@@ -1,4 +1,6 @@
+import { BaseEntity } from "types";
+
 export type Edition = {
-    id: number;
-    createdAt: number;
-  };
+    name: string;
+
+} & BaseEntity;
