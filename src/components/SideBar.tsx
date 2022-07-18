@@ -9,7 +9,7 @@ import { Course } from 'features/courses'
 
 const Logo = () => {
     return (
-        <Link to='/' className='flex items-center text-white'>
+        <Link to='/' className='flex items-center text-white px-4 hover:text-slate-200'>
             <img className='h-8 w-auto mr-4' src={logo} alt="PUT Logo"/>
             <span className='text-base font-semibold'>PUT-DB-2023</span>
         </Link>
@@ -27,7 +27,7 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
         <Disclosure>
         {({ open } : {open : any}) => (
           <>
-            <Disclosure.Button className="flex w-full items-center justify-between py-2 font-semibold pl-6 pr-4 hover:bg-blue-600">
+            <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600">
                 <div className='flex items-center space-x-4'>
                     {icon}
                     <span> {title}</span>
@@ -40,9 +40,9 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
             </Disclosure.Button>
             {
                 children.map((object, index) => {
-                    return index != children.length -1 ? <Disclosure.Panel className="px-10 font-semibold pt-2 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    return index != children.length -1 ? <Disclosure.Panel className="px-10 pt-2 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
                     {object.name}
-                  </Disclosure.Panel> : <Disclosure.Panel className="px-10 font-semibold pt-2 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                  </Disclosure.Panel> : <Disclosure.Panel className="px-10 pt-2 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
                     {object.name}
                   </Disclosure.Panel>
                 })

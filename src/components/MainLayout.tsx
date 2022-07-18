@@ -8,7 +8,7 @@ type MainLayoutProps = {
 
 export const MainLayout = ({children} : MainLayoutProps) => {
   return (
-    <div className='w-screen h-screen flex'>
+    <div className='w-screen h-screen flex overflow-hidden'>
         <SideBar></SideBar>
         <div className='flex flex-col flex-1'>
             <TopBar></TopBar>

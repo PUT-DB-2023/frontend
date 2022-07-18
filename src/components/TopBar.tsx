@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ClipboardCopyIcon, PencilIcon } from '@heroicons/react/outline'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useCurrentPath } from 'hooks/useCurrentPath'
 
 interface ProfileMenuProps {
   name: string;
@@ -8,12 +10,21 @@ interface ProfileMenuProps {
   image? : string;
 }
 
-interface NavBarProps {
-  children: string[];
-}
 
-const NavBar = ({children} : NavBarProps) => {
-
+const NavBar = () => {
+  const pathSplitted : string[] = (useLocation().pathname.split('/').filter((str) => str.length != 0));
+  const rootPath: string = pathSplitted[0]
+  const numArguments : number = pathSplitted.length - 1
+  let pathToDisplay : string[] = []
+  let navigate = useNavigate();
+  console.log(useLocation())
+  
+  
+  return (
+    <nav>
+      <span></span>
+    </nav>
+  )
 }
 
 const ProfileMenu = ({name, role} : ProfileMenuProps) => {
@@ -32,13 +43,13 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
-                  <button
+                  <Link to='/users/1'><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
                     className={`${
                       active ? 'bg-blue-700 text-white' : 'text-black'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Profil
-                  </button>
+                  </button></Link>
                 )}
               </Menu.Item>
               <Menu.Item>
@@ -60,8 +71,8 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
 
 export const TopBar = () => {
   return (
-    <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-10 items-center px-12 justify-between'>
-        <span>Przedmioty</span>
+    <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
+        <NavBar/>
         <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>
     </div>
   )
