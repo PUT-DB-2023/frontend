@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { Disclosure } from '@headlessui/react'
 import { AcademicCapIcon, ChevronUpIcon, DatabaseIcon, UsersIcon } from '@heroicons/react/solid'
-import { courseList } from 'features/courses/api/getCourses'
+// import { courseList } from 'features/courses/api/getCourses'
 import { Edition } from 'features/editions'
 import { Course } from 'features/courses'
+import { useQuery } from 'react-query'
+import { getCourses } from 'features/courses/api/getCourses'
 
 const Logo = () => {
     return (
@@ -54,15 +56,27 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
 }
 
 export const SideBar = () => {
+  const coursesQuery = useQuery('courses', getCourses)
+
+  // TODO move the mutations into separate files in the API directory (see bulletproof_react)
+
+  if (coursesQuery.isLoading) {
+    return (
+      <div>
+        Loading..
+      </div>
+    );
+  }
+
   return (
     <div className='hidden lg:flex flex-col w-72 h-screen z-20 bg-blue-700 text-white'>
         <div className='flex h-14 items-center'>
             <Logo />
         </div>
         <nav className='flex flex-col w-full mt-12'>
-            <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={courseList}/>
-            <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={courseList}/>
-            <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>} children={courseList}/>
+            <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+            <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+            <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
         </nav>
     </div>
   )

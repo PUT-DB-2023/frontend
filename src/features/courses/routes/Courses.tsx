@@ -1,7 +1,6 @@
 import { ContentLayout } from 'components'
 import { Box } from 'components'
 import { Link } from 'react-router-dom'
-import { courseList } from '../api/getCourses'
 import { CourseList } from '../components/CourseList'
 
 export const Courses = () => {

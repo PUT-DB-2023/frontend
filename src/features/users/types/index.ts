@@ -1,6 +1,9 @@
 import { BaseEntity } from "types";
 
 export type User = {
-    name: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
 
 } & BaseEntity;
