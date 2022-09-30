@@ -58,15 +58,37 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
 export const SideBar = () => {
   const coursesQuery = useQuery('courses', getCourses)
 
+  console.log(coursesQuery)
+  console.log(coursesQuery.status)
+
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
 
   if (coursesQuery.isLoading) {
-    return (
+    const content = (
       <div>
         Loading..
       </div>
     );
   }
+  else if (coursesQuery.isError) {
+    return (
+      <> Server error! </>
+    )
+  }
+
+  else {
+    if (coursesQuery.data.length) {
+      const content = (
+        <>
+          <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+          <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+          <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+        </>
+      )
+    }
+  }
+
+  
 
   return (
     <div className='hidden lg:flex flex-col w-72 h-screen z-20 bg-blue-700 text-white'>
@@ -74,9 +96,7 @@ export const SideBar = () => {
             <Logo />
         </div>
         <nav className='flex flex-col w-full mt-12'>
-            <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-            <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-            <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+            
         </nav>
     </div>
   )

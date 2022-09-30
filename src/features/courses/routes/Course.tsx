@@ -12,7 +12,7 @@ const Header = () => {
   const { id } = useParams()
   console.log('a', typeof 'a')
   const courseQuery = useQuery('course', () => getCourse( { courseId : id }))
-  const editionsQuery = useQuery('editions', () => getEditions( { editionId : id }))
+  // const editionsQuery = useQuery('editions', () => getEditions( { editionId : id }))
 
   if (courseQuery.isLoading) {
     return (
