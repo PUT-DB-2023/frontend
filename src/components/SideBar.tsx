@@ -21,7 +21,7 @@ const Logo = () => {
 interface AccordionMenuProps {
     title: string;
     icon: React.ReactNode;
-    children: Course[] | Edition[];
+    children?: Course[] | Edition[];
 };
 
 const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
@@ -32,7 +32,7 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
             <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600">
                 <div className='flex items-center space-x-4'>
                     {icon}
-                    <span> {title}</span>
+                    <Link to='/courses' className='hover:text-slate-200 hover:underline'>{title}</Link>
                 </div>
               <ChevronUpIcon
                 className={`${
@@ -40,14 +40,16 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
                 } h-5 w-5 text-white`}
               />
             </Disclosure.Button>
-            {
+            {children?.length ?
                 children.map((object, index) => {
-                    return index != children.length -1 ? <Disclosure.Panel className="px-10 pt-2 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
-                    {object.name}
-                  </Disclosure.Panel> : <Disclosure.Panel className="px-10 pt-2 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
-                    {object.name}
-                  </Disclosure.Panel>
-                })
+                    return index != children.length -1 ? 
+                    <Link to={'/courses/' + object.id}><Disclosure.Panel className="px-10 pt-2 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                      {object.id}
+                    </Disclosure.Panel></Link> : 
+                    <Link to={'/courses/' + object.id}><Disclosure.Panel className="px-10 pt-2 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                      {object.name}
+                    </Disclosure.Panel></Link>
+                }) : null
             }
           </>
         )}
@@ -82,14 +84,12 @@ export const SideBar = () => {
       content = (
         <>
           <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-          <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-          <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+          <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>}/>
+          <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>}/>
         </>
       )
     }
   }
-
-  
 
   return (
     <div className='hidden lg:flex flex-col w-72 h-screen z-20 bg-blue-700 text-white'>
