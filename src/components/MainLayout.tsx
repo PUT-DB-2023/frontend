@@ -10,7 +10,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   return (
     <div className='w-screen h-screen flex overflow-hidden'>
         <SideBar></SideBar>
-        <div className='flex flex-col flex-1'>
+        <div className='flex flex-col flex-1 bg-slate-100'>
             <TopBar></TopBar>
             {children}
         </div>

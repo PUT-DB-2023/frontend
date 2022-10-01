@@ -1,5 +1,4 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom';
 
 interface ContentProps {
     title?: string;
@@ -9,12 +8,12 @@ interface ContentProps {
 
 export const ContentLayout = ({title, header, children} : ContentProps) => {
   return (
-    <main className='flex-1 overflow-y-auto bg-slate-100'>
-      { header }
-        <div className='w-full flex flex-1 flex-col bg-slate-100 p-12'>
-          { header ? <></> : <h1 className='text-black text-3xl font-bold mb-24'>{title}</h1> }
+    <main className='flex overflow-y-auto h-auto bg-slate-100 p-9 flex-wrap gap-9'>
+      {/* { header } */}
+        {/* <div className='w-full flex flex-1 flex-col mt-9 flex-wrap'> */}
+          {/* { header ? <></> : <h1 className='text-black text-3xl font-bold mb-24'>{title}</h1> } */}
           { children }
-        </div>
+        {/* </div> */}
     </main>
   )
 }

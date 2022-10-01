@@ -3,8 +3,13 @@ export type BaseEntity = {
     createdAt: number;
   };
 
-export enum ButtonTypes {
-    action,
-    warning,
-    outline
+export enum ButtonType {
+    ACTION,
+    WARNING,
+    OUTLINE
+}
+
+export enum PanelType {
+  HEADER,
+  CONTENT
 }

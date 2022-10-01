@@ -60,11 +60,12 @@ export const SideBar = () => {
 
   console.log(coursesQuery)
   console.log(coursesQuery.status)
+  let content = null
 
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
 
   if (coursesQuery.isLoading) {
-    const content = (
+    content = (
       <div>
         Loading..
       </div>
@@ -78,7 +79,7 @@ export const SideBar = () => {
 
   else {
     if (coursesQuery.data.length) {
-      const content = (
+      content = (
         <>
           <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
           <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
@@ -96,7 +97,7 @@ export const SideBar = () => {
             <Logo />
         </div>
         <nav className='flex flex-col w-full mt-12'>
-            
+            { content }
         </nav>
     </div>
   )

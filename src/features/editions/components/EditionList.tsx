@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export const EditionList = () => {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col shadow-md bg-white p-9'>
         <h1 className='text-lg font-bold mb-10'>Edycje</h1>
         <h2 className='text-base font-semibold mt-4'>Aktywne edycje</h2>
         <div className='flex w-full flex-wrap gap-4 mt-6 mb-8'>

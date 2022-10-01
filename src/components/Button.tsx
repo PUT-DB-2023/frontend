@@ -1,19 +1,19 @@
 import React from 'react'
-import { ButtonTypes } from 'types';
+import { ButtonType } from 'types';
 
 interface ButtonProps {
-    type: ButtonTypes;
+    type: ButtonType;
     text: String;
 }
 
 export const Button = ({type, text} : ButtonProps) => {
   return (
     <button className={`w-40 h-9 flex items-center justify-center rounded-md ${
-        type == ButtonTypes.action ?
+        type == ButtonType.ACTION ?
             'bg-blue-700 text-white' :
-            type == ButtonTypes.warning ?
+            type == ButtonType.WARNING ?
                 'bg-red-500 text-white' :
-                type == ButtonTypes.outline ?
+                type == ButtonType.OUTLINE ?
                     'text-blue-700 border border-blue-700' : ''
     }`}>{text}</button>
   )
