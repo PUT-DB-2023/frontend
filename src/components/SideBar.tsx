@@ -8,6 +8,7 @@ import { Edition } from 'features/editions'
 import { Course } from 'features/courses'
 import { useQuery } from 'react-query'
 import { getCourses } from 'features/courses/api/getCourses'
+import { getServers } from 'features/servers/api/getServers'
 
 const Logo = () => {
     return (
@@ -23,9 +24,10 @@ interface AccordionMenuProps {
     url: string;
     icon: React.ReactNode;
     children?: Course[] | Edition[];
+    userMenu? : boolean;
 };
 
-const AccordionMenu = ({title, url, icon, children} : AccordionMenuProps) => {
+const AccordionMenu = ({title, url, icon, children, userMenu} : AccordionMenuProps) => {
     return (
         <Disclosure>
         {({ open } : {open : any}) => (
@@ -41,7 +43,7 @@ const AccordionMenu = ({title, url, icon, children} : AccordionMenuProps) => {
                 } h-5 w-5 text-white`}
               />
             </Disclosure.Button>
-            {children?.length ?
+            {children?.length  && !userMenu ?
                 children.map((object, index) => {
                     return index != children.length -1 ? 
                     <Link to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
@@ -52,6 +54,20 @@ const AccordionMenu = ({title, url, icon, children} : AccordionMenuProps) => {
                     </Disclosure.Panel></Link>
                 }) : null
             }
+            {userMenu ?
+              <> 
+                <Link to='/users/admins/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                  Administratorzy
+                </Disclosure.Panel></Link>
+                <Link to='/users/teachers/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                  Dydaktycy
+                </Disclosure.Panel></Link>
+                <Link to='/users/students/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                  Studenci
+                </Disclosure.Panel></Link>
+                </>
+                : null
+            }
           </>
         )}
       </Disclosure>
@@ -60,12 +76,14 @@ const AccordionMenu = ({title, url, icon, children} : AccordionMenuProps) => {
 
 export const SideBar = () => {
   const coursesQuery = useQuery('courses', getCourses)
-  let content = null
+  const serversQuery = useQuery('servers', getServers)
+  let coursesContent = null
+  let serversContent = null
 
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
 
   if (coursesQuery.isLoading) {
-    content = (
+    coursesContent = (
       <div>
         Loading..
       </div>
@@ -79,12 +97,29 @@ export const SideBar = () => {
 
   else {
     if (coursesQuery.data.length) {
-      content = (
-        <>
+      coursesContent = (
           <AccordionMenu title='Przedmioty' url='/courses/' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-          <AccordionMenu title='Serwery' url='/servers/' icon={<DatabaseIcon className='h-5 w-auto'/>}/>
-          <AccordionMenu title='Użytkownicy' url='/users/' icon={<UsersIcon className='h-5 w-auto'/>}/>
-        </>
+      )
+    }
+  }
+
+  if (serversQuery.isLoading) {
+    serversContent = (
+      <div>
+        Loading..
+      </div>
+    );
+  }
+  else if (serversQuery.isError) {
+    return (
+      <> Server error! </>
+    )
+  }
+
+  else {
+    if (serversQuery.data.length) {
+      serversContent = (
+          <AccordionMenu title='Serwery' url='/servers/' icon={<DatabaseIcon className='h-5 w-auto'/>} children={serversQuery.data}/>
       )
     }
   }
@@ -95,7 +130,9 @@ export const SideBar = () => {
             <Logo />
         </div>
         <nav className='flex flex-col w-full mt-12'>
-            { content }
+            { coursesContent }
+            { serversContent }
+            <AccordionMenu title='Użytkownicy' url='/users/' icon={<UsersIcon className='h-5 w-auto'/>} userMenu={ true }/>
         </nav>
     </div>
   )

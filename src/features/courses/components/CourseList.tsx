@@ -26,7 +26,10 @@ console.log(coursesQuery.data)
     <div className='flex w-full flex-wrap gap-4'>
         { coursesQuery.data.map(function(course : Course) {
             return <Link to= {'/courses/' + course.id}>
-                    <Box title={ course.name }></Box>
+                    <Box>
+                      <span className='font-semibold text-xl'> { course.name }</span>
+                      <span className='font-normal text-base'> { course.description }</span>
+                    </Box>
                     </Link>
         }) }
     </div>
