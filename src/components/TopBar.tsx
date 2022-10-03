@@ -17,7 +17,6 @@ const NavBar = () => {
   const numArguments : number = pathSplitted.length - 1
   let pathToDisplay : string[] = []
   let navigate = useNavigate();
-  console.log(useLocation())
   
   
   return (

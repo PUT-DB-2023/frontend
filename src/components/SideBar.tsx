@@ -46,10 +46,10 @@ const AccordionMenu = ({title, url, icon, children, userMenu} : AccordionMenuPro
             {children?.length  && !userMenu ?
                 children.map((object, index) => {
                     return index != children.length -1 ? 
-                    <Link to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
                       {object.name}
                     </Disclosure.Panel></Link> : 
-                    <Link to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
                       {object.name}
                     </Disclosure.Panel></Link>
                 }) : null

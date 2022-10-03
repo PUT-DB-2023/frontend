@@ -23,7 +23,7 @@ console.log(serversQuery.data)
   return (
     <div className='flex w-full flex-wrap gap-4'>
         { serversQuery.data.map(function(server : Server) {
-            return <Link to= {'/servers/' + server.id}>
+            return <Link key={ server.id } to= {'/servers/' + server.id}>
                     <Box>
                       <span className='font-semibold text-xl'> { server.name }</span>
                     </Box>

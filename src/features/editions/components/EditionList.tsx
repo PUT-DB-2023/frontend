@@ -1,6 +1,6 @@
 import { Box } from "components";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { EditionStatus } from "types";
 import { getEditions } from "../api/getEditions";
 import { Edition } from "../types";
@@ -11,7 +11,8 @@ interface EditionListProps {
   type: EditionStatus;
 }
 
-export const EditionList = ({id, type} : EditionListProps) => {
+export const EditionList = ({type} : EditionListProps) => {
+  const { id } = useParams()
   const editionsQuery = useQuery('editions', () => getEditions( id ))
 
   let editionsContent = null;
@@ -37,7 +38,7 @@ export const EditionList = ({id, type} : EditionListProps) => {
       return (
         <div className='w-full h-full overflow-y-auto'>
           { activeEditions.map(function(edition : Edition) {
-            return <Link to= {'/editions/' + edition.id}>
+            return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <EditionRow>
                         <span className='text-base font-semibold'>{ edition.name }</span>
                       </EditionRow>
@@ -52,7 +53,7 @@ export const EditionList = ({id, type} : EditionListProps) => {
       return (
         <div className='w-full h-full overflow-y-auto'>
           { closedEditions.map(function(edition : Edition) {
-            return <Link to= {'/editions/' + edition.id}>
+            return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <EditionRow color='bg-red-500'>
                         <span className='text-base font-semibold'>{ edition.name }</span>
                       </EditionRow>
