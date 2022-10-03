@@ -1,8 +1,8 @@
 import './App.css';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Courses } from 'features/courses';
-import { MainLayout } from 'components';
-import { Editions } from 'features/editions';
+import { Courses } from 'features/courses'
+import { MainLayout } from 'components'
+import { Editions } from 'features/editions'
 import { Error } from 'components'
 
 function App() {

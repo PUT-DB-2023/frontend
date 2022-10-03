@@ -20,11 +20,12 @@ const Logo = () => {
 
 interface AccordionMenuProps {
     title: string;
+    url: string;
     icon: React.ReactNode;
     children?: Course[] | Edition[];
 };
 
-const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
+const AccordionMenu = ({title, url, icon, children} : AccordionMenuProps) => {
     return (
         <Disclosure>
         {({ open } : {open : any}) => (
@@ -32,7 +33,7 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
             <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600">
                 <div className='flex items-center space-x-4'>
                     {icon}
-                    <Link to='/courses' className='hover:text-slate-200 hover:underline'>{title}</Link>
+                    <Link to={ url } className='hover:text-slate-200 hover:underline'>{title}</Link>
                 </div>
               <ChevronUpIcon
                 className={`${
@@ -43,10 +44,10 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
             {children?.length ?
                 children.map((object, index) => {
                     return index != children.length -1 ? 
-                    <Link to={'/courses/' + object.id}><Disclosure.Panel className="px-10 pt-2 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
-                      {object.id}
+                    <Link to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                      {object.name}
                     </Disclosure.Panel></Link> : 
-                    <Link to={'/courses/' + object.id}><Disclosure.Panel className="px-10 pt-2 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    <Link to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
                       {object.name}
                     </Disclosure.Panel></Link>
                 }) : null
@@ -59,9 +60,6 @@ const AccordionMenu = ({title, icon, children} : AccordionMenuProps) => {
 
 export const SideBar = () => {
   const coursesQuery = useQuery('courses', getCourses)
-
-  console.log(coursesQuery)
-  console.log(coursesQuery.status)
   let content = null
 
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
@@ -83,9 +81,9 @@ export const SideBar = () => {
     if (coursesQuery.data.length) {
       content = (
         <>
-          <AccordionMenu title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
-          <AccordionMenu title='Serwery' icon={<DatabaseIcon className='h-5 w-auto'/>}/>
-          <AccordionMenu title='Użytkownicy' icon={<UsersIcon className='h-5 w-auto'/>}/>
+          <AccordionMenu title='Przedmioty' url='/courses/' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
+          <AccordionMenu title='Serwery' url='/servers/' icon={<DatabaseIcon className='h-5 w-auto'/>}/>
+          <AccordionMenu title='Użytkownicy' url='/users/' icon={<UsersIcon className='h-5 w-auto'/>}/>
         </>
       )
     }

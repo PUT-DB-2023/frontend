@@ -1,6 +1,7 @@
 import { MainLayout } from "components";
 import { Courses } from "features/courses";
 import { CoursesRoutes } from "features/courses/routes";
+import { EditionsRoutes } from "features/editions/routes";
 import { Edition } from "features/editions/routes/Edition";
 import { ServersRoutes } from "features/servers";
 import { UsersRoutes } from "features/users";
@@ -23,7 +24,7 @@ export const protectedRoutes = [
         { path: '/', element: <Courses /> },
         { path: '/courses/*', element: <CoursesRoutes /> },
         { path: '/users/*', element: <UsersRoutes /> },
-        { path: '/editions/*', element: <Edition /> },
+        { path: '/editions/*', element: <EditionsRoutes /> },
         { path: '/servers/*', element: <ServersRoutes /> },
       ],
     },

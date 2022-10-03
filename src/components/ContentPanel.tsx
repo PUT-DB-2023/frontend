@@ -12,7 +12,7 @@ export const ContentPanel = ({type, children} : ContentPanelProps) => {
       type == PanelType.HEADER ?
           'basis-full flex justify-between' :
           type == PanelType.CONTENT ?
-          'basis-full lg:basis-1/3 min-h-[40rem] flex-col' : ''
+          'basis-full lg:basis-1/3 h-[40rem] flex-col' : ''
   }`}>
       { children }
     </main>

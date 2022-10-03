@@ -1,18 +1,19 @@
-import { Box, ContentLayout, ContentPanel } from 'components'
+import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
-import { EditionRow } from 'features/editions/components/EditionRow'
-import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, PanelType } from 'types'
+import { ButtonType, EditionStatus, PanelType } from 'types'
 import { getCourse } from '../api/getCourse'
 
-const Header = () => {
+// TODO Add the edition fetching to the edition list component
+
+export const Course = () => {
+
   const { id } = useParams()
-  const courseQuery = useQuery('course', () => getCourse( { courseId : id }))
-  // const editionsQuery = useQuery('editions', () => getEditions( { editionId : id }))
+  console.log(id)
+
+  const courseQuery = useQuery('course', () => getCourse( id ))
 
   if (courseQuery.isLoading) {
     return (
@@ -21,32 +22,10 @@ const Header = () => {
       </div>
     );
   }
-
-  return (
-    <div className='flex w-full shadow-md bg-white p-9 rounded-md z-10 relative gap-9'>
-      <div className='flex flex-col'>
-        <h1 className='text-black text-3xl font-bold mb-4'>{ courseQuery.data.name }</h1>
-        <h2 className='text-blue-700 font-semibold mb-8'>3 aktywne edycje</h2>
-        <h3 className='text-slate-500 text-base text-justify'>{ courseQuery.data.description }</h3>
-      </div>
-      <div className='flex gap-4'>
-        <Button type={ButtonType.OUTLINE} text='Edytuj'/>
-        <Button type={ButtonType.WARNING} text='Usuń'/>
-      </div>
-    </div>
-  )
-}
-
-export const Course = () => {
-
-  const { id } = useParams()
-  const courseQuery = useQuery('course', () => getCourse( { courseId : id }))
-  // const editionsQuery = useQuery('editions', () => getEditions( { editionId : id }))
-
-  if (courseQuery.isLoading) {
+  else if (courseQuery.isError) {
     return (
       <div>
-        Loading..
+        Error!
       </div>
     );
   }
@@ -69,9 +48,7 @@ export const Course = () => {
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
           <div className='pt-10 h-full overflow-y-auto'>
-            <EditionRow>
-            </EditionRow>
-            <EditionRow />
+            <EditionList id={courseQuery.data.id} type={EditionStatus.ACTIVE} />
           </div>
         </ContentPanel>
 
@@ -79,11 +56,7 @@ export const Course = () => {
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
           <div className='pt-10 h-full overflow-y-auto'>
-            <EditionRow color='bg-red-500'>
-            </EditionRow>
-            <EditionRow color='bg-red-500' />
-            <EditionRow color='bg-red-500' />
-            <EditionRow color='bg-red-500' />
+            <EditionList id={courseQuery.data.id} type={EditionStatus.CLOSED} />
           </div>
         </ContentPanel>
     </ContentLayout>

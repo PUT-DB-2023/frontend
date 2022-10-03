@@ -13,3 +13,8 @@ export enum PanelType {
   HEADER,
   CONTENT
 }
+
+export enum EditionStatus {
+  ACTIVE,
+  CLOSED
+}
