@@ -1,12 +1,10 @@
 import React from 'react'
 
 interface ContentProps {
-    title?: string;
-    header?: React.ReactNode;
     children: React.ReactNode;
 };
 
-export const ContentLayout = ({title, header, children} : ContentProps) => {
+export const ContentLayout = ({children} : ContentProps) => {
   return (
     <main className='flex overflow-y-auto h-auto bg-slate-100 p-9 flex-wrap gap-9'>
       {/* { header } */}

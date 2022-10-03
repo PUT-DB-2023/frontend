@@ -7,7 +7,7 @@ import { CourseList } from '../components/CourseList'
 
 export const Courses = () => {
   return (
-    <ContentLayout title='Przedmioty'>
+    <ContentLayout>
       <ContentPanel type={PanelType.HEADER}> 
           <span className='text-black text-3xl font-bold mb-4'>Przedmioty</span>
           <div className='flex gap-4'>

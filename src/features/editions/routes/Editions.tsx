@@ -8,7 +8,7 @@ export const Editions = () => {
   let { id } : any = useParams()
 
   return (
-    <ContentLayout title={id != undefined ? 'courseList[id].name' : ''}>
+    <ContentLayout>
         <div className='flex w-full flex-wrap'>
             <Box title='Lato 2022'></Box>
             <Box title='Zima 2021/22'></Box>

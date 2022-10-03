@@ -7,7 +7,7 @@ import { CoursesRoutes } from '../routes'
 import { Course } from '../types'
 
 export const CourseList = () => {
-  const [newCourse, setNewCourse] = useState('')
+  // const [newCourse, setNewCourse] = useState('')
   const coursesQuery = useQuery('courses', getCourses)
 
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
