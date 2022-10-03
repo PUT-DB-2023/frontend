@@ -18,3 +18,9 @@ export enum EditionStatus {
   ACTIVE,
   CLOSED
 }
+
+export enum UserType {
+  ADMIN,
+  TEACHER,
+  STUDENT
+}

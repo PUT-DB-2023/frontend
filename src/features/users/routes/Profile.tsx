@@ -1,11 +1,11 @@
 import { ContentLayout } from 'components'
 import React from 'react'
-import { UserList } from '../components/UserList'
+// import { UserList } from '../components/UserList'
 
 export const Profile = () => {
   return (
     <ContentLayout>
-        <UserList></UserList>
+        {/* <UserList></UserList> */}
     </ContentLayout>
   )
 }
