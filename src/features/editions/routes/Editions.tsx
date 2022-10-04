@@ -10,8 +10,9 @@ export const Editions = () => {
   return (
     <ContentLayout>
         <div className='flex w-full flex-wrap'>
-            <Box title='Lato 2022'></Box>
-            <Box title='Zima 2021/22'></Box>
+            <Box>
+              <span className='font-semibold text-xl'> Administratorzy</span>
+            </Box>
         </div>
     </ContentLayout>
   )

@@ -5,13 +5,19 @@ export const UserTypeList = () => {
     return (
         <div className='flex w-full flex-wrap gap-4'>
             <Link to='/users/admins/'>
-                <Box title='Administratorzy'></Box>
+                <Box>
+                    <span className='font-semibold text-xl'> Administratorzy </span>
+                </Box>
             </Link>
             <Link to='/users/teachers/'>
-                <Box title='Dydaktycy'></Box>
+                <Box>
+                    <span className='font-semibold text-xl'> Dydaktycy </span>
+                </Box>
             </Link>
             <Link to='/users/students/'>
-                <Box title='Studenci'></Box>
+                <Box>
+                    <span className='font-semibold text-xl'> Studenci </span>
+                </Box>
             </Link>
         </div>
         )
