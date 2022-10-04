@@ -9,7 +9,7 @@ export const Server = () => {
   const { id } = useParams()
   console.log(id)
 
-  const editionQuery = useQuery('edition', () => getServer( id ))
+  const editionQuery = useQuery(['server', id], () => getServer( id ))
 
   if (editionQuery.isLoading) {
     return (

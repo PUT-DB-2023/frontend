@@ -28,7 +28,7 @@ export const CourseList = () => {
             return <Link key={course.id} to= {'/courses/' + course.id}>
                     <Box>
                       <span className='font-semibold text-xl'> { course.name }</span>
-                      <span className='font-normal text-base'> { course.description }</span>
+                      <span className='font-normal text-base text-slate-600'> { course.description }</span>
                     </Box>
                     </Link>
         }) }

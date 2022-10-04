@@ -4,6 +4,8 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { ButtonType, PanelType } from 'types';
 import { getEdition } from '../api/getEdition';
+import { getEditionGroups } from '../api/getEditionGroups';
+import { GroupList } from '../components/GroupList';
 
 export const Edition = () => {
 
@@ -39,6 +41,7 @@ export const Edition = () => {
             <Button type={ButtonType.WARNING} text='Usuń'/>
           </div>
         </ContentPanel>
+        <GroupList></GroupList>
     </ContentLayout>
   )
 }

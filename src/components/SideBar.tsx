@@ -96,11 +96,9 @@ export const SideBar = () => {
   }
 
   else {
-    if (coursesQuery.data.length) {
       coursesContent = (
           <AccordionMenu title='Przedmioty' url='/courses/' icon={<AcademicCapIcon className='h-5 w-auto'/>} children={coursesQuery.data}/>
       )
-    }
   }
 
   if (serversQuery.isLoading) {
@@ -117,11 +115,9 @@ export const SideBar = () => {
   }
 
   else {
-    if (serversQuery.data.length) {
       serversContent = (
           <AccordionMenu title='Serwery' url='/servers/' icon={<DatabaseIcon className='h-5 w-auto'/>} children={serversQuery.data}/>
       )
-    }
   }
 
   return (

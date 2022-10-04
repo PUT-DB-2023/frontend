@@ -1,0 +1,34 @@
+import { Box } from 'components'
+import { useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { Link, useParams } from 'react-router-dom'
+import { getEditionGroups } from '../api/getEditionGroups'
+import { Group } from '../types'
+
+export const GroupList = () => {
+  const { id } = useParams()
+  const groupsQuery = useQuery(['groups'], () => getEditionGroups( id ))
+
+  // TODO move the mutations into separate files in the API directory (see bulletproof_react)
+
+  if (groupsQuery.isLoading) {
+    return (
+      <div>
+        Loading..
+      </div>
+    );
+  }
+
+  return (
+    <div className='flex w-full flex-wrap gap-4'>
+        { groupsQuery.data.map(function(group : Group) {
+            return <Link key={group.id} to= {'/courses/' + group.id}>
+                    <Box>
+                      <span className='font-semibold text-xl'> { group.name }</span>
+                      <span className='font-normal text-base text-slate-600'> { group.day + " " + group.hour}</span>
+                    </Box>
+                    </Link>
+        }) }
+    </div>
+  )
+}

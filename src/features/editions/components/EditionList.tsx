@@ -1,4 +1,5 @@
 import { Box } from "components";
+import { Spinner } from "components/Spinner";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { EditionStatus } from "types";
@@ -13,15 +14,13 @@ interface EditionListProps {
 
 export const EditionList = ({type} : EditionListProps) => {
   const { id } = useParams()
-  const editionsQuery = useQuery('editions', () => getEditions( id ))
+  const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
 
   let editionsContent = null;
   
   if (editionsQuery.isLoading) {
     return (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
   else if (editionsQuery.isError) {

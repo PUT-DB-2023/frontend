@@ -1,6 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { EditionList } from 'features/editions/components/EditionList'
+import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, EditionStatus, PanelType } from 'types'
@@ -11,9 +12,10 @@ import { getCourse } from '../api/getCourse'
 export const Course = () => {
 
   const { id } = useParams()
-  console.log(id)
 
-  const courseQuery = useQuery('course', () => getCourse( id ))
+  let courseQuery = useQuery(['course', id], () => getCourse( id )) // refetch when id changes
+
+  console.log(id, courseQuery.data)
 
   if (courseQuery.isLoading) {
     return (
