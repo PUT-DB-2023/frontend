@@ -6,7 +6,7 @@ import { UserTypeList } from '../components/UserTypeList'
 export const UserTypes = () => {
   return (
     <ContentLayout>
-      <ContentPanel type={PanelType.HEADER}> 
+      <ContentPanel type={PanelType.LARGE}> 
           <span className='text-black text-3xl font-bold mb-4'>Użytkownicy</span>
         </ContentPanel>
         <UserTypeList></UserTypeList>

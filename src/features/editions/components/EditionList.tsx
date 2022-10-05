@@ -16,6 +16,8 @@ export const EditionList = ({type} : EditionListProps) => {
   const { id } = useParams()
   const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
 
+  console.log(editionsQuery.data)
+
   let editionsContent = null;
   
   if (editionsQuery.isLoading) {

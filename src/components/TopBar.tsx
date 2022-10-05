@@ -42,7 +42,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
-                  <Link to='/users/1'><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
+                  <Link to='/users/5'><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
                     className={`${
                       active ? 'bg-blue-700 text-white' : 'text-black'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

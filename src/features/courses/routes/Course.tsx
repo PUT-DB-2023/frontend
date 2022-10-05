@@ -34,7 +34,7 @@ export const Course = () => {
   
   return (
     <ContentLayout>
-        <ContentPanel type={PanelType.HEADER}> 
+        <ContentPanel type={PanelType.LARGE}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseQuery.data.name }</h1>
             <h2 className='text-blue-900 font-semibold mb-8'>3 aktywne edycje</h2>
@@ -46,7 +46,7 @@ export const Course = () => {
           </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.CONTENT}>
+        <ContentPanel type={PanelType.SMALL}>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
           <div className='pt-10 h-full overflow-y-auto'>
@@ -54,7 +54,7 @@ export const Course = () => {
           </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.CONTENT}> 
+        <ContentPanel type={PanelType.SMALL}> 
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
           <div className='pt-10 h-full overflow-y-auto'>

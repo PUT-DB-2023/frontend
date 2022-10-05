@@ -9,9 +9,9 @@ interface ContentPanelProps {
 export const ContentPanel = ({type, children} : ContentPanelProps) => {
   return (
     <main className={`bg-white shadow-md rounded-md flex flex-auto p-9 ${
-      type == PanelType.HEADER ?
+      type == PanelType.LARGE ?
           'basis-full flex justify-between' :
-          type == PanelType.CONTENT ?
+          type == PanelType.SMALL ?
           'basis-full lg:basis-1/3 h-[40rem] flex-col' : ''
   }`}>
       { children }

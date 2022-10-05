@@ -1,86 +1,53 @@
-export const UserTable = () => {}
-// import React from 'react'
-// import {
-//   ColumnDef,
-//   flexRender,
-//   getCoreRowModel,
-//   useReactTable,
-// } from '@tanstack/react-table'
-// import { User } from '../types'
-// import { userList } from '../api/getUsers'
+import { Spinner } from 'components/Spinner'
+import React from 'react'
+import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
+import { getStudents } from '../api/getStudents'
+import { User } from '../types'
 
-// import '../components/index.css'
+export const UserTable = () => {
+  const usersQuery = useQuery(['students'], getStudents)
 
-// const columns: ColumnDef<User>[] = [
-//   {
-//     accessorKey: 'id',
-//     header: () => 'Nr Indeksu',
-//     cell: info => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'firstName',
-//     header: () => 'Imię',
-//     cell: info => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'lastName',
-//     header: () => 'Nazwisko',
-//     cell: info => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'email',
-//     header: () => 'Email',
-//     cell: info => info.getValue(),
-//   },
-//   {
-//     accessorKey: 'password',
-//     header: () => 'Password',
-//     cell: info => info.getValue(),
-//   },
-// ]
+  console.log(usersQuery.data)
 
-// export const UserList = () => {
+  if (usersQuery.isLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
-//   const [data, setData] = React.useState(() => [...userList])
-
-//   const table = useReactTable({
-//     data,
-//     columns,
-//     getCoreRowModel: getCoreRowModel(),
-//   })
-
-//   return (
-//     <div className="p-2">
-//       <table className='border border-slate-300 bg-white shadow-md'>
-//         <thead className='text-sm'>
-//           {table.getHeaderGroups().map(headerGroup => (
-//             <tr key={headerGroup.id}>
-//               {headerGroup.headers.map(header => (
-//                 <th key={header.id}>
-//                   {header.isPlaceholder
-//                     ? null
-//                     : flexRender(
-//                         header.column.columnDef.header,
-//                         header.getContext()
-//                       )}
-//                 </th>
-//               ))}
-//             </tr>
-//           ))}
-//         </thead>
-//         <tbody className='text-sm border border-slate-300'>
-//           {table.getRowModel().rows.map(row => (
-//             <tr key={row.id}>
-//               {row.getVisibleCells().map(cell => (
-//                 <td key={cell.id}>
-//                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                 </td>
-//               ))}
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       <div className="h-4" />
-//     </div>
-//   )
-// }
+  return (
+    <table className='border-slate-300 border-[0.1rem] border-spacing-0 w-full border-collapse cp-0 box-border text-base text-slate-700'>
+      <tbody className='p-0'>
+        <tr className='p-0 border-slate-300 border-[0.05rem] h-10 font-bold'>
+          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+            Imię
+          </td>
+          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+            Nazwisko
+          </td>
+          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+            E-mail
+          </td>
+        </tr>
+      { usersQuery.data.map((user: any) => {
+        return (
+            <tr className='p-0 border-slate-300 border-[0.05rem] h-10'>
+              {/* <Link to={`/users/${user.id}`}> */}
+              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+                { user.first_name }
+              </td>
+              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+                { user.last_name }
+              </td>
+              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+                { user.email }
+              </td>
+              {/* </Link> */}
+          </tr>
+        )
+      })}
+      </tbody>
+    </table>
+  )
+}
