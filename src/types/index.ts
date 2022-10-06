@@ -6,7 +6,9 @@ export type BaseEntity = {
 export enum ButtonType {
     ACTION,
     WARNING,
-    OUTLINE
+    OUTLINE,
+    TEXT_WARNING,
+    TEXT_ACTION
 }
 
 export enum PanelType {

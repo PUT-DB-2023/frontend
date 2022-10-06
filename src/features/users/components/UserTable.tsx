@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { getStudents } from '../api/getStudents'
 import { User } from '../types'
+import { UserTableRow } from './UserTableRow'
 
 export const UserTable = () => {
   const usersQuery = useQuery(['students'], getStudents)
@@ -29,22 +30,13 @@ export const UserTable = () => {
           <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
             E-mail
           </td>
+          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+            Hasło
+          </td>
         </tr>
       { usersQuery.data.map((user: any) => {
         return (
-            <tr className='p-0 border-slate-300 border-[0.05rem] h-10'>
-              {/* <Link to={`/users/${user.id}`}> */}
-              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
-                { user.first_name }
-              </td>
-              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
-                { user.last_name }
-              </td>
-              <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
-                { user.email }
-              </td>
-              {/* </Link> */}
-          </tr>
+            <UserTableRow user={ user } />
         )
       })}
       </tbody>
