@@ -12,16 +12,8 @@ interface UsersProps {
   type: UserType;
 }
 
-export const UserTable = ( { type } : UsersProps) => {
-  const usersQuery = useQuery(['users', type], () => getUsers(type))
-
-  console.log(usersQuery.data)
-
-  if (usersQuery.isLoading) {
-    return (
-      <Spinner />
-    );
-  }
+export const UserTable = ( { data } : any) => {
+  // const usersQuery = useQuery(['users', type], () => getUsers(type))
 
   return (
     <div className='border-slate-300 border-[0.1rem] border-spacing-0 w-full border-collapse cp-0 box-border text-base text-slate-700'>
@@ -41,7 +33,7 @@ export const UserTable = ( { type } : UsersProps) => {
           <div className='p-0 border-slate-300 pl-2 basis-2/12 h-full flex items-center'>
           </div>
         </div>
-      { usersQuery.data.map((user: any) => {
+      { data.map((user: any) => {
         return (
             <UserTableRow user={ user } />
         )

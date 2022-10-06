@@ -3,6 +3,7 @@ import { Courses } from "features/courses";
 import { CoursesRoutes } from "features/courses/routes";
 import { EditionsRoutes } from "features/editions/routes";
 import { Edition } from "features/editions/routes/Edition";
+import { GroupsRoutes } from "features/groups";
 import { ServersRoutes } from "features/servers";
 import { UsersRoutes } from "features/users";
 import { Suspense } from "react";
@@ -26,6 +27,7 @@ export const protectedRoutes = [
         { path: '/users/*', element: <UsersRoutes /> },
         { path: '/editions/*', element: <EditionsRoutes /> },
         { path: '/servers/*', element: <ServersRoutes /> },
+        { path: '/groups/*', element: <GroupsRoutes /> },
       ],
     },
   ];

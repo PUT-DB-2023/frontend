@@ -13,7 +13,7 @@ export const Edition = () => {
   const { id } = useParams()
   console.log(id)
 
-  const editionQuery = useQuery('edition', () => getEdition( id ))
+  const editionQuery = useQuery(['edition', id], () => getEdition( id ))
 
   if (editionQuery.isLoading) {
     return (
@@ -32,7 +32,10 @@ export const Edition = () => {
     <ContentLayout>
         <ContentPanel type={PanelType.LARGE}> 
           <div className='flex-col'>
-            <h1 className='text-black text-3xl font-bold mb-4'>{ editionQuery.data.name }</h1>
+            <h1 className='text-black text-3xl font-bold mb-4'>
+              { editionQuery.data.course.name + " " + editionQuery.data.semester.year + " - "}
+              { editionQuery.data.semester.winter ? "Zima" : "Lato"}
+            </h1>
             <h2 className='text-blue-900 font-semibold mb-8'>3 grupy</h2>
           </div>
           <div className='flex gap-4'>

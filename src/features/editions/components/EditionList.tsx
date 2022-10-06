@@ -17,8 +17,6 @@ export const EditionList = ({type} : EditionListProps) => {
   const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
 
   console.log(editionsQuery.data)
-
-  let editionsContent = null;
   
   if (editionsQuery.isLoading) {
     return (
@@ -34,14 +32,24 @@ export const EditionList = ({type} : EditionListProps) => {
   }
   else {
     if (type == EditionStatus.ACTIVE) {
-      const activeEditions = editionsQuery.data.filter((obj : Edition) => obj.active === true)
+      const activeEditions = editionsQuery.data.filter((obj : any) => obj.active === true)
 
       return (
         <div className='w-full h-full overflow-y-auto'>
-          { activeEditions.map(function(edition : Edition) {
+          { activeEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <EditionRow>
-                        <span className='text-base font-semibold'>{ edition.name }</span>
+                        <span className='text-lg font-semibold'>
+                          { edition.course.name + " " + edition.semester.year + " - "}
+                          { edition.semester.winter ? "Zima" : "Lato"}
+                        </span>
+                        <div className="flex flex-row pt-2">
+                          { edition.teachers.map((teacher: any) => {
+                            return (
+                              <span className="text-base font-normal text-blue-800 mr-4"> { teacher.first_name + " " + teacher.last_name}</span>
+                            )
+                          }) } 
+                        </div>
                       </EditionRow>
                     </Link>
           }) }
@@ -49,14 +57,24 @@ export const EditionList = ({type} : EditionListProps) => {
       )
     }
     else if (type == EditionStatus.CLOSED) {
-      const closedEditions = editionsQuery.data.filter((obj : Edition) => obj.active === false)
+      const closedEditions = editionsQuery.data.filter((obj : any) => obj.active === false)
 
       return (
         <div className='w-full h-full overflow-y-auto'>
-          { closedEditions.map(function(edition : Edition) {
+          { closedEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <EditionRow color='bg-red-500'>
-                        <span className='text-base font-semibold'>{ edition.name }</span>
+                        <span className='text-lg font-semibold'>
+                          { edition.course.name + " " + edition.semester.year + " - "}
+                          { edition.semester.winter ? "Zima" : "Lato"}
+                        </span>
+                        <div className="flex flex-row pt-2">
+                          { edition.teachers.map((teacher: any) => {
+                            return (
+                              <span className="text-base font-normal text-blue-800 mr-4"> { teacher.first_name + " " + teacher.last_name } </span>
+                            )
+                          }) } 
+                        </div>
                       </EditionRow>
                     </Link>
           }) }

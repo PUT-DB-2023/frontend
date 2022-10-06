@@ -1,6 +1,9 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button';
+import { Spinner } from 'components/Spinner';
+import { useQuery } from 'react-query';
 import { ButtonType, PanelType, UserType } from 'types'
+import { getUsers } from '../api/getUsers';
 import { UserTable } from '../components/UserTable';
 
 interface UsersProps {
@@ -8,6 +11,13 @@ interface UsersProps {
 }
 
 export const Users = ({ type } : UsersProps) => {
+  const usersQuery = useQuery(['users', type], () => getUsers(type))
+
+  if (usersQuery.isLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   console.log(type)
   return (
@@ -17,7 +27,7 @@ export const Users = ({ type } : UsersProps) => {
             { 
                 type === UserType.ADMIN ? 'Administratorzy' :
                 type === UserType.TEACHER ? 'Dydaktycy' :
-                type === UserType.STUDENT ? 'Studenci' : ''  
+                type === UserType.STUDENT ? 'Studenci' : '' 
             }
         </span>
         <div className='flex gap-4'>
@@ -26,8 +36,8 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.LARGE}>
-        <UserTable type={ type }></UserTable>
-      </ContentPanel> 
+        <UserTable data={ usersQuery.data }> </UserTable>
+      </ContentPanel>
     </ContentLayout>
   )
 }

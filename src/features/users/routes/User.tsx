@@ -10,7 +10,7 @@ import { UserInfo } from '../components/UserInfo'
 
 export const User = () => {
   const { id } = useParams()
-  const userQuery = useQuery('user', () => getUser( id ))
+  const userQuery = useQuery(['user', id], () => getUser( id ))
 
   if (userQuery.isLoading) {
     return (

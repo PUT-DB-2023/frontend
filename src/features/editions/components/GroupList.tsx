@@ -8,7 +8,7 @@ import { Group } from '../types'
 
 export const GroupList = () => {
   const { id } = useParams()
-  const groupsQuery = useQuery(['groups'], () => getEditionGroups( id ))
+  const groupsQuery = useQuery(['groups', id], () => getEditionGroups( id ))
 
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
 
@@ -20,12 +20,13 @@ export const GroupList = () => {
 
   return (
     <div className='flex w-full flex-wrap gap-4'>
-        { groupsQuery.data.map(function(group : Group) {
-            return <Link key={group.id} to= {'/courses/' + group.id}>
-                    <Box>
-                      <span className='font-semibold text-xl'> { group.name }</span>
-                      <span className='font-normal text-base text-slate-600'> { group.day + " " + group.hour}</span>
-                    </Box>
+        { groupsQuery.data.map(function(group : any) {
+            return <Link key={group.id} to= {'/groups/' + group.id}>
+                      <Box>
+                        <span className='font-semibold text-xl'> Group { group.name }</span>
+                        <span className='font-normal text-base text-slate-600'> { group.day + " " + group.hour}</span>
+                        <span className='font-normal text-base text-blue-600'> { group.teacherEdition.teacher.first_name + " " + group.teacherEdition.teacher.last_name}</span>
+                      </Box>
                     </Link>
         }) }
     </div>

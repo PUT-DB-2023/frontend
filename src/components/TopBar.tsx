@@ -3,6 +3,12 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ClipboardCopyIcon, PencilIcon } from '@heroicons/react/outline'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCurrentPath } from 'hooks/useCurrentPath'
+import { useQuery } from 'react-query';
+import { getUser } from 'features/users/api/getUser';
+import { getUsers } from 'features/users/api/getUsers';
+import { PanelType, UserType } from 'types';
+import { ContentPanel } from './ContentPanel';
+import { Spinner } from './Spinner';
 
 interface ProfileMenuProps {
   name: string;
@@ -27,6 +33,16 @@ const NavBar = () => {
 }
 
 const ProfileMenu = ({name, role} : ProfileMenuProps) => {
+  const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
+
+  if (userQuery.isLoading) {
+    return (
+      <ContentPanel type={PanelType.LARGE}> 
+        <Spinner />
+      </ContentPanel>
+    );
+  }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
         <div>
@@ -42,9 +58,9 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
-                  <Link to='/users/5'><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
+                  <Link to={`/users/` + userQuery.data[0].id}><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
                     className={`${
-                      active ? 'bg-blue-700 text-white' : 'text-black'
+                      active ? 'bg-blue-600 text-white' : 'text-black'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Profil
@@ -55,7 +71,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <button
                     className={`${
-                      active ? 'bg-blue-700 text-white' : 'text-gray-900'
+                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Wyloguj

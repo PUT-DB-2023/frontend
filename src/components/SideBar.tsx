@@ -13,7 +13,7 @@ import { Spinner } from './Spinner'
 
 const Logo = () => {
     return (
-        <Link to='/' className='flex items-center text-white px-4 hover:text-slate-200'>
+        <Link to='/' className='flex items-center text-white px-4 hover:text-slate-200 transition-all'>
             <img className='h-8 w-auto mr-4' src={logo} alt="PUT Logo"/>
             <span className='text-base font-semibold'>PUT-DB-2023</span>
         </Link>
@@ -33,10 +33,10 @@ const AccordionMenu = ({title, url, icon, children, userMenu} : AccordionMenuPro
         <Disclosure>
         {({ open } : {open : any}) => (
           <>
-            <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600">
+            <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600 transition-all">
                 <div className='flex items-center space-x-4'>
                     {icon}
-                    <Link to={ url } className='hover:text-slate-200 hover:underline'>{title}</Link>
+                    <Link to={ url } className='hover:text-slate-200 hover:underline transition-all'>{title}</Link>
                 </div>
               <ChevronUpIcon
                 className={`${
@@ -47,23 +47,23 @@ const AccordionMenu = ({title, url, icon, children, userMenu} : AccordionMenuPro
             {children?.length  && !userMenu ?
                 children.map((object, index) => {
                     return index != children.length -1 ? 
-                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                       {object.name}
                     </Disclosure.Panel></Link> : 
-                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                    <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                       {object.name}
                     </Disclosure.Panel></Link>
                 }) : null
             }
             {userMenu ?
               <> 
-                <Link to='/users/admins/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                <Link to='/users/admins/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                   Administratorzy
                 </Disclosure.Panel></Link>
-                <Link to='/users/teachers/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                <Link to='/users/teachers/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                   Dydaktycy
                 </Disclosure.Panel></Link>
-                <Link to='/users/students/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer">
+                <Link to='/users/students/'><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                   Studenci
                 </Disclosure.Panel></Link>
                 </>

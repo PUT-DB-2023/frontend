@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { UserType } from 'types'
 import { User } from '../types'
 
-export const getUsers = async ( type : UserType ) => {
+export const getUsers = async ( type? : UserType) => {
 
     console.log(type)
 
