@@ -1,5 +1,6 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { Spinner } from 'components/Spinner'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType } from 'types'
@@ -16,9 +17,7 @@ export const Server = () => {
 
   if (serverQuery.isLoading) {
     return (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
   else if (serverQuery.isError) {

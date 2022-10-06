@@ -1,4 +1,5 @@
 import { Box } from 'components'
+import { Spinner } from 'components/Spinner'
 import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { Link } from 'react-router-dom'
@@ -14,9 +15,7 @@ export const CourseList = () => {
 
   if (coursesQuery.isLoading) {
     return (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
 

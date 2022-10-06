@@ -1,4 +1,5 @@
 import { Box } from 'components'
+import { Spinner } from 'components/Spinner'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { Link } from 'react-router-dom'
 import { getServers } from '../api/getServers'
@@ -12,9 +13,7 @@ export const ServerList = () => {
 
   if (serversQuery.isLoading) {
     return (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
 

@@ -24,28 +24,28 @@ export const UserTable = ( { type } : UsersProps) => {
   }
 
   return (
-    <table className='border-slate-300 border-[0.1rem] border-spacing-0 w-full border-collapse cp-0 box-border text-base text-slate-700'>
-      <tbody className='p-0'>
-        <tr className='p-0 border-slate-300 border-[0.05rem] h-10 font-bold'>
-          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+    <div className='border-slate-300 border-[0.1rem] border-spacing-0 w-full border-collapse cp-0 box-border text-base text-slate-700'>
+        <div className='p-0 border-slate-300 border-b-[1px] h-10 font-bold flex box-border'>
+          <div className='p-0 border-slate-300 pl-2 basis-2/12 border-r-[1px] h-full flex items-center'>
             Imię
-          </td>
-          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+          </div>
+          <div className='p-0 border-slate-300 pl-2 basis-3/12 border-r-[1px] h-full flex items-center'>
             Nazwisko
-          </td>
-          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+          </div>
+          <div className='p-0 border-slate-300 pl-2 basis-4/12 border-r-[1px] h-full flex items-center'>
             E-mail
-          </td>
-          <td className='p-0 border-slate-300 border-[0.05rem] pl-2'>
+          </div>
+          <div className='p-0 border-slate-300 pl-2 basis-2/12 border-r-[1px] h-full flex items-center'>
             Hasło
-          </td>
-        </tr>
+          </div>
+          <div className='p-0 border-slate-300 pl-2 basis-2/12 h-full flex items-center'>
+          </div>
+        </div>
       { usersQuery.data.map((user: any) => {
         return (
             <UserTableRow user={ user } />
         )
       })}
-      </tbody>
-    </table>
+    </div>
   )
 }

@@ -1,5 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { Spinner } from 'components/Spinner'
+import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
@@ -14,14 +16,15 @@ export const Course = () => {
   const { id } = useParams()
 
   let courseQuery = useQuery(['course', id], () => getCourse( id )) // refetch when id changes
+  const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
 
   console.log(id, courseQuery.data)
 
   if (courseQuery.isLoading) {
     return (
-      <div>
-        Loading..
-      </div>
+      <ContentPanel type={PanelType.LARGE}> 
+        <Spinner />
+      </ContentPanel>
     );
   }
   else if (courseQuery.isError) {
@@ -37,7 +40,7 @@ export const Course = () => {
         <ContentPanel type={PanelType.LARGE}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseQuery.data.name }</h1>
-            <h2 className='text-blue-900 font-semibold mb-8'>3 aktywne edycje</h2>
+            <h2 className='text-blue-900 font-semibold mb-8'> { editionsQuery.data !== undefined ? editionsQuery.data.length : '' } edycje </h2>
             <h3 className='text-slate-500 text-base text-justify'>{ courseQuery.data.description }</h3>
           </div>
           <div className='flex gap-4'>

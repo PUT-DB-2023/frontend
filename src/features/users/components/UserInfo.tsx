@@ -24,7 +24,7 @@ export const UserInfo = ( { userData } : any ) => {
         </div>
         <div className='flex flex-col p-2 gap-2'>
             <span className='text-black text-base font-semibold'> Hasło </span>
-            <span className='text-slate-600 text-base'> <Button type={ButtonType.ACTION} text='Resetuj'/> </span>
+            <span className='text-slate-600 text-base'> <Button type={ButtonType.OUTLINE} text='Resetuj'/> </span>
         </div>
     </div> 
     </>

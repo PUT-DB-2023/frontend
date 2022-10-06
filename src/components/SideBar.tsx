@@ -9,6 +9,7 @@ import { Course } from 'features/courses'
 import { useQuery } from 'react-query'
 import { getCourses } from 'features/courses/api/getCourses'
 import { getServers } from 'features/servers/api/getServers'
+import { Spinner } from './Spinner'
 
 const Logo = () => {
     return (
@@ -84,9 +85,7 @@ export const SideBar = () => {
 
   if (coursesQuery.isLoading) {
     coursesContent = (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
   else if (coursesQuery.isError) {
@@ -103,9 +102,7 @@ export const SideBar = () => {
 
   if (serversQuery.isLoading) {
     serversContent = (
-      <div>
-        Loading..
-      </div>
+      <Spinner />
     );
   }
   else if (serversQuery.isError) {
