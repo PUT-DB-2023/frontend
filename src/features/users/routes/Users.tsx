@@ -9,7 +9,7 @@ interface UsersProps {
 
 export const Users = ({ type } : UsersProps) => {
 
-  console.log('USERS')
+  console.log(type)
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.LARGE}> 
@@ -26,7 +26,7 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.LARGE}>
-        <UserTable></UserTable>
+        <UserTable type={ type }></UserTable>
       </ContentPanel> 
     </ContentLayout>
   )

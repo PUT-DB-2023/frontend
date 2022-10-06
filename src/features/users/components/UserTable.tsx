@@ -2,12 +2,18 @@ import { Spinner } from 'components/Spinner'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
+import { UserType } from 'types'
 import { getStudents } from '../api/getStudents'
+import { getUsers } from '../api/getUsers'
 import { User } from '../types'
 import { UserTableRow } from './UserTableRow'
 
-export const UserTable = () => {
-  const usersQuery = useQuery(['students'], getStudents)
+interface UsersProps {
+  type: UserType;
+}
+
+export const UserTable = ( { type } : UsersProps) => {
+  const usersQuery = useQuery(['users', type], () => getUsers(type))
 
   console.log(usersQuery.data)
 
