@@ -36,6 +36,12 @@ export const Group = () => {
   else {
     students = groupQuery.data.students
   }
+
+  const createDbAccounts = (groupId: Number, serverId : Number) => {
+    console.log(groupQuery.data)
+  }
+
+  const num = 1
   
   return (
     <ContentLayout>
@@ -46,7 +52,7 @@ export const Group = () => {
             <h3 className='text-slate-500 text-base text-justify'>{ groupQuery.data.day + " " + groupQuery.data.hour }</h3>
           </div>
           <div className='flex gap-4'>
-            <Button type={ButtonType.ACTION} text='Utwórz konta'/>
+            <Button onClick={ () => createDbAccounts(groupQuery.data.id, 1) } type={ButtonType.ACTION} text='Utwórz konta'/>
             <Button type={ButtonType.OUTLINE} text='Edytuj'/>
             <Button type={ButtonType.WARNING} text='Usuń'/>
           </div>

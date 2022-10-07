@@ -15,6 +15,8 @@ export const Edition = () => {
 
   const editionQuery = useQuery(['edition', id], () => getEdition( id ))
 
+  console.log(editionQuery.data)
+
   if (editionQuery.isLoading) {
     return (
       <Spinner />
