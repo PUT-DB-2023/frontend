@@ -14,19 +14,13 @@ export const Edition = () => {
   console.log(id)
 
   const editionQuery = useQuery(['edition', id], () => getEdition( id ))
+  const groupsQuery = useQuery(['groups', id], () => getEditionGroups( id ))
 
   console.log(editionQuery.data)
 
-  if (editionQuery.isLoading) {
+  if (editionQuery.isLoading || groupsQuery.isLoading) {
     return (
       <Spinner />
-    );
-  }
-  else if (editionQuery.isError) {
-    return (
-      <div>
-        Error!
-      </div>
     );
   }
   
@@ -38,7 +32,7 @@ export const Edition = () => {
               { editionQuery.data.course.name + " " + editionQuery.data.semester.year + " - "}
               { editionQuery.data.semester.winter ? "Zima" : "Lato"}
             </h1>
-            <h2 className='text-blue-900 font-semibold mb-8'>3 grupy</h2>
+            <h2 className='text-blue-900 font-semibold mb-8'>{ groupsQuery.data.length } grupy</h2>
           </div>
           <div className='flex gap-4'>
             <Button type={ButtonType.OUTLINE} text='Edytuj'/>
