@@ -18,6 +18,11 @@ export const Group = () => {
   const { id } = useParams()
 
   const groupQuery = useQuery(['group', id], () => getGroup( id ))
+  const { data, refetch } = useQuery(['dbAccountCreationStatus'],
+    () => addDbAccounts(groupQuery.data.id, groupQuery.data.teacherEdition.edition.servers[0].id), {
+    refetchOnWindowFocus: false,
+    enabled: false // disable this query from automatically running
+  })
   let students = null
 
   if (groupQuery.isLoading) {
@@ -39,9 +44,8 @@ export const Group = () => {
   }
 
   const createDbAccounts = (groupId: Number, serverId : Number) => {
-    const createDbAccountsQuery = useQuery(['dbAccountCreationStatus'], () => addDbAccounts(groupQuery.data.id, groupQuery.data.teacherEdition.edition.servers[0].id))
-
-    console.log(createDbAccountsQuery.data)
+    refetch()
+    console.log(data)
 
   }
 
