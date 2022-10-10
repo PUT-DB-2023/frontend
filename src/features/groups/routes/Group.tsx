@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, EditionStatus, PanelType } from 'types'
+import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
 
 // TODO Add the edition fetching to the edition list component
@@ -38,7 +39,10 @@ export const Group = () => {
   }
 
   const createDbAccounts = (groupId: Number, serverId : Number) => {
-    console.log(groupQuery.data)
+    const createDbAccountsQuery = useQuery(['dbAccountCreationStatus'], () => addDbAccounts(groupQuery.data.id, groupQuery.data.teacherEdition.edition.servers[0].id))
+
+    console.log(createDbAccountsQuery.data)
+
   }
 
   const num = 1

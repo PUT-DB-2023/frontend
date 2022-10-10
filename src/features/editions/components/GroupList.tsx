@@ -10,6 +10,8 @@ export const GroupList = () => {
   const { id } = useParams()
   const groupsQuery = useQuery(['groups', id], () => getEditionGroups( id ))
 
+  console.log(groupsQuery.data)
+
   // TODO move the mutations into separate files in the API directory (see bulletproof_react)
 
   if (groupsQuery.isLoading) {
