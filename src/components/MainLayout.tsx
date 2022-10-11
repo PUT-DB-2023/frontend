@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PanelType, UserType } from 'types';
 import { ContentPanel } from './ContentPanel';
+import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
 import { Spinner } from './Spinner';
@@ -39,11 +40,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
   const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
 
   if (userQuery.isLoading) {
-    return (
-      <ContentPanel type={PanelType.LARGE}> 
-        <Spinner />
-      </ContentPanel>
-    );
+    return null
   }
 
   return (
@@ -61,13 +58,15 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
-                  <Link to={`/users/` + userQuery.data[0].id}><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
-                    className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-black'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    Profil
-                  </button></Link>
+                  <Link to={`/users/` + userQuery.data[0].id}>
+                    <button
+                      className={`${
+                        active ? 'bg-blue-600 text-white' : 'text-black'
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    >
+                      Profil
+                    </button>
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
@@ -99,12 +98,10 @@ export const TopBar = () => {
 
 export const MainLayout = ({children} : MainLayoutProps) => {
   const [showSidebar, setShowSidebar] = useState(false)
-
-  console.log(showSidebar)
-
   return (
     <div className='w-screen h-screen flex overflow-hidden'>
         <SideBar></SideBar>
+        <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
         <div className='flex flex-col flex-1 bg-slate-100'>
         <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
           <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>

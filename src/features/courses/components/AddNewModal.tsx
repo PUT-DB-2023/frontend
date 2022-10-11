@@ -6,22 +6,24 @@ import { ButtonType } from 'types';
 import { Course } from '../types';
 import { addCourse } from '../api/addCourse';
 
-export const AddNewModal = ({ show, off }: { show: boolean, off: () => void }) => {
+export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
     
     const handleOff = React.useCallback(() => {
         setName('');
+        setDescription('');
         off();
     }, [])
     
-    const handleAdd = React.useCallback(() => {
+    const handleAdd = React.useCallback(async () => {
         const course: Course = {name: '', description: '', id: 2, createdAt: 0}
         course.name = name;
         course.description = description;
         course.createdAt = Date.now();
-        addCourse(course);
-        handleOff()
+        handleOff();
+        await addCourse(course);
+        refetch()
     }, [name, description])
 
     if (show) {
