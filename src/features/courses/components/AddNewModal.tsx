@@ -9,7 +9,7 @@ import { addCourse } from '../api/addCourse';
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-    
+
     const handleOff = React.useCallback(() => {
         setName('');
         setDescription('');
@@ -29,11 +29,13 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     if (show) {
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff}>
-                <Field title={"Name"} value={name} setValue={setName} />
-                <Field title={"Description"} value={description} setValue={setDescription} />
-                <div>
+                <div className={`flex flex-col gap-1`}>
+                    <Field title={"Name"} value={name} setValue={setName} />
+                    <Field title={"Description"} value={description} setValue={setDescription} />
+                </div>
+                <div className={`flex gap-2 mt-10`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd}/>
+                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>
             </ModalContainer>
         );

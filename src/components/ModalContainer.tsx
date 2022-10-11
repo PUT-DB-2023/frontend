@@ -1,5 +1,4 @@
 import * as React from 'react';
-import css from './Modal.module.scss';
 import { useClickOutside } from 'hooks/useClickOutside';
 
 export interface IModalContainer {
@@ -13,10 +12,10 @@ export const ModalContainer: React.FC<IModalContainer> = ({
 }) => {
     const ref = useClickOutside(off);
     return (
-        <div className={css.outerContainer}>
-            <div className={css.middleContainer}>
-                <div className={`shadow-md rounded-md ${css.innerContainer}`} ref={ref}>
-                    <div className={css.title} >{title}</div>
+        <div className={`absolute w-full h-full top-0 left-0 overflow-x-hidden overflow-y-auto z-20 bg-black/25`}>
+            <div className={`flex w-full h-full`}>
+                <div className={`flex flex-col gap-4 p-6 bg-white shadow-md rounded-md m-auto`} ref={ref}>
+                    <div className={`font-semibold text-lg`} >{title}</div>
                     {children}
                 </div>
             </div>
