@@ -46,7 +46,6 @@ export const Group = () => {
   const createDbAccounts = (groupId: Number, serverId : Number) => {
     refetch()
     console.log(data)
-
   }
 
   const num = 1

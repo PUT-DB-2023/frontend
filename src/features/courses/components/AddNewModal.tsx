@@ -21,7 +21,8 @@ export const AddNewModal = ({ show, off }: { show: boolean, off: () => void }) =
         course.description = description;
         course.createdAt = Date.now();
         addCourse(course);
-    }, [name])
+        handleOff()
+    }, [name, description])
 
     if (show) {
         return (

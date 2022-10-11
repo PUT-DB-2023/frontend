@@ -9,6 +9,7 @@ import { getUsers } from 'features/users/api/getUsers';
 import { PanelType, UserType } from 'types';
 import { ContentPanel } from './ContentPanel';
 import { Spinner } from './Spinner';
+import { ShowMenuButton } from './ShowMenuButton';
 
 interface ProfileMenuProps {
   name: string;
@@ -87,6 +88,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
 export const TopBar = () => {
   return (
     <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
+        <ShowMenuButton></ShowMenuButton>
         <NavBar/>
         <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>
     </div>
