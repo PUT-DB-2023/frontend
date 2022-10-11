@@ -9,14 +9,15 @@ import { addCourse } from '../api/addCourse';
 export const AddNewModal = ({ show, off }: { show: boolean, off: () => void }) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-    
+
     const handleOff = React.useCallback(() => {
         setName('');
+        setDescription('');
         off();
     }, [])
-    
+
     const handleAdd = React.useCallback(() => {
-        const course: Course = {name: '', description: '', id: 2, createdAt: 0}
+        const course: Course = { name: '', description: '', id: 2, createdAt: 0 }
         course.name = name;
         course.description = description;
         course.createdAt = Date.now();
@@ -27,11 +28,13 @@ export const AddNewModal = ({ show, off }: { show: boolean, off: () => void }) =
     if (show) {
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff}>
-                <Field title={"Name"} value={name} setValue={setName} />
-                <Field title={"Description"} value={description} setValue={setDescription} />
-                <div>
+                <div className={`flex flex-col gap-1`}>
+                    <Field title={"Name"} value={name} setValue={setName} />
+                    <Field title={"Description"} value={description} setValue={setDescription} />
+                </div>
+                <div className={`flex gap-2 mt-10`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd}/>
+                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>
             </ModalContainer>
         );
