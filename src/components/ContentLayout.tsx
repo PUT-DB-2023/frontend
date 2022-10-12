@@ -6,7 +6,7 @@ interface ContentProps {
 
 export const ContentLayout = ({children} : ContentProps) => {
   return (
-    <main className='flex overflow-y-auto h-auto bg-slate-100 p-9 flex-wrap gap-9'>
+    <main className='w-full flex overflow-y-auto h-auto bg-slate-100 lg:p-9 p-4 flex-wrap gap-9'>
       {/* { header } */}
         {/* <div className='w-full flex flex-1 flex-col mt-9 flex-wrap'> */}
           {/* { header ? <></> : <h1 className='text-black text-3xl font-bold mb-24'>{title}</h1> } */}

@@ -23,13 +23,13 @@ export const GroupList = () => {
   return (
     <div className='flex w-full flex-wrap gap-4'>
         { groupsQuery.data.map(function(group : any) {
-            return <Link key={group.id} to= {'/groups/' + group.id}>
-                      <Box>
+            return (
+                      <Box route={'/groups/' + group.id}>
                         <span className='font-semibold text-xl'> Group { group.name }</span>
                         <span className='font-normal text-base text-slate-600'> { group.day + " " + group.hour}</span>
                         <span className='font-normal text-base text-blue-600'> { group.teacherEdition.teacher.first_name + " " + group.teacherEdition.teacher.last_name}</span>
                       </Box>
-                    </Link>
+                    )
         }) }
     </div>
   )

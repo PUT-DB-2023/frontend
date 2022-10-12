@@ -87,7 +87,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
 
 export const TopBar = () => {
   return (
-    <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
+    <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
         <ShowMenuButton></ShowMenuButton>
         <NavBar/>
         <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>

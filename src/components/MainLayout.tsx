@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react';
 import { getUsers } from 'features/users/api/getUsers';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PanelType, UserType } from 'types';
@@ -88,7 +88,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
 
 export const TopBar = () => {
   return (
-    <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
+    <div className='w-full h-1 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
         <ShowMenuButton></ShowMenuButton>
         <NavBar/>
         <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>
@@ -98,12 +98,18 @@ export const TopBar = () => {
 
 export const MainLayout = ({children} : MainLayoutProps) => {
   const [showSidebar, setShowSidebar] = useState(false)
+  const location = useLocation()
+
+  useEffect(() => {
+    setShowSidebar(false)
+  }, [location]);
+  
   return (
     <div className='w-screen h-screen flex overflow-hidden'>
         <SideBar></SideBar>
         <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
         <div className='flex flex-col flex-1 bg-slate-100'>
-        <div className='w-full h-16 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
+        <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
           <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>
           <NavBar/>
           <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>

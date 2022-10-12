@@ -16,7 +16,7 @@ export const UserTable = ( { data } : any) => {
   // const usersQuery = useQuery(['users', type], () => getUsers(type))
 
   return (
-    <div className='border-slate-300 border-[0.1rem] border-spacing-0 w-full border-collapse cp-0 box-border text-base text-slate-700'>
+    <div className='border-slate-300 border-[0.1rem] border-spacing-0 w-full overflow-y-auto border-collapse cp-0 box-border text-base text-slate-700'>
         <div className='p-0 border-slate-300 border-b-[1px] h-10 font-bold flex box-border'>
           <div className='p-0 border-slate-300 pl-2 basis-2/12 border-r-[1px] h-full flex items-center'>
             Imię

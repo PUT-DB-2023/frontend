@@ -12,12 +12,12 @@ export const CourseList = ( { courseData } : any) => {
   return (
     <div className='flex w-full flex-wrap gap-4'>
         { courseData.map(function(course : Course) {
-            return <Link key={course.id} to= {'/courses/' + course.id}>
-                      <Box>
-                        <span className='font-semibold text-xl'> { course.name }</span>
-                        <span className='font-normal text-base text-slate-600'> { course.description }</span>
-                      </Box>
-                    </Link>
+            return (
+              <Box route={"/courses/" + course.id}>
+                <span className='font-semibold text-xl'> { course.name }</span>
+                <span className='font-normal text-base text-slate-600'> { course.description }</span>
+              </Box>
+            )
         }) }
     </div>
   )
