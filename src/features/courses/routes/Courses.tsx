@@ -21,7 +21,8 @@ export const Courses = () => {
         <Spinner />
       </div>
     )
-  } 
+  }
+  
   return (
     <ContentLayout>
       <AddNewModal refetch={() => courseRefetch()} show={newModal} off={() => setNewModal(false)} />
