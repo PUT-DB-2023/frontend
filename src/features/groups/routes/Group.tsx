@@ -3,49 +3,48 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
+import { ServerList } from 'features/servers/components/ServerList'
 import { UserTable } from 'features/users/components/UserTable'
+import { getgroups } from 'process'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, EditionStatus, PanelType } from 'types'
 import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
+import { GroupServerList } from '../components/GroupServerList'
 
 // TODO Add the edition fetching to the edition list component
 
 export const Group = () => {
 
   const { id } = useParams()
+  const { data : groupData, status : groupStatus, refetch : groupRefetch } = useQuery(['group', id], () => getGroup( id ))
 
-  const groupQuery = useQuery(['group', id], () => getGroup( id ))
-  const { data, refetch } = useQuery(['dbAccountCreationStatus'],
-    () => addDbAccounts(groupQuery.data.id, groupQuery.data.teacherEdition.edition.servers[0].id), {
+  const { data : dbAccoutCreationData, status: dbAccoutCreationStatus, refetch : dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
+    () => addDbAccounts(groupData.id, groupData.teacherEdition.edition.servers[0].id), {
     refetchOnWindowFocus: false,
     enabled: false // disable this query from automatically running
   })
   let students = null
+  let servers = null
+  console.log(groupData)
 
-  if (groupQuery.isLoading) {
+  if (groupStatus === 'loading') {
     return (
-      <ContentPanel type={PanelType.LARGE}> 
+      <div className='w-full h-full flex justify-center items-center'>
         <Spinner />
-      </ContentPanel>
-    );
-  }
-  else if (groupQuery.isError) {
-    return (
-      <div>
-        Error!
       </div>
-    );
+    )
   }
   else {
-    students = groupQuery.data.students
+    students = groupData.students
+    console.log(groupData)
+    servers = groupData.teacherEdition.edition.servers
   }
 
   const createDbAccounts = (groupId: Number, serverId : Number) => {
-    refetch()
-    console.log(data)
+    dbAccoutCreationRefetch()
   }
 
   const num = 1
@@ -54,12 +53,12 @@ export const Group = () => {
     <ContentLayout>
         <ContentPanel type={PanelType.LARGE}> 
           <div className='flex-col'>
-            <h1 className='text-black text-3xl font-bold mb-4'> Grupa { groupQuery.data.name }</h1>
-            <h2 className='text-blue-900 font-semibold mb-8'> { groupQuery.data !== undefined ? groupQuery.data.students.length : '' } studentów </h2>
-            <h3 className='text-slate-500 text-base text-justify'>{ groupQuery.data.day + " " + groupQuery.data.hour }</h3>
+            <h1 className='text-black text-3xl font-bold mb-4'> Grupa { groupData.name }</h1>
+            <h2 className='text-blue-900 font-semibold mb-8'> { groupData !== undefined ? groupData.students.length : '' } studentów </h2>
+            <h3 className='text-slate-500 text-base text-justify'>{ groupData.day + " " + groupData.hour }</h3>
           </div>
           <div className='flex gap-4'>
-            <Button onClick={ () => createDbAccounts(groupQuery.data.id, 1) } type={ButtonType.ACTION} text='Utwórz konta'/>
+            <Button onClick={ () => createDbAccounts(groupData.id, 1) } type={ButtonType.ACTION} text='Utwórz konta'/>
             <Button type={ButtonType.OUTLINE} text='Edytuj'/>
             <Button type={ButtonType.WARNING} text='Usuń'/>
           </div>
@@ -68,6 +67,10 @@ export const Group = () => {
         <ContentPanel type={PanelType.LARGE}>
           <UserTable data={ students }></UserTable>
         </ContentPanel>
+
+        <GroupServerList serverData={servers}>
+          
+        </GroupServerList>
     </ContentLayout>
   )
 }

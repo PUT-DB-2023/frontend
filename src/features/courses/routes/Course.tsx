@@ -15,10 +15,10 @@ export const Course = () => {
 
   const { id } = useParams()
 
-  const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course'], () => getCourse(id))
-  const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['editions'], () => getEditions(id))
+  const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course', id], () => getCourse(id))
+  const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['editions', id], () => getEditions(id))
   
-  if (editionStatus == 'loading') {
+  if (editionStatus == 'loading' || courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
         <Spinner />

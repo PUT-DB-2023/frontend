@@ -6,23 +6,14 @@ import { Link, useParams } from 'react-router-dom'
 import { getEditionGroups } from '../api/getEditionGroups'
 import { Group } from '../types'
 
-export const GroupList = () => {
+export const GroupList = ({groupData} : any) => {
   const { id } = useParams()
-  const groupsQuery = useQuery(['groups', id], () => getEditionGroups( id ))
 
-  console.log(groupsQuery.data)
-
-  // TODO move the mutations into separate files in the API directory (see bulletproof_react)
-
-  if (groupsQuery.isLoading) {
-    return (
-      <Spinner />
-    );
-  }
+  console.log(groupData)
 
   return (
     <div className='flex w-full flex-wrap gap-4'>
-        { groupsQuery.data.map(function(group : any) {
+        { groupData.map(function(group : any) {
             return (
                       <Box route={'/groups/' + group.id}>
                         <span className='font-semibold text-xl'> Group { group.name }</span>

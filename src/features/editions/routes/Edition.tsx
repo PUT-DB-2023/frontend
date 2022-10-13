@@ -11,8 +11,8 @@ import { GroupList } from '../components/GroupList';
 export const Edition = () => {
   const { id } = useParams()
 
-  const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['edition'], () => getEdition(id))
-  const { data : groupData, status : groupStatus, refetch : groupRefetch } = useQuery(['groups'], () => getEditionGroups(id))
+  const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['edition', id], () => getEdition(id))
+  const { data : groupData, status : groupStatus, refetch : groupRefetch } = useQuery(['editionGroups', id], () => getEditionGroups(id))
 
   if (editionStatus === 'loading' || groupStatus === 'loading') {
     return (
@@ -37,7 +37,7 @@ export const Edition = () => {
             <Button type={ButtonType.WARNING} text='Usuń'/>
           </div>
         </ContentPanel>
-        <GroupList></GroupList>
+        <GroupList groupData={groupData}></GroupList>
     </ContentLayout>
   )
 }

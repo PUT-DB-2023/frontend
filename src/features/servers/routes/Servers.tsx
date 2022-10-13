@@ -1,10 +1,23 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { Spinner } from 'components/Spinner'
 import React from 'react'
+import { useQuery } from 'react-query'
 import { ButtonType, PanelType } from 'types'
+import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 
 export const Servers = () => {
+  const { data : serverData, status : serverStatus, refetch : serverRefetch } = useQuery(['servers'], getServers)
+
+  if (serverStatus == 'loading') {
+    return (
+      <div className='w-full h-full flex justify-center items-center'>
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.LARGE}> 
@@ -13,7 +26,7 @@ export const Servers = () => {
             <Button type={ButtonType.ACTION} text='Dodaj'/>
           </div>
         </ContentPanel>
-        <ServerList></ServerList>
+        <ServerList serverData= {serverData}></ServerList>
     </ContentLayout>
   )
 }
