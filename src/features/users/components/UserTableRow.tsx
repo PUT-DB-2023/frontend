@@ -13,7 +13,7 @@ export const UserTableRow = ( { user } : any ) => {
   }
 
   return (
-      <div className='p-0 border-slate-300 border-b-[1px] last:border-b-0 h-10 font-base flex text-sm box-border hover:bg-slate-100 transition-all'>
+      <div className='p-0 border-slate-300 border-b-[1px] last:border-b-0 h-10 font-base flex text-sm box-border hover:bg-zinc-100 transition-all'>
         <Link to={`/users/${user.id}`} className='p-0 border-slate-300 pl-2 basis-2/12 border-r-[1px] h-full flex items-center'>
           { user.first_name }
         </Link>

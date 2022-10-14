@@ -108,7 +108,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
     <div className='w-screen h-screen flex overflow-hidden'>
         <SideBar></SideBar>
         <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
-        <div className='flex flex-col flex-1 bg-slate-100'>
+        <div className='flex flex-col flex-1 bg-zinc-100'>
         <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
           <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>
           <NavBar/>
