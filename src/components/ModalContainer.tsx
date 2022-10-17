@@ -14,7 +14,7 @@ export const ModalContainer: React.FC<IModalContainer> = ({
     return (
         <div className={`absolute w-full h-full top-0 left-0 overflow-x-hidden overflow-y-auto z-20 bg-black/25`}>
             <div className={`flex w-full h-full`}>
-                <div className={`flex flex-col gap-4 p-6 bg-white shadow-md rounded-md m-auto`} ref={ref}>
+                <div className={`min-w-[32rem] min-h-[24rem] flex flex-col gap-4 p-6 bg-white shadow-md rounded-md m-auto justify-between`} ref={ref}>
                     <div className={`font-semibold text-lg`} >{title}</div>
                     {children}
                 </div>
