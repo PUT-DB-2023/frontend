@@ -5,8 +5,8 @@ export const addDbAccounts = async (groupId: any, serverId: any) => {
         method: 'post',
         url: '/add_db_account',
         data: {
-            groupID : groupId,
-            serverID : serverId
+            group_id : groupId,
+            server_id : serverId
         }
     })
     return response.data

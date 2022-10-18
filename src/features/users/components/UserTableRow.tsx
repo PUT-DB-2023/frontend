@@ -29,7 +29,6 @@ export const UserTableRow = ( { user } : any ) => {
         <div className='p-0 border-slate-300 pl-2 basis-2/12 h-full flex items-center'>
         <Button type={ButtonType.TEXT_WARNING} text='Resetuj Hasło' />
         </div>
-    </div>
-    // </Link>  
+    </div> 
   )
 }

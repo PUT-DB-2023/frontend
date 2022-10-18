@@ -31,7 +31,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Name"} value={name} setValue={setName} />
                     <Field title={"Description"} value={description} setValue={setDescription} />
                 </div>
-                <div className={`flex gap-2 mt-10`}>
+                <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
                     <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>
