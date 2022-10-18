@@ -3,7 +3,6 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { Course } from '../types';
 import { addCourse } from '../api/addCourse';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
@@ -15,15 +14,14 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         setDescription('');
         off();
     }, [])
-    
+
     const handleAdd = React.useCallback(async () => {
-        const course: Course = {name: '', description: '', id: 2, createdAt: 0}
-        course.name = name;
-        course.description = description;
-        course.createdAt = Date.now();
-        handleOff();
-        await addCourse(course);
-        refetch()
+        const res = await addCourse({name, description});
+        if (res.data) {
+            handleOff();
+            refetch()
+         } else {
+         }
     }, [name, description])
 
     if (show) {

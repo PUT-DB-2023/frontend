@@ -7,8 +7,11 @@ import { ButtonType, PanelType } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
 import { GroupList } from '../components/GroupList';
+import { RemoveModal } from '../components/RemoveModal';
+import * as React from 'react'
 
 export const Edition = () => {
+  const [showRemove, setShowRemove] = React.useState(false)
   const { id } = useParams()
 
   const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['edition', id], () => getEdition(id))
@@ -24,6 +27,7 @@ export const Edition = () => {
   
   return (
     <ContentLayout>
+      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={DataTransfer.name} courseId={editionData.course.id}/>
         <ContentPanel type={PanelType.LARGE}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>
@@ -34,7 +38,7 @@ export const Edition = () => {
           </div>
           <div className='flex gap-4'>
             <Button type={ButtonType.OUTLINE} text='Edytuj'/>
-            <Button type={ButtonType.WARNING} text='Usuń'/>
+            <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setShowRemove(true)}/>
           </div>
         </ContentPanel>
         <GroupList groupData={groupData}></GroupList>
