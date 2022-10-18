@@ -53,7 +53,7 @@ export const Group = () => {
   return (
     <ContentLayout>
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
-        <ContentPanel type={PanelType.LARGE}> 
+        <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Grupa { groupData.name }</h1>
             <h2 className='text-blue-900 font-semibold mb-8'> { groupData !== undefined ? groupData.students.length : '' } studentów </h2>
@@ -67,7 +67,7 @@ export const Group = () => {
           </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.LARGE}>
+        <ContentPanel type={PanelType.HEADER}>
           <UserTable data={ students }></UserTable>
         </ContentPanel>
     </ContentLayout>

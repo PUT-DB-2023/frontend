@@ -27,14 +27,14 @@ export const User = () => {
 
   return (
     <ContentLayout>
-      <ContentPanel type={PanelType.LARGE}> 
+      <ContentPanel type={PanelType.HEADER}> 
             <span className='text-black text-3xl font-bold mb-4'> { userQuery.data.first_name + " " + userQuery.data.last_name} </span>
           <div className='flex gap-4'>
               <Button type={ButtonType.OUTLINE} text='Edytuj'/>
               <Button type={ButtonType.WARNING} text='Usuń'/>
           </div>
         </ContentPanel>
-        <ContentPanel type={PanelType.LARGE}>
+        <ContentPanel type={PanelType.HEADER}>
           <UserInfo userData={userQuery.data} />
         </ContentPanel>
     </ContentLayout>

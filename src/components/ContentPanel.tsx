@@ -8,11 +8,11 @@ interface ContentPanelProps {
 
 export const ContentPanel = ({type, children} : ContentPanelProps) => {
   return (
-    <main className={`bg-white shadow-md rounded-md flex flex-auto lg:p-9 p-6 ${
-      type == PanelType.LARGE ?
-          'basis-full flex justify-between flex-col lg:flex-row' :
-          type == PanelType.SMALL ?
-          'basis-full lg:basis-1/3 lg:h-[40rem] h-[24rem] flex-col' : ''
+    <main className={`bg-white shadow-md rounded-md flex flex-auto lg:p-9 p-6 basis-full justify-between gap-8 ${
+      type == PanelType.HEADER ?
+          'flex-col lg:flex-row' :
+          type == PanelType.CONTENT ?
+          'flex-col' : ''
   }`}>
       { children }
     </main>

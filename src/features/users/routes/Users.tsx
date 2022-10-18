@@ -1,6 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
+import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
 import { ButtonType, PanelType, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
@@ -22,7 +23,7 @@ export const Users = ({ type } : UsersProps) => {
   console.log(type)
   return (
     <ContentLayout>
-      <ContentPanel type={PanelType.LARGE}> 
+      <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>
             { 
                 type === UserType.ADMIN ? 'Administratorzy' :
@@ -35,7 +36,8 @@ export const Users = ({ type } : UsersProps) => {
         </div>
       </ContentPanel>
 
-      <ContentPanel type={PanelType.LARGE}>
+      <ContentPanel type={PanelType.CONTENT}>
+        <Toolbar />
         <UserTable data={ usersQuery.data }> </UserTable>
       </ContentPanel>
     </ContentLayout>

@@ -4,8 +4,6 @@ import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { EditionStatus } from "types";
 import { getEditions } from "../api/getEditions";
-import { Edition } from "../types";
-import { EditionRow } from "./EditionRow";
 
 interface EditionListProps {
   id: string;
@@ -35,22 +33,22 @@ export const EditionList = ({type} : EditionListProps) => {
       const activeEditions = editionsQuery.data.filter((obj : any) => obj.active === true)
 
       return (
-        <div className='w-full h-full overflow-y-auto'>
+        <div className='w-full h-full'>
           { activeEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
-                      <EditionRow>
+                      <Box>
                         <span className='text-lg font-semibold'>
                           { edition.course.name + " " + edition.semester.year + " - "}
                           { edition.semester.winter ? "Zima" : "Lato"}
                         </span>
-                        <div className="flex flex-row pt-2">
+                        <div className="flex flex-row pt-1">
                           { edition.teachers.map((teacher: any) => {
                             return (
                               <span className="text-base font-normal text-blue-800 mr-4"> { teacher.first_name + " " + teacher.last_name}</span>
                             )
                           }) } 
                         </div>
-                      </EditionRow>
+                      </Box>
                     </Link>
           }) }
         </div>
@@ -63,7 +61,7 @@ export const EditionList = ({type} : EditionListProps) => {
         <div className='w-full h-full overflow-y-auto'>
           { closedEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
-                      <EditionRow color='bg-red-500'>
+                      <Box color='bg-red-500'>
                         <span className='text-lg font-semibold'>
                           { edition.course.name + " " + edition.semester.year + " - "}
                           { edition.semester.winter ? "Zima" : "Lato"}
@@ -75,7 +73,7 @@ export const EditionList = ({type} : EditionListProps) => {
                             )
                           }) } 
                         </div>
-                      </EditionRow>
+                      </Box>
                     </Link>
           }) }
         </div>

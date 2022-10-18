@@ -35,7 +35,7 @@ export const Course = () => {
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={id} name={courseData.name} />
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
-        <ContentPanel type={PanelType.LARGE}> 
+        <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseData.name }</h1>
             <h2 className='text-blue-900 font-semibold mb-8'> { editionData !== undefined ? editionData.length : '' } edycje </h2>
@@ -47,20 +47,16 @@ export const Course = () => {
           </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.SMALL}>
+        <ContentPanel type={PanelType.CONTENT}>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
-          <hr className='w-full mt-2 border-1 border-blue-800'></hr>
-          <div className='pt-10 h-full overflow-y-auto'>
+          {/* <hr className='w-full mt-2 border-1 border-blue-800'></hr> */}
             <EditionList id={courseData.id} type={EditionStatus.ACTIVE} />
-          </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.SMALL}> 
+        <ContentPanel type={PanelType.CONTENT}> 
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
-          <hr className='w-full mt-2 border-1 border-blue-800'></hr>
-          <div className='pt-10 h-full overflow-y-auto'>
+          {/* <hr className='w-full mt-2 border-1 border-blue-800'></hr> */}
             <EditionList id={courseData.id} type={EditionStatus.CLOSED} />
-          </div>
         </ContentPanel>
     </ContentLayout>
   )

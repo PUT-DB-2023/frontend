@@ -10,13 +10,15 @@ import { Course } from '../types'
 export const CourseList = ( { courseData } : any) => {
   console.log(courseData);
   return (
-    <div className='flex w-full flex-wrap gap-4'>
+    <div className='w-full h-full'>
         { courseData.map(function(course : Course) {
             return (
-              <Box route={"/courses/" + course.id}>
-                <span className='font-semibold text-xl'> { course.name }</span>
-                <span className='font-normal text-base text-slate-600'> { course.description }</span>
-              </Box>
+              <Link to={'/courses/' + course.id}>
+                <Box>
+                  <span className='font-semibold text-xl'> { course.name }</span>
+                  <span className='font-normal text-base text-slate-600'> { course.description }</span>
+                </Box>
+              </Link>
             )
         }) }
     </div>

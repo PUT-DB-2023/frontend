@@ -9,6 +9,7 @@ import { getEditionGroups } from '../api/getEditionGroups';
 import { GroupList } from '../components/GroupList';
 import { RemoveModal } from '../components/RemoveModal';
 import * as React from 'react'
+import { Toolbar } from 'components/Toolbar';
 
 export const Edition = () => {
   const [showRemove, setShowRemove] = React.useState(false)
@@ -28,7 +29,7 @@ export const Edition = () => {
   return (
     <ContentLayout>
       <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={DataTransfer.name} courseId={editionData.course.id}/>
-        <ContentPanel type={PanelType.LARGE}> 
+        <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>
               { editionData.course.name + " " + editionData.semester.year + " - "}
@@ -41,7 +42,11 @@ export const Edition = () => {
             <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setShowRemove(true)}/>
           </div>
         </ContentPanel>
-        <GroupList groupData={groupData}></GroupList>
+        
+        <ContentPanel type={PanelType.CONTENT}>
+          <Toolbar />
+          <GroupList groupData={groupData}></GroupList>
+        </ContentPanel>
     </ContentLayout>
   )
 }

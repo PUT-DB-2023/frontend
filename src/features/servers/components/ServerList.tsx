@@ -7,12 +7,14 @@ import { Server } from '../types'
 
 export const ServerList = ({ serverData } : any) => {
   return (
-    <div className='flex w-full flex-wrap gap-4'>
+    <div className='w-full h-full'>
         { serverData.map(function(server : Server) {
             return (
-                    <Box route={'/servers/' + server.id}>
-                      <span className='font-semibold text-xl'> { server.name } </span>
-                    </Box>
+                    <Link to={'/servers/' + server.id}>
+                      <Box>
+                          <span className='font-semibold text-xl'> { server.name } </span>
+                      </Box>
+                    </Link>
                   )
         }) }
     </div>

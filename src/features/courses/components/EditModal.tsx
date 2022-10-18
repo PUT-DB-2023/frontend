@@ -26,7 +26,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
-         } else {
          }
     }, [name, description, data])
 

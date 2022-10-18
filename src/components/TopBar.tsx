@@ -38,7 +38,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
 
   if (userQuery.isLoading) {
     return (
-      <ContentPanel type={PanelType.LARGE}> 
+      <ContentPanel type={PanelType.HEADER}> 
         <Spinner />
       </ContentPanel>
     );

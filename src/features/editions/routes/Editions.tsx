@@ -14,7 +14,7 @@ export const Editions = () => {
   return (
     <ContentLayout>
       {/* <ModalContainer title='Test' /> */}
-      <ContentPanel type={PanelType.LARGE}>
+      <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Edycje</span>
         <div className='flex gap-4'>
           <Button type={ButtonType.ACTION} text='Dodaj' />

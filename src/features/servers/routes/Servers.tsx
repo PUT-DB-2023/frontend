@@ -7,6 +7,7 @@ import { ButtonType, PanelType } from 'types'
 import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 import { AddNewModal } from '../components/AddNewModal'
+import { Toolbar } from 'components/Toolbar'
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
@@ -23,13 +24,17 @@ export const Servers = () => {
   return (
     <ContentLayout>
       <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} />
-      <ContentPanel type={PanelType.LARGE}>
+      <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
         <div className='flex gap-4'>
           <Button type={ButtonType.ACTION} text='Dodaj' onClick={() => setShowAdd(true)}/>
         </div>
       </ContentPanel>
-      <ServerList serverData={serverData}></ServerList>
+
+      <ContentPanel type={PanelType.CONTENT}>
+        <Toolbar />
+        <ServerList serverData={serverData}></ServerList>
+      </ContentPanel>
     </ContentLayout>
   )
 }

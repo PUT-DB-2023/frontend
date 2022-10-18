@@ -36,7 +36,7 @@ export const Server = () => {
     <ContentLayout>
       <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name}/>
       <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{id: id as string, ...serverQuery.data}}/>
-        <ContentPanel type={PanelType.LARGE}> 
+        <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { serverQuery.data.name }</h1>
             <h2 className='text-blue-900 font-semibold mb-8'>Detale</h2>
@@ -46,7 +46,7 @@ export const Server = () => {
             <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setShowRemove(true)}/>
           </div>
         </ContentPanel>
-        <ContentPanel type={PanelType.LARGE}>
+        <ContentPanel type={PanelType.HEADER}>
           <ServerInfo serverData={serverQuery.data} />
         </ContentPanel>
     </ContentLayout>

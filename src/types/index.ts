@@ -12,8 +12,8 @@ export enum ButtonType {
 }
 
 export enum PanelType {
-  LARGE,
-  SMALL
+  HEADER,
+  CONTENT
 }
 
 export enum EditionStatus {
