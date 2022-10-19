@@ -32,7 +32,7 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar />
+        <Toolbar searchPlaceholder='Szukaj serwera'/>
         <ServerList serverData={serverData}></ServerList>
       </ContentPanel>
     </ContentLayout>

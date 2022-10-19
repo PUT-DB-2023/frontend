@@ -11,6 +11,7 @@ import { getCourse } from '../api/getCourse'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
+import { Toolbar } from 'components/Toolbar'
 
 // TODO Add the edition fetching to the edition list component
 
@@ -48,15 +49,17 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
+          <Toolbar searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           {/* <hr className='w-full mt-2 border-1 border-blue-800'></hr> */}
             <EditionList id={courseData.id} type={EditionStatus.ACTIVE} />
-        </ContentPanel>
+        
 
-        <ContentPanel type={PanelType.CONTENT}> 
+        {/* <ContentPanel type={PanelType.CONTENT}>  */}
+          <hr className='w-full mt-2 border-1 border-blue-800'></hr>
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
-          {/* <hr className='w-full mt-2 border-1 border-blue-800'></hr> */}
             <EditionList id={courseData.id} type={EditionStatus.CLOSED} />
+        {/* </ContentPanel> */}
         </ContentPanel>
     </ContentLayout>
   )

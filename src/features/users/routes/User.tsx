@@ -12,6 +12,8 @@ export const User = () => {
   const { id } = useParams()
   const userQuery = useQuery(['user', id], () => getUser( id ))
 
+  console.log(userQuery.data)
+
   if (userQuery.isLoading) {
     return (
       <Spinner />

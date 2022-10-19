@@ -33,7 +33,7 @@ export const EditionList = ({type} : EditionListProps) => {
       const activeEditions = editionsQuery.data.filter((obj : any) => obj.active === true)
 
       return (
-        <div className='w-full h-full'>
+        <div className='w-full'>
           { activeEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <Box>

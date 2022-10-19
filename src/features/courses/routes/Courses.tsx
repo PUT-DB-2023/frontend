@@ -34,7 +34,7 @@ export const Courses = () => {
         </div>
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar />
+        <Toolbar searchPlaceholder='Szukaj przedmiotu' />
         <CourseList courseData= { courseData }></CourseList>
       </ContentPanel>
     </ContentLayout>

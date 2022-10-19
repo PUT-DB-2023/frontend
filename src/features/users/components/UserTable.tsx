@@ -8,11 +8,7 @@ import { getUsers } from '../api/getUsers'
 import { User } from '../types'
 import { UserTableRow } from './UserTableRow'
 
-interface UsersProps {
-  type: UserType;
-}
-
-export const UserTable = ( { data } : any) => {
+export const UserTable = ( { data, } : any) => {
   // const usersQuery = useQuery(['users', type], () => getUsers(type))
 
   return (

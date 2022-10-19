@@ -14,6 +14,8 @@ interface UsersProps {
 export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
 
+  console.log(usersQuery.data)
+
   if (usersQuery.isLoading) {
     return (
       <Spinner />
@@ -37,7 +39,7 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar />
+        <Toolbar searchPlaceholder='Szukaj użytkownika' />
         <UserTable data={ usersQuery.data }> </UserTable>
       </ContentPanel>
     </ContentLayout>

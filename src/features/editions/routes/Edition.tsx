@@ -39,12 +39,12 @@ export const Edition = () => {
           </div>
           <div className='flex gap-4'>
             <Button type={ButtonType.OUTLINE} text='Edytuj'/>
-            <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setShowRemove(true)}/>
+            <Button type={ButtonType.WARNING} text='Zakończ' onClick={()=>setShowRemove(true)}/>
           </div>
         </ContentPanel>
         
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar />
+          <Toolbar searchPlaceholder='Szukaj grupy'/>
           <GroupList groupData={groupData}></GroupList>
         </ContentPanel>
     </ContentLayout>

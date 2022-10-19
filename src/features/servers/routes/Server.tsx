@@ -46,7 +46,7 @@ export const Server = () => {
             <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setShowRemove(true)}/>
           </div>
         </ContentPanel>
-        <ContentPanel type={PanelType.HEADER}>
+        <ContentPanel type={PanelType.CONTENT}>
           <ServerInfo serverData={serverQuery.data} />
         </ContentPanel>
     </ContentLayout>
