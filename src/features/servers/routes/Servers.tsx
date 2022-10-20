@@ -3,7 +3,7 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import React from 'react'
 import { useQuery } from 'react-query'
-import { ButtonType, PanelType } from 'types'
+import { ButtonType, PanelType, Status } from 'types'
 import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 import { AddNewModal } from '../components/AddNewModal'
@@ -33,7 +33,13 @@ export const Servers = () => {
 
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar searchPlaceholder='Szukaj serwera'/>
-        <ServerList serverData={serverData}></ServerList>
+        <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
+        <ServerList serverData={serverData} type={Status.ACTIVE}></ServerList>
+
+        <hr className='w-full mt-2 border-1 border-blue-800'></hr>
+
+        <h2 className='text-lg font-semibold'>Nieaktywne serwery</h2>
+        <ServerList serverData={serverData} type={Status.INACTIVE}></ServerList>
       </ContentPanel>
     </ContentLayout>
   )

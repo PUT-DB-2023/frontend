@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { Disclosure } from '@headlessui/react'
-import { AcademicCapIcon, ChevronUpIcon, DatabaseIcon, UsersIcon } from '@heroicons/react/solid'
+import { AcademicCapIcon, ChevronUpIcon, DatabaseIcon, UserGroupIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
 // import { courseList } from 'features/courses/api/getCourses'
 import { Edition } from 'features/editions'
 import { Course } from 'features/courses'
@@ -10,6 +10,8 @@ import { useQuery } from 'react-query'
 import { getCourses } from 'features/courses/api/getCourses'
 import { getServers } from 'features/servers/api/getServers'
 import { Spinner } from './Spinner'
+import { getGroup } from 'features/groups/api/getGroup'
+import { getGroups } from 'features/groups/api/getGroups'
 
 interface AccordionMenuProps {
   title: string;
@@ -69,9 +71,13 @@ export const AccordionMenu = ({title, url, icon, children, userMenu} : Accordion
 export const SideNavigation = () => {
   const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery('courses', getCourses)
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery('servers', getServers)
+  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery('groups', getGroups)
 
   let coursesContent = null
   let serversContent = null
+  let groupsContent = null
+
+  console.log(groupData)
 
   if (courseStatus === 'loading') {
     coursesContent = (
@@ -92,7 +98,7 @@ export const SideNavigation = () => {
       <div className='w-full h-full flex items-center justify-center'>
         <Spinner />
       </div>
-    );
+    )
   }
 
   else if (serverStatus === 'success') {
@@ -101,11 +107,26 @@ export const SideNavigation = () => {
     )
   }
 
+  if (groupStatus === 'loading') {
+    groupsContent = (
+      <div className='w-full h-full flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+  }
+
+  else if (groupStatus === 'success') {
+    groupsContent = (
+      <AccordionMenu title='Grupy' url='/groups/' icon={<UserGroupIcon className='h-5 w-auto'/>} children={groupData}/>
+    )
+  }
+
   return (
     <nav className='flex flex-col w-full h-full overflow-y-auto mt-12'>
         { coursesContent }
         { serversContent }
-        <AccordionMenu title='Użytkownicy' url='/users/' icon={<UsersIcon className='h-5 w-auto'/>} userMenu={ true }/>
+        <AccordionMenu title='Użytkownicy' url='/users/' icon={<UserIcon className='h-5 w-auto'/>} userMenu={ true }/>
+        { groupsContent }
     </nav>
   )
 }

@@ -1,3 +1,5 @@
+import { Menu } from '@headlessui/react'
+import { DotsHorizontalIcon, LoginIcon } from '@heroicons/react/solid'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
@@ -10,7 +12,7 @@ import { getgroups } from 'process'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, EditionStatus, PanelType } from 'types'
+import { ButtonType, Status, PanelType } from 'types'
 import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
 import { GroupServerList } from '../components/GroupServerList'
@@ -54,16 +56,51 @@ export const Group = () => {
     <ContentLayout>
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
         <ContentPanel type={PanelType.HEADER}> 
-          <div className='flex-col'>
-            <h1 className='text-black text-3xl font-bold mb-4'> Grupa { groupData.name }</h1>
+          <div className='flex-col flex gap-4'>
+            <h1 className='font-bold text-3xl'> {groupData.name} - {groupData.day} {groupData.hour} </h1>
+            <h2 className='font-normal text-base'> 
+              {groupData.teacherEdition.edition.course.name} - {groupData.teacherEdition.edition.semester.year} { groupData.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}
+            </h2>
             <h2 className='text-blue-900 font-semibold mb-8'> { groupData !== undefined ? groupData.students.length : '' } studentów </h2>
-            <h3 className='text-slate-500 text-base text-justify'>{ groupData.day + " " + groupData.hour }</h3>
           </div>
-          <div className='flex gap-4'>
-            {/* <Button onClick={ () => createDbAccounts(groupData.id, 1) } type={ButtonType.ACTION} text='Utwórz konta'/> */}
+          <div className='flex gap-6'>
             <Button onClick={ () => setNewModal(true) } type={ButtonType.ACTION} text='Utwórz konta'/>
-            <Button type={ButtonType.OUTLINE} text='Edytuj'/>
-            <Button type={ButtonType.WARNING} text='Usuń'/>
+            <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="flex text-black items-center space-x-4">
+                    <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
+                  </Menu.Button>
+                </div>
+                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="px-1 py-1 ">
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                            <button
+                              onClick={()=>console.log('EDIT')}
+                              className={`${
+                                active ? 'bg-zinc-300' : 'text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              Edytuj
+                            </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                          <button
+                            onClick={()=>console.log()}
+                            className={`${
+                              active ? 'bg-red-500 text-white' : 'text-red-500'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          >
+                            Usuń
+                          </button>
+                        )}
+                      </Menu.Item>
+                      
+                    </div>
+                  </Menu.Items>
+              </Menu>
           </div>
         </ContentPanel>
 

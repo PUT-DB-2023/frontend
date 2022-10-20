@@ -2,15 +2,15 @@ import { Box } from "components";
 import { Spinner } from "components/Spinner";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
-import { EditionStatus } from "types";
+import { Status } from "types";
 import { getEditions } from "../api/getEditions";
 
-interface EditionListProps {
-  id: string;
-  type: EditionStatus;
+interface IEditionList {
+  editionData: any;
+  type: Status;
 }
 
-export const EditionList = ({type} : EditionListProps) => {
+export const EditionList = ({editionData, type} : IEditionList) => {
   const { id } = useParams()
   const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
 
@@ -29,7 +29,7 @@ export const EditionList = ({type} : EditionListProps) => {
     );
   }
   else {
-    if (type == EditionStatus.ACTIVE) {
+    if (type == Status.ACTIVE) {
       const activeEditions = editionsQuery.data.filter((obj : any) => obj.active === true)
 
       return (
@@ -54,7 +54,7 @@ export const EditionList = ({type} : EditionListProps) => {
         </div>
       )
     }
-    else if (type == EditionStatus.CLOSED) {
+    else if (type == Status.INACTIVE) {
       const closedEditions = editionsQuery.data.filter((obj : any) => obj.active === false)
 
       return (

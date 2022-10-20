@@ -1,3 +1,5 @@
+import { Menu } from '@headlessui/react'
+import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
@@ -31,9 +33,44 @@ export const User = () => {
     <ContentLayout>
       <ContentPanel type={PanelType.HEADER}> 
             <span className='text-black text-3xl font-bold mb-4'> { userQuery.data.first_name + " " + userQuery.data.last_name} </span>
-          <div className='flex gap-4'>
-              <Button type={ButtonType.OUTLINE} text='Edytuj'/>
-              <Button type={ButtonType.WARNING} text='Usuń'/>
+          <div className='flex gap-6'>
+            <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
+            <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="flex text-black items-center space-x-4">
+                    <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
+                  </Menu.Button>
+                </div>
+                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="px-1 py-1 ">
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                            <button
+                              onClick={()=>console.log('EDIT')}
+                              className={`${
+                                active ? 'bg-zinc-300' : 'text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              Edytuj
+                            </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                          <button
+                            onClick={()=>console.log('DELETE')}
+                            className={`${
+                              active ? 'bg-red-500 text-white' : 'text-red-500'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          >
+                            Usuń
+                          </button>
+                        )}
+                      </Menu.Item>
+                      
+                    </div>
+                  </Menu.Items>
+              </Menu>
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>

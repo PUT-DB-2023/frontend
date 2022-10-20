@@ -5,13 +5,15 @@ import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
-import { ButtonType, EditionStatus, PanelType } from 'types'
+import { Link, useParams } from 'react-router-dom'
+import { ButtonType, Status, PanelType } from 'types'
 import { getCourse } from '../api/getCourse'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { Toolbar } from 'components/Toolbar'
+import { DotsHorizontalIcon } from '@heroicons/react/outline'
+import { Menu } from '@headlessui/react'
 
 // TODO Add the edition fetching to the edition list component
 
@@ -42,24 +44,70 @@ export const Course = () => {
             <h2 className='text-blue-900 font-semibold mb-8'> { editionData !== undefined ? editionData.length : '' } edycje </h2>
             <h3 className='text-slate-500 text-base text-justify'>{ courseData.description }</h3>
           </div>
-          <div className='flex gap-4'>
-            <Button type={ButtonType.OUTLINE} text='Edytuj' onClick={()=>setEditModal(true)}/>
-            <Button type={ButtonType.WARNING} text='Usuń' onClick={()=>setRemoveModal(true)}/>
+          <div className='flex items-start'>
+            <div className='flex gap-6'>
+              <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={()=>console.log('ADD EDITION')}/>
+              <Menu as="div" className="relative inline-block text-left">
+                <div>
+                  <Menu.Button className="flex text-black items-center space-x-4">
+                    <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
+                  </Menu.Button>
+                </div>
+                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="px-1 py-1 ">
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                            <button
+                              onClick={()=>setEditModal(true)}
+                              className={`${
+                                active ? 'bg-zinc-300' : 'text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              Edytuj
+                            </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                            <button
+                              onClick={()=>setEditModal(true)}
+                              className={`${
+                                active ? 'bg-zinc-300' : 'text-black'
+                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            >
+                              Pokaż zakończone edycje
+                            </button>
+                        )}
+                      </Menu.Item>
+                      <Menu.Item>
+                        {({ active } : { active : any }) => (
+                          <button
+                            onClick={()=>setRemoveModal(true)}
+                            className={`${
+                              active ? 'bg-red-500 text-white' : 'text-red-500'
+                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                          >
+                            Usuń
+                          </button>
+                        )}
+                      </Menu.Item>
+                      
+                    </div>
+                  </Menu.Items>
+              </Menu>
+            </div>
           </div>
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
           <Toolbar searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
-          {/* <hr className='w-full mt-2 border-1 border-blue-800'></hr> */}
-            <EditionList id={courseData.id} type={EditionStatus.ACTIVE} />
-        
+          <EditionList editionData={editionData} type={Status.ACTIVE} />
 
-        {/* <ContentPanel type={PanelType.CONTENT}>  */}
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
+
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
-            <EditionList id={courseData.id} type={EditionStatus.CLOSED} />
-        {/* </ContentPanel> */}
+          <EditionList editionData={editionData} type={Status.INACTIVE} />
         </ContentPanel>
     </ContentLayout>
   )

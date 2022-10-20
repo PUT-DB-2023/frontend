@@ -16,9 +16,9 @@ export enum PanelType {
   CONTENT
 }
 
-export enum EditionStatus {
+export enum Status {
   ACTIVE,
-  CLOSED
+  INACTIVE
 }
 
 export enum UserType {
