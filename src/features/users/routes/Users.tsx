@@ -1,6 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
+import { Table } from 'components/Table';
 import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
 import { ButtonType, PanelType, UserType } from 'types'
@@ -40,7 +41,7 @@ export const Users = ({ type } : UsersProps) => {
 
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar searchPlaceholder='Szukaj użytkownika' />
-        <UserTable data={ usersQuery.data }> </UserTable>
+        <Table data={usersQuery.data}> </Table>
       </ContentPanel>
     </ContentLayout>
   )

@@ -8,7 +8,7 @@ interface ContentPanelProps {
 
 export const ContentPanel = ({type, children} : ContentPanelProps) => {
   return (
-    <main className={`bg-white shadow-md rounded-md flex flex-auto lg:p-9 p-6 basis-full justify-between gap-8 ${
+    <main className={`bg-white w-full shadow-md rounded-md flex flex-auto lg:p-9 p-6 basis-full justify-between gap-8 ${
       type == PanelType.HEADER ?
           'flex-col lg:flex-row' :
           type == PanelType.CONTENT ?
