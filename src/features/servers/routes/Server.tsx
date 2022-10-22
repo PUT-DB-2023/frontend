@@ -45,7 +45,10 @@ export const Server = () => {
           </div>
           <div className='flex items-start'>
             <div className='flex gap-6'>
-              <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={()=>console.log('DEACTIVATE')}/>
+              {serverQuery.data.active ? 
+                <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={()=>console.log('DEACTIVATE')}/> :
+                <Button type={ButtonType.ACTION} text='Aktywuj' onClick={()=>console.log('ACTIVATE')}/>
+              } 
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="flex text-black items-center space-x-4">
@@ -59,7 +62,7 @@ export const Server = () => {
                             <button
                               onClick={()=>setShowEdit(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Edytuj

@@ -1,14 +1,40 @@
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
+import { ColumnDef } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
+import { LinkCell, Table } from 'components/Table'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, PanelType, UserType } from 'types'
+import { ButtonType, PanelType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
+import { User as UserType } from '../types'
+
+const columns: ColumnDef<UserType>[] = [
+  {
+      accessorKey: 'id',
+      header: () => 'Nr Indeksu',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'first_name',
+      header: () => 'Imię',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'last_name',
+      header: () => 'Nazwisko',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'email',
+      header: 'Email',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+]
 
 export const User = () => {
   const { id } = useParams()
@@ -48,7 +74,7 @@ export const User = () => {
                             <button
                               onClick={()=>console.log('EDIT')}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Edytuj
@@ -75,6 +101,9 @@ export const User = () => {
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>
           <UserInfo userData={userQuery.data} />
+        </ContentPanel>
+        <ContentPanel type={PanelType.CONTENT}>
+          <Table data={userQuery.data} columns={columns}></Table>
         </ContentPanel>
     </ContentLayout>
   )

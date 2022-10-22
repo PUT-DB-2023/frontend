@@ -3,10 +3,7 @@ import { useQuery } from 'react-query'
 import { UserType } from 'types'
 import { User } from '../types'
 
-export const getUsers = async ( type? : UserType) => {
-
-    console.log(type)
-
+export const getUsers = async (type? : UserType) => {
     let response = null
     if (type === UserType.ADMIN) response = await axios.get("/admins/")
     else if (type === UserType.TEACHER) response = await axios.get("/teachers/")

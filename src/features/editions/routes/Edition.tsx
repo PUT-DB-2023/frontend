@@ -3,7 +3,7 @@ import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { ButtonType, PanelType } from 'types';
+import { ButtonType, PanelType, testSortOptions } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
 import { GroupList } from '../components/GroupList';
@@ -60,7 +60,7 @@ export const Edition = () => {
                               <button
                                 onClick={()=>console.log('EDIT')}
                                 className={`${
-                                  active ? 'bg-zinc-300' : 'text-black'
+                                  active ? 'bg-blue-100' : 'text-black'
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
                                 Edytuj
@@ -72,7 +72,7 @@ export const Edition = () => {
                               <button
                                 onClick={()=>console.log('SHOW INACTIVE')}
                                 className={`${
-                                  active ? 'bg-zinc-300' : 'text-black'
+                                  active ? 'bg-blue-100' : 'text-black'
                                 } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                               >
                                 Pokaż nieaktywne grupy
@@ -100,7 +100,7 @@ export const Edition = () => {
         </ContentPanel>
         
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar searchPlaceholder='Szukaj grupy'/>
+          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
           <GroupList groupData={groupData}></GroupList>
         </ContentPanel>
     </ContentLayout>

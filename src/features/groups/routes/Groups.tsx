@@ -8,7 +8,7 @@ import { AddNewModal } from 'features/courses/components/AddNewModal';
 import { ServerList } from 'features/servers/components/ServerList';
 import React from 'react'
 import { useQuery } from 'react-query';
-import { ButtonType, PanelType, Status } from 'types';
+import { ButtonType, PanelType, Status, testSortOptions } from 'types';
 import { getGroups } from '../api/getGroups';
 import { GroupList } from '../components/GroupList';
 
@@ -44,7 +44,7 @@ export const Groups = () => {
                             <button
                               onClick={()=>console.log('SHOW INACTIVE')}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Pokaz nieaktywne grupy
@@ -59,7 +59,7 @@ export const Groups = () => {
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar searchPlaceholder='Szukaj grupy'/>
+            <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
             <h2 className='text-lg font-semibold'>Aktywne grupy</h2>
             <GroupList groupData={groupData} type={Status.ACTIVE}></GroupList>
     

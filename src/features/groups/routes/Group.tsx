@@ -1,24 +1,49 @@
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon, LoginIcon } from '@heroicons/react/solid'
+import { ColumnDef } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
+import { LinkCell, Table } from 'components/Table'
+import { Toolbar } from 'components/Toolbar'
 import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
 import { GroupList } from 'features/editions/components/GroupList'
 import { ServerList } from 'features/servers/components/ServerList'
+import { User } from 'features/users'
 import { UserTable } from 'features/users/components/UserTable'
 import { getgroups } from 'process'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, Status, PanelType } from 'types'
+import { ButtonType, Status, PanelType, testSortOptions } from 'types'
 import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
 import { GroupServerList } from '../components/GroupServerList'
 import { ServerListModal } from '../components/ServerListModal'
 
-// TODO Add the edition fetching to the edition list component
+const columns: ColumnDef<User>[] = [
+  {
+      accessorKey: 'id',
+      header: () => 'Nr Indeksu',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'first_name',
+      header: () => 'Imię',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'last_name',
+      header: () => 'Nazwisko',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'email',
+      header: 'Email',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+]
 
 export const Group = () => {
 
@@ -78,7 +103,7 @@ export const Group = () => {
                             <button
                               onClick={()=>console.log('EDIT')}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Edytuj
@@ -104,8 +129,9 @@ export const Group = () => {
           </div>
         </ContentPanel>
 
-        <ContentPanel type={PanelType.HEADER}>
-          <UserTable data={ students }></UserTable>
+        <ContentPanel type={PanelType.CONTENT}>
+          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkowników'/>
+          <Table data={ students } columns={columns}></Table>
         </ContentPanel>
     </ContentLayout>
   )

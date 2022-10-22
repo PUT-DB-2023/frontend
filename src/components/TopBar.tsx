@@ -61,7 +61,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <Link to={`/users/` + userQuery.data[0].id}><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
                     className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-black'
+                      active ? 'bg-blue-100' : 'text-black'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Profil
@@ -72,7 +72,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <button
                     className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
+                      active ? 'bg-blue-100' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Wyloguj

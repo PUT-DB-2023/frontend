@@ -26,3 +26,20 @@ export enum UserType {
   TEACHER,
   STUDENT
 }
+
+export type SortOptions = {
+  field : string,
+  asc : boolean
+}
+
+export type FilterOptions = {
+  field : string,
+  asc : boolean
+}
+
+export const testSortOptions : SortOptions[] = [
+  {field: 'name', asc: true},
+  {field: 'name', asc: false},
+  {field: 'age', asc: true},
+  {field: 'age', asc: false},
+]

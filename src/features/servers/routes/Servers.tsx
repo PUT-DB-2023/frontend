@@ -3,7 +3,7 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import React from 'react'
 import { useQuery } from 'react-query'
-import { ButtonType, PanelType, Status } from 'types'
+import { ButtonType, PanelType, Status, testSortOptions } from 'types'
 import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 import { AddNewModal } from '../components/AddNewModal'
@@ -44,7 +44,7 @@ export const Servers = () => {
                           <button
                             onClick={()=>console.log('SHOW INACTIVE')}
                             className={`${
-                              active ? 'bg-zinc-300' : 'text-black'
+                              active ? 'bg-blue-100' : 'text-black'
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           >
                             Pokaz nieaktywne serwery
@@ -59,7 +59,7 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj serwera'/>
         <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
         <ServerList serverData={serverData} type={Status.ACTIVE}></ServerList>
 

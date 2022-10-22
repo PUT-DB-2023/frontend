@@ -2,7 +2,7 @@ import { ContentLayout, ContentPanel } from 'components'
 import { Box } from 'components'
 import { Button } from 'components/Button'
 import { Link } from 'react-router-dom'
-import { ButtonType, PanelType } from 'types'
+import { ButtonType, PanelType, testSortOptions } from 'types'
 import { CourseList } from '../components/CourseList'
 import { ModalContainer } from 'components/ModalContainer';
 import { AddNewModal } from '../components/AddNewModal'
@@ -47,7 +47,7 @@ export const Courses = () => {
                           <button
                             onClick={()=>console.log('SHOW INACTIVE')}
                             className={`${
-                              active ? 'bg-zinc-300' : 'text-black'
+                              active ? 'bg-blue-100' : 'text-black'
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                           >
                             Pokaz nieaktywne przedmioty
@@ -61,7 +61,7 @@ export const Courses = () => {
         </div>
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar searchPlaceholder='Szukaj przedmiotu' />
+        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj przedmiotu' />
         <CourseList courseData= { courseData }></CourseList>
       </ContentPanel>
     </ContentLayout>

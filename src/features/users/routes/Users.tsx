@@ -1,16 +1,41 @@
+import { ColumnDef } from '@tanstack/react-table';
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
-import { Table } from 'components/Table';
+import { LinkCell, Table } from 'components/Table';
 import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
-import { ButtonType, PanelType, UserType } from 'types'
+import { ButtonType, PanelType, testSortOptions, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
 import { UserTable } from '../components/UserTable';
+import { User } from '../types';
 
 interface UsersProps {
     type: UserType;
 }
+
+const columns: ColumnDef<User>[] = [
+  {
+      accessorKey: 'id',
+      header: () => 'Nr Indeksu',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'first_name',
+      header: () => 'Imię',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'last_name',
+      header: () => 'Nazwisko',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+  {
+      accessorKey: 'email',
+      header: 'Email',
+      cell: ({row, getValue}) => LinkCell({row, getValue})
+  },
+]
 
 export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
@@ -40,8 +65,8 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar searchPlaceholder='Szukaj użytkownika' />
-        <Table data={usersQuery.data}> </Table>
+        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
+        <Table data={usersQuery.data} columns={columns} />
       </ContentPanel>
     </ContentLayout>
   )

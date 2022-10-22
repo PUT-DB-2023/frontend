@@ -6,7 +6,7 @@ import { EditionList } from 'features/editions/components/EditionList'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
-import { ButtonType, Status, PanelType } from 'types'
+import { ButtonType, Status, PanelType, testSortOptions } from 'types'
 import { getCourse } from '../api/getCourse'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
@@ -60,7 +60,7 @@ export const Course = () => {
                             <button
                               onClick={()=>setEditModal(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Edytuj
@@ -72,7 +72,7 @@ export const Course = () => {
                             <button
                               onClick={()=>setEditModal(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
+                                active ? 'bg-blue-100' : 'text-black'
                               } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                             >
                               Pokaż zakończone edycje
@@ -100,7 +100,7 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar searchPlaceholder='Szukaj edycji'/>
+          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <EditionList editionData={editionData} type={Status.ACTIVE} />
 
