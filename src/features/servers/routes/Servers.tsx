@@ -30,7 +30,7 @@ export const Servers = () => {
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
         <div className='flex items-start'>
           <div className='flex gap-6'>
-            <Button type={ButtonType.ACTION} text='Dodaj przedmiot' onClick={()=>setShowAdd(true)}/>
+            <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={()=>setShowAdd(true)}/>
             <Menu as="div" className="relative inline-block text-left">
               <div>
                 <Menu.Button className="flex text-black items-center space-x-4">

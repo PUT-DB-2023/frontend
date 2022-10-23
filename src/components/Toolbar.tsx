@@ -3,7 +3,7 @@ import { SortAscendingIcon } from '@heroicons/react/solid'
 import React from 'react'
 
 interface IToolbar {
-    searchPlaceholder : string,
+    searchPlaceholder?: string,
 }
 
 export const Toolbar = ({ searchPlaceholder } : IToolbar) => {
