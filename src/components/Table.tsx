@@ -11,8 +11,8 @@ import { User } from 'features/users'
 import { Button } from './Button'
 import { ButtonType } from 'types'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowSmDownIcon, ArrowSmUpIcon, ChevronUpIcon } from '@heroicons/react/outline'
-import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from '@heroicons/react/solid'
+import { ArrowSmDownIcon, ArrowSmUpIcon, ChevronDoubleDownIcon, ChevronDoubleUpIcon, ChevronUpIcon } from '@heroicons/react/outline'
+import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
 
 export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, baseUrl : string}) => {   
     return  (
@@ -60,9 +60,18 @@ export const Table = ({ data, columns } : any) => {
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                        </svg>
+                        {{
+                          asc: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-600">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12" />
+                          </svg>,
+                          desc: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-600">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M 15.75 15 m-7.5-6 L 12 5.25 15.75 9" />
+                          </svg>,
+                        }[header.column.getIsSorted() as string] ?? 
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-blue-600">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+                          </svg>
+                        }
                       </div>
                     )}
                     </th>
