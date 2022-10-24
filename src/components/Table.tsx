@@ -46,30 +46,23 @@ export const Table = ({ data, columns } : any) => {
                 {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
                     {headerGroup.headers.map(header => (
-                    <th key={header.id} className='text-left border border-slate-300 p-2' onClick={header.column.getToggleSortingHandler()}>
+                    <th key={header.id} className='text-left border border-slate-300 p-2 hover:text-zinc-600' onClick={header.column.getToggleSortingHandler()}>
                         {header.isPlaceholder ? null : (
                       <div
                         {...{
                           className: `flex justify-between ${header.column.getCanSort()
                             ? 'cursor-pointer select-none'
                             : ''}`,
-                          onClick: header.column.getToggleSortingHandler(),
+                          onClick: () => header.column.getToggleSortingHandler(),
                         }}
                       >
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        {{
-                          asc: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                        </svg>,
-                        
-                          desc: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="h-5">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                         </svg>
-                        
-                        }[header.column.getIsSorted() as string] ?? null}
                       </div>
                     )}
                     </th>
