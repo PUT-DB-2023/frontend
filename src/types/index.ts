@@ -43,3 +43,10 @@ export const testSortOptions : SortOptions[] = [
   {field: 'age', asc: true},
   {field: 'age', asc: false},
 ]
+
+export type DbAccount = {
+  username : string,
+  password : string,
+  additional_info : string,
+  isMovedToExtDB : boolean
+} & BaseEntity

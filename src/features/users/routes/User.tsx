@@ -5,14 +5,54 @@ import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import { LinkCell, Table } from 'components/Table'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, PanelType, UserType } from 'types'
+import { ButtonType, DbAccount, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
 import { User as TUser } from '../types'
-import { columns } from './Users'
+
+const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
+[
+    {
+        accessorKey: 'username',
+        header: () => 'Użytkownik',
+        cell: ({getValue}) => (
+          <div className='p-2'>
+              {getValue() as ReactNode}
+          </div>
+        )
+    },
+    {
+        accessorKey: 'password',
+        header: () => 'Hasło',
+        cell: ({getValue}) => (
+          <div className='p-2'>
+              {getValue() as ReactNode}
+          </div>
+        )
+    },
+    {
+        accessorKey: 'additional_info',
+        header: () => 'Dodatkowe informacje',
+        cell: ({getValue}) => (
+          <div className='p-2'>
+              {getValue() as ReactNode}
+          </div>
+        )
+    },
+    {
+        accessorKey: 'isMovedToExtDB',
+        header: 'Przeniesiono',
+        cell: ({getValue}) => (
+          <div className='p-2'>
+              {/* {'true' ? getValue() : 'false'} */}
+              {/* {getValue() as ReactNode} */}
+          </div>
+        )
+    }
+  ]
 
 export const User = ({type} : {type: UserType}) => {
   const { id } = useParams()
@@ -83,7 +123,7 @@ export const User = ({type} : {type: UserType}) => {
           <UserInfo userData={userQuery.data} />
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
-          <Table data={userQuery.data} columns={columns(baseUrl)}></Table>
+          <Table data={userQuery.data.db_accounts} columns={columns}></Table>
         </ContentPanel>
     </ContentLayout>
   )
