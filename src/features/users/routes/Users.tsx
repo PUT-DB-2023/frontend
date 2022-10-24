@@ -69,7 +69,7 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
+        <Toolbar sort={false} filter={false} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
         <Table data={usersQuery.data} columns={columns(baseUrl)} />
       </ContentPanel>
     </ContentLayout>

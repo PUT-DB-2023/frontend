@@ -108,7 +108,7 @@ export const Group = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkowników'/>
+          <Toolbar sort={false} filter={false} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkowników'/>
           <Table data={ students } columns={columns('students')}></Table>
         </ContentPanel>
     </ContentLayout>

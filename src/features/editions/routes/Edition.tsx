@@ -100,7 +100,7 @@ export const Edition = () => {
         </ContentPanel>
         
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
+          <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
           <GroupList groupData={groupData}></GroupList>
         </ContentPanel>
     </ContentLayout>

@@ -61,7 +61,7 @@ export const Courses = () => {
         </div>
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj przedmiotu' />
+        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj przedmiotu' />
         <CourseList courseData= { courseData }></CourseList>
       </ContentPanel>
     </ContentLayout>

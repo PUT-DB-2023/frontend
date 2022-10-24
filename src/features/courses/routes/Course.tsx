@@ -100,7 +100,7 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj edycji'/>
+          <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <EditionList editionData={editionData} type={Status.ACTIVE} />
 

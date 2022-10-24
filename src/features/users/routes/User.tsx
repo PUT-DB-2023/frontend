@@ -122,9 +122,14 @@ export const User = ({type} : {type: UserType}) => {
         <ContentPanel type={PanelType.HEADER}>
           <UserInfo userData={userQuery.data} />
         </ContentPanel>
-        <ContentPanel type={PanelType.CONTENT}>
-          <Table data={userQuery.data.db_accounts} columns={columns}></Table>
-        </ContentPanel>
+        {
+          type === UserType.STUDENT ? (
+            <ContentPanel type={PanelType.CONTENT}>
+              <Table data={userQuery.data.db_accounts} columns={columns}></Table>
+            </ContentPanel>
+          ) : null
+        }
+        
     </ContentLayout>
   )
 }

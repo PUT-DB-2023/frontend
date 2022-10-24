@@ -59,7 +59,7 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj serwera'/>
         <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
         <ServerList serverData={serverData} type={Status.ACTIVE}></ServerList>
 

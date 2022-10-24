@@ -59,7 +59,7 @@ export const Groups = () => {
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
+            <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
             <h2 className='text-lg font-semibold'>Aktywne grupy</h2>
             <GroupList groupData={groupData} type={Status.ACTIVE}></GroupList>
     
