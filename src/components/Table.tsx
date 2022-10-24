@@ -10,9 +10,9 @@ import { Button } from './Button'
 import { ButtonType } from 'types'
 import { Link, useNavigate } from 'react-router-dom'
 
-export const LinkCell = ({row, getValue} : {row: any, getValue: any}) => {   
+export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, baseUrl : string}) => {   
     return  (
-                <Link to={{pathname:`/users/${row.original.id}`}}>
+                <Link to={{pathname:`/users/${baseUrl}/${row.original.id}`}}>
                     <div className='p-2'>
                         {getValue() as ReactNode}
                     </div>

@@ -12,6 +12,7 @@ import { GroupList } from 'features/editions/components/GroupList'
 import { ServerList } from 'features/servers/components/ServerList'
 import { User } from 'features/users'
 import { UserTable } from 'features/users/components/UserTable'
+import { columns } from 'features/users/routes/Users'
 import { getgroups } from 'process'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -21,29 +22,6 @@ import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
 import { GroupServerList } from '../components/GroupServerList'
 import { ServerListModal } from '../components/ServerListModal'
-
-const columns: ColumnDef<User>[] = [
-  {
-      accessorKey: 'id',
-      header: () => 'Nr Indeksu',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'first_name',
-      header: () => 'Imię',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'last_name',
-      header: () => 'Nazwisko',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'email',
-      header: 'Email',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-]
 
 export const Group = () => {
 
@@ -131,7 +109,7 @@ export const Group = () => {
 
         <ContentPanel type={PanelType.CONTENT}>
           <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkowników'/>
-          <Table data={ students } columns={columns}></Table>
+          <Table data={ students } columns={columns('students')}></Table>
         </ContentPanel>
     </ContentLayout>
   )

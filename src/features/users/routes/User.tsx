@@ -8,37 +8,17 @@ import { LinkCell, Table } from 'components/Table'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, PanelType } from 'types'
+import { ButtonType, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
-import { User as UserType } from '../types'
+import { User as TUser } from '../types'
+import { columns } from './Users'
 
-const columns: ColumnDef<UserType>[] = [
-  {
-      accessorKey: 'id',
-      header: () => 'Nr Indeksu',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'first_name',
-      header: () => 'Imię',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'last_name',
-      header: () => 'Nazwisko',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'email',
-      header: 'Email',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-]
-
-export const User = () => {
+export const User = ({type} : {type: UserType}) => {
   const { id } = useParams()
-  const userQuery = useQuery(['user', id], () => getUser( id ))
+  console.log(typeof type)
+  const userQuery = useQuery(['user', id], () => getUser( id, type ))
+  const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
   console.log(userQuery.data)
 
@@ -103,7 +83,7 @@ export const User = () => {
           <UserInfo userData={userQuery.data} />
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
-          <Table data={userQuery.data} columns={columns}></Table>
+          <Table data={userQuery.data} columns={columns(baseUrl)}></Table>
         </ContentPanel>
     </ContentLayout>
   )

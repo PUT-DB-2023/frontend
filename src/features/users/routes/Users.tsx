@@ -14,31 +14,35 @@ interface UsersProps {
     type: UserType;
 }
 
-const columns: ColumnDef<User>[] = [
-  {
-      accessorKey: 'id',
-      header: () => 'Nr Indeksu',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'first_name',
-      header: () => 'Imię',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'last_name',
-      header: () => 'Nazwisko',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-  {
-      accessorKey: 'email',
-      header: 'Email',
-      cell: ({row, getValue}) => LinkCell({row, getValue})
-  },
-]
+export const columns = (baseUrl: string): ColumnDef<User>[] => {
+
+  return ([
+    {
+        accessorKey: 'id',
+        header: () => 'Nr Indeksu',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'first_name',
+        header: () => 'Imię',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'last_name',
+        header: () => 'Nazwisko',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'email',
+        header: 'Email',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    }
+  ])
+}
 
 export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
+  const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
   console.log(usersQuery.data)
 
@@ -66,7 +70,7 @@ export const Users = ({ type } : UsersProps) => {
 
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={usersQuery.data} columns={columns} />
+        <Table data={usersQuery.data} columns={columns(baseUrl)} />
       </ContentPanel>
     </ContentLayout>
   )

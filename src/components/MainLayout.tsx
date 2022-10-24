@@ -61,7 +61,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                   <Link to={`/users/` + userQuery.data[0].id}>
                     <button
                       className={`${
-                        active ? 'bg-blue-100' : 'text-black'
+                        active ? 'bg-blue-100 text-white' : 'text-black'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
                       Profil
@@ -73,7 +73,7 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <button
                     className={`${
-                      active ? 'bg-blue-100' : 'text-gray-900'
+                      active ? 'bg-blue-100 text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Wyloguj
