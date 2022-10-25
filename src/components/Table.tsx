@@ -40,8 +40,8 @@ export const Table = ({ data, columns } : any) => {
     })
 
     return (
-        <div className="w-full rounded-md">
-            <table className='border-slate-300 bg-white lg:w-full md:w-full lg:table md:table block w-full overflow-x-auto shadow-md'>
+        <div className="w-full rounded-lg">
+            <table className='border-slate-300 bg-white lg:w-full md:w-full lg:table md:table block w-full overflow-x-auto'>
             <thead className='text-base'>
                 {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>

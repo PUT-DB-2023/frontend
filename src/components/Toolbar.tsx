@@ -24,7 +24,7 @@ export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions }
             {filter ? <AdjustmentsIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> : null}
             {sort ? <Listbox value={sortBy} onChange={setSortBy}>
                 <div className="relative w-[232px]">
-                    <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-md border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
+                    <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                         <SortAscendingIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/>
                         <span className='flex justify-start w-full px-2'>
                             {sortBy.field}: {sortBy.asc ? "rosnąco" : "malejąco"}
@@ -33,9 +33,9 @@ export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions }
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                         </svg>
                     </Listbox.Button>
-                    <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-md shadow-xl bg-white'>
+                    <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white'>
                         {sortOptions.map((sortOption) => (
-                            <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-md'
+                            <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
                                 key={sortOption.field + sortOption.asc}
                                 value={sortOption}
                             >

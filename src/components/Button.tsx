@@ -9,7 +9,7 @@ interface ButtonProps {
 
 export const Button = ({type, text, onClick} : ButtonProps) => {
   return (
-    <button className={`lg:w-40 min-w-20 p-4 h-9 flex items-center justify-center rounded-md ${
+    <button className={`lg:w-40 min-w-20 p-4 h-9 flex items-center justify-center rounded-lg ${
       type == ButtonType.ACTION ?
       'bg-blue-800 text-white hover:bg-blue-700 active:bg-blue-800' :
       type == ButtonType.WARNING ?

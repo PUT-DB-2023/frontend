@@ -9,17 +9,18 @@ interface IGroupList {
   }
 
 export const GroupList = ({ groupData, type } : IGroupList) => {
+    console.log(groupData.filter((obj : any) => obj.teacherEdition.edition.active === true)[0])
     if (type == Status.ACTIVE) {
         const activeGroups = groupData.filter((obj : any) => obj.teacherEdition.edition.active === true)
-    
         return (
           <div className='w-full'>
-            { activeGroups.map(function(group : any) {
+            { activeGroups.length == 0 ? 
+            <div className='font-semibold text-xl'> Brak grup </div> :activeGroups.map(function(group : any) {
               return <Link to={'/groups/' + group.id}>
                         <Box>
-                            <span className='font-semibold text-xl'> {group.name} - {group.day} {group.hour} </span>
+                            <span className='font-semibold text-xl'> {group.name} - {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</span>
                             <span className='font-normal text-base'> 
-                              {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}
+                              {group.day} {group.hour} 
                             </span>
                         </Box>
                       </Link>
