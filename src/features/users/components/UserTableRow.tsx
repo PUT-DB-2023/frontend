@@ -8,7 +8,6 @@ export const UserTableRow = ( { user } : any ) => {
   let navigate = useNavigate();
 
   const handleRowClick = (userId : any) => {
-    console.log(userId)
     navigate(`/users/${userId}`)
   }
 

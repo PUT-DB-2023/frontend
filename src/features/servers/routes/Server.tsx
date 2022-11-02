@@ -20,12 +20,12 @@ export const Server = () => {
 
   const serverQuery = useQuery(['server', id], () => getServer( id ))
   // const {data: serverQuery } = useQuery(['server', id], () => getServer( id ))
-  console.log(serverQuery.data)
+  const refetch = serverQuery.refetch;
 
   const activation = React.useCallback(()=>{
-    id && activeServer({id: id, active: !serverQuery.data.active});
+    id && activeServer({id: id, active: !serverQuery.data.active, refresh: refetch});
     serverQuery.refetch()
-  },[serverQuery, id])
+  },[serverQuery, id, refetch])
 
   if (serverQuery.isLoading) {
     return (
@@ -44,30 +44,31 @@ export const Server = () => {
     <ContentLayout>
       <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name}/>
       <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{id: id as string, ...serverQuery.data}}/>
-        <ContentPanel type={PanelType.HEADER}> 
+        <ContentPanel type={PanelType.HEADER}>
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { serverQuery.data.name }</h1>
-            <h2 className='text-blue-900 font-semibold mb-8'>Detale</h2>
           </div>
           <div className='flex items-start'>
             <div className='flex gap-6'>
-              {serverQuery?.data?.active && <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/>}
-              {!serverQuery?.data?.active && <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>}
+              {serverQuery.data.active ? 
+                <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/> :
+                <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>
+              } 
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="flex text-black items-center space-x-4">
                     <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
                   </Menu.Button>
                 </div>
-                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-1 py-1 ">
+                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="px-1 py-1">
                       <Menu.Item>
                         {({ active } : { active : any }) => (
                             <button
                               onClick={()=>setShowEdit(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
-                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                active ? 'bg-blue-100' : 'text-black'
+                              } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                             >
                               Edytuj
                             </button>
@@ -79,7 +80,7 @@ export const Server = () => {
                             onClick={()=>setShowRemove(true)}
                             className={`${
                               active ? 'bg-red-500 text-white' : 'text-red-500'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                           >
                             Usuń
                           </button>
@@ -93,7 +94,16 @@ export const Server = () => {
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
+          <h2 className='text-lg font-semibold'> Szczegóły </h2>
           <ServerInfo serverData={serverQuery.data} />
+        </ContentPanel>
+        <ContentPanel type={PanelType.CONTENT}>
+          <h2 className='text-lg font-semibold'> Polecenia bazodanowe </h2>
+          <div className='flex flex-col'>
+            <span className='font-normal text-base'> Tworzenie użytkownika </span>
+            <span className='font-normal text-base'> Modyfikowanie użytkownika </span>
+            <span className='font-normal text-base'> Usuwanie użytkownika </span>
+          </div>
         </ContentPanel>
     </ContentLayout>
   )

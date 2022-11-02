@@ -10,16 +10,16 @@ interface IGroupList {
 
 export const GroupList = ({ groupData, type } : IGroupList) => {
     if (type == Status.ACTIVE) {
-        const activeGroups = groupData.filter((obj : any) => obj.teacherEdition.edition.active === true)
-    
+        const activeGroups = groupData.filter((obj : any) => obj?.teacherEdition?.edition?.active === true)
         return (
           <div className='w-full'>
-            { activeGroups.map(function(group : any) {
+            { activeGroups.length == 0 ? 
+            <div className='font-semibold text-xl'> Brak grup </div> :activeGroups.map(function(group : any) {
               return <Link to={'/groups/' + group.id}>
                         <Box>
-                            <span className='font-semibold text-xl'> {group.name} - {group.day} {group.hour} </span>
+                            <span className='font-semibold text-xl'> {group.name} - {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</span>
                             <span className='font-normal text-base'> 
-                              {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}
+                              {group.day} {group.hour} 
                             </span>
                         </Box>
                       </Link>
@@ -28,7 +28,7 @@ export const GroupList = ({ groupData, type } : IGroupList) => {
         )
       }
       else if (type == Status.INACTIVE) {
-        const inactiveGroups = groupData.filter((obj : any) => obj.teacherEdition.edition.active === false)
+        const inactiveGroups = groupData.filter((obj : any) => obj?.teacherEdition?.edition?.active === false)
     
         return (
           <div className='w-full h-full overflow-y-auto'>

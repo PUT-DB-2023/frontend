@@ -55,14 +55,14 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             <div className='h-9 w-9 rounded-full bg-black'></div>
           </Menu.Button>
         </div>
-          <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
                   <Link to={`/users/` + userQuery.data[0].id}><button // TODO change the navigation to my profile via a /myprofile path that redirects to a /users/:id path
                     className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-black'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      active ? 'bg-blue-100 text-white' : 'text-black'
+                    } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                   >
                     Profil
                   </button></Link>
@@ -72,8 +72,8 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <button
                     className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      active ? 'bg-blue-100 text-white' : 'text-gray-900'
+                    } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                   >
                     Wyloguj
                   </button>

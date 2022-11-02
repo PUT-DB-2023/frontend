@@ -36,7 +36,7 @@ const NavBar = () => {
   )
 }
 
-const ProfileMenu = ({name, role} : ProfileMenuProps) => {
+const ProfileMenu = () => {
   const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
 
   if (userQuery.isLoading) {
@@ -48,21 +48,21 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
         <div>
           <Menu.Button className="flex text-black items-center space-x-4">
             <div className='flex flex-col text-end'>
-              <span className='text-base font-semibold'>{name}</span>
-              <span className='text-sm'>{role}</span>
+              <span className='text-base font-semibold'>{userQuery.data[0].first_name} {userQuery.data[0].last_name}</span>
+              <span className='text-sm'>{userQuery.data[0].role}</span>
             </div>
             <div className='h-9 w-9 rounded-full bg-black'></div>
           </Menu.Button>
         </div>
-          <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : any }) => (
-                  <Link to={`/users/` + userQuery.data[0].id}>
+                  <Link to={`/users/admins/` + userQuery.data[0].id}>
                     <button
                       className={`${
-                        active ? 'bg-blue-600 text-white' : 'text-black'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        active ? 'bg-blue-100 text-white' : 'text-black'
+                      } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                     >
                       Profil
                     </button>
@@ -73,8 +73,8 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
                 {({ active } : { active : any }) => (
                   <button
                     className={`${
-                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      active ? 'bg-blue-100 text-white' : 'text-gray-900'
+                    } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                   >
                     Wyloguj
                   </button>
@@ -83,16 +83,6 @@ const ProfileMenu = ({name, role} : ProfileMenuProps) => {
             </div>
           </Menu.Items>
       </Menu>
-  )
-}
-
-export const TopBar = () => {
-  return (
-    <div className='w-full h-1 bg-white shadow-md flex text-base text-black z-20 items-center px-12 justify-between'>
-        <ShowMenuButton></ShowMenuButton>
-        <NavBar/>
-        <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>
-    </div>
   )
 }
 
@@ -112,7 +102,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
         <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
           <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>
           <NavBar/>
-          <ProfileMenu name='Bartosz Bębel' role='Dydaktyk'/>
+          <ProfileMenu />
         </div>
             {children}
         </div>

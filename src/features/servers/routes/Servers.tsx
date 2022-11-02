@@ -3,7 +3,7 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import React from 'react'
 import { useQuery } from 'react-query'
-import { ButtonType, PanelType, Status } from 'types'
+import { ButtonType, PanelType, Status, testSortOptions } from 'types'
 import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 import { AddNewModal } from '../components/AddNewModal'
@@ -37,15 +37,15 @@ export const Servers = () => {
                   <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
                 </Menu.Button>
               </div>
-                <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="px-1 py-1 ">
                     <Menu.Item>
                       {({ active } : { active : any }) => (
                           <button
                             onClick={()=>console.log('SHOW INACTIVE')}
                             className={`${
-                              active ? 'bg-zinc-300' : 'text-black'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                              active ? 'bg-blue-100' : 'text-black'
+                            } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                           >
                             Pokaz nieaktywne serwery
                           </button>
@@ -59,7 +59,7 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj serwera'/>
         <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
         <ServerList serverData={serverData} type={Status.ACTIVE}></ServerList>
 

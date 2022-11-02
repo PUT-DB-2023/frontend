@@ -1,21 +1,48 @@
+import { ColumnDef } from '@tanstack/react-table';
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
-import { Table } from 'components/Table';
+import { LinkCell, Table } from 'components/Table';
 import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
-import { ButtonType, PanelType, UserType } from 'types'
+import { ButtonType, PanelType, testSortOptions, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
 import { UserTable } from '../components/UserTable';
+import { User } from '../types';
 
 interface UsersProps {
     type: UserType;
 }
 
+export const columns = (baseUrl: string): ColumnDef<User>[] => {
+
+  return ([
+    {
+        accessorKey: 'id',
+        header: () => 'Nr Indeksu',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'first_name',
+        header: () => 'Imię',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'last_name',
+        header: () => 'Nazwisko',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    },
+    {
+        accessorKey: 'email',
+        header: 'Email',
+        cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
+    }
+  ])
+}
+
 export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
-
-  console.log(usersQuery.data)
+  const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
   if (usersQuery.isLoading) {
     return (
@@ -23,7 +50,6 @@ export const Users = ({ type } : UsersProps) => {
     );
   }
 
-  console.log(type)
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.HEADER}>
@@ -40,8 +66,8 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar searchPlaceholder='Szukaj użytkownika' />
-        <Table data={usersQuery.data}> </Table>
+        <Toolbar sort={false} filter={false} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
+        <Table data={usersQuery.data} columns={columns(baseUrl)} />
       </ContentPanel>
     </ContentLayout>
   )

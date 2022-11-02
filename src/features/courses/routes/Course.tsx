@@ -6,7 +6,7 @@ import { EditionList } from 'features/editions/components/EditionList'
 import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useParams } from 'react-router-dom'
-import { ButtonType, Status, PanelType } from 'types'
+import { ButtonType, Status, PanelType, testSortOptions } from 'types'
 import { getCourse } from '../api/getCourse'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
@@ -14,12 +14,14 @@ import * as React from 'react'
 import { Toolbar } from 'components/Toolbar'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 import { Menu } from '@headlessui/react'
+import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
 
 // TODO Add the edition fetching to the edition list component
 
 export const Course = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const [editModal, setEditModal] = React.useState(false)
+  const [addEditionModal, setAddEditionModal] = React.useState(false)
 
   const { id } = useParams()
 
@@ -38,6 +40,7 @@ export const Course = () => {
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={id} name={courseData.name} />
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
+        {id && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => editionRefetch()} courseId={id}/> }
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseData.name }</h1>
@@ -46,22 +49,22 @@ export const Course = () => {
           </div>
           <div className='flex items-start'>
             <div className='flex gap-6'>
-              <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={()=>console.log('ADD EDITION')}/>
+              <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={()=>setAddEditionModal(true)}/>
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="flex text-black items-center space-x-4">
                     <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
                   </Menu.Button>
                 </div>
-                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="px-1 py-1 ">
                       <Menu.Item>
                         {({ active } : { active : any }) => (
                             <button
                               onClick={()=>setEditModal(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
-                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                active ? 'bg-blue-100' : 'text-black'
+                              } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                             >
                               Edytuj
                             </button>
@@ -72,8 +75,8 @@ export const Course = () => {
                             <button
                               onClick={()=>setEditModal(true)}
                               className={`${
-                                active ? 'bg-zinc-300' : 'text-black'
-                              } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                                active ? 'bg-blue-100' : 'text-black'
+                              } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                             >
                               Pokaż zakończone edycje
                             </button>
@@ -85,7 +88,7 @@ export const Course = () => {
                             onClick={()=>setRemoveModal(true)}
                             className={`${
                               active ? 'bg-red-500 text-white' : 'text-red-500'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                            } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
                           >
                             Usuń
                           </button>
@@ -100,7 +103,7 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar searchPlaceholder='Szukaj edycji'/>
+          <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <EditionList editionData={editionData} type={Status.ACTIVE} />
 

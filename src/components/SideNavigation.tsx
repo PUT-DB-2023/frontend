@@ -77,8 +77,6 @@ export const SideNavigation = () => {
   let serversContent = null
   let groupsContent = null
 
-  console.log(groupData)
-
   if (courseStatus === 'loading') {
     coursesContent = (
       <div className='w-full h-full flex items-center justify-center'>

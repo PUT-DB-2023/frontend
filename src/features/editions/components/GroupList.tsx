@@ -9,11 +9,11 @@ import { Group } from '../types'
 export const GroupList = ({groupData} : any) => {
   const { id } = useParams()
 
-  console.log(groupData)
-
   return (
     <div className='w-full h-full'>
-        { groupData.map(function(group : any) {
+        { groupData.length == 0 ? 
+            <div className='w-full h-full flex justify-center items-center p-16 font-semibold text-xl'> Brak grup </div> :
+            groupData.map(function(group : any) {
             return (
                       <Link to={'/groups/' + group.id}>
                         <Box>

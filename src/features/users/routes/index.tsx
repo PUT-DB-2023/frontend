@@ -12,7 +12,9 @@ export const UsersRoutes = () => {
       <Route path="/admins/" element={<Users type={UserType.ADMIN}/>} />
       <Route path="/teachers/" element={<Users type={UserType.TEACHER}/>} />
       <Route path="/students/" element={<Users type={UserType.STUDENT}/>} /> 
-      <Route path=":id" element={<User />} />
+      <Route path="/admins/:id" element={<User type={UserType.ADMIN} />} />
+      <Route path="/teachers/:id" element={<User type={UserType.TEACHER} />} />
+      <Route path="/students/:id" element={<User type={UserType.STUDENT} />} />
       <Route path="*" element={<Navigate to="." />} />
     </Routes>
   )
