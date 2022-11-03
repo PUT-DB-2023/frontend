@@ -44,15 +44,12 @@ export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
-  console.log(usersQuery.data)
-
   if (usersQuery.isLoading) {
     return (
       <Spinner />
     );
   }
 
-  console.log(type)
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.HEADER}>

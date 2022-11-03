@@ -3,7 +3,6 @@ import { UserType } from 'types'
 import { User } from '../types'
 
 export const getUser = async (userId: any, type? : UserType) => {
-    console.log(userId, type)
     let response = null
     if (type === UserType.ADMIN) response = await axios.get(`/admins/${userId}/`)
     else if (type === UserType.TEACHER) response = await axios.get(`/teachers/${userId}/`)

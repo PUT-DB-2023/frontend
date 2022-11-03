@@ -29,7 +29,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     const handleAdd = React.useCallback(async () => {
         let data = { name, ip, port, provider, user, password, database, active }
-        console.log(data)
         const res = await addServer(data)
         if (res.data) {
             handleOff();
@@ -42,20 +41,20 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy server' off={handleOff}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Name"} value={name} setValue={setName} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} />
                     <Field title={"IP"} value={ip} setValue={setIp} />
                     <Field title={"Port"} value={port} setValue={setPort} />
-                    <Field title={"Provider"} value={provider} setValue={setProvider} />
-                    <Field title={"User"} value={user} setValue={setUser} />
-                    <Field title={"Password"} value={password} setValue={setPassword} />
-                    <Field title={"Database"} value={database} setValue={setDatabase} />
+                    <Field title={"Dostawca"} value={provider} setValue={setProvider} />
+                    <Field title={"Użytkownik"} value={user} setValue={setUser} />
+                    <Field title={"Hasło"} value={password} setValue={setPassword} />
+                    <Field title={"Baza danych"} value={database} setValue={setDatabase} />
                     {/* <Field title={"Active"} value={active} setValue={active} /> */}
                     <div className='flex gap-2 items-center'>
-                        Active:
+                        Aktywny:
                         <input type="checkbox" checked={active} onChange={() => setActive(!active)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
                     </div>
                 </div>
-                <div className={`flex gap-2 mt-10`}>
+                <div className={`flex flex-wrap gap-2 mt-10`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
                     <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>

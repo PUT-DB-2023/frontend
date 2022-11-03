@@ -3,7 +3,6 @@ import { Logo } from './Logo'
 import { SideNavigation } from './SideNavigation'
 
 export const MobileSideBar = ({ show, off } : { show: any, off :() => void}) => {
-    console.log(show)
     const ref = useClickOutside(off);
     if (show) {
     return (

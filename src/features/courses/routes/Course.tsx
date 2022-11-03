@@ -14,12 +14,14 @@ import * as React from 'react'
 import { Toolbar } from 'components/Toolbar'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 import { Menu } from '@headlessui/react'
+import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
 
 // TODO Add the edition fetching to the edition list component
 
 export const Course = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const [editModal, setEditModal] = React.useState(false)
+  const [addEditionModal, setAddEditionModal] = React.useState(false)
 
   const { id } = useParams()
 
@@ -38,6 +40,7 @@ export const Course = () => {
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={id} name={courseData.name} />
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
+        {id && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => editionRefetch()} courseId={id}/> }
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseData.name }</h1>
@@ -46,7 +49,7 @@ export const Course = () => {
           </div>
           <div className='flex items-start'>
             <div className='flex gap-6'>
-              <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={()=>console.log('ADD EDITION')}/>
+              <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={()=>setAddEditionModal(true)}/>
               <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <Menu.Button className="flex text-black items-center space-x-4">

@@ -56,11 +56,8 @@ const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
 
 export const User = ({type} : {type: UserType}) => {
   const { id } = useParams()
-  console.log(typeof type)
   const userQuery = useQuery(['user', id], () => getUser( id, type ))
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
-
-  console.log(userQuery.data)
 
   if (userQuery.isLoading) {
     return (

@@ -4,17 +4,20 @@ import { ContentLayout, ContentPanel } from 'components';
 import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
 import { Toolbar } from 'components/Toolbar';
-import { AddNewModal } from 'features/courses/components/AddNewModal';
+import { AddNewModal } from 'features/groups/components/AddNewModal';
 import { ServerList } from 'features/servers/components/ServerList';
 import React from 'react'
 import { useQuery } from 'react-query';
 import { ButtonType, PanelType, Status, testSortOptions } from 'types';
 import { getGroups } from '../api/getGroups';
 import { GroupList } from '../components/GroupList';
+import { getTeacherEdition } from '../api/getTeacherEdition';
 
 export const Groups = () => {
     const [showAdd, setShowAdd] = React.useState(false);
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
+    const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
+    console.log(techerEditionsData)
 
     if (groupStatus == 'loading') {
     return (
@@ -25,7 +28,7 @@ export const Groups = () => {
     }
     return (
         <ContentLayout>
-          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={groupRefetch} />
+          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={groupRefetch} teacherEditions={techerEditionsData}/>
           <ContentPanel type={PanelType.HEADER}>
             <span className='text-black text-3xl font-bold mb-4'>Grupy</span>
             <div className='flex items-start'>

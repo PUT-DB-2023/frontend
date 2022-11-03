@@ -13,8 +13,6 @@ interface IEditionList {
 export const EditionList = ({editionData, type} : IEditionList) => {
   const { id } = useParams()
   const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
-
-  console.log(editionsQuery.data)
   
   if (editionsQuery.isLoading) {
     return (

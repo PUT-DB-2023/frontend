@@ -9,8 +9,6 @@ import { Group } from '../types'
 export const GroupList = ({groupData} : any) => {
   const { id } = useParams()
 
-  console.log(groupData)
-
   return (
     <div className='w-full h-full'>
         { groupData.length == 0 ? 

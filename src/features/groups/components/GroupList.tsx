@@ -9,9 +9,8 @@ interface IGroupList {
   }
 
 export const GroupList = ({ groupData, type } : IGroupList) => {
-    console.log(groupData.filter((obj : any) => obj.teacherEdition.edition.active === true)[0])
     if (type == Status.ACTIVE) {
-        const activeGroups = groupData.filter((obj : any) => obj.teacherEdition.edition.active === true)
+        const activeGroups = groupData.filter((obj : any) => obj?.teacherEdition?.edition?.active === true)
         return (
           <div className='w-full'>
             { activeGroups.length == 0 ? 
@@ -29,7 +28,7 @@ export const GroupList = ({ groupData, type } : IGroupList) => {
         )
       }
       else if (type == Status.INACTIVE) {
-        const inactiveGroups = groupData.filter((obj : any) => obj.teacherEdition.edition.active === false)
+        const inactiveGroups = groupData.filter((obj : any) => obj?.teacherEdition?.edition?.active === false)
     
         return (
           <div className='w-full h-full overflow-y-auto'>

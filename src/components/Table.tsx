@@ -25,7 +25,6 @@ export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, ba
 }
 
 export const Table = ({ data, columns } : any) => {
-    console.log(data);
     const [sorting, setSorting] = React.useState<SortingState>([])
     
     const table = useReactTable({

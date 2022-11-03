@@ -39,9 +39,6 @@ const NavBar = () => {
 const ProfileMenu = () => {
   const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
 
-
-  console.log(userQuery.data)
-
   if (userQuery.isLoading) {
     return null
   }

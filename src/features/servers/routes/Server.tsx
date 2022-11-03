@@ -11,6 +11,7 @@ import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
+import { activeServer } from '../api/activeServer'
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
@@ -19,7 +20,12 @@ export const Server = () => {
 
   const serverQuery = useQuery(['server', id], () => getServer( id ))
   // const {data: serverQuery } = useQuery(['server', id], () => getServer( id ))
-  console.log(serverQuery.data)
+  const refetch = serverQuery.refetch;
+
+  const activation = React.useCallback(()=>{
+    id && activeServer({id: id, active: !serverQuery.data.active, refresh: refetch});
+    serverQuery.refetch()
+  },[serverQuery, id, refetch])
 
   if (serverQuery.isLoading) {
     return (
@@ -45,8 +51,8 @@ export const Server = () => {
           <div className='flex items-start'>
             <div className='flex gap-6'>
               {serverQuery.data.active ? 
-                <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={()=>console.log('DEACTIVATE')}/> :
-                <Button type={ButtonType.ACTION} text='Aktywuj' onClick={()=>console.log('ACTIVATE')}/>
+                <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/> :
+                <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>
               } 
               <Menu as="div" className="relative inline-block text-left">
                 <div>

@@ -8,7 +8,6 @@ import { CoursesRoutes } from '../routes'
 import { Course } from '../types'
 
 export const CourseList = ( { courseData } : any) => {
-  console.log(courseData);
   return (
     <div className='w-full h-full'>
         { courseData.length == 0 ? 

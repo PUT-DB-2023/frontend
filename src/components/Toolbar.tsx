@@ -8,15 +8,13 @@ interface IToolbar {
     sort : boolean,
     filter: boolean,
     search : boolean,
-    searchPlaceholder : string,
+    searchPlaceholder?: string,
     sortOptions : SortOptions[],
     filterOptions? : FilterOptions // TODO
 }
 
 export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions } : IToolbar) => {
     const [sortBy, setSortBy] = useState(sortOptions[0])
-
-    console.log(sortBy)
 
     return (
     <div className='flex w-full justify-end self-end'>
