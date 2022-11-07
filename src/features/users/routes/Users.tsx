@@ -9,6 +9,8 @@ import { ButtonType, PanelType, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
 import { UserTable } from '../components/UserTable';
 import { User } from '../types';
+import * as React from 'react';
+import { searchFunc } from 'api/searchApi'
 
 interface UsersProps {
     type: UserType;
@@ -18,7 +20,7 @@ export const columns = (baseUrl: string): ColumnDef<User>[] => {
 
   return ([
     {
-        accessorKey: 'id',
+        accessorKey: 'student_id',
         header: () => 'Nr Indeksu',
         cell: ({row, getValue}) => LinkCell({row, getValue, baseUrl})
     },
@@ -43,6 +45,9 @@ export const columns = (baseUrl: string): ColumnDef<User>[] => {
 export const Users = ({ type } : UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
+  const [search, setSearch] = React.useState('');
+
+  const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id','first_name','last_name','email']), [search, usersQuery.data]);
 
   if (usersQuery.isLoading) {
     return (
@@ -66,8 +71,8 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={usersQuery.data} columns={columns(baseUrl)} />
+        <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
+        <Table data={searchData} columns={columns(baseUrl)} />
       </ContentPanel>
     </ContentLayout>
   )

@@ -12,13 +12,18 @@ import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { serversSortOptions } from 'types'
 import { sortFunc } from 'api/sortFilter'
+import { searchFunc } from 'api/searchApi'
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
   const [sortBy, setSortBy] = React.useState(serversSortOptions[0]);
   const [filterBy, setFilterBy] = React.useState(null);
+  const [search, setSearch] = React.useState('');
+
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers'], getServers);
-  const sortedServers = React.useMemo(() => sortFunc(serverData, sortBy),[serverData, sortBy]);
+
+  const searchData = React.useMemo(() => searchFunc(search, serverData, ['name']), [search, serverData]);
+  const sortedServers = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
 
 
   if (serverStatus == 'loading') {
@@ -65,7 +70,7 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera'/>
         <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
         <ServerList serverData={sortedServers} type={Status.ACTIVE}></ServerList>
 

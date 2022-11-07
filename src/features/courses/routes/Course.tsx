@@ -15,6 +15,8 @@ import { DotsHorizontalIcon } from '@heroicons/react/outline'
 import { Menu } from '@headlessui/react'
 import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
 import { sortFunc } from 'api/sortFilter'
+import { searchFunc } from 'api/searchApi'
+
 
 // TODO Add the edition fetching to the edition list component
 
@@ -24,6 +26,8 @@ export const Course = () => {
   const [addEditionModal, setAddEditionModal] = React.useState(false);
   const [sortBy, setSortBy] = React.useState(editionsSortOptions[0])
   const [filterBy, setFilterBy] = React.useState(null);
+  const [search, setSearch] = React.useState('');
+
 
   const { id } = useParams()
 
@@ -31,8 +35,9 @@ export const Course = () => {
   const editionsQuery = useQuery(['editions', id], () => getEditions(id));
   const { data : editionData, status : editionStatus, refetch : editionRefetch } = editionsQuery;
 
-  const sortedEditions = React.useMemo(() => sortFunc(editionData, sortBy),[editionData, sortBy]);
-  
+  const searchData = React.useMemo(() => searchFunc(search, editionData, ['course/name','semester/year']), [search, editionData]);
+  const sortedEditions = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
+
   if (editionStatus == 'loading' || courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
@@ -108,7 +113,7 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar sort={true} filter={true} search={true} sortOptions={editionsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj edycji'/>
+          <Toolbar sort={true} filter={true} search={true} sortOptions={editionsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
           <EditionList editionsQuery={editionsQuery} editionData={sortedEditions} type={Status.ACTIVE} />
 

@@ -13,9 +13,11 @@ interface IToolbar {
     filterOptions? : FilterOptions, // TODO
     sortVal?: any,
     sortSet?: (v: any) => void,
+    searchVal?: string;
+    searchSet?: (v: any) => void,
 }
 
-export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions, sortVal, sortSet } : IToolbar) => {
+export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions, sortVal, sortSet, searchVal, searchSet } : IToolbar) => {
     const sortBy = sortVal;
     const setSortBy = sortSet;
 
@@ -51,7 +53,11 @@ export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions, 
                 </div>
             </Listbox> : null}
             {search ? <div className='flex'>
-                <input className='border border-zinc-400 rounded-l-md h-9 w-60 px-3 py-1 outline-offset-[-2px] outline-none border-r-0 focus:outline-blue-800 hover:border-zinc-500' placeholder={searchPlaceholder}></input>
+                <input className='border border-zinc-400 rounded-l-md h-9 w-60 px-3 py-1 outline-offset-[-2px] outline-none border-r-0 focus:outline-blue-800 hover:border-zinc-500'
+                    placeholder={searchPlaceholder}
+                    value={searchVal}
+                    onChange={(v) => searchSet?.(v.target.value)}
+                />
                 <div className='flex items-center justify-center px-[6px] w-8 bg-blue-800 rounded-r-md h-9 cursor-pointer'>
                     <SearchIcon className='h-5 w-auto text-white'></SearchIcon>
                 </div>  

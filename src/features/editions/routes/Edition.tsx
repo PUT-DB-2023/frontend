@@ -16,6 +16,7 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import { activeEdition } from '../api/activeEdition';
 import { groupsSortOptions } from 'types';
 import { sortFunc } from 'api/sortFilter';
+import { searchFunc } from 'api/searchApi';
 
 export const Edition = () => {
   const [showRemove, setShowRemove] = React.useState(false);
@@ -23,10 +24,13 @@ export const Edition = () => {
   const { id } = useParams();
   const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
   const [filterBy, setFilterBy] = React.useState(null);
+  const [search, setSearch] = React.useState('');
 
   const { data: editionData, status: editionStatus, refetch: editionRefetch } = useQuery(['edition', id], () => getEdition(id))
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['editionGroups', id], () => getEditionGroups(id))
-  const sortedGroups = React.useMemo(() => sortFunc(groupData, sortBy),[groupData, sortBy]);
+
+  const searchData = React.useMemo(() => searchFunc(search, groupData, ['day','hour','teacherEdition/teacher/first_name', 'teacherEdition/teacher/last_name']), [search, groupData]);
+  const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
 
   const handleActive = React.useCallback(() => {
     id && activeEdition({ id: id, active: !editionData.active, refresh: editionRefetch });
@@ -108,7 +112,7 @@ export const Edition = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj grupy' />
+        <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
         <GroupList groupData={sortedGroups}></GroupList>
       </ContentPanel>
     </ContentLayout>

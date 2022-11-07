@@ -13,14 +13,19 @@ import { GroupList } from '../components/GroupList';
 import { getTeacherEdition } from '../api/getTeacherEdition';
 import { groupsSortOptions } from 'types';
 import { sortFunc } from 'api/sortFilter';
+import { searchFunc } from 'api/searchApi'
 
 export const Groups = () => {
     const [showAdd, setShowAdd] = React.useState(false);
     const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
     const [filterBy, setFilterBy] = React.useState(null);
+    const [search, setSearch] = React.useState('');
+
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
     const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
-    const sortedGroups = React.useMemo(() => sortFunc(groupData, sortBy),[groupData, sortBy]);
+
+    const searchData = React.useMemo(() => searchFunc(search, groupData, ['name','day','hour','teacherEdition/edition/course/name','teacherEdition/edition/semester/year']), [search, groupData]);
+    const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
 
 
     if (groupStatus == 'loading') {
@@ -66,7 +71,7 @@ export const Groups = () => {
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj grupy'/>
+            <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
             <h2 className='text-lg font-semibold'>Aktywne grupy</h2>
             <GroupList groupData={sortedGroups} type={Status.ACTIVE}></GroupList>
     

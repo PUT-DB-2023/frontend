@@ -15,6 +15,7 @@ import { ServerListModal } from '../components/ServerListModal'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
+import { searchFunc } from 'api/searchApi'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -22,14 +23,17 @@ export const Group = () => {
   const { id } = useParams()
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   const [newModal, setNewModal] = React.useState(false);
+  const [search, setSearch] = React.useState('');
+
 
   const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
     () => addDbAccounts(groupData.id, groupData.teacherEdition.edition.servers[0].id), {
     refetchOnWindowFocus: false,
     enabled: false // disable this query from automatically running
   })
-  let students = null
   let servers = null
+
+  const searchData = React.useMemo(() => searchFunc(search, groupData.students, ['student_id','first_name','last_name','email']), [search, groupData.students]);
 
   if (groupStatus === 'loading') {
     return (
@@ -39,7 +43,6 @@ export const Group = () => {
     )
   }
   else {
-    students = groupData.students
     servers = groupData.teacherEdition.edition.servers
   }
 
@@ -100,8 +103,8 @@ export const Group = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} searchPlaceholder='Szukaj użytkowników' />
-        <Table data={students} columns={columns('students')}></Table>
+        <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
+        <Table data={searchData} columns={columns('students')}></Table>
       </ContentPanel>
     </ContentLayout>
   )
