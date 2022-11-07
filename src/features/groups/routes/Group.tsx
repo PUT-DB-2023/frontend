@@ -33,7 +33,7 @@ export const Group = () => {
   })
   let servers = null
 
-  const searchData = React.useMemo(() => searchFunc(search, groupData.students, ['student_id','first_name','last_name','email']), [search, groupData.students]);
+  const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
 
   if (groupStatus === 'loading') {
     return (
