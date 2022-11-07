@@ -3,17 +3,23 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import React from 'react'
 import { useQuery } from 'react-query'
-import { ButtonType, PanelType, Status, testSortOptions } from 'types'
+import { ButtonType, PanelType, Status } from 'types'
 import { getServers } from '../api/getServers'
 import { ServerList } from '../components/ServerList'
 import { AddNewModal } from '../components/AddNewModal'
 import { Toolbar } from 'components/Toolbar'
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
+import { serversSortOptions } from 'types'
+import { sortFunc } from 'api/sortFilter'
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
-  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers'], getServers)
+  const [sortBy, setSortBy] = React.useState(serversSortOptions[0]);
+  const [filterBy, setFilterBy] = React.useState(null);
+  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers'], getServers);
+  const sortedServers = React.useMemo(() => sortFunc(serverData, sortBy),[serverData, sortBy]);
+
 
   if (serverStatus == 'loading') {
     return (
@@ -59,14 +65,14 @@ export const Servers = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj serwera'/>
         <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
-        <ServerList serverData={serverData} type={Status.ACTIVE}></ServerList>
+        <ServerList serverData={sortedServers} type={Status.ACTIVE}></ServerList>
 
         <hr className='w-full mt-2 border-1 border-blue-800'></hr>
 
         <h2 className='text-lg font-semibold'>Nieaktywne serwery</h2>
-        <ServerList serverData={serverData} type={Status.INACTIVE}></ServerList>
+        <ServerList serverData={sortedServers} type={Status.INACTIVE}></ServerList>
       </ContentPanel>
     </ContentLayout>
   )

@@ -1,10 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
-import { Box } from 'components'
 import { Button } from 'components/Button'
-import { Link } from 'react-router-dom'
-import { ButtonType, PanelType, testSortOptions } from 'types'
+import { ButtonType, PanelType, coursesSortOptions } from 'types'
 import { CourseList } from '../components/CourseList'
-import { ModalContainer } from 'components/ModalContainer';
 import { AddNewModal } from '../components/AddNewModal'
 import * as React from 'react';
 import { useQuery } from 'react-query'
@@ -12,11 +9,17 @@ import { getCourses } from '../api/getCourses'
 import { Spinner } from 'components/Spinner'
 import { Toolbar } from 'components/Toolbar'
 import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon } from '@heroicons/react/solid'
+import { DotsHorizontalIcon } from '@heroicons/react/solid';
+import { sortFunc } from '../../../api/sortFilter'
 
 export const Courses = () => {
   const [newModal, setNewModal] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState(coursesSortOptions[0])
+  const [filterBy, setFilterBy] = React.useState(null);
+
   const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['courses'], getCourses)
+
+  const sorted = React.useMemo(() => sortFunc(courseData, sortBy),[courseData, sortBy]);
 
   if (courseStatus == 'loading') {
     return (
@@ -61,8 +64,8 @@ export const Courses = () => {
         </div>
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj przedmiotu' />
-        <CourseList courseData= { courseData }></CourseList>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj przedmiotu' />
+        <CourseList courseData= { sorted }></CourseList>
       </ContentPanel>
     </ContentLayout>
   )

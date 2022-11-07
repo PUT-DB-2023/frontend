@@ -1,8 +1,5 @@
 import { ContentLayout, ContentPanel } from 'components'
-import { Box } from 'components'
 import { Button } from 'components/Button';
-import { CourseList } from 'features/courses/components/CourseList';
-// import { courseList } from 'features/courses/api/getCourses'
 import { useParams } from "react-router-dom";
 import { ButtonType, PanelType } from 'types';
 import { GroupList } from '../components/GroupList';

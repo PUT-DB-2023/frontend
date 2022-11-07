@@ -10,7 +10,6 @@ import { useQuery } from 'react-query'
 import { getCourses } from 'features/courses/api/getCourses'
 import { getServers } from 'features/servers/api/getServers'
 import { Spinner } from './Spinner'
-import { getGroup } from 'features/groups/api/getGroup'
 import { getGroups } from 'features/groups/api/getGroups'
 
 interface AccordionMenuProps {

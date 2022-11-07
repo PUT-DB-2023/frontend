@@ -5,7 +5,7 @@ import { Spinner } from 'components/Spinner';
 import { LinkCell, Table } from 'components/Table';
 import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
-import { ButtonType, PanelType, testSortOptions, UserType } from 'types'
+import { ButtonType, PanelType, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
 import { UserTable } from '../components/UserTable';
 import { User } from '../types';
@@ -66,7 +66,7 @@ export const Users = ({ type } : UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkownika' />
+        <Toolbar sort={false} filter={false} search={true} searchPlaceholder='Szukaj użytkownika' />
         <Table data={usersQuery.data} columns={columns(baseUrl)} />
       </ContentPanel>
     </ContentLayout>

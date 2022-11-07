@@ -3,7 +3,7 @@ import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { ButtonType, PanelType, testSortOptions } from 'types';
+import { ButtonType, PanelType } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
 import { GroupList } from '../components/GroupList';
@@ -14,14 +14,19 @@ import { Toolbar } from 'components/Toolbar';
 import { Menu } from '@headlessui/react';
 import { DotsHorizontalIcon } from '@heroicons/react/solid';
 import { activeEdition } from '../api/activeEdition';
+import { groupsSortOptions } from 'types';
+import { sortFunc } from 'api/sortFilter';
 
 export const Edition = () => {
   const [showRemove, setShowRemove] = React.useState(false);
   const [showEdit, setShowEdit] = React.useState(false)
   const { id } = useParams();
+  const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
+  const [filterBy, setFilterBy] = React.useState(null);
 
   const { data: editionData, status: editionStatus, refetch: editionRefetch } = useQuery(['edition', id], () => getEdition(id))
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['editionGroups', id], () => getEditionGroups(id))
+  const sortedGroups = React.useMemo(() => sortFunc(groupData, sortBy),[groupData, sortBy]);
 
   const handleActive = React.useCallback(() => {
     id && activeEdition({ id: id, active: !editionData.active, refresh: editionRefetch });
@@ -103,8 +108,8 @@ export const Edition = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy' />
-        <GroupList groupData={groupData}></GroupList>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj grupy' />
+        <GroupList groupData={sortedGroups}></GroupList>
       </ContentPanel>
     </ContentLayout>
   )

@@ -1,26 +1,16 @@
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon, LoginIcon } from '@heroicons/react/solid'
-import { ColumnDef } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
-import { LinkCell, Table } from 'components/Table'
+import { Table } from 'components/Table'
 import { Toolbar } from 'components/Toolbar'
-import { getEditions } from 'features/editions/api/getEditions'
-import { EditionList } from 'features/editions/components/EditionList'
-import { GroupList } from 'features/editions/components/GroupList'
-import { ServerList } from 'features/servers/components/ServerList'
-import { User } from 'features/users'
-import { UserTable } from 'features/users/components/UserTable'
 import { columns } from 'features/users/routes/Users'
-import { getgroups } from 'process'
-import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, Status, PanelType, testSortOptions } from 'types'
+import { ButtonType, PanelType } from 'types'
 import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
-import { GroupServerList } from '../components/GroupServerList'
 import { ServerListModal } from '../components/ServerListModal'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
@@ -31,7 +21,7 @@ export const Group = () => {
   const [editModal, setEditModal] = React.useState(false);
   const { id } = useParams()
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
-  const [newModal, setNewModal] = useState(false);
+  const [newModal, setNewModal] = React.useState(false);
 
   const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
     () => addDbAccounts(groupData.id, groupData.teacherEdition.edition.servers[0].id), {
@@ -110,7 +100,7 @@ export const Group = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj użytkowników' />
+        <Toolbar sort={false} filter={false} search={true} searchPlaceholder='Szukaj użytkowników' />
         <Table data={students} columns={columns('students')}></Table>
       </ContentPanel>
     </ContentLayout>

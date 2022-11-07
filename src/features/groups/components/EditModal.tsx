@@ -32,7 +32,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const handleUpdate = React.useCallback(async () => {
         const studs = students.map((o: any) => String(o.id))
         const res = await updateGroup({name, day, hour, room, teacherEdition, students: studs, id: data.id});
-        console.log(res)
         if (res) {
             off();
             refetch()

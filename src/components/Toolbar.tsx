@@ -9,23 +9,26 @@ interface IToolbar {
     filter: boolean,
     search : boolean,
     searchPlaceholder?: string,
-    sortOptions : SortOptions[],
-    filterOptions? : FilterOptions // TODO
+    sortOptions? : SortOptions[],
+    filterOptions? : FilterOptions, // TODO
+    sortVal?: any,
+    sortSet?: (v: any) => void,
 }
 
-export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions } : IToolbar) => {
-    const [sortBy, setSortBy] = useState(sortOptions[0])
+export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions, sortVal, sortSet } : IToolbar) => {
+    const sortBy = sortVal;
+    const setSortBy = sortSet;
 
     return (
     <div className='flex w-full justify-end self-end'>
         <div className='flex-wrap-reverse lg:w-auto flex items-center gap-4'>
             {filter ? <AdjustmentsIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> : null}
-            {sort ? <Listbox value={sortBy} onChange={setSortBy}>
+            {sort && sortOptions && sortBy && setSortBy ? <Listbox value={sortBy} onChange={setSortBy}>
                 <div className="relative w-[232px]">
                     <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                         <SortAscendingIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/>
                         <span className='flex justify-start w-full px-2'>
-                            {sortBy.field}: {sortBy.asc ? "rosnąco" : "malejąco"}
+                            {sortBy.name}: {sortBy.asc ? "rosnąco" : "malejąco"}
                         </span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -39,7 +42,7 @@ export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions }
                             >
                                 {({ selected }) => (         
                                     <>                   
-                                        <span className={selected ? `font-bold` : `font-normal`}>{sortOption.field}: {sortOption.asc ? "rosnąco" : "malejąco"}</span>
+                                        <span className={selected ? `font-bold` : `font-normal`}>{sortOption.name}: {sortOption.asc ? "rosnąco" : "malejąco"}</span>
                                     </>
                                 )}
                             </Listbox.Option>

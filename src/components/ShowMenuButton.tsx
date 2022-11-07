@@ -1,5 +1,4 @@
 import { MenuAlt2Icon } from '@heroicons/react/solid';
-import { ButtonType } from 'types';
 
 interface ShowMenuButtonProps {
     onClick?: () => void;

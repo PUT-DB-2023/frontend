@@ -3,12 +3,10 @@ import { getUsers } from 'features/users/api/getUsers';
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { PanelType, UserType } from 'types';
-import { ContentPanel } from './ContentPanel';
+import { UserType } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
-import { Spinner } from './Spinner';
 
 type MainLayoutProps = {
   children?: React.ReactNode;

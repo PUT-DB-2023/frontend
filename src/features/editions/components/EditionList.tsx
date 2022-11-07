@@ -1,18 +1,16 @@
 import { Box } from "components";
 import { Spinner } from "components/Spinner";
-import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import { Status } from "types";
-import { getEditions } from "../api/getEditions";
 
 interface IEditionList {
+  editionsQuery?: any;
   editionData: any;
   type: Status;
 }
 
-export const EditionList = ({editionData, type} : IEditionList) => {
+export const EditionList = ({editionsQuery, editionData, type} : IEditionList) => {
   const { id } = useParams()
-  const editionsQuery = useQuery(['editions', id], () => getEditions( id ))
   
   if (editionsQuery.isLoading) {
     return (
@@ -28,7 +26,7 @@ export const EditionList = ({editionData, type} : IEditionList) => {
   }
   else {
     if (type == Status.ACTIVE) {
-      const activeEditions = editionsQuery.data.filter((obj : any) => obj.active === true)
+      const activeEditions = editionData.filter((obj : any) => obj.active === true)
 
       return (
         <div className='w-full'>
@@ -55,7 +53,7 @@ export const EditionList = ({editionData, type} : IEditionList) => {
       )
     }
     else if (type == Status.INACTIVE) {
-      const closedEditions = editionsQuery.data.filter((obj : any) => obj.active === false)
+      const closedEditions = editionData.filter((obj : any) => obj.active === false)
 
       return (
         <div className='w-full h-full overflow-y-auto'>

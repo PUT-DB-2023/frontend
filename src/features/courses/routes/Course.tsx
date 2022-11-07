@@ -3,10 +3,9 @@ import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
 import { getEditions } from 'features/editions/api/getEditions'
 import { EditionList } from 'features/editions/components/EditionList'
-import { useEffect } from 'react'
 import { useQuery } from 'react-query'
-import { Link, useParams } from 'react-router-dom'
-import { ButtonType, Status, PanelType, testSortOptions } from 'types'
+import { useParams } from 'react-router-dom'
+import { ButtonType, Status, PanelType, editionsSortOptions } from 'types'
 import { getCourse } from '../api/getCourse'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
@@ -15,18 +14,24 @@ import { Toolbar } from 'components/Toolbar'
 import { DotsHorizontalIcon } from '@heroicons/react/outline'
 import { Menu } from '@headlessui/react'
 import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
+import { sortFunc } from 'api/sortFilter'
 
 // TODO Add the edition fetching to the edition list component
 
 export const Course = () => {
-  const [removeModal, setRemoveModal] = React.useState(false)
-  const [editModal, setEditModal] = React.useState(false)
-  const [addEditionModal, setAddEditionModal] = React.useState(false)
+  const [removeModal, setRemoveModal] = React.useState(false);
+  const [editModal, setEditModal] = React.useState(false);
+  const [addEditionModal, setAddEditionModal] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState(editionsSortOptions[0])
+  const [filterBy, setFilterBy] = React.useState(null);
 
   const { id } = useParams()
 
-  const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course', id], () => getCourse(id))
-  const { data : editionData, status : editionStatus, refetch : editionRefetch } = useQuery(['editions', id], () => getEditions(id))
+  const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course', id], () => getCourse(id));
+  const editionsQuery = useQuery(['editions', id], () => getEditions(id));
+  const { data : editionData, status : editionStatus, refetch : editionRefetch } = editionsQuery;
+
+  const sortedEditions = React.useMemo(() => sortFunc(editionData, sortBy),[editionData, sortBy]);
   
   if (editionStatus == 'loading' || courseStatus == 'loading') {
     return (
@@ -103,14 +108,14 @@ export const Course = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj edycji'/>
+          <Toolbar sort={true} filter={true} search={true} sortOptions={editionsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj edycji'/>
           <h2 className='text-lg font-semibold'>Aktywne edycje</h2>
-          <EditionList editionData={editionData} type={Status.ACTIVE} />
+          <EditionList editionsQuery={editionsQuery} editionData={sortedEditions} type={Status.ACTIVE} />
 
           <hr className='w-full mt-2 border-1 border-blue-800'></hr>
 
           <h2 className='text-lg font-semibold'>Zakończone edycje</h2>
-          <EditionList editionData={editionData} type={Status.INACTIVE} />
+          <EditionList editionsQuery={editionsQuery} editionData={sortedEditions} type={Status.INACTIVE} />
         </ContentPanel>
     </ContentLayout>
   )

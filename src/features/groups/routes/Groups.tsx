@@ -5,19 +5,23 @@ import { Button } from 'components/Button';
 import { Spinner } from 'components/Spinner';
 import { Toolbar } from 'components/Toolbar';
 import { AddNewModal } from 'features/groups/components/AddNewModal';
-import { ServerList } from 'features/servers/components/ServerList';
 import React from 'react'
 import { useQuery } from 'react-query';
-import { ButtonType, PanelType, Status, testSortOptions } from 'types';
+import { ButtonType, PanelType, Status } from 'types';
 import { getGroups } from '../api/getGroups';
 import { GroupList } from '../components/GroupList';
 import { getTeacherEdition } from '../api/getTeacherEdition';
+import { groupsSortOptions } from 'types';
+import { sortFunc } from 'api/sortFilter';
 
 export const Groups = () => {
     const [showAdd, setShowAdd] = React.useState(false);
+    const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
+    const [filterBy, setFilterBy] = React.useState(null);
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
     const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
-    console.log(techerEditionsData)
+    const sortedGroups = React.useMemo(() => sortFunc(groupData, sortBy),[groupData, sortBy]);
+
 
     if (groupStatus == 'loading') {
     return (
@@ -62,14 +66,14 @@ export const Groups = () => {
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar sort={true} filter={true} search={true} sortOptions={testSortOptions} searchPlaceholder='Szukaj grupy'/>
+            <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchPlaceholder='Szukaj grupy'/>
             <h2 className='text-lg font-semibold'>Aktywne grupy</h2>
-            <GroupList groupData={groupData} type={Status.ACTIVE}></GroupList>
+            <GroupList groupData={sortedGroups} type={Status.ACTIVE}></GroupList>
     
             <hr className='w-full mt-2 border-1 border-blue-800'></hr>
     
             <h2 className='text-lg font-semibold'>Nieaktywne grupy</h2>
-            <GroupList groupData={groupData} type={Status.INACTIVE}></GroupList>
+            <GroupList groupData={sortedGroups} type={Status.INACTIVE}></GroupList>
           </ContentPanel>
         </ContentLayout>
       )
