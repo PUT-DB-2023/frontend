@@ -62,5 +62,5 @@ export type DbAccount = {
   username : string,
   password : string,
   additional_info : string,
-  isMovedToExtDB : boolean
+  is_moved : boolean
 } & BaseEntity
