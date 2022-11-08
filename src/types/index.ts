@@ -41,29 +41,21 @@ export type FilterOptions = {
 export const coursesSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: true},
   {name: 'Nazwa', field: 'name', asc: false},
-  {name: 'Id', field: 'id', asc: true},
-  {name: 'Id', field: 'id', asc: false},
 ]
 
 export const editionsSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'description', asc: true},
   {name: 'Nazwa', field: 'description', asc: false},
-  {name: 'Id', field: 'id', asc: true},
-  {name: 'Id',  field: 'id', asc: false},
 ]
 
 export const groupsSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: true},
   {name: 'Nazwa', field: 'name', asc: false},
-  {name: 'Id', field: 'id', asc: true},
-  {name: 'Id',  field: 'id', asc: false},
 ]
 
 export const serversSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: true},
   {name: 'Nazwa', field: 'name', asc: false},
-  {name: 'Id', field: 'id', asc: true},
-  {name: 'Id',  field: 'id', asc: false},
 ]
 
 export type DbAccount = {
