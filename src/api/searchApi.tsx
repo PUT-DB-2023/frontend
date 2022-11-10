@@ -11,8 +11,8 @@ export const searchFunc = (search: string, data: [], keys: Array<string>) => {
                 if (keyVal !== undefined) { phrase.push(keyVal); }
             }
 
-            const addedPhrase = phrase.join(' ');
-            return addedPhrase.includes(search);
+            const addedPhrase = phrase.join(' ').toLowerCase();
+            return addedPhrase.includes(search.toLowerCase());
         }) : data;
     }
 }

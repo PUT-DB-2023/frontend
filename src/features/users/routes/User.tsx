@@ -43,7 +43,7 @@ const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
         )
     },
     {
-        accessorKey: 'isMovedToExtDB',
+        accessorKey: 'is_moved',
         header: 'Przeniesiono',
         cell: ({getValue}) => (
           <div className='p-2'>

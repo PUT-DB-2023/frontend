@@ -6,7 +6,6 @@ export interface IAddEdition {
     description: string,
     date_opened: Date,
     date_closed: Date,
-    active: boolean,
     semester: string,
     course: string,
 }
@@ -16,7 +15,6 @@ export const addEdition = async (edition: IAddEdition) => {
         description: edition.description,
         date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
-        active: edition.active,
         semester: edition.semester,
         course: edition.course,
     }

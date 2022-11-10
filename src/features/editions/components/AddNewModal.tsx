@@ -11,7 +11,6 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
-    const [active, setActive] = React.useState(true);
     const [semester, setSemester] = React.useState('1');
     const [course, setCourse] = React.useState(courseId);
 
@@ -19,20 +18,19 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         setDescription('');
         setDateOpened(new Date());
         setDateClosed(new Date());
-        setActive(true);
         setSemester('1');
         setCourse(courseId);
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = await addEdition({description, date_opened: dateOpened, date_closed: dateClosed, active, semester, course});
+        const res = await addEdition({description, date_opened: dateOpened, date_closed: dateClosed, semester, course});
         if (res) {
             handleOff();
             refetch()
          } else {
          }
-    }, [description, dateOpened, dateClosed, active, semester, course])
+    }, [description, dateOpened, dateClosed, semester, course])
 
     if (show) {
         return (
@@ -41,7 +39,6 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
                     <Field title={"Opis"} value={description} setValue={setDescription} />
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened}/>
-                    <CheckBox title={"Aktywny:"} value={active} setValue={setActive} />
                     <Field title={"Semestr"} value={semester} setValue={setSemester} />
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
