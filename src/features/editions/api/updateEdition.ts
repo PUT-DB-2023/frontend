@@ -12,7 +12,6 @@ export const updateEdition = async (edition: IUpdate) => {
         description: edition.description,
         date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
-        active: edition.active,
         semester: {id: edition.semester},
         course: {id: edition.course},
         id: edition.id,

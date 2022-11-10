@@ -19,7 +19,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
-    const [active, setActive] = React.useState(true);
     const [semester, setSemester] = React.useState('');
     const [course, setCourse] = React.useState('');
     const ref = React.useRef(null);
@@ -30,18 +29,17 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setDescription(data.description);
         openArray && setDateOpened(new Date(openArray?.[0], openArray?.[1], openArray?.[2]));
         closeArray && setDateClosed(new Date(closeArray?.[0], closeArray?.[1], closeArray?.[2]));
-        setActive(data.active);
         setSemester(data.semester.id);
         setCourse(data.course.id);
     },[show, data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateEdition({description, date_opened: dateOpened, date_closed: dateClosed, active, semester, course, id: data.id});
+        const res = await updateEdition({description, date_opened: dateOpened, date_closed: dateClosed, semester, course, id: data.id});
         if (res) {
             off();
             refetch()
          }
-    }, [description, dateOpened, dateClosed, active, semester, course])
+    }, [description, dateOpened, dateClosed, semester, course])
 
     if (show) {
         return (
@@ -50,7 +48,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     <Field title={"Opis"} value={description} setValue={setDescription} />
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened}/>
-                    <CheckBox title={"Aktywny:"} value={active} setValue={setActive} />
                     <Field title={"Semestr"} value={semester} setValue={setSemester} />
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
