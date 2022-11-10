@@ -13,7 +13,9 @@ export enum ButtonType {
 
 export enum PanelType {
   HEADER,
-  CONTENT
+  CONTENT,
+  OUTLINE,
+  GRADIENT
 }
 
 export enum Status {

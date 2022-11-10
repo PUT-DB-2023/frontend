@@ -111,6 +111,10 @@ export const Course = () => {
             </div>
           </div>
         </ContentPanel>
+        <ContentPanel type={PanelType.CONTENT}>
+          <h2 className='text-lg font-semibold'>Wybrana edycja</h2>
+          <h1 className='text-3xl'></h1>
+        </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
           <Toolbar sort={true} filter={true} search={true} sortOptions={editionsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj edycji'/>
