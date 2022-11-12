@@ -11,7 +11,7 @@ export const CourseList = ( { courseData } : any) => {
   return (
     <div className='w-full h-full'>
         { courseData.length == 0 ? 
-          <div className='font-semibold text-xl'> Brak Przedmiotów </div> :
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
           courseData.map(function(course : Course) {
             return (
               <Link to={'/courses/' + course.id}>

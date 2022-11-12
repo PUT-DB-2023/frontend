@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/logo.png'
 import { Disclosure } from '@headlessui/react'
-import { AcademicCapIcon, ChevronUpIcon, DatabaseIcon, UserGroupIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
+import { AcademicCapIcon, CalendarIcon, ChevronUpIcon, DatabaseIcon, UserGroupIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
 // import { courseList } from 'features/courses/api/getCourses'
 import { Edition } from 'features/editions'
 import { Course } from 'features/courses'
@@ -11,6 +11,7 @@ import { getCourses } from 'features/courses/api/getCourses'
 import { getServers } from 'features/servers/api/getServers'
 import { Spinner } from './Spinner'
 import { getGroups } from 'features/groups/api/getGroups'
+import { getSemesters } from 'features/semesters/api/getSemesters'
 
 interface AccordionMenuProps {
   title: string;
@@ -68,13 +69,15 @@ export const AccordionMenu = ({title, url, icon, children, userMenu} : Accordion
 }
 
 export const SideNavigation = () => {
-  const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery('courses', getCourses)
+  const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['courses'], () => getCourses(undefined))
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery('servers', getServers)
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery('groups', getGroups)
+  const { data: semesterData, status: semesterStatus, refetch: semesterRefetch } = useQuery('semesters', () => getSemesters(undefined))
 
   let coursesContent = null
   let serversContent = null
   let groupsContent = null
+  let semestersContent = null
 
   if (courseStatus === 'loading') {
     coursesContent = (
@@ -118,12 +121,27 @@ export const SideNavigation = () => {
     )
   }
 
+  if (semesterStatus === 'loading') {
+    semestersContent = (
+      <div className='w-full h-full flex items-center justify-center'>
+        <Spinner />
+      </div>
+    )
+  }
+
+  else if (semesterStatus === 'success') {
+    semestersContent = (
+      <AccordionMenu title='Semestry' url='/semesters/' icon={<CalendarIcon className='h-5 w-auto'/>} children={semesterData}/>
+    )
+  }
+
   return (
     <nav className='flex flex-col w-full h-full overflow-y-auto mt-12'>
         { coursesContent }
         { serversContent }
         <AccordionMenu title='Użytkownicy' url='/users/' icon={<UserIcon className='h-5 w-auto'/>} userMenu={ true }/>
         { groupsContent }
+        { semestersContent }
     </nav>
   )
 }

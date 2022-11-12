@@ -57,11 +57,11 @@ export const Group = () => {
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
-          <h1 className='font-bold text-3xl'> {groupData.name} - {groupData.day} {groupData.hour} </h1>
-          <h2 className='font-normal text-base'>
-            {groupData.teacherEdition.edition.course.name} - {groupData.teacherEdition.edition.semester.year} {groupData.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}
+          <h1 className='font-bold text-3xl'> {groupData.name} - {groupData.teacherEdition.edition.course.name} {groupData.teacherEdition.edition.semester.year} {groupData.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</h1>
+          <h2 className='font-semibold text-xl text-blue-800'>
+            {groupData.day} {groupData.hour}
           </h2>
-          <h2 className='text-blue-900 font-semibold mb-8'> {groupData !== undefined ? groupData.students.length : ''} studentów </h2>
+          {/* <h2 className='text-blue-900 font-semibold mb-8'> {groupData !== undefined ? groupData.students.length : ''} studentów </h2> */}
         </div>
         <div className='flex gap-6'>
           <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta' />

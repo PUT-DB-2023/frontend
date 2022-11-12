@@ -4,35 +4,35 @@ import { Spinner } from 'components/Spinner'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType } from 'types'
-import { getServer } from '../api/getServer'
-import { ServerInfo } from '../components/ServerInfo'
+import { getSemester } from '../api/getSemester'
+// import { SemesterInfo } from '../components/SemesterInfo'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
-import { activeServer } from '../api/activeServer'
+import { activeSemester } from '../api/activeSemester'
 
-export const Server = () => {
+export const Semester = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
   const { id } = useParams()
 
-  const serverQuery = useQuery(['server', id], () => getServer( id ))
-  // const {data: serverQuery } = useQuery(['server', id], () => getServer( id ))
-  const refetch = serverQuery.refetch;
+  const semesterQuery = useQuery(['semester', id], () => getSemester( id ))
+  // const {data: semesterQuery } = useQuery(['semester', id], () => getSemester( id ))
+  const refetch = semesterQuery.refetch;
 
   const activation = React.useCallback(()=>{
-    id && activeServer({id: id, active: !serverQuery.data.active, refresh: refetch});
-    serverQuery.refetch()
-  },[serverQuery, id, refetch])
+    id && activeSemester({id: id, active: !semesterQuery.data.active, refresh: refetch});
+    semesterQuery.refetch()
+  },[semesterQuery, id, refetch])
 
-  if (serverQuery.isLoading) {
+  if (semesterQuery.isLoading) {
     return (
       <Spinner />
     );
   }
-  else if (serverQuery.isError) {
+  else if (semesterQuery.isError) {
     return (
       <div>
         Error!
@@ -40,19 +40,19 @@ export const Server = () => {
     );
   }
 
-  console.log(serverQuery.data)
+  console.log(semesterQuery.data)
 
   return (
     <ContentLayout>
-      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name}/>
-      <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{id: id as string, ...serverQuery.data}}/>
+      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={semesterQuery.data.name}/>
+      <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={semesterQuery.refetch} data={{id: id as string, ...semesterQuery.data}}/>
         <ContentPanel type={PanelType.HEADER}>
           <div className='flex-col'>
-            <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { serverQuery.data.name }</h1>
+            <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { semesterQuery.data.name }</h1>
           </div>
           <div className='flex items-start'>
             <div className='flex gap-6'>
-              {serverQuery.data.active ? 
+              {semesterQuery.data.active ? 
                 <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/> :
                 <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>
               } 
@@ -97,7 +97,7 @@ export const Server = () => {
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
           <h2 className='text-lg font-semibold'> Szczegóły </h2>
-          <ServerInfo serverData={serverQuery.data} />
+          {/* <SemesterInfo semesterData={semesterQuery.data} /> */}
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
           <h2 className='text-lg font-semibold'> Polecenia bazodanowe </h2>

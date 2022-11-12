@@ -60,6 +60,11 @@ export const serversSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: false},
 ]
 
+export const semestersSortOptions : SortOptions[] = [
+  {name: 'Nazwa', field: 'name', asc: true},
+  {name: 'Nazwa', field: 'name', asc: false},
+]
+
 export type DbAccount = {
   username : string,
   password : string,

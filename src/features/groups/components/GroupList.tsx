@@ -14,7 +14,8 @@ export const GroupList = ({ groupData, type } : IGroupList) => {
         return (
           <div className='w-full'>
             { activeGroups.length == 0 ? 
-            <div className='font-semibold text-xl'> Brak grup </div> :activeGroups.map(function(group : any) {
+            <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
+            activeGroups.map(function(group : any) {
               return <Link to={'/groups/' + group.id}>
                         <Box>
                             <span className='font-semibold text-xl'> {group.name} - {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</span>
@@ -31,13 +32,15 @@ export const GroupList = ({ groupData, type } : IGroupList) => {
         const inactiveGroups = groupData.filter((obj : any) => obj?.teacherEdition?.edition?.active === false)
     
         return (
-          <div className='w-full h-full overflow-y-auto'>
-            { inactiveGroups.map(function(group : any) {
+          <div className='w-full'>
+            { inactiveGroups.length == 0 ? 
+            <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
+            inactiveGroups.map(function(group : any) {
               return <Link to={'/groups/' + group.id}>
-                        <Box color='bg-red-500'>
-                            <span className='font-semibold text-xl'> {group.name} - {group.day} {group.hour} </span>
+                        <Box>
+                            <span className='font-semibold text-xl'> {group.name} - {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</span>
                             <span className='font-normal text-base'> 
-                              {group.teacherEdition.edition.course.name} - {group.teacherEdition.edition.semester.year} { group.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}
+                              {group.day} {group.hour} 
                             </span>
                         </Box>
                       </Link>

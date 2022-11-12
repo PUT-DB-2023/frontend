@@ -11,7 +11,7 @@ export const ContentPanel = ({type, children} : ContentPanelProps) => {
     <main className={`bg-white w-full shadow-md rounded-lg flex flex-auto lg:p-9 p-6 basis-full justify-between gap-8 ${
       type === PanelType.HEADER ? 'flex-col lg:flex-row' :
       type === PanelType.CONTENT ? 'flex-col' :
-      type === PanelType.OUTLINE ? 'flex-col border border-blue-600' :
+      type === PanelType.OUTLINE ? 'flex-col pt-0 lg:pt-0' :
       type === PanelType.GRADIENT ? 'flex-col bg-gradient-to-r from-blue-600 to-blue-600' : ''
     }`}>
       { children }

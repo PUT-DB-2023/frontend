@@ -31,7 +31,7 @@ export const EditionList = ({editionsQuery, editionData, type} : IEditionList) =
       return (
         <div className='w-full'>
           { activeEditions.length == 0 ? 
-          <div className='font-semibold text-xl'> Brak Przedmiotów </div> :
+          <div className='font-semibold text-xl'> Brak Wyników </div> :
           activeEditions.map(function(edition : any) {
             return <Link key={ edition.id} to= {'/editions/' + edition.id}>
                       <Box>

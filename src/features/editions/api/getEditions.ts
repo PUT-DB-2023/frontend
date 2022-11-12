@@ -2,10 +2,11 @@ import { axios } from 'lib/axios'
 import { useQuery } from 'react-query'
 import { Edition } from '../types'
 
-export const getEditions = async ( courseId? : any ) => {
+export const getEditions = async (active?: boolean, courseId? : string ) => {
     const response = await axios.get("/editions/", {
         params : {
-            'course': courseId
+            'course': courseId,
+            'semester__active': active,
         }
     })
     return response.data
