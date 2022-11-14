@@ -36,16 +36,18 @@ export const ServerList = ({sortVal, sortSet, searchVal, searchSet} : IServerLis
 
   return (
     <div className='w-full h-full flex flex-col items-center'>
-      { sortedServers.map(function(server : Server) {
-        return (
-          <Link to={'/servers/' + server.id} className='w-full'>
-            <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
-                <span className='font-semibold text-xl'> { server.name } </span>
-            </Box>
-          </Link>
-        )
-      }) }
-        <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} />
+      {sortedServers.length == 0 ? 
+        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> : 
+        sortedServers.map(function(server : Server) {
+          return (
+            <Link to={'/servers/' + server.id} className='w-full'>
+              <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
+                  <span className='font-semibold text-xl'> { server.name } </span>
+              </Box>
+            </Link>
+          )
+        }) }
+        {sortedServers.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
     </div>
   )
 }

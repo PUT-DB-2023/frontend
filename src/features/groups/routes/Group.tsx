@@ -16,12 +16,13 @@ import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { searchFunc } from 'api/searchApi'
+import { OptionsMenu } from 'components/OptionsMenu'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const { id } = useParams()
-  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id!))
+  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
 
@@ -65,45 +66,15 @@ export const Group = () => {
         </div>
         <div className='flex gap-6'>
           <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta' />
-          <Menu as="div" className="relative inline-block text-left">
-            <div>
-              <Menu.Button className="flex text-black items-center space-x-4">
-                <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500' />
-              </Menu.Button>
-            </div>
-            <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }: { active: boolean }) => (
-                    <button
-                      onClick={() => setEditModal(true)}
-                      className={`${active ? 'bg-blue-100' : 'text-black'
-                        } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                    >
-                      Edytuj
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }: { active: boolean }) => (
-                    <button
-                      onClick={() => setRemoveModal(true)}
-                      className={`${active ? 'bg-red-500 text-white' : 'text-red-500'
-                        } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                    >
-                      Usuń
-                    </button>
-                  )}
-                </Menu.Item>
-
-              </div>
-            </Menu.Items>
-          </Menu>
+          <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
         </div>
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
+        <div className='flex justify-between'>
+          <h2 className='text-lg font-semibold'> Studenci </h2>
+          <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
+        </div>
         <Table data={searchData} columns={columns('students')}></Table>
       </ContentPanel>
     </ContentLayout>

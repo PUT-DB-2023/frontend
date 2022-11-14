@@ -102,14 +102,14 @@ export const Course = () => {
                       <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                           {/* <ChevronDownIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> */}
                           <span className='flex justify-start w-full px-2'>
-                            {selectedEdition!.semester.year} - {selectedEdition!.semester.winter ? "Zima" : "Lato"}
+                            {selectedEdition.semester.year} - {selectedEdition.semester.winter ? "Zima" : "Lato"}
                           </span>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                           </svg>
                       </Listbox.Button>
-                      <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white'>
-                          {allEditionsData.map((edition : Edition) => (
+                      <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white max-h-56'>
+                          {allEditionsData.sort((a : Edition, b : Edition) => (b.semester.year.localeCompare(a.semester.year) || Number(b.semester.winter) - Number(a.semester.winter))).map((edition : Edition) => (
                               <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
                                   key={edition.id}
                                   value={edition}>

@@ -3,6 +3,7 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { ColumnDef } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { OptionsMenu } from 'components/OptionsMenu'
 import { Spinner } from 'components/Spinner'
 import { LinkCell, Table } from 'components/Table'
 import React, { ReactNode } from 'react'
@@ -45,10 +46,10 @@ const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
     {
         accessorKey: 'is_moved',
         header: 'Przeniesiono',
-        cell: ({getValue}) => (
+        cell: ({getValue} : {getValue : any}) => (
           <div className='p-2'>
               {/* {'true' ? getValue() : 'false'} */}
-              {/* {getValue() as ReactNode} */}
+              {getValue().toString() as ReactNode}
           </div>
         )
     }
@@ -80,42 +81,7 @@ export const User = ({type} : {type: UserType}) => {
             <span className='text-black text-3xl font-bold mb-4'> { userQuery.data.first_name + " " + userQuery.data.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
-            <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="flex text-black items-center space-x-4">
-                    <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
-                  </Menu.Button>
-                </div>
-                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-1 py-1 ">
-                      <Menu.Item>
-                        {({ active } : { active : boolean }) => (
-                            <button
-                              onClick={()=>console.log('EDIT')}
-                              className={`${
-                                active ? 'bg-blue-100' : 'text-black'
-                              } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                            >
-                              Edytuj
-                            </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active } : { active : boolean }) => (
-                          <button
-                            onClick={()=>console.log('DELETE')}
-                            className={`${
-                              active ? 'bg-red-500 text-white' : 'text-red-500'
-                            } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                          >
-                            Usuń
-                          </button>
-                        )}
-                      </Menu.Item>
-                      
-                    </div>
-                  </Menu.Items>
-              </Menu>
+            <OptionsMenu edit={() => console.log('EDIT')} remove={() => console.log('REMOVE')} />
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>
@@ -124,6 +90,7 @@ export const User = ({type} : {type: UserType}) => {
         {
           type === UserType.STUDENT ? (
             <ContentPanel type={PanelType.CONTENT}>
+              <h2 className='text-lg font-semibold'> Konta bazodanowe </h2>
               <Table data={userQuery.data.db_accounts} columns={columns}></Table>
             </ContentPanel>
           ) : null

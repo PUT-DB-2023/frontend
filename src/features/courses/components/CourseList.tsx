@@ -47,7 +47,7 @@ export const CourseList = ({sortVal, sortSet, searchVal, searchSet} : ICourseLis
               </Link>
             )
         }) }
-        <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} />
+        {sorted.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
     </div>
   )
 }
