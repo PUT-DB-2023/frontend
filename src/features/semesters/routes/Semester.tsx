@@ -65,7 +65,7 @@ export const Semester = () => {
                   <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="px-1 py-1">
                       <Menu.Item>
-                        {({ active } : { active : any }) => (
+                        {({ active } : { active : boolean }) => (
                             <button
                               onClick={()=>setShowEdit(true)}
                               className={`${
@@ -77,7 +77,7 @@ export const Semester = () => {
                         )}
                       </Menu.Item>
                       <Menu.Item>
-                        {({ active } : { active : any }) => (
+                        {({ active } : { active : boolean }) => (
                           <button
                             onClick={()=>setShowRemove(true)}
                             className={`${

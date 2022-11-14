@@ -18,32 +18,17 @@ export const Courses = () => {
   const [sortBy, setSortBy] = React.useState(coursesSortOptions[0])
   const [filterBy, setFilterBy] = React.useState(null);
   const [search, setSearch] = React.useState('');
-  const [showActiveOnly, setShowActiveOnly] = React.useState<boolean | undefined>(true) // show only active courses (true - active only, undefined - all courses)
-
-  const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['courses', showActiveOnly], () => getCourses(showActiveOnly))
-
-  const searchData = React.useMemo(() => searchFunc(search, courseData, ['name']), [search, courseData]);
-  const sorted = React.useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
-
-  if (courseStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
-  }
 
   return (
     <ContentLayout>
-      <AddNewModal refetch={() => courseRefetch()} show={newModal} off={() => setNewModal(false)} />
+      {/* <AddNewModal refetch={() => courseRefetch()} show={newModal} off={() => setNewModal(false)} /> */}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Przedmioty</span>
         <Button type={ButtonType.ACTION} text='Dodaj przedmiot' onClick={() => setNewModal(true)} />
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={true} filter={true} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
-        <CourseList courseData={sorted}></CourseList>
-        <Button type={ButtonType.ACTION} text='Pokaż pozostałe' onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} />
+        <CourseList sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch}></CourseList>
       </ContentPanel>
     </ContentLayout>
   )

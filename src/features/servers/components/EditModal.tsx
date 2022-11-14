@@ -4,13 +4,14 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateServer } from '../api/updateServer';
-import { IServ } from '../api/updateServer'
+// import { IServ } from '../api/updateServer'
+import { Server } from '../types';
 
 interface IEditModal {
     show: boolean,
     off: () => void,
     refetch: () => void,
-    data: IServ,
+    data: Server,
 }
 
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
@@ -35,7 +36,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     },[show, data])
     
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateServer({id: data.id, name, ip, port, provider, password, database, active} as IServ)
+        const res = await updateServer({id: data.id, name, ip, port, provider, password, database, active} as Server)
         if (res.data) {
             off();
             refetch();

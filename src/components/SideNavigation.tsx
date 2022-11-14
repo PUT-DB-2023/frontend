@@ -17,14 +17,14 @@ interface AccordionMenuProps {
   title: string;
   url: string;
   icon: React.ReactNode;
-  children?: Course[] | Edition[];
+  children?: Course[];
   userMenu? : boolean;
 };
 
 export const AccordionMenu = ({title, url, icon, children, userMenu} : AccordionMenuProps) => {
   return (
     <Disclosure>
-      {({ open } : {open : any}) => (
+      {({ open } : {open : boolean}) => (
         <>
           <Disclosure.Button className="flex w-full items-center justify-between py-2 pl-6 pr-4 hover:bg-blue-600 transition-all">
               <div className='flex items-center space-x-4'>
@@ -70,7 +70,7 @@ export const AccordionMenu = ({title, url, icon, children, userMenu} : Accordion
 
 export const SideNavigation = () => {
   const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['courses'], () => getCourses(undefined))
-  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery('servers', getServers)
+  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery('servers', () => getServers(undefined))
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery('groups', getGroups)
   const { data: semesterData, status: semesterStatus, refetch: semesterRefetch } = useQuery('semesters', () => getSemesters(undefined))
 

@@ -1,14 +1,41 @@
+import { Course } from "features/courses";
+import { Edition } from "features/editions";
+import { Teacher } from "features/users";
+import { Server } from "http";
+
 export type BaseEntity = {
-    id: number;
+    id: string;
     createdAt: number;
-  };
+} & unknown;
+
+export type TeacherEdition = {
+  teacher: Teacher;
+  edition: Edition;
+} & BaseEntity
+
+export type EditionServer = {
+  edition: Edition;
+  server: Server;
+  additional_info: string;
+  username_template: string;
+  passwd_template: string;
+} & BaseEntity
+
+export type DbAccount = {
+  username : string,
+  password : string,
+  additional_info : string,
+  is_moved : boolean;
+  editionServer: EditionServer;
+} & BaseEntity
 
 export enum ButtonType {
     ACTION,
     WARNING,
     OUTLINE,
     TEXT_WARNING,
-    TEXT_ACTION
+    TEXT_ACTION,
+    LOAD_HIDDEN
 }
 
 export enum PanelType {
@@ -16,7 +43,7 @@ export enum PanelType {
   CONTENT,
   OUTLINE,
   GRADIENT
-}
+} 
 
 export enum Status {
   ACTIVE,
@@ -64,10 +91,3 @@ export const semestersSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: true},
   {name: 'Nazwa', field: 'name', asc: false},
 ]
-
-export type DbAccount = {
-  username : string,
-  password : string,
-  additional_info : string,
-  is_moved : boolean
-} & BaseEntity

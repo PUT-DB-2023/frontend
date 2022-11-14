@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom'
 import { ButtonType, DbAccount, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
-import { User as TUser } from '../types'
+import { Admin, Student, Teacher, User as TUser } from '../types'
 
 const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
 [
@@ -59,18 +59,20 @@ export const User = ({type} : {type: UserType}) => {
   const userQuery = useQuery(['user', id], () => getUser( id, type ))
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
-  if (userQuery.isLoading) {
+  if (userQuery.isLoading || userQuery.data === undefined) {
     return (
       <Spinner />
     );
   }
-  else if (userQuery.isError) {
+  else if (userQuery.isError || userQuery.data === undefined) {
     return (
       <div>
         Error!
       </div>
     );
   }
+
+  console.log(userQuery.data)
 
   return (
     <ContentLayout>
@@ -87,7 +89,7 @@ export const User = ({type} : {type: UserType}) => {
                   <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="px-1 py-1 ">
                       <Menu.Item>
-                        {({ active } : { active : any }) => (
+                        {({ active } : { active : boolean }) => (
                             <button
                               onClick={()=>console.log('EDIT')}
                               className={`${
@@ -99,7 +101,7 @@ export const User = ({type} : {type: UserType}) => {
                         )}
                       </Menu.Item>
                       <Menu.Item>
-                        {({ active } : { active : any }) => (
+                        {({ active } : { active : boolean }) => (
                           <button
                             onClick={()=>console.log('DELETE')}
                             className={`${

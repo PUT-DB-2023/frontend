@@ -55,7 +55,7 @@ const ProfileMenu = () => {
           <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1 ">
               <Menu.Item>
-                {({ active } : { active : any }) => (
+                {({ active } : { active : boolean }) => (
                   <Link to={`/users/admins/` + userQuery.data[0].id}>
                     <button
                       className={`${
@@ -68,7 +68,7 @@ const ProfileMenu = () => {
                 )}
               </Menu.Item>
               <Menu.Item>
-                {({ active } : { active : any }) => (
+                {({ active } : { active : boolean }) => (
                   <button
                     className={`${
                       active ? 'bg-blue-100' : 'text-black'

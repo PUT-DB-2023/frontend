@@ -1,7 +1,7 @@
 import { axios } from 'lib/axios'
 import { Course } from '../types'
 
-export const getCourse = async (courseId: any) => {
+export const getCourse = async (courseId: string|undefined) => {
     const response = await axios.get(`/courses/${courseId}/`)
     return response.data
 }

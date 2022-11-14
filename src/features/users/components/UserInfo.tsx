@@ -1,9 +1,13 @@
 import { Button } from 'components/Button'
 import React from 'react'
 import { ButtonType } from 'types'
-import { User } from '../types'
+import { Admin, Student, Teacher, User } from '../types'
 
-export const UserInfo = ( { userData } : any ) => {
+interface IUserInfo {
+    userData : User;
+}
+
+export const UserInfo = ({ userData } : IUserInfo) => {
   return (
     <>
     <div className='flex flex-col w-full gap-2'>
@@ -24,7 +28,7 @@ export const UserInfo = ( { userData } : any ) => {
         </div>
         <div className='flex flex-col p-2 gap-2'>
             <span className='text-black text-base font-semibold'> Hasło </span>
-            <span className='text-slate-600 text-base'> { userData.password.split('').map((x : any) => '*') } </span>
+            <span className='text-slate-600 text-base'> { userData.password.split('').map((x : string) => '*') } </span>
         </div>
     </div> 
     </>

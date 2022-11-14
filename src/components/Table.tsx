@@ -80,6 +80,7 @@ export const Table = ({ data, columns } : any) => {
             </thead>
             <tbody className='text-sm text-zinc-600 border border-slate-300'>
                 {table.getRowModel().rows.map(row => (
+                  
                 <tr key={row.id} className='hover:bg-zinc-100 transition-all cursor-pointer'>
                     {row.getVisibleCells().map(cell => (
                     <td key={cell.id} className='border border-slate-300'>
@@ -94,3 +95,4 @@ export const Table = ({ data, columns } : any) => {
         </div>
     )
 }
+  

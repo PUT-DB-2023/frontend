@@ -45,13 +45,8 @@ export const Groups = () => {
     
           <ContentPanel type={PanelType.CONTENT}>
             <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
-            <h2 className='text-lg font-semibold'>Aktywne grupy</h2>
-            <GroupList groupData={sortedGroups} type={Status.ACTIVE}></GroupList>
-    
-            <hr className='w-full mt-2 border-1 border-blue-800'></hr>
-    
-            <h2 className='text-lg font-semibold'>Nieaktywne grupy</h2>
-            <GroupList groupData={sortedGroups} type={Status.INACTIVE}></GroupList>
+            {/* <h2 className='text-lg font-semibold'>Aktywne grupy</h2> */}
+            <GroupList groupData={sortedGroups}></GroupList>
           </ContentPanel>
         </ContentLayout>
       )

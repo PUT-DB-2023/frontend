@@ -1,14 +1,16 @@
+import { Course } from "features/courses";
+import { Semester } from "features/semesters";
+import { Server } from "features/servers";
+import { Teacher, User } from "features/users";
 import { BaseEntity } from "types";
 
 export type Edition = {
-    name: string;
-} & BaseEntity;
-
-export type Group = {
-    name: string;
-    day: string;
-    hour: string;
-    room: string;
-    teacherEdition: Number;
+    description: string;
+    date_opened: string;
+    date_closed: string;
+    semester: Semester;
+    course: Course;
+    teachers: Teacher[];
+    servers: Server[];
 
 } & BaseEntity;

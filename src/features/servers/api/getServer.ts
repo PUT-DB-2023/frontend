@@ -1,7 +1,7 @@
 import { axios } from 'lib/axios'
 import { Server } from '../types'
 
-export const getServer = async (editionId: any) => {
+export const getServer = async (editionId: string) : Promise<Server> => {
     const response = await axios.get(`/servers/${editionId}/`)
     return response.data
 }

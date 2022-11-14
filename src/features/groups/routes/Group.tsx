@@ -21,7 +21,7 @@ export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const { id } = useParams()
-  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
+  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id!))
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
 
@@ -74,7 +74,7 @@ export const Group = () => {
             <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
                 <Menu.Item>
-                  {({ active }: { active: any }) => (
+                  {({ active }: { active: boolean }) => (
                     <button
                       onClick={() => setEditModal(true)}
                       className={`${active ? 'bg-blue-100' : 'text-black'
@@ -85,7 +85,7 @@ export const Group = () => {
                   )}
                 </Menu.Item>
                 <Menu.Item>
-                  {({ active }: { active: any }) => (
+                  {({ active }: { active: boolean }) => (
                     <button
                       onClick={() => setRemoveModal(true)}
                       className={`${active ? 'bg-red-500 text-white' : 'text-red-500'

@@ -1,13 +1,10 @@
 import { MainLayout } from "components";
 import { Courses } from "features/courses";
 import { CoursesRoutes } from "features/courses/routes";
-import { EditionsRoutes } from "features/editions/routes";
-import { Edition } from "features/editions/routes/Edition";
 import { GroupsRoutes } from "features/groups";
 import { SemestersRoutes } from "features/semesters";
 import { ServersRoutes } from "features/servers";
 import { UsersRoutes } from "features/users";
-import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
 const App = () => {

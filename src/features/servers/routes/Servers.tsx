@@ -20,23 +20,9 @@ export const Servers = () => {
   const [filterBy, setFilterBy] = React.useState(null);
   const [search, setSearch] = React.useState('');
 
-  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers'], getServers);
-
-  const searchData = React.useMemo(() => searchFunc(search, serverData, ['name']), [search, serverData]);
-  const sortedServers = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
-
-
-  if (serverStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
-  }
-
   return (
     <ContentLayout>
-      <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} />
+      {/* <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} /> */}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
         <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={()=>setShowAdd(true)}/>
@@ -44,13 +30,8 @@ export const Servers = () => {
 
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera'/>
-        <h2 className='text-lg font-semibold'>Aktywne serwery</h2>
-        <ServerList serverData={sortedServers} type={Status.ACTIVE}></ServerList>
-
-        <hr className='w-full mt-2 border-1 border-blue-800'></hr>
-
-        <h2 className='text-lg font-semibold'>Nieaktywne serwery</h2>
-        <ServerList serverData={sortedServers} type={Status.INACTIVE}></ServerList>
+        {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}
+        <ServerList sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch}></ServerList>
       </ContentPanel>
     </ContentLayout>
   )

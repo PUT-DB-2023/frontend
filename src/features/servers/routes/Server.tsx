@@ -12,40 +12,32 @@ import * as React from 'react'
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { activeServer } from '../api/activeServer'
+import { OptionsMenu } from 'components/OptionsMenu'
+import { Server as TServer } from '../types'
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
   const { id } = useParams()
 
-  const serverQuery = useQuery(['server', id], () => getServer( id ))
-  // const {data: serverQuery } = useQuery(['server', id], () => getServer( id ))
+  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer( id! ))
   const refetch = serverQuery.refetch;
 
   const activation = React.useCallback(()=>{
-    id && activeServer({id: id, active: !serverQuery.data.active, refresh: refetch});
+    serverQuery.data && id && activeServer({id: id, active: serverQuery.data.active, refresh: refetch});
     serverQuery.refetch()
   },[serverQuery, id, refetch])
 
-  if (serverQuery.isLoading) {
+  if (serverQuery.isLoading || !serverQuery.data) {
     return (
       <Spinner />
     );
   }
-  else if (serverQuery.isError) {
-    return (
-      <div>
-        Error!
-      </div>
-    );
-  }
-
-  console.log(serverQuery.data)
 
   return (
     <ContentLayout>
       <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name}/>
-      <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{id: id as string, ...serverQuery.data}}/>
+      <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{...serverQuery.data, id: id as string}}/>
         <ContentPanel type={PanelType.HEADER}>
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { serverQuery.data.name }</h1>
@@ -56,42 +48,7 @@ export const Server = () => {
                 <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/> :
                 <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>
               } 
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
-                  <Menu.Button className="flex text-black items-center space-x-4">
-                    <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>
-                  </Menu.Button>
-                </div>
-                  <Menu.Items className="absolute right-0 mt-4 w-[212px] origin-top-right divide-y divide-gray-100 rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-1 py-1">
-                      <Menu.Item>
-                        {({ active } : { active : any }) => (
-                            <button
-                              onClick={()=>setShowEdit(true)}
-                              className={`${
-                                active ? 'bg-blue-100' : 'text-black'
-                              } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                            >
-                              Edytuj
-                            </button>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active } : { active : any }) => (
-                          <button
-                            onClick={()=>setShowRemove(true)}
-                            className={`${
-                              active ? 'bg-red-500 text-white' : 'text-red-500'
-                            } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                          >
-                            Usuń
-                          </button>
-                        )}
-                      </Menu.Item>
-                      
-                    </div>
-                  </Menu.Items>
-              </Menu>
+              <OptionsMenu edit={() => setShowEdit(true)} remove={() => setShowRemove(true)} />
             </div>
           </div>
         </ContentPanel>
@@ -101,10 +58,21 @@ export const Server = () => {
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
           <h2 className='text-lg font-semibold'> Polecenia bazodanowe </h2>
-          <div className='flex flex-col'>
-            <span className='font-normal text-base'> Tworzenie użytkownika </span>
-            <span className='font-normal text-base'> Modyfikowanie użytkownika </span>
-            <span className='font-normal text-base'> Usuwanie użytkownika </span>
+          <div className='flex flex-col gap-6 p-4'>
+            <div className='flex flex-col gap-2'>
+              <h3 className='text-black text-base font-semibold'> Tworzenie użytkownika </h3>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <h3 className='text-black text-base font-semibold'> Usuwanie użytkownika </h3>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+            </div>
           </div>
         </ContentPanel>
     </ContentLayout>

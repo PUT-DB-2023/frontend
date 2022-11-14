@@ -7,7 +7,6 @@ import { Toolbar } from 'components/Toolbar';
 import { useQuery } from 'react-query';
 import { ButtonType, PanelType, UserType } from 'types'
 import { getUsers } from '../api/getUsers';
-import { UserTable } from '../components/UserTable';
 import { User } from '../types';
 import * as React from 'react';
 import { searchFunc } from 'api/searchApi'

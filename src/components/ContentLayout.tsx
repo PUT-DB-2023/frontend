@@ -6,7 +6,7 @@ interface ContentProps {
 
 export const ContentLayout = ({children} : ContentProps) => {
   return (
-    <main className='w-full flex overflow-y-auto h-auto bg-zinc-100 lg:p-9 p-4 flex-wrap gap-9'>
+    <main className='w-full flex overflow-y-auto h-full bg-zinc-100 lg:p-9 p-4 flex-col gap-9'>
       { children }
     </main>
   )

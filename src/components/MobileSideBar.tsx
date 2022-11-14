@@ -2,7 +2,12 @@ import { useClickOutside } from 'hooks/useClickOutside';
 import { Logo } from './Logo'
 import { SideNavigation } from './SideNavigation'
 
-export const MobileSideBar = ({ show, off } : { show: any, off :() => void}) => {
+interface IMobileSidebar {
+  show: boolean;
+  off: () => void;
+}
+
+export const MobileSideBar = ({show, off} :IMobileSidebar) => {
     const ref = useClickOutside(off);
     if (show) {
     return (

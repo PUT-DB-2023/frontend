@@ -1,6 +1,8 @@
 import { BaseEntity } from "types";
 
 export type Semester = {
-    name: string;
+    winter: boolean;
+    year: string;
+    active: boolean;
 
 } & BaseEntity;
