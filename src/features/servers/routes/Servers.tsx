@@ -1,7 +1,7 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { ButtonType, PanelType, Status } from 'types'
 import { getServers } from '../api/getServers'
@@ -20,9 +20,23 @@ export const Servers = () => {
   const [filterBy, setFilterBy] = React.useState(null);
   const [search, setSearch] = React.useState('');
 
+  const [showActiveOnly, setShowActiveOnly] = useState<boolean | undefined>(true) // show only active courses (true - active only, undefined - all courses)
+  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers', showActiveOnly], () => getServers(showActiveOnly));
+
+  const searchData = useMemo(() => searchFunc(search, serverData, ['name']), [search, serverData]);
+  const sortedServers = useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
+
+  if (serverStatus == 'loading') {
+    return (
+      <div className='w-full h-full flex justify-center items-center'>
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
     <ContentLayout>
-      {/* <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} /> */}
+      <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} />
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
         <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={()=>setShowAdd(true)}/>
@@ -31,7 +45,8 @@ export const Servers = () => {
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera'/>
         {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}
-        <ServerList sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch}></ServerList>
+        <ServerList serverData={sortedServers}></ServerList>
+        {sortedServers.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
       </ContentPanel>
     </ContentLayout>
   )

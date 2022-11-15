@@ -11,34 +11,15 @@ import { getServers } from '../api/getServers'
 import { Server } from '../types'
 
 interface IServerList {
-  sortVal: any;
-  sortSet: (v: any) => void;
-  searchVal: string;
-  searchSet: (v: any) => void;
+  serverData: Server[];
 }
 
-export const ServerList = ({sortVal, sortSet, searchVal, searchSet} : IServerList) => {
-  const [showActiveOnly, setShowActiveOnly] = useState<boolean | undefined>(true) // show only active courses (true - active only, undefined - all courses)
-  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers', showActiveOnly], () => getServers(showActiveOnly));
-
-  const searchData = useMemo(() => searchFunc(searchVal, serverData, ['name']), [searchVal, serverData]);
-  const sortedServers = useMemo(() => sortFunc(searchData, sortVal),[searchData, sortVal]);
-
-  if (serverStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
-  }
-
-  console.log(showActiveOnly)
-
+export const ServerList = ({serverData} : IServerList) => {
   return (
     <div className='w-full h-full flex flex-col items-center'>
-      {sortedServers.length == 0 ? 
+      {serverData.length == 0 ? 
         <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> : 
-        sortedServers.map(function(server : Server) {
+        serverData.map(function(server : Server) {
           return (
             <Link to={'/servers/' + server.id} className='w-full'>
               <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
@@ -47,7 +28,6 @@ export const ServerList = ({sortVal, sortSet, searchVal, searchSet} : IServerLis
             </Link>
           )
         }) }
-        {sortedServers.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
     </div>
   )
 }

@@ -4,8 +4,9 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addCourse } from '../api/addCourse';
+import { toast } from 'react-toastify';
 
-export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
+export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: any}) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
 
@@ -15,13 +16,21 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         off();
     }, [])
 
+    const showToast = async () => {
+        return await toast.promise(refetch, {
+            pending: "Dodawanie..",
+            success: "Pomyślnie dodano przedmiot.",
+            error: "Nie udało się dodać przedmiotu.",
+        })
+    }
+
     const handleAdd = React.useCallback(async () => {
         const res = await addCourse({name, description});
         if (res.data) {
             handleOff();
             refetch()
-         } else {
-         }
+            showToast()
+        }
     }, [name, description])
 
     if (show) {

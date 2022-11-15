@@ -4,6 +4,7 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteCourse } from '../api/deleteCourse'
 import { useNavigate,  } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 interface IRemoveModal {
     show: boolean,
@@ -14,13 +15,22 @@ interface IRemoveModal {
 
 export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
+
+    const showToast = async (res : Promise<any>) => {
+        return await toast.promise(res, {
+            pending: "Usuwanie..",
+            success: "Pomyślnie usunięto przedmiot.",
+            error: "Nie udało się usunąć przedmiotu.",
+        })
+    }
+
     const handleRemove = React.useCallback(async () => {
         const res = await deleteCourse(id)
         if (res.status) {
             off();
             navigate('/courses')
-         } else {
-         }
+            showToast(res)
+        }
     }, [id])
 
     if (show) {

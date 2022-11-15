@@ -56,8 +56,8 @@ export const Semesters = () => {
   return (
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={id} name={activeSemesterData.name} />
-        {/* <EditModal refetch={() => activeSemesterRefetch()} show={editModal} off={() => setEditModal(false)} data={activeSemesterData} /> */}
-        {/* {id && <AddNewModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => activeSemesterRefetch()} courseId={id}/> } */}
+        <EditModal refetch={() => activeSemesterRefetch()} show={editModal} off={() => setEditModal(false)} data={activeSemesterData} />
+        {id && <AddNewModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => activeSemesterRefetch()}/> }
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Semestry </h1>
@@ -71,10 +71,9 @@ export const Semesters = () => {
             <div className='flex flex-col gap-6'>
               <h2 className='text-lg font-semibold'>Wybrany semestr</h2>
               <div className='flex flex-col gap-4'>
-                <h1 className='text-3xl font-bold'>
-                  {selectedSemester!.year + " - "}
-                  {selectedSemester!.winter ? "Zima" : "Lato"}
-                </h1>
+              <h1 className='text-3xl font-bold'>
+                {selectedSemester ? selectedSemester?.year.toString().concat(selectedSemester.winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
+              </h1>
               </div>
             </div>
             <div className='flex gap-6'>

@@ -49,17 +49,30 @@ export const Course = () => {
 
   React.useEffect(() => {
     if (activeEditionData !== undefined) {
-      setSelectedEdition(activeEditionData[0])
-    } 
-  }, [activeEditionData])
+      if (activeEditionData.length !== 0) {
+        setSelectedEdition(activeEditionData[0])
+      }
+      else if(allEditionsData !== undefined) {
+        if (allEditionsData.length !== 0) {
+          setSelectedEdition(allEditionsData[0])
+        }
+      }
+    }
+    else {
+      setSelectedEdition(undefined)
+    }
+    
+  }, [activeEditionData, allEditionsData])
 
-  if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading' || selectedEdition === undefined) {
+  if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
         <Spinner />
       </div>
     )
   }
+
+  console.log(allEditionsData)
   
   return (
     <ContentLayout>
@@ -69,7 +82,7 @@ export const Course = () => {
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseData.name }</h1>
-            <h2 className='text-blue-900 font-semibold mb-8'> { activeEditionData !== undefined ? activeEditionData.length : '' } edycje </h2>
+            <h2 className='text-blue-900 font-semibold mb-8'> { allEditionsData !== undefined ? allEditionsData.length : '' } edycje </h2>
             <h3 className='text-slate-500 text-base text-justify'>{ courseData.description }</h3>
           </div>
           <div className='flex gap-6'>
@@ -83,26 +96,29 @@ export const Course = () => {
               <h2 className='text-lg font-semibold'>Wybrana edycja</h2>
               <div className='flex flex-col gap-4'>
                 <h1 className='text-3xl font-bold'>
-                  { selectedEdition.semester.year + " - "}
-                  { selectedEdition.semester.winter ? "Zima" : "Lato"}
+                  {selectedEdition ? selectedEdition?.semester.year.toString().concat(selectedEdition?.semester.winter ? " - Zima" : " - Lato") : 'Brak edycji'}
                 </h1>
                 {/* <h2 className='text-xl font-semibold '></h2> */}
                 <div className="flex flex-row">
-                  { activeEditionData[0].teachers.map((teacher: Teacher) => {
+                  <h2 className={`text-lg font-semibold ${selectedEdition?.semester.active ? 'text-blue-600' : 'text-red-500'}`}>
+                    {selectedEdition ? selectedEdition?.semester.active ? 'Aktywna' : 'Nieaktywna' : ''}
+                  </h2>
+                  {/* {selectedEdition ? selectedEdition?.teachers.map((teacher: Teacher) => {
                     return (
                       <span className="text-base font-normal text-blue-800 mr-4"> { teacher.first_name + " " + teacher.last_name}</span>
                     )
-                  }) } 
+                  }) : null}  */}
                 </div>
               </div>
             </div>
+            {selectedEdition ?
             <div className='flex gap-6'>
               <Listbox value={selectedEdition} onChange={setSelectedEdition}>
                   <div className="relative w-[232px]">
                       <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                           {/* <ChevronDownIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> */}
                           <span className='flex justify-start w-full px-2'>
-                            {selectedEdition.semester.year} - {selectedEdition.semester.winter ? "Zima" : "Lato"}
+                            {selectedEdition?.semester.year} - {selectedEdition?.semester.winter ? "Zima" : "Lato"}
                           </span>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -124,11 +140,15 @@ export const Course = () => {
                   </div>
                 </Listbox>
                 <OptionsMenu edit={() => console.log(true)} remove={() => console.log(true)}></OptionsMenu>
-            </div>        
+            </div>
+            : null}     
           </div>
-          
-          <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
-          <GroupList groupData={sortedGroups}></GroupList>
+          {selectedEdition ?
+          <>
+            <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
+            <GroupList groupData={sortedGroups}></GroupList>
+          </>
+          : null}
         </ContentPanel>
     </ContentLayout>
   )

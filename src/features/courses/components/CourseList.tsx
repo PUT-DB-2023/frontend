@@ -12,32 +12,16 @@ import { CoursesRoutes } from '../routes'
 import { Course } from '../types'
 
 interface ICourseList {
-  sortVal: any;
-  sortSet: (v: any) => void;
-  searchVal: string;
-  searchSet: (v: any) => void;
+  courseData: Course[];
 }
 
-export const CourseList = ({sortVal, sortSet, searchVal, searchSet} : ICourseList) => {
-  const [showActiveOnly, setShowActiveOnly] = useState<boolean | undefined>(true) // show only active courses (true - active only, undefined - all courses)
-  const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['courses', showActiveOnly], () => getCourses(showActiveOnly))
-
-  const searchData = useMemo(() => searchFunc(searchVal, courseData, ['name']), [searchVal, courseData]);
-  const sorted = useMemo(() => sortFunc(searchData, sortVal), [searchData, sortVal]);
-
-  if (courseStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
-  }
+export const CourseList = ({courseData} : ICourseList) => {
 
   return (
     <div className='w-full h-full flex flex-col items-center'>
-        { sorted.length == 0 ? 
+        { courseData.length == 0 ? 
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
-          sorted.map(function(course : Course) {
+          courseData.map(function(course : Course) {
             return (
               <Link to={'/courses/' + course.id} className='w-full'>
                 <Box>
@@ -47,7 +31,6 @@ export const CourseList = ({sortVal, sortSet, searchVal, searchSet} : ICourseLis
               </Link>
             )
         }) }
-        {sorted.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
     </div>
   )
 }
