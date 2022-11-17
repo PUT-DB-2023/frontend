@@ -1,6 +1,7 @@
 import { axios } from 'lib/axios'
 import { Edition } from '../types'
 import { format } from 'date-fns'
+import { toast } from 'react-toastify'
 
 export interface IAddEdition {
     description: string,
@@ -18,6 +19,9 @@ export const addEdition = async (edition: IAddEdition) => {
         semester: edition.semester,
         course: edition.course,
     }
+    const t = toast.loading("Dodawanie..")
     const response = await axios.post("/editions/", data)
+    .then((e)=>{toast.update(t, {render: "Pomyślnie dodano edycję", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: "Nie udało się dodać edycji", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response.data
 }

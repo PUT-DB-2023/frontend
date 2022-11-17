@@ -18,23 +18,13 @@ interface IRemoveModal {
 export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
 
-    const {status: removeStatus, refetch: removeRefetch } = useQuery(['removeCourse'],
-        () => deleteCourse(id), {
-        refetchOnWindowFocus: false,
-        enabled: false // disable this query from automatically running
-    })
-
     const handleRemove = React.useCallback(async () => {
-        const res = removeRefetch()
-        if (removeStatus) {
+        const res = await deleteCourse(id)
+        if (res.status) {
             off();
             navigate('/courses')
-            showToast({refetch: res, messages: {
-                pending: 'Usuwanie..',
-                success: 'Pomyślnie usunięto przedmiot.',
-                error: 'Nie udało się usunąć przedmiotu.',
-            }})
-        }
+         } else {
+         }
     }, [id])
 
     if (show) {

@@ -5,6 +5,7 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addServer } from '../api/addServer';
 import { showToast } from 'api/showToast';
+import { useQuery } from 'react-query';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
@@ -34,11 +35,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         if (res.data) {
             handleOff();
             refetch();
-            showToast({refetch: res, messages: {
-                pending: 'Dodawanie..',
-                success: 'Pomyślnie dodano serwer.',
-                error: 'Nie udało się dodać serwera.',
-            }})
         } else {
         }
     }, [name, ip, port, provider, user, password, database, active])

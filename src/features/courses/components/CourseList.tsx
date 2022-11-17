@@ -17,6 +17,8 @@ interface ICourseList {
 
 export const CourseList = ({courseData} : ICourseList) => {
 
+  console.log(courseData)
+
   return (
     <div className='w-full h-full flex flex-col items-center'>
         { courseData.length == 0 ? 
@@ -24,7 +26,7 @@ export const CourseList = ({courseData} : ICourseList) => {
           courseData.map(function(course : Course) {
             return (
               <Link to={'/courses/' + course.id} className='w-full'>
-                <Box>
+                <Box color={course.active ? 'bg-blue-800' : 'bg-red-500'}>
                   <span className='font-semibold text-xl'> { course.name }</span>
                   <span className='font-normal text-base text-slate-600'> { course.description }</span>
                 </Box>

@@ -73,7 +73,11 @@ export const Group = () => {
       <ContentPanel type={PanelType.CONTENT}>
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Studenci </h2>
-          <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
+          <div className='flex justify-between gap-6'>
+            <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => console.log('ADD STUDENT')}/>
+            <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
+          </div>
+          
         </div>
         <Table data={searchData} columns={columns('students')}></Table>
       </ContentPanel>

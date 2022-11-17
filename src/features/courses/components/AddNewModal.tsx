@@ -11,12 +11,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
 
-    const {status: addStatus, refetch: addRefetch } = useQuery(['addCourse', name, description],
-        () => addCourse({name, description}), {
-        refetchOnWindowFocus: false,
-        enabled: false // disable this query from automatically running
-    })
-
     const handleOff = React.useCallback(() => {
         setName('');
         setDescription('');
@@ -24,15 +18,10 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = addRefetch()
-        if (addStatus) {
+        const res = await addCourse({name, description});
+        if (res.data) {
             handleOff();
             refetch()
-            showToast({refetch: refetch, messages: {
-                pending: 'Dodawanie..',
-                success: 'Pomyślnie dodano przedmiot.',
-                error: 'Nie udało się dodać przedmiotu.',
-            }})
         }
     }, [name, description])
 

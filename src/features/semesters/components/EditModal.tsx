@@ -40,11 +40,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
-            showToast({refetch: res, messages: {
-                pending: 'Edytowanie..',
-                success: 'Pomyślnie edytowano semestr.',
-                error: 'Nie udało się edytować semetru.',
-            }})
          } else {
          }
     }, [name, data, name, ip, port, provider, user, password, database, active])

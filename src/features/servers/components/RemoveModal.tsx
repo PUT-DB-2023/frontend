@@ -20,11 +20,6 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/servers')
-            showToast({refetch: res, messages: {
-                pending: 'Usuwanie..',
-                success: 'Pomyślnie usunięto serwer.',
-                error: 'Nie udało się usunąć serwera.',
-            }})
          } else {
          }
     }, [id])

@@ -9,6 +9,8 @@ interface IGroupList {
   }
 
 export const GroupList = ({ groupData } : IGroupList) => {
+
+  console.log(groupData)
     return (
       <div className='w-full'>
         { groupData.length == 0 ? 

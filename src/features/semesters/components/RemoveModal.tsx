@@ -20,11 +20,6 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/semesters')
-            showToast({refetch: res, messages: {
-                pending: 'Usuwanie..',
-                success: 'Pomyślnie usunięto semestr.',
-                error: 'Nie udało się usunąć semestru.',
-            }})
          } else {
          }
     }, [id])

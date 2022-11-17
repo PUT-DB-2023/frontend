@@ -4,7 +4,6 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteGroup } from '../api/deleteGroup';
 import { useNavigate,  } from 'react-router-dom'
-import { showToast } from 'api/showToast';
 
 interface IRemoveModal {
     show: boolean,
@@ -20,11 +19,6 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/groups')
-            showToast({refetch: res, messages: {
-                pending: 'Usuwanie..',
-                success: 'Pomyślnie usunięto grupę.',
-                error: 'Nie udało się usunąć grupy.',
-            }})
          }
     }, [id])
 

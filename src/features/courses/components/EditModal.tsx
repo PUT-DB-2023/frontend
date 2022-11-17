@@ -27,11 +27,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
-            showToast({refetch: refetch, messages: {
-                pending: 'Edytowanie..',
-                success: 'Pomyślnie edytowano przedmiot.',
-                error: 'Nie udało się edytować przedmiotu.',
-            }})
          }
     }, [name, description, data])
 

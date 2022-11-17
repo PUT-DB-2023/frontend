@@ -4,7 +4,6 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addGroup } from '../api/addGroup';
-import { showToast } from 'api/showToast';
 
 export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boolean, off: () => void, refetch: () => void, teacherEditions: {} }) => {
     const [name, setName] = React.useState('');
@@ -13,7 +12,6 @@ export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boo
     const [room, setRoom] = React.useState('');
     const [teacherEdition, setTeacherEdition] = React.useState('1');
     const [students, setStudents] = React.useState(['12', '13']);
-
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -30,11 +28,6 @@ export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boo
         if (res) {
             handleOff();
             refetch()
-            showToast({refetch: res, messages: {
-                pending: 'Dodawanie..',
-                success: 'Pomyślnie dodano grupę.',
-                error: 'Nie udało się dodać grupy.',
-            }})
         }
     }, [name, day, hour, room, teacherEdition, students])
 
