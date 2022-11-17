@@ -4,6 +4,7 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateGroup } from '../api/updateGroup'
+import { showToast } from 'api/showToast';
 
 interface IEditModal {
     show: boolean,
@@ -35,6 +36,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res) {
             off();
             refetch()
+            showToast({refetch: res, messages: {
+                pending: 'Edytowanie..',
+                success: 'Pomyślnie edytowano grupę.',
+                error: 'Nie udało się edytować grupy.',
+            }})
          }
     }, [name, day, hour, room, teacherEdition, students])
 

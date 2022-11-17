@@ -6,6 +6,7 @@ import { ButtonType } from 'types';
 import { updateServer } from '../api/updateServer';
 // import { IServ } from '../api/updateServer'
 import { Server } from '../types';
+import { showToast } from 'api/showToast';
 
 interface IEditModal {
     show: boolean,
@@ -40,6 +41,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
+            showToast({refetch: res, messages: {
+                pending: 'Edytowanie..',
+                success: 'Pomyślnie edytowano serwer.',
+                error: 'Nie udało się edytować serwera.',
+            }})
          } else {
          }
     }, [name, data, name, ip, port, provider, user, password, database, active])

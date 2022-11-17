@@ -3,6 +3,7 @@ import { getUsers } from 'features/users/api/getUsers';
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { UserType } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
@@ -94,6 +95,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   
   return (
     <div className='w-screen h-screen flex overflow-hidden'>
+        <ToastContainer />
         <SideBar></SideBar>
         <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
         <div className='flex flex-col flex-1 w-full bg-zinc-100'>

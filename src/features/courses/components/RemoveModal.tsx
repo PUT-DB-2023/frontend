@@ -5,6 +5,8 @@ import { ButtonType } from 'types';
 import { deleteCourse } from '../api/deleteCourse'
 import { useNavigate,  } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import { showToast } from 'api/showToast';
+import { useQuery } from 'react-query';
 
 interface IRemoveModal {
     show: boolean,
@@ -16,20 +18,22 @@ interface IRemoveModal {
 export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
 
-    const showToast = async (res : Promise<any>) => {
-        return await toast.promise(res, {
-            pending: "Usuwanie..",
-            success: "Pomyślnie usunięto przedmiot.",
-            error: "Nie udało się usunąć przedmiotu.",
-        })
-    }
+    const {status: removeStatus, refetch: removeRefetch } = useQuery(['removeCourse'],
+        () => deleteCourse(id), {
+        refetchOnWindowFocus: false,
+        enabled: false // disable this query from automatically running
+    })
 
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteCourse(id)
-        if (res.status) {
+        const res = removeRefetch()
+        if (removeStatus) {
             off();
             navigate('/courses')
-            showToast(res)
+            showToast({refetch: res, messages: {
+                pending: 'Usuwanie..',
+                success: 'Pomyślnie usunięto przedmiot.',
+                error: 'Nie udało się usunąć przedmiotu.',
+            }})
         }
     }, [id])
 

@@ -14,18 +14,26 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
+import { showToast } from 'api/showToast'
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
   const { id } = useParams()
 
-  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer( id! ))
+  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer( id ))
   const refetch = serverQuery.refetch;
 
   const activation = React.useCallback(()=>{
     serverQuery.data && id && activeServer({id: id, active: serverQuery.data.active, refresh: refetch});
+    const currentActive = serverQuery.data && serverQuery.data.active
     serverQuery.refetch()
+    showToast({refetch: serverQuery.refetch(), messages: {
+      pending: currentActive ? 'Deaktywowanie serwera..' : 'Aktywowanie serwera..',
+      success: currentActive ? 'Pomyślnie deaktywowano serwer.' : 'Pomyślnie aktywowano serwer..',
+      error: currentActive ? 'Nie udało się deaktywować serwera.' : 'Nie udało się aktywować serwera.',
+  }})
+    
   },[serverQuery, id, refetch])
 
   if (serverQuery.isLoading || !serverQuery.data) {

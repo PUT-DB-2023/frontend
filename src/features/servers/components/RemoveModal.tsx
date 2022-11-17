@@ -4,6 +4,7 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteServer } from '../api/deleteServer'
 import { useNavigate,  } from 'react-router-dom'
+import { showToast } from 'api/showToast';
 
 interface IRemoveModal {
     show: boolean,
@@ -19,6 +20,11 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/servers')
+            showToast({refetch: res, messages: {
+                pending: 'Usuwanie..',
+                success: 'Pomyślnie usunięto serwer.',
+                error: 'Nie udało się usunąć serwera.',
+            }})
          } else {
          }
     }, [id])

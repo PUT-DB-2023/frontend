@@ -48,7 +48,6 @@ const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
         header: 'Przeniesiono',
         cell: ({getValue} : {getValue : any}) => (
           <div className='p-2'>
-              {/* {'true' ? getValue() : 'false'} */}
               {getValue().toString() as ReactNode}
           </div>
         )

@@ -4,6 +4,7 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateCourse } from '../api/updateCourse';
+import { showToast } from 'api/showToast';
 
 interface IEditModal {
     show: boolean,
@@ -26,6 +27,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
+            showToast({refetch: refetch, messages: {
+                pending: 'Edytowanie..',
+                success: 'Pomyślnie edytowano przedmiot.',
+                error: 'Nie udało się edytować przedmiotu.',
+            }})
          }
     }, [name, description, data])
 

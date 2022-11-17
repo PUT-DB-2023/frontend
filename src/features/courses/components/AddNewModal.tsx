@@ -4,11 +4,18 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addCourse } from '../api/addCourse';
-import { toast } from 'react-toastify';
+import { showToast } from 'api/showToast';
+import { useQuery } from 'react-query';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: any}) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
+
+    const {status: addStatus, refetch: addRefetch } = useQuery(['addCourse', name, description],
+        () => addCourse({name, description}), {
+        refetchOnWindowFocus: false,
+        enabled: false // disable this query from automatically running
+    })
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -16,20 +23,16 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         off();
     }, [])
 
-    const showToast = async () => {
-        return await toast.promise(refetch, {
-            pending: "Dodawanie..",
-            success: "Pomyślnie dodano przedmiot.",
-            error: "Nie udało się dodać przedmiotu.",
-        })
-    }
-
     const handleAdd = React.useCallback(async () => {
-        const res = await addCourse({name, description});
-        if (res.data) {
+        const res = addRefetch()
+        if (addStatus) {
             handleOff();
             refetch()
-            showToast()
+            showToast({refetch: refetch, messages: {
+                pending: 'Dodawanie..',
+                success: 'Pomyślnie dodano przedmiot.',
+                error: 'Nie udało się dodać przedmiotu.',
+            }})
         }
     }, [name, description])
 

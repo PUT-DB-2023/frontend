@@ -3,6 +3,12 @@ import { Edition } from "features/editions";
 import { Teacher } from "features/users";
 import { Server } from "http";
 
+export interface ToastMessages {
+  pending: string;
+  success: string;
+  error: string;
+}
+
 export type BaseEntity = {
     id: string;
     createdAt: number;
