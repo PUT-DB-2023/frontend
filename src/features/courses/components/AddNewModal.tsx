@@ -6,10 +6,13 @@ import { ButtonType } from 'types';
 import { addCourse } from '../api/addCourse';
 import { showToast } from 'api/showToast';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: any}) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
+
+    const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -22,6 +25,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         if (res.data) {
             handleOff();
             refetch()
+            navigate(`${res.data.id}/`)
         }
     }, [name, description])
 

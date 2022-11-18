@@ -6,6 +6,7 @@ import { AcademicCapIcon, CalendarIcon, ChevronUpIcon, DatabaseIcon, UserGroupIc
 // import { courseList } from 'features/courses/api/getCourses'
 import { Edition } from 'features/editions'
 import { Course } from 'features/courses'
+import { Semester } from 'features/semesters'
 import { useQuery } from 'react-query'
 import { getCourses } from 'features/courses/api/getCourses'
 import { getServers } from 'features/servers/api/getServers'
@@ -17,7 +18,7 @@ interface AccordionMenuProps {
   title: string;
   url: string;
   icon: React.ReactNode;
-  children?: Course[];
+  children?: any[];
   userMenu? : boolean;
 };
 
@@ -41,7 +42,7 @@ export const AccordionMenu = ({title, url, icon, children, userMenu} : Accordion
               children.map((object, index) => {
                   return index != children.length -1 ? 
                   <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
-                    {object.name}
+                    {object.year ? `${object.year} ${object.winter ? '- Zima' : '- Lato'}` : object.name}
                   </Disclosure.Panel></Link> : 
                   <Link key={index} to={url + object.id}><Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all">
                     {object.name}
@@ -78,6 +79,8 @@ export const SideNavigation = () => {
   let serversContent = null
   let groupsContent = null
   let semestersContent = null
+
+  console.log(semesterData)
 
   if (courseStatus === 'loading') {
     coursesContent = (

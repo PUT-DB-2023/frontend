@@ -6,6 +6,7 @@ import { ButtonType } from 'types';
 import { addServer } from '../api/addServer';
 import { showToast } from 'api/showToast';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
@@ -16,6 +17,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [password, setPassword] = React.useState('');
     const [database, setDatabase] = React.useState('');
     const [active, setActive] = React.useState(false);
+
+    const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -35,6 +38,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         if (res.data) {
             handleOff();
             refetch();
+            navigate(`${res.data.id}/`)
         } else {
         }
     }, [name, ip, port, provider, user, password, database, active])

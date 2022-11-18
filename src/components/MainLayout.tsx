@@ -70,13 +70,15 @@ const ProfileMenu = () => {
               </Menu.Item>
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <button
-                    className={`${
-                      active ? 'bg-blue-100' : 'text-black'
-                    } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
-                  >
-                    Wyloguj
-                  </button>
+                  <Link to='/auth/login/'>
+                    <button
+                      className={`${
+                        active ? 'bg-blue-100' : 'text-black'
+                      } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
+                    >
+                      Wyloguj
+                    </button>
+                  </Link>
                 )}
               </Menu.Item>
             </div>

@@ -6,6 +6,7 @@ import { ButtonType } from 'types';
 import { addSemester } from '../api/addSemester';
 import { showToast } from 'api/showToast';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
@@ -17,11 +18,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [database, setDatabase] = React.useState('');
     const [active, setActive] = React.useState(false);
 
-    const {status: addStatus, refetch: addRefetch } = useQuery(['addSemester', name, ip, port, provider, user, password, database, active],
-        () => addSemester({ name, ip, port, provider, user, password, database, active }), {
-        refetchOnWindowFocus: false,
-        enabled: false // disable this query from automatically running
-    })
+    const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -41,6 +38,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         if (res.data) {
             handleOff();
             refetch();
+            console.log(res.data.id)
+            navigate(`semesters/${res.data.id}/`)
         } else {
         }
     }, [name, ip, port, provider, user, password, database, active])

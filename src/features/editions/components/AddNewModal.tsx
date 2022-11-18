@@ -6,6 +6,7 @@ import { ButtonType } from 'types';
 import { addEdition } from '../api/addEdition';
 import { CheckBox } from 'components/CheckBox';
 import { DateField } from 'components/DateField';
+import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, off: () => void, refetch: () => void, courseId: string }) => {
     const [description, setDescription] = React.useState('');
@@ -13,6 +14,8 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
     const [semester, setSemester] = React.useState('1');
     const [course, setCourse] = React.useState(courseId);
+
+    const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
         setDescription('');
@@ -28,6 +31,7 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         if (res) {
             handleOff();
             refetch()
+            // navigate(`courses/${res.data.id}/`)
          } else {
          }
     }, [description, dateOpened, dateClosed, semester, course])

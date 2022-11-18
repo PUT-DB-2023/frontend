@@ -4,6 +4,7 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addGroup } from '../api/addGroup';
+import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boolean, off: () => void, refetch: () => void, teacherEditions: {} }) => {
     const [name, setName] = React.useState('');
@@ -12,6 +13,8 @@ export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boo
     const [room, setRoom] = React.useState('');
     const [teacherEdition, setTeacherEdition] = React.useState('1');
     const [students, setStudents] = React.useState(['12', '13']);
+
+    const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -25,9 +28,11 @@ export const AddNewModal = ({ show, off, refetch, teacherEditions }: { show: boo
 
     const handleAdd = React.useCallback(async () => {
         const res = await addGroup({ name, day, hour, room, teacherEdition, students });
+        console.log(res)
         if (res) {
-            handleOff();
+            handleOff()
             refetch()
+            navigate(`${res.id}/`)
         }
     }, [name, day, hour, room, teacherEdition, students])
 

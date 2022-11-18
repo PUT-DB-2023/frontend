@@ -33,6 +33,8 @@ export const Courses = () => {
     )
   }
 
+  console.log(courseData)
+
   return (
     <ContentLayout>
       <AddNewModal refetch={() => courseRefetch()} show={newModal} off={() => setNewModal(false)} />
