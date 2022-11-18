@@ -18,7 +18,7 @@ export const ServerList = ({serverData} : IServerList) => {
   return (
     <div className='w-full h-full flex flex-col items-center'>
       {serverData.length == 0 ? 
-        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> : 
+        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Serwerów </div> : 
         serverData.map(function(server : Server) {
           return (
             <Link to={'/servers/' + server.id} className='w-full'>

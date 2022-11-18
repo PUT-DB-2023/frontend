@@ -14,7 +14,7 @@ export const GroupList = ({ groupData } : IGroupList) => {
     return (
       <div className='w-full'>
         { groupData.length == 0 ? 
-        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
+        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Grup </div> :
         groupData.map(function(group : Group) {
           return (
             <Link to={'/groups/' + group.id}>

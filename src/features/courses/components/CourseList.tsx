@@ -22,7 +22,7 @@ export const CourseList = ({courseData} : ICourseList) => {
   return (
     <div className='w-full h-full flex flex-col items-center'>
         { courseData.length == 0 ? 
-          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Wyników </div> :
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Przedmiotów </div> :
           courseData.map(function(course : Course) {
             return (
               <Link to={'/courses/' + course.id} className='w-full'>
