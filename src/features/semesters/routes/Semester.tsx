@@ -45,7 +45,7 @@ export const Semester = () => {
 
   return (
     <ContentLayout>
-      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={semesterQuery.data.name}/>
+      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={semesterQuery.data.name} refetch={() => refetch()}/>
       <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={semesterQuery.refetch} data={{id: id as string, ...semesterQuery.data}}/>
         <ContentPanel type={PanelType.HEADER}>
           <div className='flex-col'>

@@ -25,6 +25,14 @@ export const Courses = () => {
   const searchData = React.useMemo(() => searchFunc(search, courseData, ['name']), [search, courseData]);
   const sorted = React.useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
 
+  const nonActiveLast = React.useCallback((data: any[]) => {
+    const active = data?.filter(i => i?.active);
+    const nonActive = data?.filter(i => !i?.active);
+    return active?.concat(nonActive);
+  }, []);
+
+  const activeSorted = nonActiveLast(sorted);
+
   if (courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
@@ -44,7 +52,7 @@ export const Courses = () => {
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={true} filter={true} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
-        <CourseList courseData={sorted}></CourseList>
+        <CourseList courseData={activeSorted}></CourseList>
         {courseData.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
       </ContentPanel>
     </ContentLayout>

@@ -50,11 +50,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             <ModalContainer title={data.name} off={off}>
                 <div className={`flex flex-col gap-1`}>
                 <Field title={"Nazwa"} value={name} setValue={setName} />
-                    <Field title={"IP"} value={ip} setValue={setIp} />
-                    <Field title={"Port"} value={port} setValue={setPort} />
+                    <Field title={"IP"} value={ip} setValue={setIp} pattern={'/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/'}/>
+                    <Field title={"Port"} value={port} setValue={setPort} type={'number'}/>
                     <Field title={"Dostawca"} value={provider} setValue={setProvider} />
                     <Field title={"Użytkownik"} value={user} setValue={setUser} />
-                    <Field title={"Hasło"} value={password} setValue={setPassword} />
+                    <Field title={"Hasło"} value={password} setValue={setPassword} type={'password'}/>
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} />
                     <div className='flex gap-2 items-center'>
                         Aktywny:

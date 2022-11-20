@@ -34,8 +34,8 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.name} off={off}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Name"} value={name} setValue={setName} />
-                    <Field title={"Description"} value={description} setValue={setDescription} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} />
                 </div>
                 <div className={`flex gap-2 mt-10`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />

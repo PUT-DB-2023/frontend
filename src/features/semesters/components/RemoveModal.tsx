@@ -10,17 +10,17 @@ interface IRemoveModal {
     show: boolean,
     off: () => void,
     id: string | undefined,
-    name: string
+    name: string,
+    refetch: () => void;
 }
 
-export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteSemester(id)
         if (res.status) {
             off();
-            navigate('/semesters')
-         } else {
+            refetch();
          }
     }, [id])
 

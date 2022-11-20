@@ -24,7 +24,15 @@ export const Servers = () => {
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers', showActiveOnly], () => getServers(showActiveOnly));
 
   const searchData = useMemo(() => searchFunc(search, serverData, ['name']), [search, serverData]);
-  const sortedServers = useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
+  const sortedServers = useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
+
+  const nonActiveLast = React.useCallback((data: any[]) => {
+    const active = data?.filter(i => i?.active);
+    const nonActive = data?.filter(i => !i?.active);
+    return active?.concat(nonActive);
+  }, []);
+
+  const activeSorted = nonActiveLast(sortedServers);
 
   if (serverStatus == 'loading') {
     return (
@@ -39,14 +47,14 @@ export const Servers = () => {
       <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={serverRefetch} />
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
-        <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={()=>setShowAdd(true)}/>
+        <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={() => setShowAdd(true)} />
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera'/>
+        <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera' />
         {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}
-        <ServerList serverData={sortedServers}></ServerList>
-        {sortedServers.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
+        <ServerList serverData={activeSorted}></ServerList>
+        {activeSorted.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => { setShowActiveOnly(showActiveOnly ? undefined : true) }} /> : null}
       </ContentPanel>
     </ContentLayout>
   )

@@ -22,10 +22,7 @@ import { Semester } from '../types'
 export const Semesters = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const [editModal, setEditModal] = React.useState(false)
-  const [addEditionModal, setAddEditionModal] = React.useState(false)
-  const [sortBy, setSortBy] = React.useState(semestersSortOptions[0])
-  const [filterBy, setFilterBy] = React.useState(null)
-  const [search, setSearch] = React.useState('')
+  const [addModal, setAddModal] = React.useState(false)
   const [selectedSemester, setSelectedSemester] = React.useState<Semester>()
 
   const { id } = useParams()
@@ -48,22 +45,25 @@ export const Semesters = () => {
       </div>
     )
   }
+
+  const allRefetch = () => {
+    activeSemesterRefetch();
+    allSemestersRefetch();
+  }
   
-  console.log(activeSemesterData)
-  console.log(allSemestersData)
-  console.log(selectedSemester)
-  
+  const removeName = 'Usuń semestr ' + selectedSemester.year + ' - ' + (selectedSemester.winter ? 'Zima' : 'Lato')
+
   return (
     <ContentLayout>
-        <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={id} name={activeSemesterData.name} />
-        <EditModal refetch={() => activeSemesterRefetch()} show={editModal} off={() => setEditModal(false)} data={activeSemesterData} />
-        {id && <AddNewModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => activeSemesterRefetch()}/> }
+        <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={selectedSemester.id} name={removeName} refetch={() => allRefetch()}/>
+        <EditModal refetch={() => allRefetch()} show={editModal} off={() => setEditModal(false)} data={selectedSemester} />
+        <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() => allRefetch()}/>
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'> Semestry </h1>
           </div>
           <div className='flex gap-6'>
-            <Button type={ButtonType.ACTION} text='Dodaj semestr' onClick={()=>setAddEditionModal(true)}/>
+            <Button type={ButtonType.ACTION} text='Dodaj semestr' onClick={()=>setAddModal(true)}/>
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
@@ -104,7 +104,7 @@ export const Semesters = () => {
                       </Listbox.Options>
                   </div>
                 </Listbox>
-                <OptionsMenu edit={() => console.log(true)} remove={() => console.log(true)}></OptionsMenu>
+                <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)}></OptionsMenu>
             </div>            
           </div>
         </ContentPanel>

@@ -12,5 +12,6 @@ export type Edition = {
     course: Course;
     teachers: Teacher[];
     servers: Server[];
+    active: boolean;
 
 } & BaseEntity;

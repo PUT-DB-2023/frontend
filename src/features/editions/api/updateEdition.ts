@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 interface IUpdate extends IAddEdition {
     id: string;
+    active: boolean;
 }
 
 export const updateEdition = async (edition: IUpdate) => {
@@ -13,12 +14,13 @@ export const updateEdition = async (edition: IUpdate) => {
         description: edition.description,
         date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
-        semester: {id: edition.semester},
-        course: {id: edition.course},
-        id: edition.id,
+        semester: edition.semester,
+        course: edition.course,
+        active: edition.active,
     }
+    console.log(data)
     const t = toast.loading("Edytowanie..")
-    const response = await axios.patch(`/editions/${edition.id}`, data)
+    const response = await axios.patch(`/editions/${edition.id}/`, data)
     .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano edycję", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     .catch((e)=>{toast.update(t, {render: "Nie udało się edytować edycji", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response

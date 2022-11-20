@@ -24,13 +24,19 @@ import { Edition } from 'features/editions'
 import { Semester } from 'features/semesters'
 import { Teacher } from 'features/users'
 import { Group } from 'features/groups/types'
+import { EditModal as EditEditionModal } from '../../editions/components/EditModal'
+import { RemoveModal as RemoveEditionModal } from 'features/editions/components/RemoveModal'
 
 
 export const Course = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const [editModal, setEditModal] = React.useState(false)
   const [addEditionModal, setAddEditionModal] = React.useState(false)
-
+  const [editEditionModal, setEditEditionModal] = React.useState(false)
+  const [removeEditionModal, setRemoveEditionModal] = React.useState(false)
+  const [sortBy, setSortBy] = React.useState(editionsSortOptions[0])
+  const [filterBy, setFilterBy] = React.useState(null)
+  const [search, setSearch] = React.useState('')
   const [selectedEdition, setSelectedEdition] = React.useState<Edition>()
 
   const { courseId, editionId } = useParams()
@@ -63,7 +69,12 @@ export const Course = () => {
     
   }, [editionId, allEditionsData, activeEditionData])
 
-  if (allEditionsStatus == 'loading' || courseStatus == 'loading') {
+  const allRefetch = () => {
+    activeEditionRefetch();
+    allEditionsRefetch();
+  }
+
+  if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
         <Spinner />
@@ -72,12 +83,14 @@ export const Course = () => {
   }
 
   console.log(allEditionsData)
-  
+  console.log(selectedEdition)
   return (
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
-        {courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={() => console.log('aa')} courseId={courseId}/> }
+        {courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={allRefetch} courseId={courseId}/> }
+        {courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition}/>}
+        {courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} id={selectedEdition?.id} refetch={allRefetch}/>}
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>
             <h1 className='text-black text-3xl font-bold mb-4'>{ courseData.name }</h1>
