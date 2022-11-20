@@ -2,14 +2,8 @@ import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
 
 export interface ISemester {
-    name: string,
-    ip: string,
-    port: string,
-    provider: string,
-    user: string,
-    password: string,
-    database: string,
-    active: boolean,
+    year: string;
+    winter: boolean;
 }
 
 export const addSemester = async (semester: ISemester) => {
