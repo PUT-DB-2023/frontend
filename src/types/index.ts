@@ -97,3 +97,28 @@ export const semestersSortOptions : SortOptions[] = [
   {name: 'Nazwa', field: 'name', asc: true},
   {name: 'Nazwa', field: 'name', asc: false},
 ]
+
+export type WeekDay = {
+  name: string;
+  field: string;
+}
+
+export const weekDays : WeekDay[] = [
+  {name: 'Poniedziałek', field: 'Poniedziałek'},
+  {name: 'Wtorek', field: 'Wtorek'},
+  {name: 'Środa', field: 'Środa'},
+  {name: 'Czwartek', field: 'Czwartek'},
+  {name: 'Piątek', field: 'Piątek'},
+  {name: 'Sobota', field: 'Sobota'},
+  {name: 'Niedziela', field: 'Niedziela'},
+]
+
+export const semesters: number[] = [
+  1,2,3,4,5,6,7
+]
+
+export type Semester = {
+  id: number;
+  year: string;
+  winter: boolean;
+}

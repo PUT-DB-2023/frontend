@@ -9,17 +9,18 @@ interface IRemoveModal {
     show: boolean,
     off: () => void,
     id: string | undefined,
-    courseId: string | undefined,
-    name: string
+    name: string,
+    refetch: () => void
 }
 
-export const RemoveModal = ({ show, off, id, courseId, name }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteEdition(id)
         if (res.status) {
             off();
-            courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
+            refetch();
+            // courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
          } else {
          }
     }, [id])

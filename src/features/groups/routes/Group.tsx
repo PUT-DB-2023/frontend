@@ -17,6 +17,7 @@ import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { searchFunc } from 'api/searchApi'
 import { OptionsMenu } from 'components/OptionsMenu'
+import { deleteEdition } from 'features/editions/api/deleteEdition'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -28,7 +29,7 @@ export const Group = () => {
 
 
   const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
-    () => addDbAccounts(groupData.id, groupData.teacherEdition.edition.servers[0].id), {
+    () => addDbAccounts(groupData.id, groupData?.teacherEdition?.edition?.servers[0]?.id), {
     refetchOnWindowFocus: false,
     enabled: false // disable this query from automatically running
   })
@@ -44,7 +45,7 @@ export const Group = () => {
     )
   }
   else {
-    servers = groupData.teacherEdition.edition.servers
+    servers = groupData?.teacherEdition?.edition?.servers
   }
 
   const createDbAccounts = (groupId: Number, serverId: Number) => {
@@ -58,7 +59,7 @@ export const Group = () => {
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
-          <h1 className='font-bold text-3xl'> {groupData.name} - {groupData.teacherEdition.edition.course.name} {groupData.teacherEdition.edition.semester.year} {groupData.teacherEdition.edition.semester.winter ? "Zima" : "Lato"}</h1>
+          <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
           <h2 className='font-semibold text-xl text-blue-800'>
             {groupData.day} {groupData.hour}
           </h2>
