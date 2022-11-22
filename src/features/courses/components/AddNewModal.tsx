@@ -1,12 +1,10 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
-import { Field } from 'components/Field';
 import { Button } from 'components/Button';
+import { Field } from 'components/Field';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
 import { addCourse } from '../api/addCourse';
-import { showToast } from 'api/showToast';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: any}) => {
     const [name, setName] = React.useState('');

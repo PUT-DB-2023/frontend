@@ -24,7 +24,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateSemester({id: data.id, year, winter})
+        const res = await updateSemester({id: data.id, year, winter, active: false, editions: []})
         if (res.data) {
             off();
             refetch();

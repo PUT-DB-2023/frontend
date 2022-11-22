@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
-import { Field } from 'components/Field';
 import { Button } from 'components/Button';
+import { Field } from 'components/Field';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
 import { ButtonType } from 'types';
 import { updateCourse } from '../api/updateCourse';
-import { showToast } from 'api/showToast';
 
 interface IEditModal {
     show: boolean,

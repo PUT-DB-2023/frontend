@@ -3,15 +3,14 @@ import { sortFunc } from 'api/sortFilter';
 import { Spinner } from 'components/Spinner';
 import { Toolbar } from 'components/Toolbar';
 import { Group } from 'features/groups/types';
-import React from 'react'
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { editionsSortOptions, groupsSortOptions } from 'types';
+import { groupsSortOptions } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
-import { getEditions } from '../api/getEditions';
 import { GroupList } from '../components/GroupList';
-import {Edition as TEdition} from '../types'
+import { Edition as TEdition } from '../types';
 
 interface IEdition {
     editionData: TEdition;

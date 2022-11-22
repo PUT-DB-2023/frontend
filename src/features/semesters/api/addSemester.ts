@@ -1,9 +1,12 @@
+import { Edition } from 'features/editions';
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
 
 export interface ISemester {
     year: string;
     winter: boolean;
+    active: boolean;
+    editions: Edition[];
 }
 
 export const addSemester = async (semester: ISemester) => {

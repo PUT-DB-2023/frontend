@@ -9,7 +9,7 @@ interface ButtonProps {
 
 export const Button = ({type, text, onClick} : ButtonProps) => {
   return (
-    <button className={`lg:min-w-[144px] min-w-[80px] p-4 h-9 flex items-center justify-center rounded-lg ${
+    <button className={`lg:min-w-[144px] min-w-[144px] p-4 h-9 flex items-center justify-center rounded-lg ${
       type == ButtonType.ACTION ? 'bg-blue-800 text-white hover:bg-blue-700 active:bg-blue-800' :
       type == ButtonType.WARNING ? 'bg-red-600 text-white hover:bg-red-500 active:bg-red-600' :
       type == ButtonType.OUTLINE ? 'text-blue-800 border border-blue-800 hover:text-blue-700 hover:border-blue-700 active:text-blue-800 active:border-blue-800' : 
