@@ -1,17 +1,12 @@
-import React, { ReactNode } from 'react'
 import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable,
+  useReactTable
 } from '@tanstack/react-table'
-import { User } from 'features/users'
-import { Button } from './Button'
-import { ButtonType } from 'types'
-import { Link, useNavigate } from 'react-router-dom'
-import { ArrowSmDownIcon, ArrowSmUpIcon, ChevronDoubleDownIcon, ChevronDoubleUpIcon, ChevronUpIcon } from '@heroicons/react/outline'
-import { ArrowDownIcon, ArrowUpIcon, ChevronDownIcon } from '@heroicons/react/outline'
+import React, { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, baseUrl : string}) => {   
     return  (
@@ -39,7 +34,7 @@ export const Table = ({ data, columns } : any) => {
 
     return (
         <div className="w-full rounded-lg">
-            <table className='border-slate-300 bg-white lg:w-full md:w-full lg:table md:table block w-full overflow-x-auto'>
+            <table className='border-slate-300 bg-white lg:w-full lg:table block w-full overflow-x-auto'>
             <thead className='text-base'>
                 {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>

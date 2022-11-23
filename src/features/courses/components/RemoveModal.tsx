@@ -1,12 +1,9 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
-import { deleteCourse } from '../api/deleteCourse'
-import { useNavigate,  } from 'react-router-dom'
-import { toast } from 'react-toastify';
-import { showToast } from 'api/showToast';
-import { useQuery } from 'react-query';
+import { deleteCourse } from '../api/deleteCourse';
 
 interface IRemoveModal {
     show: boolean,

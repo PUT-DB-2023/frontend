@@ -1,4 +1,4 @@
-import React from 'react'
+import { Edition } from 'features/editions/routes/Edition'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Course } from './Course'
 import { Courses } from './Courses'
@@ -7,7 +7,9 @@ export const CoursesRoutes = () => {
   return (
     <Routes>
       <Route path="" element={<Courses />} />
-      <Route path=":id" element={<Course />} />
+      <Route path=":courseId" element={<Course />}>
+        <Route path="editions/:editionId" element={<Edition />} />
+      </Route>
       <Route path="*" element={<Navigate to="." />} />
     </Routes>
   )

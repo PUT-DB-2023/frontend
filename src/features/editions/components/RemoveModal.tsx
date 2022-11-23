@@ -8,22 +8,24 @@ import { useNavigate,  } from 'react-router-dom'
 interface IRemoveModal {
     show: boolean,
     off: () => void,
-    id: string | undefined,
+    courseId: string | undefined,
+    editionId: string | undefined,
     name: string,
     refetch: () => void
 }
 
-export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteEdition(id)
+        const res = await deleteEdition(editionId)
         if (res.status) {
             off();
+            courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
             refetch();
-            // courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
+            console.log(res.data)
          } else {
          }
-    }, [id])
+    }, [editionId])
 
     if (show) {
         return (

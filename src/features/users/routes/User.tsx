@@ -1,21 +1,54 @@
-import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { ColumnDef } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Spinner } from 'components/Spinner'
-import { LinkCell, Table } from 'components/Table'
-import React, { ReactNode } from 'react'
+import { Table } from 'components/Table'
+import { ReactNode } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, DbAccount, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
-import { Admin, Student, Teacher, User as TUser } from '../types'
 
 const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
 [
+    {
+      accessorKey: 'editionServer.server.name',
+      header: () => 'Serwer',
+      cell: ({getValue}) => (
+        <div className='p-2'>
+            {getValue() as ReactNode}
+        </div>
+      )
+    },
+    {
+      accessorKey: 'editionServer.edition.course.name',
+      header: () => 'Przedmiot',
+      cell: ({getValue}) => (
+        <div className='p-2'>
+            {getValue() as ReactNode}
+        </div>
+      )
+    },
+    {
+      accessorKey: 'editionServer.edition.semester.year',
+      header: () => 'Edycja',
+      cell: ({getValue}) => (
+        <div className='p-2'>
+            {getValue() as ReactNode}
+        </div>
+      )
+    },
+    {
+      accessorKey: 'editionServer.edition.semester.winter',
+      header: () => 'Semestr',
+      cell: ({getValue} : {getValue : any}) => (
+        <div className='p-2'>
+            {getValue() ? <span>Zima</span> : <span>Lato</span>}
+        </div>
+      )
+    },
     {
         accessorKey: 'username',
         header: () => 'Użytkownik',

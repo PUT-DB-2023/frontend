@@ -17,9 +17,8 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
-    const [semester, setSemester] = React.useState<Semester>(semestersData[0]);
+    const [semester, setSemester] = React.useState<Semester>(semestersData?.[0]);
     const [course, setCourse] = React.useState(courseId);
-
 
     const navigate = useNavigate()
 

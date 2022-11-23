@@ -1,6 +1,5 @@
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
-import { Course } from '../types'
 
 export const addCourse = async ({name, description}: {name: string, description: string}) => {
     const t = toast.loading("Dodawanie..")

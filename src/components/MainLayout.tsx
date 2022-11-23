@@ -2,12 +2,13 @@ import { Menu } from '@headlessui/react';
 import { getUsers } from 'features/users/api/getUsers';
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { UserType } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
+import { redirect } from "react-router-dom";
 
 type MainLayoutProps = {
   children?: React.ReactNode;
@@ -25,7 +26,6 @@ const NavBar = () => {
   const rootPath: string = pathSplitted[0]
   const numArguments : number = pathSplitted.length - 1
   let pathToDisplay : string[] = []
-  let navigate = useNavigate();
   
   
   return (
@@ -36,6 +36,7 @@ const NavBar = () => {
 }
 
 const ProfileMenu = () => {
+  let navigate = useNavigate();
   const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
 
   if (userQuery.isLoading) {
@@ -70,15 +71,16 @@ const ProfileMenu = () => {
               </Menu.Item>
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <Link to='/auth/login/'>
+                  // <Link to='/auth/login/'>
                     <button
                       className={`${
                         active ? 'bg-blue-100' : 'text-black'
                       } group flex w-full items-center rounded-lg px-2 py-2 text-sm`}
+                      onClick={() => navigate('/auth/login')}
                     >
                       Wyloguj
                     </button>
-                  </Link>
+                  // </Link>
                 )}
               </Menu.Item>
             </div>
