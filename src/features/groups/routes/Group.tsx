@@ -18,6 +18,7 @@ import * as React from 'react'
 import { searchFunc } from 'api/searchApi'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { deleteEdition } from 'features/editions/api/deleteEdition'
+import { AddStudCSVModal } from '../components/AddStudCSVModal'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -26,6 +27,7 @@ export const Group = () => {
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
+  const [addFileModal, setAddFileModal] = React.useState(false);
 
 
   const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
@@ -56,6 +58,7 @@ export const Group = () => {
     <ContentLayout>
       <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />
       <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
+      {id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} />}
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
@@ -75,6 +78,7 @@ export const Group = () => {
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Studenci </h2>
           <div className='flex justify-between gap-6'>
+            <Button text={'Dodaj z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>
             <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => console.log('ADD STUDENT')}/>
             <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
           </div>

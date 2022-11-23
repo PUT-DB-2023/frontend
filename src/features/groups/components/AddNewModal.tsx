@@ -19,7 +19,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState('');
-    const [students, setStudents] = React.useState({title: '', selectedFile: '', name: ''});
 
     const { data: teachers, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
 
@@ -31,14 +30,10 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         setHour('08:00');
         setRoom('');
         setTeacher('');
-        setStudents({title: '', selectedFile: '', name: ''});
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const data = new FormData();
-        data.append('file', students.selectedFile, students.name);
-        console.log(data)
         const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: '', students: [] });
         console.log(res)
         if (res) {
@@ -46,15 +41,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
             refetch()
             navigate(`${res.id}/`)
         }
-    }, [name, day, hour, room, teacher, students])
-
-    const handleSelectedFile = React.useCallback((event: any) => {
-        setStudents({
-            title: 'students',
-            selectedFile: event.target.files[0],
-            name: event.target.files[0].name
-        });
-    }, []);
+    }, [name, day, hour, room, teacher])
 
     if (show) {
         return (
@@ -65,10 +52,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />
                     <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />
-                    <FieldBox title={'Studenci'}>
-                        <input className="block w-full text-zinc-600 border border-zinc-400 rounded-lg cursor-pointer focus:outline-none focus-visible:outline-blue-800"
-                        type="file" accept=".csv, .xlsx" onChange={handleSelectedFile}/>
-                    </FieldBox>
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
