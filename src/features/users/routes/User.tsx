@@ -105,8 +105,6 @@ export const User = ({type} : {type: UserType}) => {
     );
   }
 
-  console.log(userQuery.data)
-
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.HEADER}> 

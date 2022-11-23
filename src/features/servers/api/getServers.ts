@@ -9,5 +9,7 @@ export const getServers = async ( active?: boolean, courseId? : string ) => {
             'active': active
         }
     })
+    .then(e => {return e})
+    .catch(e => {return e})
     return response.data
 }

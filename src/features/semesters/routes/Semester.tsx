@@ -41,8 +41,6 @@ export const Semester = () => {
     );
   }
 
-  console.log(semesterQuery.data)
-
   return (
     <ContentLayout>
       <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={semesterQuery.data.name} refetch={() => refetch()}/>

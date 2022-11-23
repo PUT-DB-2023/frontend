@@ -41,8 +41,6 @@ export const Courses = () => {
     )
   }
 
-  console.log(courseData)
-
   return (
     <ContentLayout>
       <AddNewModal refetch={() => courseRefetch()} show={newModal} off={() => setNewModal(false)} />
@@ -53,7 +51,7 @@ export const Courses = () => {
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={true} filter={true} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
         <CourseList courseData={activeSorted}></CourseList>
-        {courseData.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} /> : null}
+        <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => {setShowActiveOnly(showActiveOnly ? undefined : true)}} />
       </ContentPanel>
     </ContentLayout>
   )

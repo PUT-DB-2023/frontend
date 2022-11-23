@@ -20,8 +20,6 @@ export const Edition = () => {
 
     const { courseId, editionId } = useParams()
 
-    console.log('Edition params:', useParams())
-
     const { data : selectedEditionData, status : selectedEditionStatus, refetch : selectedEditionRefetch } = useQuery(['selectedEdition', editionId], () => getEdition(editionId));
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['editionGroups', editionId, selectedEditionData], () => getEditionGroups(editionId))
 
@@ -31,8 +29,6 @@ export const Edition = () => {
 
     const searchData = React.useMemo(() => searchFunc(search, groupData, ['day','hour','teacherEdition/teacher/first_name', 'teacherEdition/teacher/last_name']), [search, groupData]);
     const sortedGroups = React.useMemo<Group[]>(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
-
-    console.log(selectedEditionData)
 
     if (selectedEditionStatus == 'loading' || groupStatus == 'loading') {
         return (
@@ -46,7 +42,7 @@ export const Edition = () => {
         <>
             <div className='flex flex-col gap-4'>
                 <h1 className='text-3xl font-bold'>
-                    {selectedEditionData ? selectedEditionData?.semester?.year.toString().concat(selectedEditionData?.semester?.winter ? " - Zima" : " - Lato") : 'Brak edycji'}
+                    {selectedEditionData?.semester?.year.toString().concat(selectedEditionData?.semester?.winter ? " - Zima" : " - Lato")}
                 </h1>
                 <div className="flex flex-row">
                     <h2 className={`text-lg font-semibold ${selectedEditionData?.semester?.active ? 'text-blue-600' : 'text-red-500'}`}>

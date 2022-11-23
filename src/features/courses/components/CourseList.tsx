@@ -17,15 +17,13 @@ interface ICourseList {
 
 export const CourseList = ({courseData} : ICourseList) => {
 
-  console.log(courseData)
-
   return (
     <div className='w-full h-full flex flex-col items-center'>
         { courseData.length == 0 ? 
-          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Przedmiotów </div> :
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Aktywnych Przedmiotów </div> :
           courseData.map(function(course : Course) {
             return (
-              <Link to={'/courses/' + course.id} className='w-full'>
+              <Link key={course.id} to={'/courses/' + course.id} className='w-full'>
                 <Box color={course.active ? 'bg-blue-800' : 'bg-red-500'}>
                   <span className='font-semibold text-xl'> { course.name }</span>
                   <span className='font-normal text-base text-slate-600'> { course.description }</span>

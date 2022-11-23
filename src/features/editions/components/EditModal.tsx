@@ -36,7 +36,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         openArray && setDateOpened(new Date(openArray?.[0], openArray?.[1], openArray?.[2]));
         closeArray && setDateClosed(new Date(closeArray?.[0], closeArray?.[1], closeArray?.[2]));
         setSemester(selectedSemester);
-        console.log(data?.semester)
         setActive(data?.active);
         setCourse(data?.course?.id);
     }, [show, data])

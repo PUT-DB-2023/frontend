@@ -18,7 +18,7 @@ export const updateEdition = async (edition: IUpdate) => {
         course: edition.course,
         active: edition.active,
     }
-    console.log(data)
+
     const t = toast.loading("Edytowanie..")
     const response = await axios.patch(`/editions/${edition.id}/`, data)
     .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano edycję", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})

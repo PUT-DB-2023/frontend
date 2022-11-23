@@ -10,7 +10,8 @@ export const CoursesRoutes = () => {
       <Route path=":courseId" element={<Course />}>
         <Route path="editions/:editionId" element={<Edition />} />
       </Route>
-      <Route path="*" element={<Navigate to="." />} />
+      <Route path=":courseId/editions" element={<Course />} />
+      <Route path="*" element={<Navigate to="" />} />
     </Routes>
   )
-}
+} 

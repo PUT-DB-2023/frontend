@@ -18,9 +18,9 @@ export const GroupList = ({groupData} : IGroupList) => {
       <div className='w-full h-full'>
           { groupData.length == 0 ? 
               <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Grup </div> :
-              groupData.map(function(group : Group) {
+              groupData.map((group : Group) => {
               return (
-                <Link to={'/groups/' + group.id}>
+                <Link key={group.id} to={'/groups/' + group.id}>
                   <Box>
                     <span className='font-semibold text-xl'> {group.name} - { group.day + " " + group.hour}</span>
                     <span className='font-normal text-base text-blue-800'> { group.teacherEdition.teacher.first_name + " " + group.teacherEdition.teacher.last_name}</span>

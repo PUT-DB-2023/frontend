@@ -20,10 +20,10 @@ export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: I
         const res = await deleteEdition(editionId)
         if (res.status) {
             off();
-            courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
             refetch();
-            console.log(res.data)
-         } else {
+            console.log('REDIRECTING..')
+            courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
+         } else {   
          }
     }, [editionId])
 

@@ -8,6 +8,8 @@ export const getCourses = async (active?: boolean) => {
             'active': active
         }
     })
+    .then(e => {return e})
+    .catch(e => {return e})
     return response.data
 }
 

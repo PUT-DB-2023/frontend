@@ -30,7 +30,6 @@ export const Course = () => {
 
   const { courseId, editionId } = useParams()
 
-  console.log('Course params:', useParams())
 
   const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course', courseId], () => getCourse(courseId));
   const { data : activeEditionData, status : activeEditionStatus, refetch : activeEditionRefetch } = useQuery(['activeEditions', courseId], () => getEditions(true, courseId));
@@ -38,30 +37,67 @@ export const Course = () => {
 
   const navigate = useNavigate()
 
+  // React.useEffect(() => {
+  //   if (editionId !== undefined) {
+  //     if (allEditionsData !== undefined && allEditionsData.length !== 0) {
+  //       console.log(1)
+  //       setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
+  //       navigate(`editions/${editionId}/`)
+  //     }
+  //   }
+  //   else {
+  //     if (activeEditionData !== undefined && activeEditionData.length !== 0) {
+  //       console.log(2)
+  //       setSelectedEdition(activeEditionData[0])
+  //       navigate(`editions/${activeEditionData[0].id}/`)
+  //     }
+  //     else if(allEditionsData !== undefined && allEditionsData.length !== 0) {
+  //       console.log(3)
+  //       setSelectedEdition(allEditionsData[0])
+  //       navigate(`editions/${allEditionsData[0].id}/`)
+  //     }
+  //   }
+    
+  // }, [editionId, allEditionsData, activeEditionData])
+
+
   React.useEffect(() => {
+    console.log('USEEFFECT', {'editionId' : editionId,'all' : allEditionsData, 'active' : activeEditionData})
     if (editionId !== undefined) {
-      console.log(activeEditionData)
-      if (allEditionsData !== undefined && allEditionsData.length !== 0) {
+      if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
+        console.log('ALL IN EFFECT', allEditionsData)
+        console.log(allEditionsData.filter((edition: Edition) => edition.id == editionId))
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
         navigate(`editions/${editionId}/`)
       }
+      else {
+        if (allEditionsStatus === 'success') navigate('')
+      }
     }
     else {
-      if (activeEditionData !== undefined && activeEditionData.length !== 0) {
+      if (activeEditionData && activeEditionData.length !== 0) {
+        console.log(2)
         setSelectedEdition(activeEditionData[0])
         navigate(`editions/${activeEditionData[0].id}/`)
       }
       else if(allEditionsData !== undefined && allEditionsData.length !== 0) {
+        console.log(3)
         setSelectedEdition(allEditionsData[0])
         navigate(`editions/${allEditionsData[0].id}/`)
       }
+      else {
+        navigate('')
+      }
     }
     
-  }, [editionId, allEditionsData, activeEditionData])
+  }, [allEditionsData, activeEditionData])
 
-  const allRefetch = () => {
-    activeEditionRefetch();
-    allEditionsRefetch();
+  const allRefetch = async () => {
+    console.log('STARTING')
+    await activeEditionRefetch();
+    await allEditionsRefetch();
+    console.log('DONE');
+    
   }
 
   if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
@@ -72,8 +108,8 @@ export const Course = () => {
     )
   }
 
-  console.log(allEditionsData)
-  console.log(selectedEdition)
+  console.log('courseId', courseId)
+
   return (
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />
@@ -96,14 +132,13 @@ export const Course = () => {
           <div className='flex flex-col gap-6'>
             <div className='flex justify-between lg:flex-row md:flex-row flex-col'>
               <h2 className='text-lg font-semibold'>Wybrana edycja</h2>
-              {/* {selectedEdition ? */}
+              {allEditionsData.length ? 
               <div className='flex gap-6 lg:flex-row md:flex-row flex-col-reverse'>
                 <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={() => console.log('ADD GROUP')} />
                 <div className='flex gap-6'>
                   <Listbox value={selectedEdition} onChange={setSelectedEdition}>
                       <div className="relative w-[232px]">
                           <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
-                              {/* <ChevronDownIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> */}
                               <span className='flex justify-start w-full px-2'>
                                 {selectedEdition?.semester.year} - {selectedEdition?.semester.winter ? "Zima" : "Lato"}
                               </span>
@@ -113,7 +148,7 @@ export const Course = () => {
                           </Listbox.Button>
                           <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white max-h-56'>
                               {allEditionsData.sort((a : Edition, b : Edition) => (b.semester.year.localeCompare(a.semester.year) || Number(b.semester.winter) - Number(a.semester.winter))).map((edition : Edition) => (
-                                  <Link to={`editions/${edition.id}/`}>
+                                  <Link key={edition.id} to={`editions/${edition.id}/`}>
                                     <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
                                         key={edition.id}
                                         value={edition}
@@ -132,8 +167,12 @@ export const Course = () => {
                     <OptionsMenu edit={() => setEditEditionModal(true)} remove={() => setRemoveEditionModal(true)}></OptionsMenu>
                   </div>
               </div>
+              : null}
               {/* : null}      */}
             </div>
+              {allEditionsData.length ? null : 
+                <h1 className='text-3xl font-bold'>Brak edycji</h1>
+              }
             <Outlet />  
           </div>
         </ContentPanel>

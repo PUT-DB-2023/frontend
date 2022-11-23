@@ -80,8 +80,6 @@ export const SideNavigation = () => {
   let groupsContent = null
   let semestersContent = null
 
-  console.log(semesterData)
-
   if (courseStatus === 'loading') {
     coursesContent = (
       <div className='w-full h-full flex items-center justify-center'>
