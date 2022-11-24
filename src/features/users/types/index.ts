@@ -28,4 +28,5 @@ export type OldUser = {
     email: string;
     password: string;
     student_id?: number;
+    id?: string;
 }

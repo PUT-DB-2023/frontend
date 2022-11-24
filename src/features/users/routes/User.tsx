@@ -10,6 +10,9 @@ import { useParams } from 'react-router-dom'
 import { ButtonType, DbAccount, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
 import { UserInfo } from '../components/UserInfo'
+import { EditModal } from '../components/EditModal'
+import { RemoveModal } from '../components/RemoveModal'
+import * as React from 'react'
 
 const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
 [
@@ -89,6 +92,8 @@ const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
 
 export const User = ({type} : {type: UserType}) => {
   const { id } = useParams()
+  const [editModal, setEditModal] = React.useState(false)
+  const [removeModal, setRemoveModal] = React.useState(false)
   const userQuery = useQuery(['user', id], () => getUser( id, type ))
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
@@ -107,11 +112,13 @@ export const User = ({type} : {type: UserType}) => {
 
   return (
     <ContentLayout>
+      <EditModal show={editModal} refetch={() => null} off={() => setEditModal(false)} type={type} data={userQuery.data}/>
+      <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />
       <ContentPanel type={PanelType.HEADER}> 
             <span className='text-black text-3xl font-bold mb-4'> { userQuery.data.first_name + " " + userQuery.data.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
-            <OptionsMenu edit={() => console.log('EDIT')} remove={() => console.log('REMOVE')} />
+            <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>

@@ -1,7 +1,18 @@
 import { axios } from 'lib/axios'
-import { User } from '../types'
+import { UserType } from 'types'
+import { toast } from 'react-toastify'
+
 
 export const deleteUser = async ({ id } : any) => {
     const response = await axios.delete(`/users/${ id }`, id)
     return response.data
+}
+
+export const deleteUserOld = async (id: any, type: UserType) => {
+    const t = toast.loading("Usuwanie..")
+    const dest = (type === UserType.TEACHER ? "/teachers/" : (type === UserType.ADMIN ? "/admins/" : (type === UserType.STUDENT ? "/students/" : ""))) + id;
+    const response = await axios.delete(dest, id)
+    .then((e)=>{toast.update(t, {render: "Pomyślnie usunięto użytkownika", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: "Nie udało się usunąć użytkownika", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    return response;
 }
