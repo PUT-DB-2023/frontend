@@ -80,6 +80,7 @@ export const Semesters = () => {
               </div>
             </div>
             <div className='flex gap-6'>
+              {!selectedSemester.active &&  <Button text={"Aktywuj"} type={ButtonType.ACTION}/>}
               <Listbox value={selectedSemester} onChange={setSelectedSemester}>
                   <div className="relative w-[232px]">
                       <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>

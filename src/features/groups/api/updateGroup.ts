@@ -8,18 +8,18 @@ interface IUpdate extends IAddGroup {
 }
 
 export const updateGroup = async (group: IUpdate) => {
-    const data = {
-        name: group.name,
-        day: group.day,
-        hour: group.hour,
-        room: group.room,
-        teacherEdition: group.teacherEdition,
-        students: group.students,
-        id: group.id,
-    }
+    // const data = {
+    //     name: group.name,
+    //     day: group.day,
+    //     hour: group.hour,
+    //     room: group.room,
+    //     teacherEdition: group.teacherEdition,
+    //     students: group.students,
+    //     id: group.id,
+    // }
 
     const t = toast.loading("Edytowanie..")
-    const response = await axios.put(`/groups/${group.id}/`, data)
+    const response = await axios.put(`/groups/${group.id}/`, group)
     .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano grupę", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     .catch((e)=>{toast.update(t, {render: "Nie udało się edytować grupy", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response

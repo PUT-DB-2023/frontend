@@ -26,7 +26,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState('');
-    const [students, setStudents] = React.useState({title: '', selectedFile: '', name: ''});
 
     const { data: teachers, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
 
@@ -43,25 +42,15 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setHour(newTime);
         setRoom(data?.room);
         setTeacher(selectedTeacher);
-        setStudents({title: '', selectedFile: '', name: ''});
     }, [show, data, teachers])
 
     const handleUpdate = React.useCallback(async () => {
-        // const studs = students.map((o: any) => String(o.id))
-        const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: '', students: [], id: data.id });
+        const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: '', id: data.id });
         if (res) {
             off();
             refetch()
         }
-    }, [name, day, hour, room, teacher, students])
-
-    const handleSelectedFile = React.useCallback((event: any) => {
-        setStudents({
-            title: 'students',
-            selectedFile: event.target.files[0],
-            name: event.target.files[0].name
-        });
-    }, []);
+    }, [name, day, hour, room, teacher])
 
     if (show) {
         return (
@@ -71,11 +60,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />
-                    <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />
-                    <FieldBox title={'Studenci'}>
-                        <input className="block w-full text-zinc-600 border border-zinc-400 rounded-lg cursor-pointer focus:outline-none focus-visible:outline-blue-800"
-                        type="file" accept=".csv, .xlsx" onChange={handleSelectedFile}/>
-                    </FieldBox>                </div>
+                    <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />            </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
                     <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />

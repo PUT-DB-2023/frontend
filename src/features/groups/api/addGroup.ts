@@ -8,7 +8,7 @@ export interface IAddGroup {
     hour: string,
     room: string,
     teacherEdition: string;
-    students: Array<string>;
+    students?: Array<string>;
 }
 
 export const addGroup = async (group: IAddGroup) => {
