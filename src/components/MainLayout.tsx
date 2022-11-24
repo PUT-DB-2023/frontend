@@ -8,7 +8,7 @@ import { UserType } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
-import { redirect } from "react-router-dom";
+// import { redirect } from "react-router-dom";
 
 type MainLayoutProps = {
   children?: React.ReactNode;

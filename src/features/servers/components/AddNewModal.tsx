@@ -52,7 +52,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Port"} value={port} setValue={setPort} />
                     <Field title={"Dostawca"} value={provider} setValue={setProvider} />
                     <Field title={"Użytkownik"} value={user} setValue={setUser} />
-                    <Field title={"Hasło"} value={password} setValue={setPassword} />
+                    <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} />
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} />
                     {/* <Field title={"Active"} value={active} setValue={active} /> */}
                     <div className='flex gap-2 items-center'>

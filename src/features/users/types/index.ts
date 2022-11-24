@@ -21,3 +21,11 @@ export type Student = {
     db_accounts: DbAccount[];
 
 } & User
+
+export type OldUser = {
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    student_id?: number;
+}
