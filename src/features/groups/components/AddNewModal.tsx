@@ -13,7 +13,7 @@ import { getTeachers } from '../api/getTeachers';
 import { DropDown } from '../api/DropDown';
 import { FieldBox } from 'components/FieldBox';
 
-export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
+export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
     const [name, setName] = React.useState('');
     const [day, setDay] = React.useState<WeekDay>(weekDays[0]);
     const [hour, setHour] = React.useState('08:00');

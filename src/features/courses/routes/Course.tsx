@@ -15,12 +15,14 @@ import { EditModal as EditEditionModal } from '../../editions/components/EditMod
 import { getCourse } from '../api/getCourse'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
+import { AddNewModal as AddGroupModal } from 'features/groups/components/AddNewModal'
 
 
 export const Course = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const [editModal, setEditModal] = React.useState(false)
   const [addEditionModal, setAddEditionModal] = React.useState(false)
+  const [addGroupModal, setAddGroupModal] = React.useState(false)
   const [editEditionModal, setEditEditionModal] = React.useState(false)
   const [removeEditionModal, setRemoveEditionModal] = React.useState(false)
   const [sortBy, setSortBy] = React.useState(editionsSortOptions[0])
@@ -114,6 +116,7 @@ export const Course = () => {
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
+        <AddGroupModal show={addGroupModal} off={() => setAddGroupModal(false)} refetch={allRefetch} edition={editionId}/>
         {courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={allRefetch} courseId={courseId}/> }
         {courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition}/>}
         {courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch}/>}
@@ -134,7 +137,7 @@ export const Course = () => {
               <h2 className='text-lg font-semibold'>Wybrana edycja</h2>
               {allEditionsData.length ? 
               <div className='flex gap-6 lg:flex-row md:flex-row flex-col-reverse'>
-                <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={() => console.log('ADD GROUP')} />
+                <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={() => setAddGroupModal(true)} />
                 <div className='flex gap-6'>
                   <Listbox value={selectedEdition} onChange={setSelectedEdition}>
                       <div className="relative w-[232px]">
