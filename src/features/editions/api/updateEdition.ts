@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 interface IUpdate extends IAddEdition {
     id: string;
-    active: boolean;
+    active?: boolean;
 }
 
 export const updateEdition = async (edition: IUpdate) => {

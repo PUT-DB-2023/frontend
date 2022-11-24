@@ -23,7 +23,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
     const [semester, setSemester] = React.useState<Semester>({id: 1, year: '', winter: false});
-    const [active, setActive] = React.useState(false);
+    // const [active, setActive] = React.useState(false);
     const [course, setCourse] = React.useState('');
 
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
@@ -36,18 +36,18 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         openArray && setDateOpened(new Date(openArray?.[0], openArray?.[1], openArray?.[2]));
         closeArray && setDateClosed(new Date(closeArray?.[0], closeArray?.[1], closeArray?.[2]));
         setSemester(selectedSemester);
-        setActive(data?.active);
+        // setActive(data?.active);
         setCourse(data?.course?.id);
     }, [show, data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString(), course, id: data.id, active: active });
+        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString(), course, id: data.id });
         console.log(res)
         if (res) {
             off();
             refetch()
         }
-    }, [description, dateOpened, dateClosed, semester, course, active, data?.id])
+    }, [description, dateOpened, dateClosed, semester, course, data?.id])
 
     if (show) {
         return (
@@ -57,7 +57,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
-                    <CheckBox title={'Aktywny:'} value={active} setValue={setActive} />
+                    {/* <CheckBox title={'Aktywny:'} value={active} setValue={setActive} /> */}
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
