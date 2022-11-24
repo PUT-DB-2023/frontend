@@ -69,7 +69,7 @@ export const Group = () => {
           {/* <h2 className='text-blue-900 font-semibold mb-8'> {groupData !== undefined ? groupData.students.length : ''} studentów </h2> */}
         </div>
         <div className='flex gap-6'>
-          <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta' />
+          <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Przenieś konta' />
           <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
         </div>
       </ContentPanel>

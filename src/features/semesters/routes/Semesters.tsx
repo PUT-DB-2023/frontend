@@ -74,6 +74,9 @@ export const Semesters = () => {
               <h1 className='text-3xl font-bold'>
                 {selectedSemester ? selectedSemester?.year.toString().concat(selectedSemester.winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
               </h1>
+              <h2 className={`text-lg font-semibold ${selectedSemester?.active ? 'text-blue-600' : 'text-red-500'}`}>
+                {selectedSemester ? selectedSemester?.active ? 'Aktywny' : 'Nieaktywny' : ''}
+              </h2>
               </div>
             </div>
             <div className='flex gap-6'>

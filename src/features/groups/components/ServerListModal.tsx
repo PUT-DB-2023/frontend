@@ -21,9 +21,9 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId }: { show
                 <div className={`flex flex-col gap-1 p-2`}>
                     {servers.map((server: any) => {
                         return (
-                            <div className='w-full flex justify-between p-4 items-center shadow-md rounded-lg'>
+                            <div className='w-full flex justify-between p-4 items-center rounded-lg'>
                                 <span className='text-lg'> {server.name} </span>
-                                <Button type={ButtonType.OUTLINE} text='Utwórz' onClick={() => addDbAccounts(groupId, server.id)} />
+                                <Button type={ButtonType.OUTLINE} text='Przenieś' onClick={() => addDbAccounts(groupId, server.id)} />
                             </div>
                         )
                     })}

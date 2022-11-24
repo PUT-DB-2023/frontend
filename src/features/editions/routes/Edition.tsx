@@ -44,11 +44,9 @@ export const Edition = () => {
                 <h1 className='text-3xl font-bold'>
                     {selectedEditionData?.semester?.year.toString().concat(selectedEditionData?.semester?.winter ? " - Zima" : " - Lato")}
                 </h1>
-                <div className="flex flex-row">
-                    <h2 className={`text-lg font-semibold ${selectedEditionData?.semester?.active ? 'text-blue-600' : 'text-red-500'}`}>
+                <h2 className={`text-lg font-semibold ${selectedEditionData?.semester?.active ? 'text-blue-600' : 'text-red-500'}`}>
                     {selectedEditionData ? selectedEditionData?.semester?.active ? 'Aktywna' : 'Nieaktywna' : ''}
-                    </h2>
-                </div>
+                </h2>
             </div>
             {selectedEditionData ?
                 <>
