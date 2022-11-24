@@ -12,6 +12,7 @@ import { useQuery } from 'react-query';
 import { getTeachers } from '../api/getTeachers';
 import { DropDown } from '../api/DropDown';
 import { FieldBox } from 'components/FieldBox';
+import { getEditionTeachers } from '../api/getEditionTeachers';
 
 export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
     const [name, setName] = React.useState('');
@@ -20,7 +21,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState('');
 
-    const { data: teachers, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
+    const { data: teachers, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], () => getEditionTeachers(edition));
 
     const navigate = useNavigate()
 

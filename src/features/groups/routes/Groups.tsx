@@ -10,7 +10,7 @@ import { useQuery } from 'react-query';
 import { ButtonType, PanelType, Status } from 'types';
 import { getGroups } from '../api/getGroups';
 import { GroupList } from '../components/GroupList';
-import { getTeacherEdition } from '../api/getTeacherEdition';
+// import { getTeacherEdition } from '../api/getEditionTeachers';
 import { groupsSortOptions } from 'types';
 import { sortFunc } from 'api/sortFilter';
 import { searchFunc } from 'api/searchApi'
@@ -22,7 +22,7 @@ export const Groups = () => {
     const [search, setSearch] = React.useState('');
 
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
-    const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
+    // const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
 
     const searchData = React.useMemo(() => searchFunc(search, groupData, ['name','day','hour','teacherEdition/edition/course/name','teacherEdition/edition/semester/year']), [search, groupData]);
     const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);

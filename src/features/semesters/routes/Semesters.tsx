@@ -18,6 +18,7 @@ import { EditModal } from '../components/EditModal'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { GroupList } from 'features/editions/components/GroupList'
 import { Semester } from '../types'
+import { activateSemester } from '../api/activateSemester'
 
 export const Semesters = () => {
   const [removeModal, setRemoveModal] = React.useState(false)
@@ -37,6 +38,12 @@ export const Semesters = () => {
       setSelectedSemester(activeSemesterData[0])
     } 
   }, [activeSemesterData])
+
+  const activation = React.useCallback( async ()=>{
+    console.log('ACTIVATE')
+    await activateSemester(selectedSemester?.id);
+    allRefetch()
+  },[allSemestersQuery, selectedSemester])
 
   if (activeSemesterStatus == 'loading' || allSemestersStatus == 'loading' || selectedSemester === undefined) {
     return (
@@ -80,7 +87,7 @@ export const Semesters = () => {
               </div>
             </div>
             <div className='flex gap-6'>
-              {!selectedSemester.active &&  <Button text={"Aktywuj"} type={ButtonType.ACTION}/>}
+              {!selectedSemester.active &&  <Button text={"Aktywuj"} type={ButtonType.ACTION} onClick={activation}/>}
               <Listbox value={selectedSemester} onChange={setSelectedSemester}>
                   <div className="relative w-[232px]">
                       <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
