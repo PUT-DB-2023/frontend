@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Listbox } from '@headlessui/react'
 import { Combobox } from '@headlessui/react';
 import { weekDays, WeekDay } from 'types';
+import { getTeacher } from 'features/users/api/getTeacher';
 
 interface IDropDown {
     title: string;
@@ -19,7 +20,10 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
         query === ''
             ? values
             : values.filter((opt: any) => {
-                const val: string = opt?.first_name + opt?.last_name;
+                // console.log(opt.teacher)
+                const val: string = opt?.teacher.first_name + opt?.teacher.last_name;
+                console.log(val);
+                
                 return val.toLowerCase().includes(query.toLowerCase())
             })
     return (
@@ -30,7 +34,7 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
                         <Combobox.Input
                             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 bg-transparent rounded-lg focus-visible:outline-blue-800"
                             onChange={(event) => setQuery(event.target.value)}
-                            displayValue={(option: any) => option ? option?.first_name + ' ' + option?.last_name : ''}
+                            displayValue={(option: any) => option.teacher ? option?.teacher.first_name + ' ' + option?.teacher.last_name : ''}
                         />
                         <Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
@@ -46,7 +50,7 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
                             >
                                 {({ selected }) => (
                                     <>
-                                        <span className={selected ? `font-bold` : `font-normal`}>{option.first_name + ' ' + option.last_name}</span>
+                                        <span className={selected ? `font-bold` : `font-normal`}>{option?.teacher.first_name + ' ' + option?.teacher.last_name}</span>
                                     </>
                                 )}
                             </Combobox.Option>

@@ -40,7 +40,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
         if (res) {
             handleOff()
             refetch()
-            navigate(`${res.id}/`)
+            navigate(`/groups/${res.id}/`)
         }
     }, [name, day, hour, room, teacher])
 
