@@ -12,7 +12,7 @@ import { useQuery } from 'react-query';
 import { getTeachers } from '../api/getTeachers';
 import { DropDown } from '../api/DropDown';
 import { FieldBox } from 'components/FieldBox';
-import { getEditionTeachers } from '../api/getEditionTeachers';
+import { getTeacherEdtition } from '../api/getTeacherEdition';
 
 export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
     const [name, setName] = React.useState('');
@@ -21,9 +21,11 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState('');
 
-    const { data: teachers, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], () => getEditionTeachers(edition));
+    const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition'], () => getTeacherEdtition(edition));
 
     const navigate = useNavigate()
+
+    console.log(teacherEditionData)
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -35,8 +37,8 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: '', students: [] });
-        console.log(res)
+        const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: teacherEditionData[0].id, students: [] });
+        console.log(teacherEditionData)
         if (res) {
             handleOff()
             refetch()
@@ -52,7 +54,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />
-                    <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />
+                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
