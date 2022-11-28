@@ -36,7 +36,6 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         if (res) {
             handleOff();
             refetch()
-            console.log('CREATED ID:', res.id)
             navigate(`editions/${res.id}/`)
          } else {
          }

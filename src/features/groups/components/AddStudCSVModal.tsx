@@ -19,7 +19,6 @@ export const AddStudCSVModal = ({ show, off, refetch, id }: { show: boolean, off
             data.append('group_id', id);
             data.append('students_csv', students)
             const res = await addStudentsFile(data);
-            console.log(res)
             if (res) {
                 handleOff()
                 refetch()

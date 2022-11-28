@@ -21,9 +21,7 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
             ? values
             : values.filter((opt: any) => {
                 // console.log(opt.teacher)
-                const val: string = opt?.teacher.first_name + opt?.teacher.last_name;
-                console.log(val);
-                
+                const val: string = opt?.teacher.first_name + opt?.teacher.last_name;                
                 return val.toLowerCase().includes(query.toLowerCase())
             })
     return (

@@ -21,7 +21,6 @@ export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: I
         if (res.status) {
             off();
             refetch();
-            console.log('REDIRECTING..')
             courseId ? navigate(`/courses/${courseId}`) :  navigate('/courses')
          } else {   
          }

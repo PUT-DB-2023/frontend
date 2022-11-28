@@ -25,8 +25,6 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
 
     const navigate = useNavigate()
 
-    console.log(teacherEditionData)
-
     const handleOff = React.useCallback(() => {
         setName('');
         setDay(weekDays[0]);
@@ -38,7 +36,6 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
 
     const handleAdd = React.useCallback(async () => {
         const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: teacherEditionData[0].id, students: [] });
-        console.log(teacherEditionData)
         if (res) {
             handleOff()
             refetch()

@@ -39,36 +39,9 @@ export const Course = () => {
 
   const navigate = useNavigate()
 
-  // React.useEffect(() => {
-  //   if (editionId !== undefined) {
-  //     if (allEditionsData !== undefined && allEditionsData.length !== 0) {
-  //       console.log(1)
-  //       setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
-  //       navigate(`editions/${editionId}/`)
-  //     }
-  //   }
-  //   else {
-  //     if (activeEditionData !== undefined && activeEditionData.length !== 0) {
-  //       console.log(2)
-  //       setSelectedEdition(activeEditionData[0])
-  //       navigate(`editions/${activeEditionData[0].id}/`)
-  //     }
-  //     else if(allEditionsData !== undefined && allEditionsData.length !== 0) {
-  //       console.log(3)
-  //       setSelectedEdition(allEditionsData[0])
-  //       navigate(`editions/${allEditionsData[0].id}/`)
-  //     }
-  //   }
-    
-  // }, [editionId, allEditionsData, activeEditionData])
-
-
   React.useEffect(() => {
-    console.log('USEEFFECT', {'editionId' : editionId,'all' : allEditionsData, 'active' : activeEditionData})
     if (editionId !== undefined) {
       if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
-        console.log('ALL IN EFFECT', allEditionsData)
-        console.log(allEditionsData.filter((edition: Edition) => edition.id == editionId))
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
         navigate(`editions/${editionId}/`)
       }
@@ -78,12 +51,10 @@ export const Course = () => {
     }
     else {
       if (activeEditionData && activeEditionData.length !== 0) {
-        console.log(2)
         setSelectedEdition(activeEditionData[0])
         navigate(`editions/${activeEditionData[0].id}/`)
       }
       else if(allEditionsData !== undefined && allEditionsData.length !== 0) {
-        console.log(3)
         setSelectedEdition(allEditionsData[0])
         navigate(`editions/${allEditionsData[0].id}/`)
       }
@@ -95,11 +66,8 @@ export const Course = () => {
   }, [allEditionsData, activeEditionData])
 
   const allRefetch = async () => {
-    console.log('STARTING')
     await activeEditionRefetch();
-    await allEditionsRefetch();
-    console.log('DONE');
-    
+    await allEditionsRefetch();    
   }
 
   if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
@@ -109,8 +77,6 @@ export const Course = () => {
       </div>
     )
   }
-
-  console.log('courseId', courseId)
 
   return (
     <ContentLayout>

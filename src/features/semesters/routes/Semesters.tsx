@@ -40,7 +40,6 @@ export const Semesters = () => {
   }, [activeSemesterData])
 
   const activation = React.useCallback( async ()=>{
-    console.log('ACTIVATE')
     await activateSemester(selectedSemester?.id);
     allRefetch()
   },[allSemestersQuery, selectedSemester])
