@@ -3,7 +3,7 @@ import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
 
 export interface ISemester {
-    year: string;
+    start_year: string;
     winter: boolean;
     active: boolean;
     editions: Edition[];

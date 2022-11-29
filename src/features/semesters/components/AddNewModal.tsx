@@ -16,7 +16,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = await addSemester({year, winter, active: false, editions: []})
+        const res = await addSemester({start_year: year, winter, active: false, editions: []})
         if (res.data) {
             handleOff();
             refetch();

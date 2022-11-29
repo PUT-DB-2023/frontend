@@ -57,7 +57,7 @@ export const Semesters = () => {
     allSemestersRefetch();
   }
   
-  const removeName = 'Usuń semestr ' + selectedSemester.year + ' - ' + (selectedSemester.winter ? 'Zima' : 'Lato')
+  const removeName = 'Usuń semestr ' + selectedSemester.start_year + ' - ' + (selectedSemester.winter ? 'Zima' : 'Lato')
 
   return (
     <ContentLayout>
@@ -78,7 +78,7 @@ export const Semesters = () => {
               <h2 className='text-lg font-semibold'>Wybrany semestr</h2>
               <div className='flex flex-col gap-4'>
               <h1 className='text-3xl font-bold'>
-                {selectedSemester ? selectedSemester?.year.toString().concat(selectedSemester.winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
+                {selectedSemester ? selectedSemester?.start_year.toString().concat(selectedSemester.winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
               </h1>
               <h2 className={`text-lg font-semibold ${selectedSemester?.active ? 'text-blue-600' : 'text-red-500'}`}>
                 {selectedSemester ? selectedSemester?.active ? 'Aktywny' : 'Nieaktywny' : ''}
@@ -92,21 +92,21 @@ export const Semesters = () => {
                       <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                           {/* <ChevronDownIcon className='h-6 w-auto text-zinc-600 hover:cursor-pointer'/> */}
                           <span className='flex justify-start w-full px-2'>
-                            {selectedSemester!.year} - {selectedSemester!.winter ? "Zima" : "Lato"}
+                            {selectedSemester!.start_year} - {selectedSemester!.winter ? "Zima" : "Lato"}
                           </span>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
                               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                           </svg>
                       </Listbox.Button>
                       <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white max-h-56'>
-                          {allSemestersData.sort((a : Semester, b : Semester) => (b.year.localeCompare(a.year) || Number(b.winter) - Number(a.winter))).map((semester : Semester) => (
+                          {allSemestersData.sort((a : Semester, b : Semester) => (b.start_year.localeCompare(a.start_year) || Number(b.winter) - Number(a.winter))).map((semester : Semester) => (
                               <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
                                   key={semester.id}
                                   value={semester}
                               >
                                   {({ selected }) => (         
                                       <>                   
-                                          <span className={selected ? `font-bold` : `font-normal`}>{semester.year} - {semester.winter ? "Zima" : "Lato"}</span>
+                                          <span className={selected ? `font-bold` : `font-normal`}>{semester.start_year} - {semester.winter ? "Zima" : "Lato"}</span>
                                       </>
                                   )}
                               </Listbox.Option>

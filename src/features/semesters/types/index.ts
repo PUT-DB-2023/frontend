@@ -3,7 +3,7 @@ import { BaseEntity } from "types";
 
 export type Semester = {
     winter: boolean;
-    year: string;
+    start_year: string;
     active: boolean;
     editions: Edition[];
 

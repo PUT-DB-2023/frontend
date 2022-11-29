@@ -19,12 +19,12 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [winter, setWinter] = React.useState(false);
 
     React.useEffect(() => {
-        setYear(data?.year);
+        setYear(data?.start_year);
         setWinter(data?.winter);
     }, [data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateSemester({id: data.id, year, winter, active: false, editions: []})
+        const res = await updateSemester({id: data.id, start_year: year, winter, active: false, editions: []})
         if (res.data) {
             off();
             refetch();
@@ -33,7 +33,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
 
     if (show) {
         return (
-            <ModalContainer title={data.year} off={off}>
+            <ModalContainer title={data.start_year} off={off}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Rok"} value={year} setValue={setYear} />
                     <div className='flex gap-2 items-center'>

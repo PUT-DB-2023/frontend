@@ -18,7 +18,7 @@ export const GroupList = ({ groupData } : IGroupList) => {
           return (
             <Link key={group.id} to={'/groups/' + group.id}>
               <Box>
-                  <span className='font-semibold text-xl'> {group?.name} - {group?.teacherEdition?.edition?.course?.name} - {group?.teacherEdition?.edition?.semester?.year} { group?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</span>
+                  <span className='font-semibold text-xl'> {group?.name} - {group?.teacherEdition?.edition?.course?.name} - {group?.teacherEdition?.edition?.semester?.start_year} { group?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</span>
                   <span className='font-normal text-base'> 
                     {group.day} {group.hour} 
                   </span>
