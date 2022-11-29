@@ -42,7 +42,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setHour(newTime);
         setRoom(data?.room);
         setTeacher(selectedTeacher);
-    }, [show, data, teachers])
+    }, [show, data, teachers, teachersStatus])
 
     const handleUpdate = React.useCallback(async () => {
         const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: '', id: data.id });
@@ -60,7 +60,8 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />
-                    <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />            </div>
+                    <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />
+                </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
                     <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
                     <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />

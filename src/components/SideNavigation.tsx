@@ -137,7 +137,7 @@ export const SideNavigation = () => {
   }
 
   return (
-    <nav className='flex flex-col w-full h-full overflow-y-auto mt-12'>
+    <nav className='flex flex-col w-full h-full overflow-y-auto mt-12 scrollbar-hide'>
         { coursesContent }
         { serversContent }
         <AccordionMenu title='Użytkownicy' url='/users/' icon={<UserIcon className='h-5 w-auto'/>} userMenu={ true }/>
