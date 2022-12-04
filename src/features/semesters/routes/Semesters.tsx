@@ -99,7 +99,7 @@ export const Semesters = () => {
                           </svg>
                       </Listbox.Button>
                       <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white max-h-56'>
-                          {allSemestersData.sort((a : Semester, b : Semester) => (b.start_year.localeCompare(a.start_year) || Number(b.winter) - Number(a.winter))).map((semester : Semester) => (
+                          {allSemestersData.sort((a : Semester, b : Semester) => (b.start_year.toString().localeCompare(a.start_year) || Number(b.winter) - Number(a.winter))).map((semester : Semester) => (
                               <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
                                   key={semester.id}
                                   value={semester}
