@@ -4,11 +4,12 @@ import { useClickOutside } from 'hooks/useClickOutside';
 export interface IModalContainer {
     title: string,
     off: () => void,
+    buttons?: any,
     children?: any,
 }
 
 export const ModalContainer: React.FC<IModalContainer> = ({
-    title, off, children
+    title, off, children, buttons
 }) => {
     const ref = useClickOutside(off);
     return (
@@ -17,6 +18,7 @@ export const ModalContainer: React.FC<IModalContainer> = ({
                 <div className={`w-[min(100%,28rem)] max-h-full overflow-auto flex flex-col gap-4 p-6 bg-white shadow-md rounded-md m-auto justify-between`} ref={ref}>
                     <div className={`font-semibold text-lg`} >{title}</div>
                     <div className='overflow-y-auto'>{children}</div>
+                    {buttons ?? <div>{buttons}</div>}
                 </div>
             </div>
         </div>

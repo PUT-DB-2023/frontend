@@ -1,5 +1,3 @@
-import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon, LoginIcon } from '@heroicons/react/solid'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Spinner } from 'components/Spinner'
@@ -17,12 +15,13 @@ import { EditModal } from '../components/EditModal'
 import * as React from 'react'
 import { searchFunc } from 'api/searchApi'
 import { OptionsMenu } from 'components/OptionsMenu'
-import { deleteEdition } from 'features/editions/api/deleteEdition'
 import { AddStudCSVModal } from '../components/AddStudCSVModal'
+import { AddStudents } from '../components/AddStudents'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
+  const [addStudentModal, setAddStudentModal] = React.useState(false);
   const { id } = useParams()
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   const [newModal, setNewModal] = React.useState(false);
@@ -50,14 +49,11 @@ export const Group = () => {
     servers = groupData?.teacherEdition?.edition?.servers
   }
 
-  const createDbAccounts = (groupId: Number, serverId: Number) => {
-    dbAccoutCreationRefetch()
-  }
-
   return (
     <ContentLayout>
       <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />
       <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
+      <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData} />
       {id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} />}
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
       <ContentPanel type={PanelType.HEADER}>
@@ -79,7 +75,7 @@ export const Group = () => {
           <h2 className='text-lg font-semibold'> Studenci </h2>
           <div className='flex justify-between gap-6'>
             <Button text={'Dodaj z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>
-            <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => console.log('ADD STUDENT')}/>
+            <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)}/>
             <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
           </div>
           
