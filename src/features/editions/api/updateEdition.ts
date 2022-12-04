@@ -17,6 +17,7 @@ export const updateEdition = async (edition: IUpdate) => {
         semester: edition.semester,
         course: edition.course,
         active: edition.active,
+        teachers: edition.teachers?.map(e => e.id)
     }
 
     const t = toast.loading("Edytowanie..")

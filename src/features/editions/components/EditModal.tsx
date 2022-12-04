@@ -10,6 +10,8 @@ import { SemesterDropDown } from 'components/SemesterDropdown';
 import { useQuery } from 'react-query'
 import { getSemesters } from 'features/semesters/api/getSemesters';
 import { Semester } from 'types/index'
+import { TeachersDropDown } from 'components/TeachersDropDown';
+import { getTeachers } from 'features/groups/api/getTeachers';
 
 interface IEditModal {
     show: boolean,
@@ -25,28 +27,32 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [semester, setSemester] = React.useState<Semester>({id: 1, year: '', winter: false});
     // const [active, setActive] = React.useState(false);
     const [course, setCourse] = React.useState('');
+    const [teachers, setTeachers] = React.useState([]);
 
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
+    const { data: teachersData, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
 
     React.useEffect(() => {
         const openArray = data?.date_opened?.split('-');
         const closeArray = data?.date_closed?.split('-');
         const selectedSemester: Semester = semestersData?.find((e: Semester) => e.id === data?.semester?.id);
+        const selectedTeachers = teachersData?.filter((t: any) => data?.teachers?.map((e: any) => e?.id).includes(t.id))
         setDescription(data?.description);
         openArray && setDateOpened(new Date(openArray?.[0], openArray?.[1], openArray?.[2]));
         closeArray && setDateClosed(new Date(closeArray?.[0], closeArray?.[1], closeArray?.[2]));
         setSemester(selectedSemester);
         // setActive(data?.active);
         setCourse(data?.course?.id);
+        setTeachers(selectedTeachers);
     }, [show, data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString(), course, id: data.id });
+        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString(), course, id: data.id, teachers });
         if (res) {
             off();
             refetch()
         }
-    }, [description, dateOpened, dateClosed, semester, course, data?.id])
+    }, [description, dateOpened, dateClosed, semester, course, data?.id, teachers])
 
     if (show) {
         return (
@@ -56,6 +62,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
+                    <TeachersDropDown title={"Nauczyciele"} values={teachersData} value={teachers} setValue={setTeachers}/>
                     {/* <CheckBox title={'Aktywny:'} value={active} setValue={setActive} /> */}
                 </div>
                 <div className={`flex gap-2 mt-10 self-end`}>
