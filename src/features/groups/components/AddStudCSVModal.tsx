@@ -5,7 +5,7 @@ import { ButtonType } from 'types';
 import { FieldBox } from 'components/FieldBox';
 import { addStudentsFile } from '../api/addStudentsFile';
 
-export const AddStudCSVModal = ({ show, off, refetch, id }: { show: boolean, off: () => void, refetch: () => void, id: string }) => {
+export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult : React.Dispatch<React.SetStateAction<any>>}) => {
     const [students, setStudents] = React.useState(undefined);
 
     const handleOff = React.useCallback(() => {
@@ -20,8 +20,13 @@ export const AddStudCSVModal = ({ show, off, refetch, id }: { show: boolean, off
             data.append('students_csv', students)
             const res = await addStudentsFile(data);
             if (res) {
+                console.log(res.data);
                 handleOff()
                 refetch()
+                if (res.data){
+                    showInfo()
+                    setResult(res.data.existing_students)
+                }
             }
         }
     }, [students, id])

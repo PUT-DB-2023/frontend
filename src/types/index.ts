@@ -116,9 +116,3 @@ export const weekDays : WeekDay[] = [
 export const semesters: number[] = [
   1,2,3,4,5,6,7
 ]
-
-export type Semester = {
-  id: number;
-  year: string;
-  winter: boolean;
-}

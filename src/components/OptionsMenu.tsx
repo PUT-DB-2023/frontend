@@ -4,12 +4,13 @@ import React from 'react'
 
 interface IOptionsMenu {
     edit: () => void,
-    remove: () => void
+    remove: () => void,
+    onClick? : () => void,
 }
 
-export const OptionsMenu = ({edit, remove} : IOptionsMenu) => {
+export const OptionsMenu = ({edit, remove, onClick} : IOptionsMenu) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="relative inline-block text-left" onClick={onClick ?? undefined}>
         <div>
             <Menu.Button className="flex text-black items-center space-x-4">
             <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500'/>

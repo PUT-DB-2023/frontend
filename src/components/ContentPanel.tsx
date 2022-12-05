@@ -3,7 +3,7 @@ import { PanelType } from 'types';
 
 interface ContentPanelProps {
     type: PanelType;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 };
 
 export const ContentPanel = ({type, children} : ContentPanelProps) => {

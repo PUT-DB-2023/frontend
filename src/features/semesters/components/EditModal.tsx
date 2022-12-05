@@ -6,12 +6,13 @@ import { ButtonType } from 'types';
 import { updateSemester } from '../api/updateSemester';
 import { ISem } from '../api/updateSemester'
 import { showToast } from 'api/showToast';
+import { Semester } from '../types';
 
 interface IEditModal {
     show: boolean,
     off: () => void,
     refetch: () => void,
-    data: ISem,
+    data: Semester,
 }
 
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {

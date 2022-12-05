@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { SemesterDropDown } from 'components/SemesterDropdown';
 import { useQuery } from 'react-query'
 import { getSemesters } from 'features/semesters/api/getSemesters';
-import { Semester } from 'types/index'
+import { Semester } from 'features/semesters';
 
 export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, off: () => void, refetch: () => void, courseId: string }) => {
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());

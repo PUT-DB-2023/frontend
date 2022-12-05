@@ -14,7 +14,7 @@ import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
 import * as React from 'react'
 
-const columns : ColumnDef<DbAccount>[] = // TODO ADD DB_ACCOUNT TYPE
+const columns : ColumnDef<DbAccount>[] =
 [
     {
       accessorKey: 'editionServer.server.name',

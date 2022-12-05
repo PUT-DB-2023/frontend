@@ -9,7 +9,7 @@ import { updateEdition } from '../api/updateEdition'
 import { SemesterDropDown } from 'components/SemesterDropdown';
 import { useQuery } from 'react-query'
 import { getSemesters } from 'features/semesters/api/getSemesters';
-import { Semester } from 'types/index'
+import { Semester } from 'features/semesters';
 
 interface IEditModal {
     show: boolean,
@@ -22,7 +22,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
-    const [semester, setSemester] = React.useState<Semester>({id: 1, year: '', winter: false});
+    const [semester, setSemester] = React.useState<Semester>();
     // const [active, setActive] = React.useState(false);
     const [course, setCourse] = React.useState('');
 
@@ -41,7 +41,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [show, data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString(), course, id: data.id });
+        const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester!.id.toString(), course, id: data.id });
         if (res) {
             off();
             refetch()
