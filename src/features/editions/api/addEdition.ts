@@ -9,6 +9,7 @@ export interface IAddEdition {
     date_closed: Date,
     semester: string,
     course: string,
+    teachers?: any[],
 }
 
 export const addEdition = async (edition: IAddEdition) => {
@@ -18,6 +19,7 @@ export const addEdition = async (edition: IAddEdition) => {
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
         semester: edition.semester,
         course: edition.course,
+        teachers: edition.teachers?.map(e => e.id),
     }
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/editions/", data)
