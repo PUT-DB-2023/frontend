@@ -41,10 +41,10 @@ export const AccordionMenu = ({title, url, icon, children, userMenu} : Accordion
           {children?.length  && !userMenu ?
               children.map((object, index) => {
                   return index != children.length -1 ? 
-                  <Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all"><Link key={index} to={url + object.id}>
+                  <Disclosure.Panel key={index} className="px-10 pt-2 ml-6 pb-2 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all"><Link to={url + object.id}>
                     {object.year ? `${object.year} ${object.winter ? '- Zima' : '- Lato'}` : object.name}
                   </Link></Disclosure.Panel> : 
-                  <Disclosure.Panel className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all"><Link key={index} to={url + object.id}>
+                  <Disclosure.Panel key={index} className="px-10 pt-2 ml-6 pb-2 mb-4 text-sm text-white hover:bg-blue-600 hover:cursor-pointer transition-all"><Link to={url + object.id}>
                     {object.year ? `${object.year} ${object.winter ? '- Zima' : '- Lato'}` : object.name}
                   </Link></Disclosure.Panel>
               }) : null
@@ -73,7 +73,7 @@ export const SideNavigation = () => {
   const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['courses'], () => getCourses(undefined))
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery('servers', () => getServers(undefined))
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery('groups', getGroups)
-  const { data: semesterData, status: semesterStatus, refetch: semesterRefetch } = useQuery('semesters', () => getSemesters(undefined))
+  const { data: semesterData, status: semesterStatus, refetch: semesterRefetch } = useQuery('semesters', () => getSemesters(false))
 
   let coursesContent = null
   let serversContent = null

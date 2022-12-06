@@ -8,3 +8,7 @@ export type Semester = {
     editions: Edition[];
 
 } & BaseEntity;
+
+export type SemesterPost = {
+    editions: string[];
+} & Omit<Semester, 'editions'>

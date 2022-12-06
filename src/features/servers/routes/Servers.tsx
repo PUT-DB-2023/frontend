@@ -54,7 +54,7 @@ export const Servers = () => {
         <Toolbar sort={true} filter={true} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera' />
         {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}
         <ServerList serverData={activeSorted}></ServerList>
-        {activeSorted.length !== 0 ? <Button type={ButtonType.ACTION} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => { setShowActiveOnly(showActiveOnly ? undefined : true) }} /> : null}
+        {activeSorted.length !== 0 ? <Button type={ButtonType.LOAD_HIDDEN} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => { setShowActiveOnly(showActiveOnly ? undefined : true) }} /> : null}
       </ContentPanel>
     </ContentLayout>
   )

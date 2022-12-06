@@ -109,7 +109,7 @@ export const Course = () => {
                       <div className="relative w-[232px]">
                           <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                               <span className='flex justify-start w-full px-2'>
-                                {selectedEdition?.semester.start_year} - {selectedEdition?.semester.winter ? "Zima" : "Lato"}
+                              {selectedEdition?.semester.start_year}/{selectedEdition?.semester.start_year || 0 + 1} - {selectedEdition?.semester.winter ? "Zima" : "Lato"}
                               </span>
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -124,7 +124,7 @@ export const Course = () => {
                                       >
                                         {({ selected }) => (         
                                             <>                   
-                                                <span className={selected ? `font-bold` : `font-normal`}>{edition!.semester.start_year} - {edition!.semester.winter ? "Zima" : "Lato"}</span>
+                                                <span className={selected ? `font-bold` : `font-normal`}>{edition!.semester.start_year}/{edition!.semester.start_year+1} - {edition!.semester.winter ? "Zima" : "Lato"}</span>
                                             </>
                                         )}
                                     </Listbox.Option>

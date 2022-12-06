@@ -4,9 +4,9 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateSemester } from '../api/updateSemester';
-import { ISem } from '../api/updateSemester'
 import { showToast } from 'api/showToast';
-import { Semester } from '../types';
+import { Semester, SemesterPost } from '../types';
+import { Edition } from 'features/editions';
 
 interface IEditModal {
     show: boolean,
@@ -25,7 +25,14 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [data])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateSemester({id: data.id, start_year: year, winter, active: false, editions: []})
+        const new_data : SemesterPost = {
+            id: data.id,
+            winter: data.winter,
+            start_year: data.start_year,
+            active: data.active,
+            editions: data.editions.map((edition: Edition) => edition.id)
+        }
+        const res = await updateSemester(new_data)
         if (res.data) {
             off();
             refetch();

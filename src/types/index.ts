@@ -11,7 +11,6 @@ export interface ToastMessages {
 
 export type BaseEntity = {
     id: string;
-    createdAt: number;
 } & unknown;
 
 export type TeacherEdition = {
