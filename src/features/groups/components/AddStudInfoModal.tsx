@@ -85,10 +85,6 @@ export const AddStudInfoModal = ({ show, off, refetch, id, data }: { show: boole
         }
     }, [students, id])
 
-    const handleSelectedFile = useCallback((event: any) => {
-        setStudents(event.target.files[0]);
-    }, []);
-
     if (show) {
         return (
             <ModalContainer title='Informacje o utworzonych kontach' off={handleOff}>
