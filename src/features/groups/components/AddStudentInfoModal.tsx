@@ -98,6 +98,20 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
             <ModalContainer title='Informacje o utworzonych kontach' off={handleOff}>
                 <div className={`flex flex-col pt-8`}>
                     <Table data={data} columns={columns}/>
+                    <div className='flex flex-col gap-2 text-sm pt-4'>
+                      <div className='flex items-center gap-2'>
+                        <CheckCircleIcon className='h-6 text-green-500'/>
+                        Operacja przebiegła pomyślnie
+                      </div>
+                      <div className='flex items-center gap-2'>
+                        <MinusCircleIcon className='h-6 text-zinc-400'/>
+                        Operacja nie została wykonana - dane już istnieją
+                      </div>
+                      <div className='flex items-center gap-2'>
+                        <XCircleIcon className='h-6 text-red-500'/>
+                        Operacja zakończyła się błędem
+                      </div>
+                    </div>
                 </div>
                 <div className={`flex gap-2 mt-10 self-end justify-end`}>
                     <Button type={ButtonType.ACTION} text='Ok' onClick={handleOff} />
