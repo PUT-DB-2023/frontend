@@ -13,7 +13,7 @@ export const updateUserOld = async (user: OldUser, type: UserType) => {
     const t = toast.loading("Edytowanie..")
     const dest = (type === UserType.TEACHER ? "/teachers/" : (type === UserType.ADMIN ? "/admins/" : (type === UserType.STUDENT ? "/students/" : ""))) + `${user.id}/`
     const response = await axios.patch(dest, user)
-    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano użytkownika", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować użytkownika", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano użytkownika", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować użytkownika", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
 }

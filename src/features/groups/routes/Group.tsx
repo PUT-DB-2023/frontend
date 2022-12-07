@@ -17,7 +17,7 @@ import { searchFunc } from 'api/searchApi'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { AddStudCSVModal } from '../components/AddStudCSVModal'
 import { AddStudents } from '../components/AddStudents'
-import { AddStudInfoModal } from '../components/AddStudInfoModal'
+import { AddStudentInfoModal, StudentInfo } from '../components/AddStudentInfoModal'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -29,7 +29,7 @@ export const Group = () => {
   const [search, setSearch] = React.useState('');
   const [addFileModal, setAddFileModal] = React.useState(false);
   const [studentInfoModal, setStudentInfoModal] = React.useState(false);
-  const [addFileResult, setAddFileResult] = React.useState([])
+  const [addFileResult, setAddFileResult] = React.useState<StudentInfo[]>()
 
 
   const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
@@ -62,7 +62,7 @@ export const Group = () => {
       <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
       {id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
-      {id && <AddStudInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
+      {id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
           <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>

@@ -10,11 +10,11 @@ import { Link } from 'react-router-dom'
 
 export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, baseUrl : string}) => {   
     return  (
-                <Link to={{pathname:`/users/${baseUrl}/${row.original.id}`}}>
-                    <div className='p-2'>
-                        {getValue() as ReactNode}
-                    </div>
-                </Link>
+              <Link to={{pathname:`/users/${baseUrl}/${row.original.id}`}}>
+                  <div className='p-2'>
+                      {getValue() as ReactNode}
+                  </div>
+              </Link>
             )
 }
 

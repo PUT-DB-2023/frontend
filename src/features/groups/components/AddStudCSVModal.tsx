@@ -8,6 +8,8 @@ import { addStudentsFile } from '../api/addStudentsFile';
 export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult : React.Dispatch<React.SetStateAction<any>>}) => {
     const [students, setStudents] = React.useState(undefined);
 
+    console.log('CSV MODAL')
+
     const handleOff = React.useCallback(() => {
         setStudents(undefined);
         off();
@@ -24,8 +26,7 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
                 handleOff()
                 refetch()
                 if (res.data){
-                    // setResult(res.data.existing_students)
-                    console.log('RESULT', res.data)
+                    setResult(res.data.students_info)
                     showInfo()
                 }
             }

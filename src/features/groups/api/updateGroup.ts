@@ -20,7 +20,7 @@ export const updateGroup = async (group: IUpdate) => {
 
     const t = toast.loading("Edytowanie..")
     const response = await axios.put(`/groups/${group.id}/`, group)
-    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano grupę", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować grupy", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano grupę", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować grupy", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
 }

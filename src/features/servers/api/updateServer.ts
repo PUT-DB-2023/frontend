@@ -10,7 +10,7 @@ export interface IServ extends IServer {
 export const updateServer = async (server: Server) => {
     const t = toast.loading("Edytowanie..")
     const response = await axios.patch(`/servers/${server.id}/`, server)
-    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano serwer", type: "success", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować serwera", type: "error", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano serwer", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: "Nie udało się edytować serwera", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
 }
