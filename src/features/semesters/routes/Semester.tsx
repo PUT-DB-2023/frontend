@@ -29,9 +29,7 @@ export const Semester = () => {
   },[semesterQuery, id, refetch])
 
   if (semesterQuery.isLoading) {
-    return (
-      <Spinner />
-    );
+    return null
   }
   else if (semesterQuery.isError) {
     return (

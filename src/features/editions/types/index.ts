@@ -6,12 +6,11 @@ import { BaseEntity } from "types";
 
 export type Edition = {
     description: string;
-    date_opened: string;
-    date_closed: string;
+    date_opened: Date,
+    date_closed: Date,
     semester: Semester;
     course: Course;
     teachers: Teacher[];
     servers: Server[];
-    active: boolean;
 
 } & BaseEntity;

@@ -37,7 +37,7 @@ export const Groups = () => {
     }
     return (
         <ContentLayout>
-          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={groupRefetch} />
+          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={groupRefetch}/>
           <ContentPanel type={PanelType.HEADER}>
             <span className='text-black text-3xl font-bold mb-4'>Grupy</span>
             {/* <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={()=>setShowAdd(true)}/> */}

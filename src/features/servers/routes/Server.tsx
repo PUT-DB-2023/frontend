@@ -30,9 +30,7 @@ export const Server = () => {
   },[serverQuery, id, refetch])
 
   if (serverQuery.isLoading || !serverQuery.data) {
-    return (
-      <Spinner />
-    );
+    return null
   }
 
   return (

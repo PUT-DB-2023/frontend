@@ -16,7 +16,6 @@ export const updateEdition = async (edition: IUpdate) => {
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
         semester: edition.semester,
         course: edition.course,
-        active: edition.active,
         teachers: edition.teachers?.map(e => e.id)
     }
 

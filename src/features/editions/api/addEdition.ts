@@ -10,6 +10,7 @@ export interface IAddEdition {
     semester: string,
     course: string,
     teachers?: any[],
+    servers?: any[]
 }
 
 export const addEdition = async (edition: IAddEdition) => {
@@ -20,6 +21,7 @@ export const addEdition = async (edition: IAddEdition) => {
         semester: edition.semester,
         course: edition.course,
         teachers: edition.teachers?.map(e => e.id),
+        servers: edition.servers?.map(e => e.id),
     }
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/editions/", data)

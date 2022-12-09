@@ -1,4 +1,7 @@
 import { Menu } from '@headlessui/react';
+import { Admin } from 'features/users';
+import { getAdmin } from 'features/users/api/getAdmin';
+import { getAdmins } from 'features/users/api/getAdmins';
 import { getUsers } from 'features/users/api/getUsers';
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
@@ -37,9 +40,9 @@ const NavBar = () => {
 
 const ProfileMenu = () => {
   let navigate = useNavigate();
-  const userQuery = useQuery(['users'], () => getUsers(UserType.ADMIN))
+  const {data: userData, status: userStatus, refetch: userRefetch} = useQuery<Admin[]>(['menuAdmins'], getAdmins)
 
-  if (userQuery.isLoading) {
+  if (userStatus === 'loading') {
     return null
   }
 
@@ -48,8 +51,7 @@ const ProfileMenu = () => {
         <div>
           <Menu.Button className="flex text-black items-center space-x-4">
             <div className='flex flex-col text-end'>
-              <span className='text-base font-semibold'>{userQuery.data[0].first_name} {userQuery.data[0].last_name}</span>
-              <span className='text-sm'>{userQuery.data[0].role}</span>
+              <span className='text-base font-semibold'>{userData?.[0].first_name} {userData?.[0].last_name}</span>
             </div>
             <div className='h-9 w-9 rounded-full bg-black'></div>
           </Menu.Button>
@@ -58,7 +60,7 @@ const ProfileMenu = () => {
             <div className="px-1 py-1 ">
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <Link to={`/users/admins/` + userQuery.data[0].id}>
+                  <Link to={`/users/admins/` + userData?.[0].id}>
                     <button
                       className={`${
                         active ? 'bg-blue-100' : 'text-black'

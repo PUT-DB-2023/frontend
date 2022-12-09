@@ -70,6 +70,10 @@ export const Course = () => {
     await allEditionsRefetch();    
   }
 
+  // const handleAddGroup = () => {
+  //   if ()
+  // }
+
   if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>

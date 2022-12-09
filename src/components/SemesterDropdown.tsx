@@ -2,9 +2,14 @@ import * as React from 'react';
 import { FieldBox, clsName } from './FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
 import { Listbox } from '@headlessui/react'
+import { IDropDown } from './ServersDropDown';
 
+export const SemesterDropDown = ({ title, values, value, setValue }: IDropDown) => {
 
-export const SemesterDropDown = ({ title, values, value, setValue }: any) => {
+    console.log(values);
+    console.log(value);
+    
+
     return (
         <FieldBox title={title}>
             <Listbox value={value} onChange={(v) => setValue(v)}>

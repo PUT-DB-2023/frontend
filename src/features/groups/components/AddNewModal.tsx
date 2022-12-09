@@ -15,6 +15,8 @@ import { FieldBox } from 'components/FieldBox';
 import { getTeacherEdtition } from '../api/getTeacherEdition';
 
 export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
+    console.log(edition);
+    
     const [name, setName] = React.useState('');
     const [day, setDay] = React.useState<WeekDay>(weekDays[0]);
     const [hour, setHour] = React.useState('08:00');
@@ -43,22 +45,37 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
         }
     }, [name, day, hour, room, teacher])
 
+    if (teacherEditionStatus === 'loading') {
+        return null
+    }
+
     if (show) {
-        return (
-            <ModalContainer title='Nowa grupa' off={handleOff}>
-                <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} />
-                    <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
-                    <TimeField title={"Godzina"} value={hour} setValue={setHour} />
-                    <Field title={"Sala"} value={room} setValue={setRoom} />
-                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
-                </div>
-                <div className={`flex gap-2 mt-10 self-end`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
-                </div>
-            </ModalContainer>
-        );
+        console.log(teacherEditionData);
+        
+        if (teacherEditionData.length === 0) {
+            return (
+                <ModalContainer title='NIE DZIALA' off={handleOff}>
+
+                </ModalContainer>
+            )
+        }
+        else {
+            return (
+                <ModalContainer title='Nowa grupa' off={handleOff}>
+                    <div className={`flex flex-col gap-1`}>
+                        <Field title={"Nazwa"} value={name} setValue={setName} />
+                        <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
+                        <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                        <Field title={"Sala"} value={room} setValue={setRoom} />
+                        <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
+                    </div>
+                    <div className={`flex gap-2 mt-10 self-end`}>
+                        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+                        <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
+                    </div>
+                </ModalContainer>
+            );
+        }
     } else {
         return null;
     }

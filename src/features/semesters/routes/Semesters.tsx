@@ -29,18 +29,8 @@ export const Semesters = () => {
   }
 
   const allRefetch = () => {
-    console.log('ALL REFETCH');
-    
-    activeSemesterRefetch();
+      activeSemesterRefetch();
     queryClient.refetchQueries(['semesters']) // refetch the semester list
-  }
-
-  const handleEdit = () => {
-    
-  }
-
-  const handleRemove = () => {
-
   }
 
   console.log(activeSemesterData)
@@ -56,7 +46,7 @@ export const Semesters = () => {
             <Button type={ButtonType.ACTION} text='Dodaj semestr' onClick={()=>setAddModal(true)}/>
           </div>
         </ContentPanel>
-        <ContentPanel type={PanelType.CONTENT}>
+        <ContentPanel type={PanelType.HEADER}>
           <div className='flex justify-between'>
             <div className='flex flex-col gap-6'>
               <h2 className='text-lg font-semibold'>Bieżący semestr</h2>

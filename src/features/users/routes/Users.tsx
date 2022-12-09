@@ -51,9 +51,7 @@ export const Users = ({ type }: UsersProps) => {
   const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id', 'first_name', 'last_name', 'email']), [search, usersQuery.data]);
 
   if (usersQuery.isLoading) {
-    return (
-      <Spinner />
-    );
+    return null
   }
 
   return (

@@ -14,5 +14,7 @@ export const addSemester = async (semester: ISemester) => {
     const response = await axios.post("/semesters/", semester)
     .then((e)=>{toast.update(t, {render: "Pomyślnie dodano semestr", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     .catch((e)=>{toast.update(t, {render: "Nie udało się dodać semestru", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    console.log(response);
+    
     return response
 }

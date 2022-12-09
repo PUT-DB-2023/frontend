@@ -21,7 +21,7 @@ export const Servers = () => {
   const [search, setSearch] = React.useState('');
 
   const [showActiveOnly, setShowActiveOnly] = useState<boolean | undefined>(true) // show only active courses (true - active only, undefined - all courses)
-  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers', showActiveOnly], () => getServers(showActiveOnly));
+  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery(['servers', showActiveOnly], () => getServers({active: showActiveOnly}));
 
   const searchData = useMemo(() => searchFunc(search, serverData, ['name']), [search, serverData]);
   const sortedServers = useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);

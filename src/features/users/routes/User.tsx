@@ -98,9 +98,7 @@ export const User = ({type} : {type: UserType}) => {
   const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
 
   if (userQuery.isLoading || userQuery.data === undefined) {
-    return (
-      <Spinner />
-    );
+    return null
   }
   else if (userQuery.isError || userQuery.data === undefined) {
     return (

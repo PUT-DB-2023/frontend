@@ -53,7 +53,7 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
       header: 'Utworzono studenta',
       cell: ({getValue} : {getValue : any}) => (
         <div className='p-2'>
-            {getValue() == true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() == false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
+            {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
         </div>
       )
     },
@@ -62,7 +62,7 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
       header: 'Dodano do grupy',
       cell: ({getValue} : {getValue : any}) => (
         <div className='p-2'>
-            {getValue() == true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() == false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
+            {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
         </div>
       )
     },
@@ -82,7 +82,7 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
             header: `${server}`,
             cell: ({getValue} : {getValue : any}) => (
               <div className='p-2'>
-                {getValue() == true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() == false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
+                {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <MinusCircleIcon className='h-6 text-zinc-400'/> : <XCircleIcon className='h-6 text-red-500'/>}
               </div>
             )
           }

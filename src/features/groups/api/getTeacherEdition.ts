@@ -8,5 +8,7 @@ export const getTeacherEdtition = async (editionId : string|undefined) => {
     })
     .then(e => {return e})
     .catch(e => {return e})
+    console.log(response.data);
+    
     return response.data
 }
