@@ -88,7 +88,7 @@ export const Course = () => {
         <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
         <AddGroupModal show={addGroupModal} off={() => setAddGroupModal(false)} refetch={allRefetch} edition={editionId}/>
         {courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={allRefetch} courseId={courseId}/> }
-        {courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition}/>}
+        {courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition} courseId={courseId}/>}
         {courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch}/>}
         <ContentPanel type={PanelType.HEADER}> 
           <div className='flex-col'>

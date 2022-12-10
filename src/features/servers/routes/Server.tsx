@@ -56,7 +56,7 @@ export const Server = () => {
           <ServerInfo serverData={serverQuery.data} />
         </ContentPanel>
         <ContentPanel type={PanelType.CONTENT}>
-          <h2 className='text-lg font-semibold'> Polecenia bazodanowe </h2>
+          <h2 className='text-lg font-semibold'> Szablony poleceń </h2>
           <div className='flex flex-col gap-6 p-4'>
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Tworzenie użytkownika </h3>
@@ -65,12 +65,17 @@ export const Server = () => {
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.modify_user_template}</h4>
             </div>
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Usuwanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.delete_user_template}</h4>
+            </div>
+
+            <div className='flex flex-col gap-2'>
+              <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
+              <h4 className='text-slate-600 text-base'>{serverQuery.data.delete_user_template}</h4>  {/* TODO */}
             </div>
           </div>
         </ContentPanel>

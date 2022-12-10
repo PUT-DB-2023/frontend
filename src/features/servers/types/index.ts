@@ -10,6 +10,9 @@ export type Server = {
     database: string;
     date_created: string;
     create_user_template: string;
+    modify_user_template: string;
+    delete_user_template: string;
+    username_template: string;
     active: boolean;
 
 } & BaseEntity;

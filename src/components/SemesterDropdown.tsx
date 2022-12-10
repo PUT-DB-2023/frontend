@@ -6,9 +6,9 @@ import { IDropDown } from './ServersDropDown';
 
 export const SemesterDropDown = ({ title, values, value, setValue }: IDropDown) => {
 
-    console.log(values);
-    console.log(value);
-    
+    if (value === undefined) {
+        return null
+    }
 
     return (
         <FieldBox title={title}>

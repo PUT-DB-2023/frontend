@@ -21,7 +21,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const navigate = useNavigate()
 
     const handleOff = React.useCallback(() => {
-        setName('');
+        setName('')
         setIp('')
         setPort('')
         setProvider('')
@@ -29,7 +29,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         setPassword('')
         setDatabase('')
         setActive(false)
-        off();
+        off()
     }, [])
 
     const handleAdd = React.useCallback(async () => {
@@ -39,7 +39,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
             handleOff();
             refetch();
             navigate(`${res.data.id}/`)
-        } else {
         }
     }, [name, ip, port, provider, user, password, database, active])
 
@@ -54,8 +53,16 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Użytkownik"} value={user} setValue={setUser} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} />
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} />
-                    {/* <Field title={"Active"} value={active} setValue={active} /> */}
-                    <div className='flex gap-2 items-center'>
+
+                    <hr className='w-full my-4 border-1 border-zinc-300'></hr>
+                    <Field title={"Szablon polecenia tworzenia"} value={database} setValue={() => console.log('CREATE')} />
+                    <Field title={"Szablon polecenia modyfikowania"} value={database} setValue={() => console.log('EDIT')} />
+                    <Field title={"Szablon polecenia usuwania"} value={database} setValue={() => console.log('DELETE')} />
+                    
+                    <hr className='w-full my-4 border-1 border-zinc-300'></hr>
+                    <Field title={"Szablon nazewnictwa kont"} value={database} setValue={() => console.log('NAME')} />
+
+                    <div className='flex gap-2 items-center mt-4'>
                         Aktywny:
                         <input type="checkbox" checked={active} onChange={() => setActive(!active)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
                     </div>

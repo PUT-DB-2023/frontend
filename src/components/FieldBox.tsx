@@ -4,7 +4,7 @@ export const clsName = 'rounded-lg p-1 border border-zinc-400 hover:border-blue-
 
 export const FieldBox = ({ title, children }: any) => {
     return (
-        <div className='flex flex-col gap-1'>
+        <div className='flex flex-col gap-1 w-96'>
             {title ?? null}
             {children}
         </div>

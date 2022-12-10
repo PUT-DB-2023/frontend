@@ -38,6 +38,7 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         setSemester(semestersData[0]);
         setCourse(courseId);
         setTeachers([]);
+        setServers([]);
         off();
     }, [])
 
@@ -49,6 +50,10 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
             navigate(`editions/${res.id}/`)
          }
     }, [description, dateOpened, dateClosed, semester, course, teachers, servers])
+
+    // if (semestersStatus === 'loading' && serversStatus === 'loading' && teachersStatus === 'loading') {
+    //     return null
+    // }
 
     if (show) {
         return (

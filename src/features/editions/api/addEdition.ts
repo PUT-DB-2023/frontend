@@ -23,6 +23,10 @@ export const addEdition = async (edition: IAddEdition) => {
         teachers: edition.teachers?.map(e => e.id),
         servers: edition.servers?.map(e => e.id),
     }
+
+    console.log('add data', data);
+    
+
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/editions/", data)
     .then((e)=>{toast.update(t, {render: "Pomyślnie dodano edycję", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
