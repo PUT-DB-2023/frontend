@@ -21,7 +21,7 @@ export const ServerList = ({serverData} : IServerList) => {
         <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Serwerów </div> : 
         serverData.map(function(server : Server) {
           return (
-            <Link to={'/servers/' + server.id} className='w-full'>
+            <Link to={'/servers/' + server.id} className='w-full' key={server.id}>
               <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
                   <span className='font-semibold text-xl'> { server.name } </span>
               </Box>
