@@ -15,19 +15,21 @@ import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
 import { showToast } from 'api/showToast'
+import { EditCodesModal } from '../components/EditCodesModal'
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
+  const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
 
-  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer( id ))
+  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer(id))
   const refetch = serverQuery.refetch;
 
-  const activation = React.useCallback(()=>{
-    serverQuery.data && id && activeServer({id: id, active: serverQuery.data.active, refresh: refetch});
+  const activation = React.useCallback(() => {
+    serverQuery.data && id && activeServer({ id: id, active: serverQuery.data.active, refresh: refetch });
     serverQuery.refetch()
-  },[serverQuery, id, refetch])
+  }, [serverQuery, id, refetch])
 
   if (serverQuery.isLoading || !serverQuery.data) {
     return null
@@ -35,33 +37,39 @@ export const Server = () => {
 
   return (
     <ContentLayout>
-      <RemoveModal off={()=>setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name}/>
-      <EditModal off={()=>setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{...serverQuery.data, id: id as string}}/>
-        <ContentPanel type={PanelType.HEADER}>
-          <div className='flex-col'>
-            <h1 className='text-black text-3xl font-bold mb-4'> Serwer - { serverQuery.data.name }</h1>
+      <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name} />
+      <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{ ...serverQuery.data, id: id as string }} />
+      <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverQuery.refetch} data={{ ...serverQuery.data, id: id as string }}/>
+      <ContentPanel type={PanelType.HEADER}>
+        <div className='flex-col'>
+          <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverQuery.data.name}</h1>
+        </div>
+        <div className='flex items-start'>
+          <div className='flex gap-6'>
+            {serverQuery.data.active ?
+              <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
+              <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
+            }
+            <OptionsMenu edit={() => setShowEdit(true)} remove={() => setShowRemove(true)} />
           </div>
-          <div className='flex items-start'>
-            <div className='flex gap-6'>
-              {serverQuery.data.active ? 
-                <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation}/> :
-                <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation}/>
-              } 
-              <OptionsMenu edit={() => setShowEdit(true)} remove={() => setShowRemove(true)} />
-            </div>
+        </div>
+      </ContentPanel>
+      <ContentPanel type={PanelType.CONTENT}>
+        <h2 className='text-lg font-semibold'> Szczegóły </h2>
+        <ServerInfo serverData={serverQuery.data} />
+      </ContentPanel>
+      <ContentPanel type={PanelType.CONTENT}>
+        <div className='flex justify-between'>
+          <h2 className='text-lg font-semibold'> Szablony poleceń  </h2>
+          <div className='flex justify-between gap-6'>
+            <Button type={ButtonType.ACTION} text='Edytuj' onClick={() => setShowEditCodesModal(true)} />
           </div>
-        </ContentPanel>
-        <ContentPanel type={PanelType.CONTENT}>
-          <h2 className='text-lg font-semibold'> Szczegóły </h2>
-          <ServerInfo serverData={serverQuery.data} />
-        </ContentPanel>
-        <ContentPanel type={PanelType.CONTENT}>
-          <h2 className='text-lg font-semibold'> Szablony poleceń </h2>
-          <div className='flex flex-col gap-6 p-4'>
-            <div className='flex flex-col gap-2'>
-              <h3 className='text-black text-base font-semibold'> Tworzenie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
-            </div>
+        </div>
+        <div className='flex flex-col gap-6 p-4'>
+          <div className='flex flex-col gap-2'>
+            <h3 className='text-black text-base font-semibold'> Tworzenie użytkownika </h3>
+            <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+          </div>
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
@@ -76,9 +84,9 @@ export const Server = () => {
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
               <h4 className='text-slate-600 text-base'>{serverQuery.data.delete_user_template}</h4>  {/* TODO */}
-            </div>
           </div>
-        </ContentPanel>
+        </div>
+      </ContentPanel>
     </ContentLayout>
   )
 }
