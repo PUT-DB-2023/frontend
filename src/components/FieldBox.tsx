@@ -6,7 +6,7 @@ export const clsNameWrong = 'rounded-lg p-1 border border-red-400 hover:border-r
 
 export const FieldBox = ({ title, children }: any) => {
     return (
-        <div className='flex flex-col gap-1 w-96 relative'>
+        <div className='flex flex-col gap-1 relative'>
             {title ?? null}
             {children}
         </div>

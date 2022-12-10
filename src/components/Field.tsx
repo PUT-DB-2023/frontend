@@ -7,7 +7,6 @@ export const Field = ({ title, value, setValue, type, pattern, wrongText }: any)
 
     React.useEffect(() => {
         if (pattern) {
-            console.log(value)
             if (value === '') {
                 setWrong(false)
             } else {

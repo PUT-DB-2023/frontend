@@ -70,7 +70,7 @@ export const CourseList = () => {
 
   return (
     <div className='flex flex-col gap-8'>
-      <Toolbar sort={true} filter={true} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
+      <Toolbar sort={true} filter={false} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
       <div className='w-full h-full flex flex-col items-center'>
         { activeSorted.length == 0 ? 
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Aktywnych Przedmiotów </div> :

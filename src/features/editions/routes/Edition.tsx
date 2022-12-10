@@ -51,7 +51,7 @@ export const Edition = () => {
             </div>
             {selectedEditionData ?
                 <>
-                    <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
+                    <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
                     <GroupList groupData={sortedGroups}></GroupList>
                 </>
             : null}

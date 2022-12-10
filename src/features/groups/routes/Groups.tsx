@@ -44,7 +44,7 @@ export const Groups = () => {
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar sort={true} filter={true} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
+            <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
             {/* <h2 className='text-lg font-semibold'>Aktywne grupy</h2> */}
             <GroupList groupData={sortedGroups}></GroupList>
           </ContentPanel>
