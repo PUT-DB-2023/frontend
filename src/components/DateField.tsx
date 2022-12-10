@@ -9,7 +9,7 @@ export const DateField = ({ title, value, setValue, maxDate, minDate }: any) => 
             <DatePicker
                 onChange={(v: Date) => setValue(v)}
                 selected={value}
-                className={clsName}
+                className={`${clsName} w-full`}
                 dateFormat={'dd.MM.yyyy'} 
                 maxDate={maxDate}
                 minDate={minDate}
