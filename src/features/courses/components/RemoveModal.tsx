@@ -20,18 +20,18 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/courses')
-         } else {
-         }
+        }
     }, [id])
+
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
+    </>
 
     if (show) {
         return (
-            <ModalContainer title={name} off={off}>
+            <ModalContainer title={name} off={off} buttons={buttons}>
                 Jesteś pewny?
-                <div className={`flex gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
-                </div>
             </ModalContainer>
         );
     } else {

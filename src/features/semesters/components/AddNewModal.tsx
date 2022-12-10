@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
-import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { addSemester } from '../api/addSemester';
@@ -25,16 +24,18 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         }
     }, [year, winter])
 
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
+
+    </>
+
     if (show) {
         return (
-            <ModalContainer title='Nowy semestr' off={handleOff}>
+            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-2`}>
                     <YearField title={'Rok'} value={year} setValue={setYear} />
-                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter}/>
-                </div>
-                <div className={`flex flex-wrap gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
+                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>
         );

@@ -3,7 +3,6 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { CheckBox } from 'components/CheckBox';
 import { DateField } from 'components/DateField';
 import { updateEdition } from '../api/updateEdition'
 import { SemesterDropDown } from 'components/SemesterDropdown';
@@ -28,14 +27,13 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
     const [semester, setSemester] = React.useState<Semester>();
-    // const [active, setActive] = React.useState(false);
     const [course, setCourse] = React.useState('');
     const [teachers, setTeachers] = React.useState([]);
     const [servers, setServers] = React.useState([]);
 
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
     const { data: teachersData, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
-    const { data: serversData, status: serversStatus, refetch: serversRefetch } = useQuery(['servers'], () => getServers({courseId: courseId}));
+    const { data: serversData, status: serversStatus, refetch: serversRefetch } = useQuery(['servers'], () => getServers({ courseId: courseId }));
 
 
     React.useEffect(() => {
@@ -48,7 +46,6 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
         openArray && setDateOpened(new Date(openArray?.[0], openArray?.[1], openArray?.[2]));
         closeArray && setDateClosed(new Date(closeArray?.[0], closeArray?.[1], closeArray?.[2]));
         setSemester(selectedSemester);
-        // setActive(data?.active);
         setCourse(data?.course?.id);
         setTeachers(selectedTeachers);
         setServers(selectedServers)
@@ -62,21 +59,21 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
         }
     }, [description, dateOpened, dateClosed, semester, course, data?.id, teachers, servers])
 
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+    </>
+
     if (show) {
         return (
-            <ModalContainer title='Edytuj edycję' off={off}>
+            <ModalContainer title='Edytuj edycję' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Opis"} value={description} setValue={setDescription} />
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
-                    <TeachersDropDown title={"Nauczyciele"} values={teachersData} value={teachers} setValue={setTeachers}/>
-                    <ServersDropDown title={"Serwery"} values={serversData} value={servers} setValue={setServers}/>
-                    {/* <CheckBox title={'Aktywny:'} value={active} setValue={setActive} /> */}
-                </div>
-                <div className={`flex gap-2 mt-10 self-end`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+                    <TeachersDropDown title={"Nauczyciele"} values={teachersData} value={teachers} setValue={setTeachers} />
+                    <ServersDropDown title={"Serwery"} values={serversData} value={servers} setValue={setServers} />
                 </div>
             </ModalContainer>
         );

@@ -7,7 +7,6 @@ import { updateGroup } from '../api/updateGroup';
 import { WeekDayDropDown } from 'components/WeekDayDropdown';
 import { weekDays, WeekDay } from 'types';
 import { TimeField } from 'components/TimeField';
-import { FieldBox } from 'components/FieldBox';
 import { DropDown } from '../api/DropDown';
 import { useQuery } from 'react-query';
 import { getTeachers } from '../api/getTeachers';
@@ -52,19 +51,20 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         }
     }, [name, day, hour, room, teacher])
 
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+    </>
+
     if (show) {
         return (
-            <ModalContainer title='Edytuj grupę' off={off}>
+            <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Nazwa"} value={name} setValue={setName} />
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />
                     <DropDown title={"Nauczyciel"} values={teachers} value={teacher} setValue={setTeacher} />
-                </div>
-                <div className={`flex gap-2 mt-10 self-end`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
                 </div>
             </ModalContainer>
         );

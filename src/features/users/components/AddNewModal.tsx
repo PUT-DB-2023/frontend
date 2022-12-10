@@ -33,19 +33,20 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
 
     const name = 'Dodaj ' + (type === UserType.ADMIN ? 'admina' : (type === UserType.TEACHER ? 'nauczyciela' : (type === UserType.STUDENT ? 'studenta' : '')))
 
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
+    </>
+
     if (show) {
         return (
-            <ModalContainer title={name} off={handleOff}>
+            <ModalContainer title={name} off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Imię"} value={first_name} setValue={setFirstName} />
                     <Field title={"Nazwisko"} value={last_name} setValue={setLastName} />
                     <Field title={"Email"} value={email} setValue={setEmail} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} />
                     {type === UserType.STUDENT && <Field title={"Student ID"} value={student_id} setValue={setStudentId} />}
-                </div>
-                <div className={`flex flex-wrap gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>
             </ModalContainer>
         );

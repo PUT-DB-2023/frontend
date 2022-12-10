@@ -2,9 +2,6 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { deleteSemester } from '../api/deleteSemester'
-import { useNavigate,  } from 'react-router-dom'
-import { showToast } from 'api/showToast';
 import { activateSemester } from '../api/activateSemester';
 
 interface IActivateModal {
@@ -12,7 +9,7 @@ interface IActivateModal {
     off: () => void,
     id: string | undefined,
     name: string,
-    allRefetch: (...args : any[]) => void,
+    allRefetch: (...args: any[]) => void,
 }
 
 export const ActivateModal = ({ show, off, id, name, allRefetch }: IActivateModal) => {
@@ -22,17 +19,18 @@ export const ActivateModal = ({ show, off, id, name, allRefetch }: IActivateModa
         if (res) {
             off();
             allRefetch();
-         }
+        }
     }, [id])
+
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Ustaw' onClick={handleActivate} />
+    </>
 
     if (show) {
         return (
-            <ModalContainer title={name} off={off}>
+            <ModalContainer title={name} off={off} buttons={buttons}>
                 Czy na pewno chcesz zmienić bieżący semestr? Spowoduje to deaktywację bieżącego semestru.
-                <div className={`flex gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Ustaw' onClick={handleActivate} />
-                </div>
             </ModalContainer>
         );
     } else {

@@ -3,8 +3,7 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteServer } from '../api/deleteServer'
-import { useNavigate,  } from 'react-router-dom'
-import { showToast } from 'api/showToast';
+import { useNavigate, } from 'react-router-dom'
 
 interface IRemoveModal {
     show: boolean,
@@ -20,18 +19,18 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         if (res.status) {
             off();
             navigate('/servers')
-         } else {
-         }
+        }
     }, [id])
+
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
+    </>
 
     if (show) {
         return (
-            <ModalContainer title={name} off={off}>
+            <ModalContainer title={name} off={off} buttons={buttons}>
                 Jesteś pewny?
-                <div className={`flex gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
-                </div>
             </ModalContainer>
         );
     } else {

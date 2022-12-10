@@ -1,11 +1,6 @@
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
 import { Server } from '../types'
-import { IServer } from './addServer'
-
-export interface IServ extends IServer {
-    id: string,
-}
 
 export const updateServer = async (server: Server) => {
     const t = toast.loading("Edytowanie..")

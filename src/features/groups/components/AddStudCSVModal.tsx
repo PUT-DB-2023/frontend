@@ -5,7 +5,7 @@ import { ButtonType } from 'types';
 import { FieldBox } from 'components/FieldBox';
 import { addStudentsFile } from '../api/addStudentsFile';
 
-export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult : React.Dispatch<React.SetStateAction<any>>}) => {
+export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult: React.Dispatch<React.SetStateAction<any>> }) => {
     const [students, setStudents] = React.useState(undefined);
 
     console.log('CSV MODAL')
@@ -25,7 +25,7 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
             if (res) {
                 console.log(res.data);
                 refetch()
-                if (res.data){
+                if (res.data) {
                     setResult(res.data.students_info)
                     showInfo()
                 }
@@ -37,18 +37,19 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
         setStudents(event.target.files[0]);
     }, []);
 
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
+    </>
+
     if (show) {
         return (
-            <ModalContainer title='Dodaj studentów z pliku CSV' off={handleOff}>
+            <ModalContainer title='Dodaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <FieldBox>
                         <input className="block w-full text-zinc-600 border border-zinc-400 rounded-lg cursor-pointer focus:outline-none focus-visible:outline-blue-800"
                             type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
                     </FieldBox>
-                </div>
-                <div className={`flex gap-2 mt-10 self-end`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
-                    <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
                 </div>
             </ModalContainer>
         );

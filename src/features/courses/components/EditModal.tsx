@@ -9,36 +9,37 @@ interface IEditModal {
     show: boolean,
     off: () => void,
     refetch: () => void,
-    data: {name: string, id: string, description: string}
+    data: { name: string, id: string, description: string }
 }
 
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [name, setName] = React.useState(data.name);
     const [description, setDescription] = React.useState(data.description);
-    
-    React.useEffect(()=>{
+
+    React.useEffect(() => {
         setName(data.name);
         setDescription(data.description);
-    },[show, data])
-    
+    }, [show, data])
+
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateCourse({id: data.id, name, description})
+        const res = await updateCourse({ id: data.id, name, description })
         if (res.data) {
             off();
             refetch();
-         }
+        }
     }, [name, description, data])
+
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+    </>
 
     if (show) {
         return (
-            <ModalContainer title={data.name} off={off}>
+            <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Nazwa"} value={name} setValue={setName} />
                     <Field title={"Opis"} value={description} setValue={setDescription} />
-                </div>
-                <div className={`flex gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
                 </div>
             </ModalContainer>
         );

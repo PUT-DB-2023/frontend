@@ -4,9 +4,9 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateSemester } from '../api/updateSemester';
-import { showToast } from 'api/showToast';
 import { Semester, SemesterPost } from '../types';
 import { Edition } from 'features/editions';
+import { Switch } from 'components/Switch';
 
 interface IEditModal {
     show: boolean,
@@ -25,7 +25,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [data])
 
     const handleUpdate = React.useCallback(async () => {
-        const new_data : SemesterPost = {
+        const new_data: SemesterPost = {
             id: data.id,
             winter: data.winter,
             start_year: data.start_year,
@@ -36,22 +36,20 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (res.data) {
             off();
             refetch();
-         }
+        }
     }, [data, year, winter])
+
+    const buttons = <>
+        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+    </>
 
     if (show) {
         return (
-            <ModalContainer title={data.start_year} off={off}>
+            <ModalContainer title={data.start_year} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Rok"} value={year} setValue={setYear} />
-                    <div className='flex gap-2 items-center'>
-                        Zima:
-                        <input type="checkbox" checked={winter} onChange={() => setWinter(!winter)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
-                    </div>
-                </div>
-                <div className={`flex gap-2 mt-10`}>
-                    <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-                    <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>
         );
