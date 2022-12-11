@@ -36,8 +36,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} />
-                    <Field title={"Opis"} value={description} setValue={setDescription} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true}/>
+                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true}/>
                 </div>
             </ModalContainer>
         );
