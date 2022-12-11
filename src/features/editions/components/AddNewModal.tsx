@@ -31,11 +31,16 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
 
     const navigate = useNavigate()
 
+    React.useEffect(() => {
+      setSemester(semestersData?.[semestersData.length - 1])
+    }, [semestersData])
+    
+
     const handleOff = React.useCallback(() => {
         setDescription('');
         setDateOpened(new Date());
         setDateClosed(new Date());
-        setSemester(semestersData[0]);
+        setSemester(semestersData?.[0]);
         setCourse(courseId);
         setTeachers([]);
         setServers([]);
@@ -43,7 +48,7 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = await addEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester.id.toString(), course, teachers, servers });
+        const res = await addEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString() || '', course, teachers, servers });
         if (res) {
             handleOff();
             refetch()
@@ -51,18 +56,19 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         }
     }, [description, dateOpened, dateClosed, semester, course, teachers, servers])
 
-    if (semestersStatus === 'loading' || serversStatus === 'loading' || teachersStatus === 'loading') {
+    if (semestersStatus === 'loading' || serversStatus === 'loading' || teachersStatus === 'loading' || semestersData === undefined) {
         return null
     }
+
+    console.log('SEM DATA', semestersData);
+    
 
     const buttons = <>
         <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 
-    if (show) {
-        console.log(semestersData);
-        
+    if (show) {        
         return (
             <ModalContainer title='Nowa edycja' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
