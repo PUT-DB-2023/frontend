@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType } from 'types';
+import { ButtonType, TeacherEdition } from 'types';
 import { addGroup } from '../api/addGroup';
 import { useNavigate } from 'react-router-dom';
 import { WeekDayDropDown } from 'components/WeekDayDropdown';
@@ -19,7 +19,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     const [day, setDay] = React.useState<WeekDay>(weekDays[0]);
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
-    const [teacher, setTeacher] = React.useState('');
+    const [teacher, setTeacher] = React.useState<TeacherEdition>();
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(edition));
 
@@ -30,12 +30,12 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
         setDay(weekDays[0]);
         setHour('08:00');
         setRoom('');
-        setTeacher('');
+        setTeacher(undefined);
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: teacherEditionData[0].id, students: [] });
+        const res = await addGroup({ name, day: day.field, hour, room, teacherEdition: teacher?.id!, students: [] });
         if (res) {
             handleOff()
             refetch()

@@ -68,9 +68,8 @@ export const Group = () => {
         <div className='flex-col flex gap-4'>
           <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
           <h2 className='font-semibold text-xl text-blue-800'>
-            {groupData.day} {groupData.hour}
+            {groupData?.teacherEdition?.teacher?.first_name} {groupData?.teacherEdition?.teacher?.last_name} - {groupData.day} {groupData.hour}
           </h2>
-          {/* <h2 className='text-blue-900 font-semibold mb-8'> {groupData !== undefined ? groupData.students.length : ''} studentów </h2> */}
         </div>
         <div className='flex gap-6'>
           {servers ? <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta bazodanowe' /> : null}

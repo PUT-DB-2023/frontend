@@ -12,6 +12,8 @@ export interface IAddGroup {
 }
 
 export const addGroup = async (group: IAddGroup) => {
+    console.log('ADDD GROUP', group);
+    
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/groups/", group)
     .then((e)=>{toast.update(t, {render: `Pomyślnie dodano grupę - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
