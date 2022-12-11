@@ -72,7 +72,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} />
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />

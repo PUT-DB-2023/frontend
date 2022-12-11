@@ -57,7 +57,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy server' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} />
                     <Field title={"IP"} value={ip} setValue={setIp} pattern={'^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\.?\\b){4}$'} wrongText='Poprawny format IP to: X.X.X.X, gdzie X to liczba' />
                     <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' />
                     <Field title={"Dostawca"} value={provider} setValue={setProvider} />

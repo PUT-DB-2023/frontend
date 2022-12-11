@@ -72,7 +72,7 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         return (
             <ModalContainer title='Nowa edycja' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Opis"} value={description} setValue={setDescription} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} autoFocus={true} />
                     <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                     <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />

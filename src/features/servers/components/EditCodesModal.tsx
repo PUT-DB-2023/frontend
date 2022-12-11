@@ -42,7 +42,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.name} off={off} style={{ width: `min(100%, 1000px)` }} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Tworzenie"} value={create} setValue={setCreate} />
+                    <Field title={"Tworzenie"} value={create} setValue={setCreate} autoFocus={true} />
                     <Field title={"Modyfikacja"} value={modify} setValue={setModify} />
                     <Field title={"Usuwanie"} value={remove} setValue={setRemove} />
                     <Field title={"Nazewnictwo kont"} value={name} setValue={setName} />

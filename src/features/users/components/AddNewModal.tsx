@@ -41,7 +41,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
         return (
             <ModalContainer title={name} off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Imię"} value={first_name} setValue={setFirstName} />
+                    <Field title={"Imię"} value={first_name} setValue={setFirstName} autoFocus={true} />
                     <Field title={"Nazwisko"} value={last_name} setValue={setLastName} />
                     <Field title={"Email"} value={email} setValue={setEmail} />
                     {type === UserType.STUDENT && <Field title={"Student ID"} value={student_id} setValue={setStudentId} />}

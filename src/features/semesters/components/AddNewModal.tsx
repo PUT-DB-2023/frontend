@@ -34,7 +34,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-2`}>
-                    <YearField title={'Rok'} value={year} setValue={setYear} />
+                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} />
                     <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>

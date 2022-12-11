@@ -43,7 +43,7 @@ export const EditModal = ({ show, off, refetch, type, data }: { show: boolean, o
         return (
             <ModalContainer title={name} off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Imię"} value={first_name} setValue={setFirstName} />
+                    <Field title={"Imię"} value={first_name} setValue={setFirstName} autoFocus={true} />
                     <Field title={"Nazwisko"} value={last_name} setValue={setLastName} />
                     <Field title={"Email"} value={email} setValue={setEmail} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} />

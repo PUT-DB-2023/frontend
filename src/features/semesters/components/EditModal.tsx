@@ -48,7 +48,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.start_year} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Rok"} value={year} setValue={setYear} />
+                    <Field title={"Rok"} value={year} setValue={setYear} autoFocus={true} />
                     <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>

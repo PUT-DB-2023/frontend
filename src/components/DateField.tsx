@@ -20,7 +20,7 @@ export const DateField = ({ title, value, setValue, maxDate, minDate }: any) => 
 
 DateField.displayName = 'DateField';
 
-export const YearField = ({ title, value, setValue }: any) => {
+export const YearField = ({ title, value, setValue, autoFocus }: any) => {
     return (
         <FieldBox title={title}>
             <DatePicker
@@ -28,7 +28,8 @@ export const YearField = ({ title, value, setValue }: any) => {
                 selected={value}
                 className={`${clsName} w-full`}
                 dateFormat={'yyyy'} 
-                showYearPicker/>
+                showYearPicker
+                autoFocus={autoFocus}/>
         </FieldBox>
     )
 };
