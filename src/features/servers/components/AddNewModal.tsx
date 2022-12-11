@@ -23,14 +23,14 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
+    const navigate = useNavigate()
+
     const objectMap = (obj: any, fn: any) =>
         Object.fromEntries(
             Object.entries(obj).map(
                 ([k, v], i) => [k, fn(v, k, i)]
             )
         )
-
-    const navigate = useNavigate()
 
     const validate = React.useCallback(() => {
         let correct = true;

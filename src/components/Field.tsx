@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FieldBox, clsName, clsNameWrong, clsTextWrong } from './FieldBox';
-import { Tooltip } from '@mui/material';
 
 interface IField {
     title: string | undefined,
