@@ -19,7 +19,7 @@ export const ModalContainer: React.FC<IModalContainer> = ({
             <div className={`flex w-full h-full p-[20px]`}>
                 <div className={`max-h-full lg:min-w-[460px] md:lg:min-w-[460px] overflow-auto flex flex-col gap-5 p-6 bg-white shadow-md rounded-md m-auto justify-between`} ref={ref} style={style}>
                         <div className={`font-semibold text-lg px-1`} >{title}</div>
-                        <div className={`overflow-y-auto p-1`}>{children}</div>
+                        <div className={`overflow-y-auto p-1 grow`}>{children}</div>
                         {buttons ? <div className='flex gap-2 w-full justify-end px-1'>{buttons}</div> : null}
                 </div>
             </div>
