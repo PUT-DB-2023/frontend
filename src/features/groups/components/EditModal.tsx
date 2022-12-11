@@ -26,7 +26,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [day, setDay] = React.useState<WeekDay>(weekDays[0]);
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
-    const [teacher, setTeacher] = React.useState('');
+    const [teacher, setTeacher] = React.useState<TeacherEdition>();
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(data.teacherEdition.edition.id));
 
@@ -40,7 +40,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         const min = time.length !== 1 ? time[1] : '00';
         const newTime = hour + ':' + min;
         const selectedTeacher = teacherEditionData?.find((e: TeacherEdition) => e.teacher.id === data?.teacherEdition?.teacher?.id);
-        console.log('selectedTeacher', teacherEditionData);
+        console.log('selectedTeacher', selectedTeacher);
         
         setName(data?.name);
         setDay(day);
@@ -50,7 +50,9 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [show, data, teacherEditionData, teacherEditionStatus])
 
     const handleUpdate = React.useCallback(async () => {
-        const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: '', id: data.id });
+        console.log('teacher', teacher, typeof teacher);
+        
+        const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: teacher?.id!, id: data.id });
         if (res) {
             off();
             refetch()

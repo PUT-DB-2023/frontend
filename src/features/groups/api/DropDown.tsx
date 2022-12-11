@@ -25,6 +25,9 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
                 const val: string = opt?.teacher.first_name + opt?.teacher.last_name;
                 return val.toLowerCase().includes(query.toLowerCase())
             })
+
+    console.log()
+
     return (
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => setValue(v)}>

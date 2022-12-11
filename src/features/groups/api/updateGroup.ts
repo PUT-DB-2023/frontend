@@ -17,7 +17,8 @@ export const updateGroup = async (group: IUpdate) => {
     //     students: group.students,
     //     id: group.id,
     // }
-
+    console.log('group update', group);
+    
     const t = toast.loading("Edytowanie..")
     const response = await axios.put(`/groups/${group.id}/`, group)
     .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano grupę", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})

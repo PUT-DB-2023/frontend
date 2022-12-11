@@ -24,7 +24,7 @@ export const updateEdition = async (edition: IUpdate) => {
     
 
     const t = toast.loading("Edytowanie..")
-    const response = await axios.patch(`/editions/${edition.id}/`, data)
+    const response = await axios.put(`/editions/${edition.id}/`, data)
     .then((e)=>{toast.update(t, {render: "Pomyślnie edytowano edycję", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     .catch((e)=>{toast.update(t, {render: "Nie udało się edytować edycji", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
