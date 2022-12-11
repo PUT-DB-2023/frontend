@@ -18,7 +18,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         const res = await deleteServer(id)
         if (res.status) {
             off();
-            navigate('/servers')
+            navigate(-1)
         }
     }, [id])
 

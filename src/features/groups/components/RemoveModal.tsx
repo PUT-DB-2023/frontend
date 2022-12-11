@@ -9,7 +9,7 @@ interface IRemoveModal {
     show: boolean,
     off: () => void,
     id: string | undefined,
-    name: string
+    name: string,
 }
 
 export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
@@ -18,7 +18,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
         const res = await deleteGroup(id)
         if (res.status) {
             off();
-            navigate('/groups')
+            navigate(-1)
         }
     }, [id])
 
