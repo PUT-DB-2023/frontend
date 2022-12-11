@@ -17,6 +17,10 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [])
 
     const handleAdd = React.useCallback(async () => {
+        if(!year) {
+            console.log('Test')
+            return
+        }
         const res = await addSemester({ start_year: year?.getFullYear()?.toString(), winter, active: false, editions: [] })
         if (res.data) {
             handleOff();
@@ -34,7 +38,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons} style={{height: 'min(100%, 420px)'}}>
                 <div className={`flex flex-col gap-2`}>
-                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} />
+                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'}/>
                     <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>
