@@ -13,6 +13,7 @@ import { TeachersDropDown } from 'components/TeachersDropDown';
 import { getTeachers } from 'features/groups/api/getTeachers';
 import { getServers } from 'features/servers/api/getServers';
 import { ServersDropDown } from 'components/ServersDropDown';
+import { queryClient } from 'lib/react-query';
 
 interface IEditModal {
     show: boolean,
@@ -56,6 +57,7 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
         if (res) {
             off();
             refetch()
+            queryClient.refetchQueries(['teacherEdition'])
         }
     }, [description, dateOpened, dateClosed, semester, course, data?.id, teachers, servers])
 

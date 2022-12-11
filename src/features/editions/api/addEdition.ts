@@ -7,7 +7,7 @@ export interface IAddEdition {
     description: string,
     date_opened: Date,
     date_closed: Date,
-    semester: string,
+    semester: string,   
     course: string,
     teachers?: any[],
     servers?: any[]

@@ -21,7 +21,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState('');
 
-    const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition'], () => getTeacherEdtition(edition));
+    const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(edition));
 
     const navigate = useNavigate()
 
@@ -48,7 +48,11 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 
-    if (teacherEditionStatus === 'loading') {
+    const warningButton = <>
+        <Button type={ButtonType.OUTLINE} text='Ok' onClick={handleOff} />
+    </>
+
+    if (teacherEditionStatus === 'loading' || teacherEditionData === undefined) {
         return null
     }
 
@@ -57,8 +61,8 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
 
         if (teacherEditionData.length === 0) {
             return (
-                <ModalContainer title='NIE DZIALA' off={handleOff}>
-
+                <ModalContainer title='Nie można utworzyć grupy' off={handleOff} buttons={warningButton}>
+                    Edycja nie posiada dydaktyków. Dodaj dydaktyka aby utworzyć grupę.
                 </ModalContainer>
             )
         }
