@@ -11,7 +11,6 @@ interface IUpdate extends IAddEdition {
 
 export const updateEdition = async (edition: IUpdate) => {
     const data = {
-        id: edition.id,
         description: edition.description,
         date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
