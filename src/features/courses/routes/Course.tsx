@@ -62,10 +62,14 @@ export const Course = () => {
         navigate('')
       }
     }
+
+    console.log('--------EDITION USE EFFECT-------', selectedEdition);
     
   }, [allEditionsData, activeEditionData])
 
   const allRefetch = async () => {
+    console.log('allrefetch');
+    
     await activeEditionRefetch();
     await allEditionsRefetch();    
   }

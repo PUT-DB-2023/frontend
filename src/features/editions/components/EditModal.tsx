@@ -58,6 +58,7 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
             off();
             refetch()
             queryClient.refetchQueries(['teacherEdition'])
+            queryClient.refetchQueries(['selectedEdition'])
         }
     }, [description, dateOpened, dateClosed, semester, course, data?.id, teachers, servers])
 

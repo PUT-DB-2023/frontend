@@ -30,7 +30,7 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     //     enabled: false // disable this query from automatically running
     // })
     
-    const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters(false))
+    const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['inactiveSemesters'], () => getSemesters(false))
 
     const customMenuItems = (id: string) : CustomOptionMenuItem[] => [
         {

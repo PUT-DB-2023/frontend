@@ -30,7 +30,7 @@ export const addEdition = async (edition: IAddEdition) => {
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/editions/", data)
     .then((e)=>{toast.update(t, {render: `Pomyślnie dodano edycję - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać edycji - ${e.response.data}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać edycji - ${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     console.log(response)
     return response.data
 }

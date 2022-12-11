@@ -11,7 +11,7 @@ export const addDbAccounts = async (groupId: string, serverId: string) => {
             server_id : serverId
         }
     })
-    .then((e)=>{toast.update(t, {render: "Pomyślnie przeniesiono konta", type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: "Nie udało się przenieść kont", type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .then((e)=>{toast.update(t, {render: `Pomyślnie przeniesiono konta - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się przenieść kont - ${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response.data
 }
