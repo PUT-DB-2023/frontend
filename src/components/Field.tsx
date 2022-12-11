@@ -1,42 +1,45 @@
 import * as React from 'react';
-import { FieldBox, clsName, clsNameWrong } from './FieldBox';
+import { FieldBox, clsName, clsNameWrong, clsTextWrong } from './FieldBox';
 import { Tooltip } from '@mui/material';
 
 interface IField {
     title: string | undefined,
-    value: any;
-    setValue: any,
-    type?: string | undefined,
-    pattern?: string | undefined,
-    wrongText?: string | undefined,
-    autoFocus?: boolean | undefined,
-    multiline?: boolean | undefined,
+    value: any,
+    setValue: (e: any) => void,
+    type?: string,
+    pattern?: string,
+    wrongText?: string,
+    autoFocus?: boolean,
+    multiline?: boolean,
+    errorMsg?: string,
+    setErrorMsg?: (e: string) => void,
 }
 
-export const Field = ({ title, value, setValue, type, pattern, wrongText, autoFocus, multiline }: IField) => {
-    const [wrong, setWrong] = React.useState(false);
-
-    React.useEffect(() => {
+export const Field = ({ title, value, setValue, type, pattern, wrongText, autoFocus, multiline, errorMsg, setErrorMsg }: IField) => {
+    const handleChange = React.useCallback((e: any) => {
+        const val = e.target.value;
         if (pattern) {
-            if (value === '') {
-                setWrong(false)
+            if (val === '') {
+                setErrorMsg && setErrorMsg('');
             } else {
                 const reg = new RegExp(pattern);
-                reg.test(value) ? setWrong(false) : setWrong(true);
+                reg.test(val) ? setErrorMsg && setErrorMsg('') : setErrorMsg && wrongText && setErrorMsg(wrongText);
             }
+        } else {
+            setErrorMsg && setErrorMsg('');
         }
-    }, [pattern, value])
+        setValue(val)
+    }, [pattern])
 
     return (
         <FieldBox title={title}>
-            <Tooltip open={wrong} title={wrongText} placement="top" arrow>
-                {multiline ?
-                    <textarea value={value} onChange={(e) => setValue(e.target.value)}
-                        className={wrong ? clsNameWrong : clsName} autoFocus={autoFocus} />
-                    :
-                    <input type={type ? type : 'input'} value={value} onChange={(e) => setValue(e.target.value)}
-                        className={wrong ? clsNameWrong : clsName} autoFocus={autoFocus} />}
-            </Tooltip>
+            {multiline ?
+                <textarea value={value} onChange={handleChange}
+                    className={(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} autoFocus={autoFocus} />
+                :
+                <input type={type ? type : 'input'} value={value} onChange={handleChange}
+                    className={(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} autoFocus={autoFocus} />}
+            {errorMsg && errorMsg?.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>
     )
 };

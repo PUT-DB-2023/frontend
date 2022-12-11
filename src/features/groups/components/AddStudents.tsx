@@ -6,13 +6,16 @@ import { useQuery } from 'react-query'
 import { StudentsDropDown } from 'components/StudentsDropDown';
 import { getStudents } from 'features/users/api/getStudents';
 import { addStudents } from '../api/addStudents';
+import { clsTextWrong } from 'components/FieldBox';
 
 export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off: () => void, refetch: () => void, group: any }) => {
     const { data: studentsData, status: studentsStatus, refetch: studentsRefetch } = useQuery(['students'], getStudents);
     const [students, setStudents] = React.useState([]);
+    const [errorMsg, setErrorMsg] = React.useState('');
 
     const handleOff = React.useCallback(() => {
         setStudents([]);
+        setErrorMsg('');
         off();
     }, [])
 
@@ -20,12 +23,11 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
 
     const handleAdd = React.useCallback(async () => {
         if (students.length === 0) {
-            handleOff();
+            setErrorMsg('Wybierz chocia jednego studenta')
             return;
         }
         const allStudents = [...group?.students, ...students].map(s => s.id)
         const res = await addStudents({ id: group?.id, students: allStudents });
-        console.log(res)
         if (res.data) {
             handleOff();
             refetch()
@@ -41,7 +43,8 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
         return (
             <ModalContainer title='Dodaj studenta do grupy' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} />
+                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} style={{maxHeight: '30vh'}} errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
+                    {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
                 </div>
             </ModalContainer>
         );

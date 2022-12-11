@@ -9,16 +9,33 @@ import { addCourse } from '../api/addCourse';
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: any }) => {
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const defaultMsg = { name: '' }
+    const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const navigate = useNavigate()
+
+    const validate = React.useCallback(() => {
+        let correct = true;
+
+        if (name.length === 0) {
+            setErrorMsg({ ...errorMsg, 'name': 'Pole wymagane' })
+            correct = false;
+        }
+
+        return correct;
+    }, [name, errorMsg])
 
     const handleOff = React.useCallback(() => {
         setName('');
         setDescription('');
+        setErrorMsg(defaultMsg);
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
+        if (!validate()) {
+            return;
+        }
         const res = await addCourse({ name, description });
         if (res.data) {
             handleOff();
@@ -36,8 +53,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true}/>
-                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} />
                 </div>
             </ModalContainer>
         );

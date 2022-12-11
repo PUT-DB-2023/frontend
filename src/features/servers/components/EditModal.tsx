@@ -22,6 +22,59 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [password, setPassword] = React.useState('');
     const [database, setDatabase] = React.useState('');
     const [active, setActive] = React.useState(false);
+    const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '' }
+    const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
+
+    const objectMap = (obj: any, fn: any) =>
+        Object.fromEntries(
+            Object.entries(obj).map(
+                ([k, v], i) => [k, fn(v, k, i)]
+            )
+        )
+
+    const validate = React.useCallback(() => {
+        let correct = true;
+
+        if (name.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'name': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (ip.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'ip': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (port.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'port': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (provider.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'provider': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (user.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'user': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (password.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'password': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (database.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'database': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
+    }, [name, ip, port, provider, user, password, database, errorMsg])
 
     React.useEffect(() => {
         setName(data.name);
@@ -32,9 +85,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setPassword(data.password);
         setDatabase(data.database);
         setActive(data.active);
+        setErrorMsg(defaultMsg);
     }, [show, data])
 
     const handleUpdate = React.useCallback(async () => {
+        if (!validate()) { return; }
         const res = await updateServer({ id: data.id, name, ip, port, provider, password, database, active } as Server)
         if (res.data) {
             off();
@@ -51,13 +106,13 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} />
-                    <Field title={"IP"} value={ip} setValue={setIp} pattern={'^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\.?\\b){4}$'} wrongText='Poprawny format IP to: X.X.X.X, gdzie X to liczba' />
-                    <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' />
-                    <Field title={"Dostawca"} value={provider} setValue={setProvider} />
-                    <Field title={"Użytkownik"} value={user} setValue={setUser} />
-                    <Field title={"Hasło"} value={password} setValue={setPassword} type={'password'} />
-                    <Field title={"Baza danych"} value={database} setValue={setDatabase} />
+                <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} />
+                    <Field title={"IP"} value={ip} setValue={setIp} pattern={'^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\.?\\b){4}$'} wrongText='Poprawny format IP to: X.X.X.X, gdzie X to liczba' errorMsg={errorMsg['ip']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'ip': e }))} />
+                    <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' errorMsg={errorMsg['port']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'port': e }))} />
+                    <Field title={"Dostawca"} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))} />
+                    <Field title={"Użytkownik"} value={user} setValue={setUser} errorMsg={errorMsg['user']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'user': e }))} />
+                    <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} errorMsg={errorMsg['password']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'password': e }))} />
+                    <Field title={"Baza danych"} value={database} setValue={setDatabase} errorMsg={errorMsg['database']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'database': e }))} />
                     <div className='flex gap-2 items-center mt-4'>
                         Aktywny:
                         <input type="checkbox" checked={active} onChange={() => setActive(!active)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>

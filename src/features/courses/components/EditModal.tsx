@@ -15,13 +15,30 @@ interface IEditModal {
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [name, setName] = React.useState(data.name);
     const [description, setDescription] = React.useState(data.description);
+    const defaultMsg = { name: '' }
+    const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     React.useEffect(() => {
         setName(data.name);
         setDescription(data.description);
+        setErrorMsg(defaultMsg);
     }, [show, data])
 
+    const validate = React.useCallback(() => {
+        let correct = true;
+
+        if (name.length === 0) {
+            setErrorMsg({ ...errorMsg, 'name': 'Pole wymagane' })
+            correct = false;
+        }
+
+        return correct;
+    }, [name, description, errorMsg])
+
     const handleUpdate = React.useCallback(async () => {
+        if (!validate()) {
+            return;
+        }
         const res = await updateCourse({ id: data.id, name, description })
         if (res.data) {
             off();
@@ -38,7 +55,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} />
                     <Field title={"Opis"} value={description} setValue={setDescription} />
                 </div>
             </ModalContainer>

@@ -27,10 +27,23 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState<TeacherEdition>();
+    const defaultMsg = { name: '' }
+    const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(data.teacherEdition.edition.id));
 
     console.log('GROUP DATA', data);
+
+    const validate = React.useCallback(() => {
+        let correct = true;
+
+        if (name.length === 0) {
+            setErrorMsg({ ...errorMsg, 'name': 'Pole wymagane' })
+            correct = false;
+        }
+
+        return correct;
+    }, [name, errorMsg])
 
     React.useEffect(() => {
         const findDay = weekDays.find(e => e.field === data?.day);
@@ -49,8 +62,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setTeacher(selectedTeacher);
     }, [show, data, teacherEditionData, teacherEditionStatus])
 
+    React.useEffect(() => setErrorMsg(defaultMsg),[data, show])
+
     const handleUpdate = React.useCallback(async () => {
         console.log('teacher', teacher, typeof teacher);
+        if (!validate()) { return; }
         
         const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: teacher?.id!, id: data.id });
         if (res) {
@@ -72,7 +88,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} />
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })}/>
                     <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                     <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                     <Field title={"Sala"} value={room} setValue={setRoom} />

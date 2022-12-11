@@ -10,8 +10,6 @@ export const getSemesters = async ( active? : boolean ) => {
         }
     })
     .then(e => {return e})
-    .catch(e => {return e})
-    console.log(response.data);
-    
+    .catch(e => {return e})    
     return response.data
 }

@@ -2,16 +2,18 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { FieldBox } from 'components/FieldBox';
+import { FieldBox, clsName, clsTextWrong, clsNameWrong } from 'components/FieldBox';
 import { addStudentsFile } from '../api/addStudentsFile';
 
 export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult: React.Dispatch<React.SetStateAction<any>> }) => {
     const [students, setStudents] = React.useState(undefined);
+    const [errorMsg, setErrorMsg] = React.useState('');
 
     console.log('CSV MODAL')
 
     const handleOff = React.useCallback(() => {
         setStudents(undefined);
+        setErrorMsg('')
         off();
     }, [])
 
@@ -30,10 +32,13 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
                     showInfo()
                 }
             }
+        } else {
+            setErrorMsg('Musisz wybrać plik')
         }
     }, [students, id])
 
     const handleSelectedFile = React.useCallback((event: any) => {
+        setErrorMsg('')
         setStudents(event.target.files[0]);
     }, []);
 
@@ -47,8 +52,8 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
             <ModalContainer title='Dodaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <FieldBox>
-                        <input className="block w-full text-zinc-600 border border-zinc-400 rounded-lg cursor-pointer focus:outline-none focus-visible:outline-blue-800"
-                            type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
+                        <input className={errorMsg.length > 0 ? clsNameWrong : clsName} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
+                        {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
                     </FieldBox>
                 </div>
             </ModalContainer>

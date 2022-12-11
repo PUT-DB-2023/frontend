@@ -16,8 +16,8 @@ export interface IAddEdition {
 export const addEdition = async (edition: IAddEdition) => {
     const data = {
         description: edition.description,
-        date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
-        date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
+        date_opened: edition.date_opened && format(edition.date_opened, 'yyyy-MM-dd'),
+        date_closed: edition.date_closed && format(edition.date_closed, 'yyyy-MM-dd'),
         semester: edition.semester,
         course: edition.course,
         teachers: edition.teachers?.map(e => e.id),

@@ -3,8 +3,7 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { addEdition } from '../api/addEdition';
-import { CheckBox } from 'components/CheckBox';
+import { addEdition, IAddEdition } from '../api/addEdition';
 import { DateField } from 'components/DateField';
 import { useNavigate } from 'react-router-dom';
 import { SemesterDropDown } from 'components/SemesterDropdown';
@@ -48,6 +47,7 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     }, [])
 
     const handleAdd = React.useCallback(async () => {
+        console.log(dateOpened, dateClosed)
         const res = await addEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString() || '', course, teachers, servers });
         if (res) {
             handleOff();
