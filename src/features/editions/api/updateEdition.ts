@@ -11,12 +11,14 @@ interface IUpdate extends IAddEdition {
 
 export const updateEdition = async (edition: IUpdate) => {
     const data = {
+        id: edition.id,
         description: edition.description,
         date_opened: format(edition.date_opened, 'yyyy-MM-dd'),
         date_closed: format(edition.date_closed, 'yyyy-MM-dd'),
         semester: edition.semester,
         course: edition.course,
-        teachers: edition.teachers?.map(e => e.id)
+        teachers: edition.teachers?.map(e => e.id),
+        servers: edition.servers?.map(e => e.id),
     }
 
     console.log('data', data);

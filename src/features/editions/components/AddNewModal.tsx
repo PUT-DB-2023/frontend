@@ -51,9 +51,9 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         }
     }, [description, dateOpened, dateClosed, semester, course, teachers, servers])
 
-    // if (semestersStatus === 'loading' && serversStatus === 'loading' && teachersStatus === 'loading') {
-    //     return null
-    // }
+    if (semestersStatus === 'loading' || serversStatus === 'loading' || teachersStatus === 'loading') {
+        return null
+    }
 
     const buttons = <>
         <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
@@ -61,6 +61,8 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     </>
 
     if (show) {
+        console.log(semestersData);
+        
         return (
             <ModalContainer title='Nowa edycja' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>

@@ -50,7 +50,7 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     }    
 
     const removeName = 'Usuń semestr ' + selectedSemester?.start_year + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
-    const activateName = 'Zmień bieżący semestr na ' + selectedSemester?.start_year + '/' + selectedSemester?.start_year + 1 + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
+    const activateName = 'Zmień bieżący semestr na ' + selectedSemester?.start_year + '/' + ((selectedSemester?.start_year || '0') + 1) + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
 
     return (
         <>
