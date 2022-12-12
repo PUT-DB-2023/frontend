@@ -6,6 +6,7 @@ import { ButtonType } from 'types';
 import { addServer } from '../api/addServer';
 import { useNavigate } from 'react-router-dom';
 import { Server } from '../types';
+import { objectMap } from 'api/objectMap';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [name, setName] = React.useState('');
@@ -24,13 +25,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const navigate = useNavigate()
-
-    const objectMap = (obj: any, fn: any) =>
-        Object.fromEntries(
-            Object.entries(obj).map(
-                ([k, v], i) => [k, fn(v, k, i)]
-            )
-        )
 
     const validate = React.useCallback(() => {
         let correct = true;

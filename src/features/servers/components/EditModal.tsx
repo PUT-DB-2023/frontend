@@ -5,6 +5,7 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateServer } from '../api/updateServer';
 import { Server } from '../types';
+import { objectMap } from 'api/objectMap';
 
 interface IEditModal {
     show: boolean,
@@ -24,13 +25,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [active, setActive] = React.useState(false);
     const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
-
-    const objectMap = (obj: any, fn: any) =>
-        Object.fromEntries(
-            Object.entries(obj).map(
-                ([k, v], i) => [k, fn(v, k, i)]
-            )
-        )
 
     const validate = React.useCallback(() => {
         let correct = true;

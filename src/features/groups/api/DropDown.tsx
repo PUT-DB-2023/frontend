@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldBox, clsName } from '../../../components/FieldBox';
+import { FieldBox, clsName, clsNameWrong, clsTextWrong } from '../../../components/FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
 import { TeacherEdition } from 'types';
@@ -11,7 +11,7 @@ interface IDropDown {
     setValue: (v: any) => void;
 }
 
-export const DropDown = ({ title, values, value, setValue }: any) => {
+export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg }: any) => {
     const [query, setQuery] = React.useState('');
   
     const filteredTeachers =
@@ -24,11 +24,11 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
 
     return (
         <FieldBox title={title}>
-            <Combobox value={value} onChange={(v) => setValue(v)}>
+            <Combobox value={value} onChange={(v) => {setErrorMsg && setErrorMsg(''); setValue(v)}}>
                 <div className="relative">
-                    <div className={'relative bg-zinc-50 w-full rounded-md border border-zinc-400 h-9 hover:border-blue-800 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'}>
+                    <div className={`relative bg-zinc-50 w-full ${errorMsg?.length > 0 ? clsNameWrong : clsName}`}>
                         <Combobox.Input
-                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 bg-transparent rounded-md focus-visible:outline-blue-800"
+                            className={`w-full border-none py-[3px] pl-3 pr-10 leading-5 text-gray-900 bg-transparent focus-visible:outline-none`}
                             onChange={(event) => setQuery(event.target.value)}
                             displayValue={(option: TeacherEdition) => option ? option?.teacher.first_name + ' ' + option?.teacher.last_name : ''}
                         />
@@ -57,6 +57,7 @@ export const DropDown = ({ title, values, value, setValue }: any) => {
                     </Combobox.Options>
                 </div>
             </Combobox>
+            {errorMsg?.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>
     )
 };
