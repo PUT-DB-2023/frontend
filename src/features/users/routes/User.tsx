@@ -94,39 +94,31 @@ export const User = ({type} : {type: UserType}) => {
   const { id } = useParams()
   const [editModal, setEditModal] = React.useState(false)
   const [removeModal, setRemoveModal] = React.useState(false)
-  const userQuery = useQuery(['user', id], () => getUser( id, type ))
-  const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
+  const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser( id, type ))
 
-  if (userQuery.isLoading || userQuery.data === undefined) {
+  if (userStatus === 'loading' || userData === undefined) {
     return null
-  }
-  else if (userQuery.isError || userQuery.data === undefined) {
-    return (
-      <div>
-        Error!
-      </div>
-    );
   }
 
   return (
     <ContentLayout>
-      <EditModal show={editModal} refetch={() => null} off={() => setEditModal(false)} type={type} data={userQuery.data}/>
+      <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>
       <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />
       <ContentPanel type={PanelType.HEADER}> 
-            <span className='text-black text-3xl font-bold mb-4'> { userQuery.data.first_name + " " + userQuery.data.last_name} </span>
+            <span className='text-black text-3xl font-bold mb-4'> { userData.first_name + " " + userData.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
             <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>
-          <UserInfo userData={userQuery.data} />
+          <UserInfo userData={userData} />
         </ContentPanel>
         {
           type === UserType.STUDENT ? (
             <ContentPanel type={PanelType.CONTENT}>
               <h2 className='text-lg font-semibold'> Konta bazodanowe </h2>
-              <Table data={userQuery.data.db_accounts} columns={columns}></Table>
+              <Table data={userData.db_accounts} columns={columns}></Table>
             </ContentPanel>
           ) : null
         }

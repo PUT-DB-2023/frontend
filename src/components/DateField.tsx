@@ -9,7 +9,7 @@ export const DateField = ({ title, value, setValue, maxDate, minDate }: any) => 
             <DatePicker
                 onChange={(v: Date) => setValue(v)}
                 selected={value}
-                className={`${clsName} w-full`}
+                className={`${clsName} w-full bg-zinc-50 rounded-md`}
                 dateFormat={'dd.MM.yyyy'} 
                 maxDate={maxDate}
                 minDate={minDate}
@@ -26,7 +26,7 @@ export const YearField = ({ title, value, setValue, autoFocus, minYear, maxYear,
             <DatePicker
                 onChange={(v: Date) => {setErrorMsg && setErrorMsg(''); setValue(v)}}
                 selected={value}
-                className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} w-full`}
+                className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} w-full bg-zinc-50 rounded-md`}
                 dateFormat={'yyyy'} 
                 showYearPicker
                 autoFocus={autoFocus}

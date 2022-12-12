@@ -45,7 +45,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [name, description])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 

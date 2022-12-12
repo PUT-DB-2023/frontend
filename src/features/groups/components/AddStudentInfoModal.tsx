@@ -72,8 +72,6 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
         off();
     }, [])
 
-    console.log('INFO MODAL')
-
     if (data && data.length) {
       const server_columns : ColumnDef<any>[] = Object.keys(data[0].account_created).map((server: string) => {
         return (
@@ -89,13 +87,16 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
         )
       })
 
-      console.log('CONCAT')
       columns = columns.concat(server_columns)
     }
 
+    const buttons = <>
+        <Button type={ButtonType.ACTION} text='Ok' onClick={handleOff} />
+    </>
+
     if (show) {
         return (
-            <ModalContainer title='Informacje o utworzonych kontach' off={handleOff}>
+            <ModalContainer title='Informacje o utworzonych kontach' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col pt-8`}>
                     <Table data={data} columns={columns}/>
                     <div className='flex flex-col gap-2 text-sm pt-4'>
@@ -112,9 +113,6 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
                         Operacja zakończyła się błędem
                       </div>
                     </div>
-                </div>
-                <div className={`flex gap-2 mt-10 self-end justify-end`}>
-                    <Button type={ButtonType.ACTION} text='Ok' onClick={handleOff} />
                 </div>
             </ModalContainer>
         );

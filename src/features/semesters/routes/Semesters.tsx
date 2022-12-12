@@ -29,11 +29,9 @@ export const Semesters = () => {
   }
 
   const allRefetch = () => {
-      activeSemesterRefetch();
-    queryClient.refetchQueries(['semesters']) // refetch the semester list
+    activeSemesterRefetch();
+    queryClient.refetchQueries(['inactiveSemesters']) // refetch the semester list
   }
-
-  console.log(activeSemesterData)
 
   return (
     <ContentLayout>

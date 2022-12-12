@@ -104,7 +104,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [name, ip, port, provider, user, password, database, active, create, modify, remove, nameCodes])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 
@@ -112,26 +112,27 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy server' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
+                    <div className='flex gap-2 items-center px-4 mb-4'>
+                        <input type="checkbox" checked={active} onChange={() => setActive(!active)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
+                        Aktywny
+                    </div>
                     <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} />
-                    <Field title={"IP"} value={ip} setValue={setIp} pattern={'^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\.?\\b){4}$'} wrongText='Poprawny format IP to: X.X.X.X, gdzie X to liczba' errorMsg={errorMsg['ip']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'ip': e }))} />
-                    <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' errorMsg={errorMsg['port']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'port': e }))} />
+                    <div className='flex justify-between'>
+                        <Field title={"IP"} value={ip} setValue={setIp} pattern={'^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\.?\\b){4}$'} wrongText='Poprawny format IP to: X.X.X.X, gdzie X to liczba' errorMsg={errorMsg['ip']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'ip': e }))} />
+                        <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' errorMsg={errorMsg['port']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'port': e }))} />
+                    </div>
                     <Field title={"Dostawca"} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))} />
                     <Field title={"Użytkownik"} value={user} setValue={setUser} errorMsg={errorMsg['user']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'user': e }))} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} errorMsg={errorMsg['password']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'password': e }))} />
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} errorMsg={errorMsg['database']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'database': e }))} />
 
-                    <hr className='w-full my-4 border-1 border-zinc-300'></hr>
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
                     <Field title={"Szablon polecenia tworzenia"} value={create} setValue={setCreate} />
                     <Field title={"Szablon polecenia modyfikowania"} value={modify} setValue={setModify} />
                     <Field title={"Szablon polecenia usuwania"} value={remove} setValue={setRemove} />
 
-                    <hr className='w-full my-4 border-1 border-zinc-300'></hr>
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
                     <Field title={"Szablon nazewnictwa kont"} value={nameCodes} setValue={setNameCodes} />
-
-                    <div className='flex gap-2 items-center mt-4'>
-                        Aktywny:
-                        <input type="checkbox" checked={active} onChange={() => setActive(!active)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
-                    </div>
                 </div>
             </ModalContainer>
         );

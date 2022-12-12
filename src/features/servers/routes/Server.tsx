@@ -23,30 +23,29 @@ export const Server = () => {
   const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
 
-  const serverQuery = useQuery<TServer, Error>(['server', id], () => getServer(id))
-  const refetch = serverQuery.refetch;
+  const {data: serverData, status: serverStatus, refetch: serverRefetch} = useQuery<TServer, Error>(['server', id], () => getServer(id))
 
   const activation = React.useCallback(() => {
-    serverQuery.data && id && activeServer({ id: id, active: serverQuery.data.active, refresh: refetch });
-    serverQuery.refetch()
-  }, [serverQuery, id, refetch])
+    serverData && id && activeServer({ id: id, active: serverData.active, refresh: serverRefetch });
+    serverRefetch()
+  }, [serverData, serverStatus, id, serverRefetch])
 
-  if (serverQuery.isLoading || !serverQuery.data) {
+  if (serverStatus === 'loading' || !serverData) {
     return null
   }
 
   return (
     <ContentLayout>
-      <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverQuery.data.name} />
-      <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverQuery.refetch} data={{ ...serverQuery.data, id: id as string }} />
-      <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverQuery.refetch} data={{ ...serverQuery.data, id: id as string }}/>
+      <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverData.name} />
+      <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />
+      <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }}/>
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col'>
-          <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverQuery.data.name}</h1>
+          <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverData.name}</h1>
         </div>
         <div className='flex items-start'>
           <div className='flex gap-6'>
-            {serverQuery.data.active ?
+            {serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
             }
@@ -56,7 +55,7 @@ export const Server = () => {
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         <h2 className='text-lg font-semibold'> Szczegóły </h2>
-        <ServerInfo serverData={serverQuery.data} />
+        <ServerInfo serverData={serverData} />
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         <div className='flex justify-between'>
@@ -68,22 +67,22 @@ export const Server = () => {
         <div className='flex flex-col gap-6 p-4'>
           <div className='flex flex-col gap-2'>
             <h3 className='text-black text-base font-semibold'> Tworzenie użytkownika </h3>
-            <h4 className='text-slate-600 text-base'>{serverQuery.data.create_user_template}</h4>
+            <h4 className='text-slate-600 text-base'>{serverData.create_user_template}</h4>
           </div>
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.modify_user_template}</h4>
+              <h4 className='text-slate-600 text-base'>{serverData.modify_user_template}</h4>
             </div>
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Usuwanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.delete_user_template}</h4>
+              <h4 className='text-slate-600 text-base'>{serverData.delete_user_template}</h4>
             </div>
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
-              <h4 className='text-slate-600 text-base'>{serverQuery.data.delete_user_template}</h4>  {/* TODO */}
+              <h4 className='text-slate-600 text-base'>{serverData.delete_user_template}</h4>  {/* TODO */}
           </div>
         </div>
       </ContentPanel>

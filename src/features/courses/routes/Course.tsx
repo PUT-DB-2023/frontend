@@ -62,14 +62,10 @@ export const Course = () => {
         navigate('')
       }
     }
-
-    console.log('--------EDITION USE EFFECT-------', selectedEdition);
     
   }, [allEditionsData, activeEditionData])
 
-  const allRefetch = async () => {
-    console.log('allrefetch');
-    
+  const allRefetch = async () => {    
     await activeEditionRefetch();
     await allEditionsRefetch();    
   }
@@ -114,7 +110,7 @@ export const Course = () => {
                 <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={() => setAddGroupModal(true)} />
                 <div className='flex gap-6'>
                   <Listbox value={selectedEdition} onChange={setSelectedEdition}>
-                      <div className="relative w-[232px]">
+                      <div className="relative w-[232px] rounded-md">
                           <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 rounded-lg border border-zinc-400 flex px-1 justify-between items-center h-9 hover:border-zinc-500 focus:border-blue-800'>
                               <span className='flex justify-start w-full px-2'>
                               {selectedEdition?.semester.start_year}/{selectedEdition && selectedEdition.semester.start_year + 1} - {selectedEdition?.semester.winter ? "Zima" : "Lato"}
@@ -123,17 +119,21 @@ export const Course = () => {
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
                               </svg>
                           </Listbox.Button>
-                          <Listbox.Options className='absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white max-h-56'>
+                          <Listbox.Options className='z-10 absolute mt-2 w-full overflow-auto rounded-md shadow-md bg-white border-[1px] border-zinc-300 max-h-56'>
                               {allEditionsData.sort((a : Edition, b : Edition) => (b.semester.start_year > a.semester.start_year)).map((edition : Edition) => (
                                   <Link key={edition.id} to={`editions/${edition.id}/`}>
-                                    <Listbox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
+                                <Listbox.Option className='cursor-pointer'
                                         key={edition.id}
                                         value={edition}
                                       >
-                                        {({ selected }) => (         
-                                            <>                   
-                                                <span className={selected ? `font-bold` : `font-normal`}>{edition!.semester.start_year}/{edition!.semester.start_year+1} - {edition!.semester.winter ? "Zima" : "Lato"}</span>
+                                          {({ selected }) => (         
+                                            <>   
+                                            <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                                                <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
+                                                <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{edition!.semester.start_year}/{edition!.semester.start_year+1} - {edition!.semester.winter ? "Zima" : "Lato"}</span>
+                                            </div>                
                                             </>
+                                            
                                         )}
                                     </Listbox.Option>
                                   </Link>

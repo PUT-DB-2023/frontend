@@ -7,7 +7,6 @@ import { columns } from 'features/users/routes/Users'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType } from 'types'
-import { addDbAccounts } from '../api/addDbAccounts'
 import { getGroup } from '../api/getGroup'
 import { ServerListModal } from '../components/ServerListModal'
 import { RemoveModal } from '../components/RemoveModal'
@@ -24,19 +23,13 @@ export const Group = () => {
   const [editModal, setEditModal] = React.useState(false);
   const [addStudentModal, setAddStudentModal] = React.useState(false);
   const { id } = useParams()
-  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [addFileModal, setAddFileModal] = React.useState(false);
   const [studentInfoModal, setStudentInfoModal] = React.useState(false);
   const [addFileResult, setAddFileResult] = React.useState<StudentInfo[]>()
 
-
-  const { data: dbAccoutCreationData, status: dbAccoutCreationStatus, refetch: dbAccoutCreationRefetch } = useQuery(['dbAccountCreation'],
-    () => addDbAccounts(groupData.id, groupData?.teacherEdition?.edition?.servers[0]?.id), {
-    refetchOnWindowFocus: false,
-    enabled: false // disable this query from automatically running
-  })
+  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   let servers = null
 
   const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
@@ -52,16 +45,15 @@ export const Group = () => {
     servers = groupData?.teacherEdition?.edition?.servers
   }
 
-  const createDbAccounts = (groupId: Number, serverId: Number) => {
-    dbAccoutCreationRefetch()
-  }
+  console.log('GROUPDATAAAAAAAAAAAAAAAA', groupData);
+  
 
-  return (
+  return (  
     <ContentLayout>
       <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />
       <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
       {id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
-      <ServerListModal groupId={groupData.id} servers={servers} refetch={() => dbAccoutCreationRefetch()} show={newModal} off={() => setNewModal(false)} />
+      <ServerListModal groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved}/>
       <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData}/>
       {id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
       <ContentPanel type={PanelType.HEADER}>
@@ -72,7 +64,7 @@ export const Group = () => {
           </h2>
         </div>
         <div className='flex gap-6'>
-          {servers ? <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta bazodanowe' /> : null}
+          <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta bazodanowe' />
           <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
         </div>
       </ContentPanel>

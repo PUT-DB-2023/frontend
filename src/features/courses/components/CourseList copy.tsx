@@ -38,13 +38,7 @@ export const CourseList = () => {
   useEffect(() => {
     if (showAllCourses) {
       inactiveCourseRefetch()
-      console.log(courseData)
-      console.log(inactiveCourseData);
       setTest(courseData.concat(inactiveCourseData))
-      console.log(test);
-    }
-    else {
-      console.log(showAllCourses);
     }
   }, [showAllCourses])
   

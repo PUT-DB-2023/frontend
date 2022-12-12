@@ -15,6 +15,6 @@ export const activeServer = async (activeStat: IActiveStat) => {
         activeStat.refresh();
         return e
     })
-    .catch((e)=>{toast.update(t, {render: activeStat.active ? `Nie udało się deaktywować serwera. - ${e.response.data.name}` : `Nie udało się aktywować serwera. - ${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: activeStat.active ? `Nie udało się deaktywować serwera. \n${e.response.data.name}` : `Nie udało się aktywować serwera. \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
 }

@@ -19,7 +19,6 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) =
             ? values
             : values.filter((opt: Server) => {
                 const val: string = opt?.name;
-                console.log('opt', opt);
                 
                 return val.toLowerCase().includes(query.toLowerCase())
             })
@@ -27,9 +26,9 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) =
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => setValue(v)} multiple>
                 <div className="relative">
-                    <div className={'relative w-full rounded-lg border border-zinc-400 h-9 hover:border-blue-800 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'}>
+                    <div className={'relative w-full bg-zinc-50 rounded-md border border-zinc-400 h-9 hover:zinc-blue-600 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'}>
                         <Combobox.Input
-                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 bg-transparent rounded-lg focus-visible:outline-blue-800"
+                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 bg-transparent rounded-md focus-visible:outline-blue-800"
                             onChange={(event) => {
                                 const val = event.target.value.split(',').at(-1);
                                 setQuery(val ? val.trim() : '')
@@ -42,16 +41,19 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) =
                             </svg>
                         </Combobox.Button>
                     </div>
-                    <Combobox.Options className='w-fit z-10 absolute p-1 w-full overflow-auto rounded-lg shadow-xl bg-white'>
+                    <Combobox.Options className='z-10 absolute mt-2 w-full overflow-auto rounded-md shadow-md bg-white border-[1px] border-zinc-300 max-h-56'>
                         {filteredServers?.map((option: any) => (
-                            <Combobox.Option className='px-9 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
+                            <Combobox.Option className='cursor-pointer'
                                 key={option.id}
                                 value={option}
                             >
-                                {({ selected }) => (
-                                    <>
-                                        <span className={selected ? `font-bold` : `font-normal`}>{option?.name}</span>
-                                    </>
+                                {({ selected }) => (         
+                                        <>   
+                                        <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                                            <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
+                                            <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option.name}</span>
+                                        </div>                
+                                        </> 
                                 )}
                             </Combobox.Option>
                         ))}

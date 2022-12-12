@@ -8,7 +8,7 @@ import { weekDays, WeekDay } from 'types';
 export const Switch = ({ title, value, setValue, leftText, rightText }: any) => {
     return (
         <FieldBox title={title}>
-            <div className='flex relative gap-2'>
+            <div className='flex relative gap-2 bg-white'>
                 <div>{leftText}</div>
                 <label className="inline-flex relative items-center cursor-pointer">
                     <input type="checkbox" className="sr-only peer" checked={value} onChange={() => setValue(!value)}/>

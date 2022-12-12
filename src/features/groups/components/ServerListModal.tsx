@@ -2,35 +2,58 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { addDbAccounts } from '../api/addDbAccounts';
 import e from 'express';
+import { addDbAccounts } from '../api/addDbAccounts';
 
-export const ServerListModal = ({ show, off, refetch, servers, groupId }: { show: boolean, off: () => void, refetch: () => void, servers: any, groupId: any }) => {
+
+interface IServerListModal {
+    show: boolean,
+    off: () => void,
+    refetch: () => void, 
+    servers: any, 
+    groupId: any, 
+    allAccountsMoved: boolean,
+}
+
+export const ServerListModal = ({ show, off, refetch, servers, groupId, allAccountsMoved }: IServerListModal) => {
     const buttons = <>
-        <Button type={ButtonType.ACTION} text='Ok' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Ok' onClick={() => handleOff()} />
     </>
 
     const warningButton = <>
-        <Button type={ButtonType.OUTLINE} text='Ok' onClick={off} />
+        <Button type={ButtonType.OUTLINE} text='Ok' onClick={() => handleOff()} />
     </>
+
+    const handleOff = async () => {
+        console.log('`/`/`/`/`/` HANDLE OFF');
+        await refetch()
+        off()
+    }
 
     if (show) {
         if (servers.length === 0) {
             return (
-                <ModalContainer title='Nie można utworzyć kont bazodanowych' off={off} buttons={warningButton}>
-                    Edycja nie posiada serwerów. Dodaj serwery aby tworzyć kontabazodanowe.
+                <ModalContainer title='Nie można utworzyć kont bazodanowych' off={() => handleOff()} buttons={warningButton}>
+                    Edycja nie posiada serwerów. Dodaj serwery aby tworzyć konta bazodanowe.
                 </ModalContainer>
             )
         }
+        if (allAccountsMoved) {
+            return (
+                <ModalContainer title='Nie można utworzyć kont bazodanowych' off={() => handleOff()} buttons={warningButton}>
+                    Nie ma kont do utworzenia lub wszystkie konta studentów zostały już utworzone.
+                </ModalContainer>
+            ) 
+        }
         else {
             return (
-                <ModalContainer title='Tworzenie kont na serwerach' off={off} buttons={buttons}>
+                <ModalContainer title='Tworzenie kont na serwerach' off={() => handleOff()} buttons={buttons}>
                     <div className={`flex flex-col gap-1 p-2`}>
                         {servers.map((server: any) => {
                             return (
                                 <div className='w-full flex justify-between p-4 items-center rounded-lg' key={server.id}>
                                     <span className='text-lg'> {server.name} </span>
-                                    <Button type={ButtonType.OUTLINE} text='Przenieś' onClick={() => addDbAccounts(groupId, server.id)} />
+                                    <Button type={ButtonType.OUTLINE} text='Utwórz konta' onClick={() => addDbAccounts(groupId, server.id)} />
                                 </div>
                             )
                         })}

@@ -13,8 +13,6 @@ import { DropDown } from '../api/DropDown';
 import { getTeacherEdtition } from '../api/getTeacherEdition';
 
 export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
-    console.log(edition);
-
     const [name, setName] = React.useState('');
     const [day, setDay] = React.useState<WeekDay>(weekDays[0]);
     const [hour, setHour] = React.useState('08:00');
@@ -59,7 +57,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     }, [name, day, hour, room, teacher])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 
@@ -72,8 +70,6 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     }
 
     if (show) {
-        console.log(teacherEditionData);
-
         if (teacherEditionData.length === 0) {
             return (
                 <ModalContainer title='Nie można utworzyć grupy' off={handleOff} buttons={warningButton}>
@@ -86,8 +82,10 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
                 <ModalContainer title='Nowa grupa' off={handleOff} buttons={buttons}>
                     <div className={`flex flex-col gap-1`}>
                         <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })}/>
-                        <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
-                        <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                        <div className='flex justify-between'>
+                            <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
+                            <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                        </div>
                         <Field title={"Sala"} value={room} setValue={setRoom} />
                         <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
                     </div>

@@ -21,8 +21,8 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => {setErrorMsg && setErrorMsg(''); setValue(v)}} multiple >
                 {({open}) => (
-                <div className="relative" ref={ref}>
-                    <div className={`relative w-full ${errorMsg ? clsNameWrong : clsName}`}>
+                <div className="relative mb-40" ref={ref}>
+                    <div className={`relative bg-zinc-50 w-full rounded-md ${errorMsg ? clsNameWrong : clsName}`}>
                         <Combobox.Input
                             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 bg-transparent focus-visible:outline-none"
                             onChange={(event) => setQuery(event.target.value)}
@@ -35,16 +35,19 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
                             </svg>
                         </Combobox.Button>
                     </div>
-                    <Combobox.Options className='z-10 py-1 w-full overflow-auto rounded-lg shadow-xl bg-white' style={style}>
+                    <Combobox.Options className='z-10 absolute mt-2 w-full overflow-auto rounded-md shadow-md bg-white border-[1px] border-zinc-300 max-h-56'>
                         {filteredStudents?.map((option: any) => (
-                            <Combobox.Option className='px-3 py-[6px] hover:bg-blue-100 cursor-pointer rounded-lg'
+                            <Combobox.Option className='cursor-pointer'
                                 key={option.id}
                                 value={option}
                             >
-                                {({ selected }) => (
-                                    <>
-                                        <span className={selected ? `font-bold` : `font-normal`}>{option?.first_name + ' ' + option?.last_name + ' - ' + option?.student_id}</span>
-                                    </>
+                                {({ selected }) => (         
+                                        <>   
+                                        <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                                            <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
+                                            <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option?.first_name + ' ' + option?.last_name + ' - ' + option?.student_id}</span>
+                                        </div>                
+                                        </> 
                                 )}
                             </Combobox.Option>
                         ))}

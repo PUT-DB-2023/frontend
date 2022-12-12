@@ -45,17 +45,17 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     }, [year, winter])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
 
     </>
 
     if (show) {
         return (
-            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons} style={{ height: 'min(100%, 420px)' }}>
+            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-2`}>
                     <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })}/>
-                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
+                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter}/>
                 </div>
             </ModalContainer>
         );

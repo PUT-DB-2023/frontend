@@ -63,8 +63,8 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
     }, [description, dateOpened, dateClosed, semester, course, data?.id, teachers, servers])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
     if (show) {
@@ -72,10 +72,12 @@ export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) =>
             <ModalContainer title='Edytuj edycję' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Opis"} value={description} setValue={setDescription} autoFocus={true} />
-                    <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
-                    <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
+                    <div className='flex justify-between'>
+                        <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
+                        <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
+                    </div>
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
-                    <TeachersDropDown title={"Nauczyciele"} values={teachersData} value={teachers} setValue={setTeachers} />
+                    <TeachersDropDown title={"Dydaktycy"} values={teachersData} value={teachers} setValue={setTeachers} />
                     <ServersDropDown title={"Serwery"} values={serversData} value={servers} setValue={setServers} />
                 </div>
             </ModalContainer>

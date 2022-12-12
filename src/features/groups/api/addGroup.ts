@@ -11,12 +11,10 @@ export interface IAddGroup {
     students?: string[];
 }
 
-export const addGroup = async (group: IAddGroup) => {
-    console.log('ADDD GROUP', group);
-    
+export const addGroup = async (group: IAddGroup) => {    
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/groups/", group)
     .then((e)=>{toast.update(t, {render: `Pomyślnie dodano grupę - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać grupy - ${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać grupy \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response.data
 }

@@ -35,7 +35,7 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
     }, [group, students, studentsData])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 

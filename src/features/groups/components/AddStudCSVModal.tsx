@@ -9,8 +9,6 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
     const [students, setStudents] = React.useState(undefined);
     const [errorMsg, setErrorMsg] = React.useState('');
 
-    console.log('CSV MODAL')
-
     const handleOff = React.useCallback(() => {
         setStudents(undefined);
         setErrorMsg('')
@@ -25,7 +23,6 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
             const res = await addStudentsFile(data);
             handleOff()
             if (res) {
-                console.log(res.data);
                 refetch()
                 if (res.data) {
                     setResult(res.data.students_info)
@@ -43,7 +40,7 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
     }, []);
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 

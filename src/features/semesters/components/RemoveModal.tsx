@@ -22,7 +22,7 @@ export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     }, [id])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
         <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
     </>
 

@@ -15,7 +15,6 @@ interface IActivateModal {
 export const ActivateModal = ({ show, off, id, name, allRefetch }: IActivateModal) => {
     const handleActivate = React.useCallback(async () => {
         const res = await activateSemester(id)
-        console.log('RES', res)
         if (res) {
             off();
             allRefetch();
@@ -23,14 +22,15 @@ export const ActivateModal = ({ show, off, id, name, allRefetch }: IActivateModa
     }, [id])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
         <Button type={ButtonType.ACTION} text='Ustaw' onClick={handleActivate} />
     </>
 
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Czy na pewno chcesz zmienić bieżący semestr? Spowoduje to deaktywację bieżącego semestru.
+                Czy na pewno chcesz zmienić bieżący semestr? 
+                <br/> <br/> Spowoduje to deaktywację bieżącego semestru oraz edycji przypisanych do tego semestru.
             </ModalContainer>
         );
     } else {

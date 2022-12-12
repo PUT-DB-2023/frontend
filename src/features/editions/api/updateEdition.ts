@@ -19,13 +19,11 @@ export const updateEdition = async (edition: IUpdate) => {
         teachers: edition.teachers?.map(e => e.id),
         servers: edition.servers?.map(e => e.id),
     }
-
-    console.log('data', data);
     
 
     const t = toast.loading("Edytowanie..")
     const response = await axios.put(`/editions/${edition.id}/`, data)
     .then((e)=>{toast.update(t, {render: `Pomyślnie edytowano edycję - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się edytować edycji - ${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się edytować edycji \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
     return response
 }

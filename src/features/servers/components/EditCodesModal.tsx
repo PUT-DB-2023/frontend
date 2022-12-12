@@ -34,13 +34,13 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [data, create, modify, remove, name])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
     if (show) {
         return (
-            <ModalContainer title={data.name} off={off} style={{ width: `min(100%, 1000px)` }} buttons={buttons}>
+            <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Tworzenie"} value={create} setValue={setCreate} autoFocus={true} />
                     <Field title={"Modyfikacja"} value={modify} setValue={setModify} />

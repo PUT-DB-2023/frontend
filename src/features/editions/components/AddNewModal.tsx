@@ -47,7 +47,6 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     }, [])
 
     const handleAdd = React.useCallback(async () => {
-        console.log(dateOpened, dateClosed)
         const res = await addEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester?.id.toString() || '', course, teachers, servers });
         if (res) {
             handleOff();
@@ -60,11 +59,8 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
         return null
     }
 
-    console.log('SEM DATA', semestersData);
-    
-
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Dodaj' onClick={handleAdd} />
     </>
 
@@ -73,10 +69,12 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
             <ModalContainer title='Nowa edycja' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Opis"} value={description} setValue={setDescription} autoFocus={true} />
-                    <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
-                    <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
+                    <div className='flex justify-between'>
+                        <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
+                        <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
+                    </div>
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
-                    <TeachersDropDown title={"Nauczyciele"} values={teachersData} value={teachers} setValue={setTeachers} />
+                    <TeachersDropDown title={"Dydaktycy"} values={teachersData} value={teachers} setValue={setTeachers} />
                     <ServersDropDown title={"Serwery"} values={serversData} value={servers} setValue={setServers} />
                 </div>
             </ModalContainer>

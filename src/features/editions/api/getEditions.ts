@@ -11,6 +11,5 @@ export const getEditions = async (active?: boolean, courseId? : string ) => {
     })
     .then(e => {return e})
     .catch(e => {return e})
-    console.log('GET EDITIONS', active, courseId, response.data)
     return response.data
 }

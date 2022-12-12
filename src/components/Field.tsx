@@ -33,8 +33,8 @@ export const Field = ({ title, value, setValue, type, pattern, wrongText, autoFo
     return (
         <FieldBox title={title}>
             {multiline ?
-                <textarea value={value} onChange={handleChange}
-                    className={(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} autoFocus={autoFocus} />
+                <textarea value={value} onChange={handleChange} rows={6}
+                    className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} rounded-md`} autoFocus={autoFocus} />
                 :
                 <input type={type ? type : 'input'} value={value} onChange={handleChange}
                     className={(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} autoFocus={autoFocus} />}

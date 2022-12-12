@@ -56,8 +56,8 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [data, year, winter])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
     if (show) {

@@ -7,7 +7,15 @@ import { UserType } from 'types';
 import { updateUserOld } from '../api/updateUser';
 import { OldUser } from '../types';
 
-export const EditModal = ({ show, off, refetch, type, data }: { show: boolean, off: () => void, refetch: () => void, type: UserType, data: OldUser }) => {
+interface IEditModal {
+    show: boolean,
+    off: () => void,
+    refetch: () => void,
+    type: UserType
+    data: OldUser,
+}
+
+export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     const [first_name, setFirstName] = React.useState(data?.first_name);
     const [last_name, setLastName] = React.useState(data?.last_name);
     const [email, setEmail] = React.useState(data?.email);
@@ -38,6 +46,14 @@ export const EditModal = ({ show, off, refetch, type, data }: { show: boolean, o
         return correct;
     }, [first_name, last_name, email, student_id])
 
+    React.useEffect(() => {
+        setFirstName(data?.first_name);
+        setLastName(data?.last_name);
+        setEmail(data?.email);
+        setStudentId(data?.student_id);
+        setErrorMsg(defaultMsg);
+    }, [show, data])
+
     const handleOff = React.useCallback(() => {
         setFirstName(data?.first_name);
         setLastName(data?.last_name);
@@ -60,7 +76,7 @@ export const EditModal = ({ show, off, refetch, type, data }: { show: boolean, o
     const name = 'Edytuj ' + (type === UserType.ADMIN ? 'admina' : (type === UserType.TEACHER ? 'nauczyciela' : (type === UserType.STUDENT ? 'studenta' : '')))
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={handleOff} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
         <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleEdit} />
     </>
 

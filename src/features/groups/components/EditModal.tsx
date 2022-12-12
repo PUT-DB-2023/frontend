@@ -32,8 +32,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(data.teacherEdition.edition.id));
 
-    console.log('GROUP DATA', data);
-
     const validate = React.useCallback(() => {
         let correct = true;
 
@@ -53,7 +51,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         const min = time.length !== 1 ? time[1] : '00';
         const newTime = hour + ':' + min;
         const selectedTeacher = teacherEditionData?.find((e: TeacherEdition) => e.teacher.id === data?.teacherEdition?.teacher?.id);
-        console.log('selectedTeacher', selectedTeacher);
         
         setName(data?.name);
         setDay(day);
@@ -65,7 +62,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     React.useEffect(() => setErrorMsg(defaultMsg),[data, show])
 
     const handleUpdate = React.useCallback(async () => {
-        console.log('teacher', teacher, typeof teacher);
         if (!validate()) { return; }
         
         const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: teacher?.id!, id: data.id });
@@ -76,8 +72,8 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [name, day, hour, room, teacher])
 
     const buttons = <>
-        <Button type={ButtonType.OUTLINE} text='Anuluj' onClick={off} />
-        <Button type={ButtonType.ACTION} text='Zapisz zmiany' onClick={handleUpdate} />
+        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
     if (teacherEditionStatus === 'loading') {
@@ -89,8 +85,10 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })}/>
-                    <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
-                    <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                    <div className='flex justify-between'>
+                            <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
+                            <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                        </div>
                     <Field title={"Sala"} value={room} setValue={setRoom} />
                     <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
                 </div>
