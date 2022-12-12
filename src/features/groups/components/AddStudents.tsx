@@ -27,7 +27,7 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
             return;
         }
         const allStudents = [...group?.students, ...students].map(s => s.id)
-        const res = await addStudents({ id: group?.id, students: allStudents });
+        const res = await addStudents({ groupId: group?.id, students: students });
         if (res.data) {
             handleOff();
             refetch()

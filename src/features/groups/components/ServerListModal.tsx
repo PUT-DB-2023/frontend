@@ -41,7 +41,7 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, allAccou
         if (allAccountsMoved) {
             return (
                 <ModalContainer title='Nie można utworzyć kont bazodanowych' off={() => handleOff()} buttons={warningButton}>
-                    Nie ma kont do utworzenia lub wszystkie konta studentów zostały już utworzone.
+                    Brak kont to utworzenia lub wszystkie konta zostały już utworzone.
                 </ModalContainer>
             ) 
         }

@@ -34,7 +34,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
         if (!year) {
-            toast('Uzupełnij wszystkie wymagane pola', { type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000 })
+            toast('Uzupełnij wszystkie wymagane pola', { type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000 })
             return
         }
         const res = await addSemester({ start_year: year?.getFullYear()?.toString(), winter, active: false, editions: [] })

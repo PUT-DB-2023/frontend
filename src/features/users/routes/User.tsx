@@ -35,11 +35,11 @@ const columns : ColumnDef<DbAccount>[] =
       )
     },
     {
-      accessorKey: 'editionServer.edition.semester.year',
+      accessorKey: 'editionServer.edition.semester.start_year',
       header: () => 'Edycja',
-      cell: ({getValue}) => (
+      cell: ({getValue} : {getValue : any}) => (
         <div className='p-2'>
-            {getValue() as ReactNode}
+            {getValue().toString() + '/' + (parseInt(getValue()) + 1).toString() as ReactNode}
         </div>
       )
     },

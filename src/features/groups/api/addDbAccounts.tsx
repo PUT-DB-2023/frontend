@@ -11,7 +11,7 @@ export const addDbAccounts = async (groupId: string, serverId: string) => {
             server_id : serverId
         }
     })
-    .then((e)=>{toast.update(t, {render: <div>Pomyślnie utworzono konta bazodanowe.</div>, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})
-    .catch((e)=>{toast.update(t, {render: <div>Nie udało się utworzyć kont <br/><br/> {e.response.data.name}</div>, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000 }); return e})
+    .then((e)=>{toast.update(t, {render: <div>Pomyślnie utworzono konta bazodanowe.</div>, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
+    .catch((e)=>{toast.update(t, {render: <div>Nie udało się utworzyć kont <br/><br/> {e.response.data.name}</div>, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000 }); return e})
     return response.data
 }
