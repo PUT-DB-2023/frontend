@@ -9,8 +9,8 @@ export const WeekDayDropDown = ({ title, value, setValue }: any) => {
     return (
         <FieldBox title={title}>
             <Listbox value={value} onChange={(v) => setValue(v)}>
-                <div className="rounded-md border bg-zinc-50 border-zinc-400 h-9 hover:border-blue-800 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800">
-                    <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 flex px-1 justify-between items-center h-full rounded-lg focus-visible:outline-blue-800'>
+                <div className={`bg-zinc-50`}>
+                    <Listbox.Button className={`relative w-full cursor-pointer text-zinc-600 flex px-1 justify-between items-center h-full ${clsName}`}>
                         <span className='flex justify-start w-full px-2'>
                             {value.name}
                         </span>

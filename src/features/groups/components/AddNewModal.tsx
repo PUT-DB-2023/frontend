@@ -11,6 +11,7 @@ import { TimeField } from 'components/TimeField';
 import { useQuery } from 'react-query';
 import { DropDown } from '../api/DropDown';
 import { getTeacherEdtition } from '../api/getTeacherEdition';
+import { objectMap } from 'api/objectMap';
 
 export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, off: () => void, refetch: () => void, edition?: any }) => {
     const [name, setName] = React.useState('');
@@ -18,7 +19,7 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState<TeacherEdition>();
-    const defaultMsg = { name: '' }
+    const defaultMsg = { name: '', teacher: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(edition));
@@ -29,12 +30,20 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
         let correct = true;
 
         if (name.length === 0) {
-            setErrorMsg({ ...errorMsg, 'name': 'Pole wymagane' })
+            setErrorMsg(prevState => ({ ...prevState, 'name': 'Pole wymagane' }));
             correct = false;
         }
 
-        return correct;
-    }, [name, errorMsg])
+        if (!teacher) {
+            setErrorMsg(prevState => ({ ...prevState, 'teacher': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
+    }, [name, teacher, errorMsg])
 
     const handleOff = React.useCallback(() => {
         setName('');
@@ -81,13 +90,13 @@ export const AddNewModal = ({ show, off, refetch, edition }: { show: boolean, of
             return (
                 <ModalContainer title='Nowa grupa' off={handleOff} buttons={buttons}>
                     <div className={`flex flex-col gap-1`}>
-                        <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })}/>
+                        <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} />
                         <div className='flex justify-between'>
                             <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                             <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                         </div>
                         <Field title={"Sala"} value={room} setValue={setRoom} />
-                        <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
+                        <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} errorMsg={errorMsg['teacher']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'teacher': e }))} />
                     </div>
                 </ModalContainer>
             );

@@ -9,9 +9,9 @@ import { weekDays, WeekDay } from 'types';
 import { TimeField } from 'components/TimeField';
 import { DropDown } from '../api/DropDown';
 import { useQuery } from 'react-query';
-import { getTeachers } from '../api/getTeachers';
 import { getTeacherEdtition } from '../api/getTeacherEdition';
 import { Group } from '../types';
+import { objectMap } from 'api/objectMap';
 
 
 interface IEditModal {
@@ -27,7 +27,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const [hour, setHour] = React.useState('08:00');
     const [room, setRoom] = React.useState('');
     const [teacher, setTeacher] = React.useState<TeacherEdition>();
-    const defaultMsg = { name: '' }
+    const defaultMsg = { name: '', teacher: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const { data: teacherEditionData, status: teacherEditionStatus, refetch: teacherEditionRefetch } = useQuery(['teacherEdition', show], () => getTeacherEdtition(data.teacherEdition.edition.id));
@@ -36,12 +36,20 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         let correct = true;
 
         if (name.length === 0) {
-            setErrorMsg({ ...errorMsg, 'name': 'Pole wymagane' })
+            setErrorMsg(prevState => ({ ...prevState, 'name': 'Pole wymagane' }));
             correct = false;
         }
 
-        return correct;
-    }, [name, errorMsg])
+        if (!teacher) {
+            setErrorMsg(prevState => ({ ...prevState, 'teacher': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
+    }, [name, teacher, errorMsg])
 
     React.useEffect(() => {
         const findDay = weekDays.find(e => e.field === data?.day);
@@ -57,6 +65,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setHour(newTime);
         setRoom(data?.room);
         setTeacher(selectedTeacher);
+        setErrorMsg(defaultMsg);
     }, [show, data, teacherEditionData, teacherEditionStatus])
 
     React.useEffect(() => setErrorMsg(defaultMsg),[data, show])
@@ -84,13 +93,13 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))}/>
                     <div className='flex justify-between'>
                             <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                             <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                         </div>
                     <Field title={"Sala"} value={room} setValue={setRoom} />
-                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} />
+                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} errorMsg={errorMsg['teacher']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'teacher': e }))}/>
                 </div>
             </ModalContainer>
         );
