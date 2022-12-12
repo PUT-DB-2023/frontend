@@ -52,8 +52,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     if (show) {
         return (
-            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons}>
-                <div className={`flex flex-col gap-2`}>
+            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons} style={{height: 'min(100%, 470px)'}}>
+                <div className={`flex flex-col`}>
                     <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })}/>
                     <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter}/>
                 </div>
