@@ -12,7 +12,7 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
         return query === ''
         ? values
         : values.filter((opt: any) => {
-            const val: string = opt?.first_name + opt?.last_name + opt?.student_id;
+            const val: string = `${opt?.first_name} ${opt?.last_name} - ${opt?.student_id}`;
             return val.toLowerCase().includes(query.toLowerCase())
         })
     }, [query, values])
@@ -41,9 +41,9 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
                                 key={option.id}
                                 value={option}
                             >
-                                {({ selected }) => (         
+                                {({ selected, active }) => (         
                                         <>   
-                                        <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                                        <div className={`${selected ? 'bg-blue-100' : `hover:bg-zinc-100 [&>div]:hover:bg-blue-600 ${active ? '[&>div]:bg-blue-600 bg-zinc-100' : ''}`} flex gap-7 w-full`}>
                                             <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
                                             <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option?.first_name + ' ' + option?.last_name + ' - ' + option?.student_id}</span>
                                         </div>                

@@ -20,7 +20,7 @@ export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg
         query === ''
             ? values
             : values.filter((opt: TeacherEdition) => {                
-                const val: string = opt?.teacher.first_name + opt?.teacher.last_name;
+                const val: string = `${opt?.teacher.first_name} ${opt?.teacher.last_name}`;
                 return val.toLowerCase().includes(query.toLowerCase())
             })
 
