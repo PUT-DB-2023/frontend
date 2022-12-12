@@ -41,10 +41,9 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
 
     if (show) {
         return (
-            <ModalContainer title='Dodaj studenta do grupy' off={handleOff} buttons={buttons}>
+            <ModalContainer title='Dodaj studenta do grupy' off={handleOff} buttons={buttons} style={{height: 'min(100%, 520px)'}}>
                 <div className={`flex flex-col gap-1`}>
                     <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} style={{maxHeight: '30vh'}} errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
-                    {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
                 </div>
             </ModalContainer>
         );

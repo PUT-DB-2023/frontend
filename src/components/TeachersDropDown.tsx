@@ -2,6 +2,7 @@ import * as React from 'react';
 import { FieldBox, clsName } from './FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
+import { useClickOutside } from 'hooks/useClickOutside';
 
 interface IDropDown {
     title: string;
@@ -12,6 +13,9 @@ interface IDropDown {
 
 export const TeachersDropDown = ({ title, values, value, setValue }: any) => {
     const [query, setQuery] = React.useState('');
+    const ref = useClickOutside(() => setQuery(''))
+
+    React.useEffect(()=>{console.log(query)},[query])
 
     const filteredTeachers =
         query === ''
@@ -24,7 +28,7 @@ export const TeachersDropDown = ({ title, values, value, setValue }: any) => {
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => setValue(v)} multiple>
                 <div className="relative">
-                    <div className={'relative w-full bg-zinc-50 rounded-md border border-zinc-400 h-9 hover:border-zinc-600 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'}>
+                    <div className={'relative w-full bg-zinc-50 rounded-md border border-zinc-400 h-9 hover:border-zinc-600 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'} ref={ref}>
                         <Combobox.Input
                             className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0 bg-transparent rounded-md focus-visible:outline-blue-800"
                             onChange={(event) => {

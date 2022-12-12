@@ -3,6 +3,7 @@ import { FieldBox, clsName, clsNameWrong, clsTextWrong } from '../../../componen
 import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
 import { TeacherEdition } from 'types';
+import { useClickOutside } from 'hooks/useClickOutside';
 
 interface IDropDown {
     title: string;
@@ -13,6 +14,7 @@ interface IDropDown {
 
 export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg }: any) => {
     const [query, setQuery] = React.useState('');
+    const ref = useClickOutside(() => setQuery(''))
   
     const filteredTeachers =
         query === ''
@@ -26,7 +28,7 @@ export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => {setErrorMsg && setErrorMsg(''); setValue(v)}}>
                 <div className="relative">
-                    <div className={`relative bg-zinc-50 w-full ${errorMsg?.length > 0 ? clsNameWrong : clsName}`}>
+                    <div className={`relative bg-zinc-50 w-full ${errorMsg?.length > 0 ? clsNameWrong : clsName}`} ref={ref}>
                         <Combobox.Input
                             className={`w-full border-none py-[3px] pl-3 pr-10 leading-5 text-gray-900 bg-transparent focus-visible:outline-none`}
                             onChange={(event) => setQuery(event.target.value)}

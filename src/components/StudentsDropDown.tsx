@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldBox, clsName, clsNameWrong } from './FieldBox';
+import { FieldBox, clsName, clsNameWrong, clsTextWrong } from './FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
 import { useClickOutside } from 'hooks/useClickOutside';
@@ -21,10 +21,10 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
         <FieldBox title={title}>
             <Combobox value={value} onChange={(v) => {setErrorMsg && setErrorMsg(''); setValue(v)}} multiple >
                 {({open}) => (
-                <div className="relative mb-40" ref={ref}>
-                    <div className={`relative bg-zinc-50 w-full rounded-md ${errorMsg ? clsNameWrong : clsName}`}>
+                <div className="relative" ref={ref}>
+                    <div className={`relative bg-zinc-50 w-full `}>
                         <Combobox.Input
-                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 bg-transparent focus-visible:outline-none"
+                            className={`w-full py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 bg-transparent focus-visible:outline-none ${errorMsg ? clsNameWrong : clsName}`}
                             onChange={(event) => setQuery(event.target.value)}
                             displayValue={() => open ? query : ''}
                             placeholder={`Wybrano ${value.length} studentów`}
@@ -54,6 +54,7 @@ export const StudentsDropDown = ({ title, values, value, setValue, style, errorM
                     </Combobox.Options>
                 </div>)}
             </Combobox>
+            {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>
     )
 };
