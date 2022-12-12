@@ -39,8 +39,8 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
         <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
-    const infoText = (<>W celu wprowadzenia zmiennej uyj %s.<br/>
-        Jeeli w szablonie znajdują się cudzysłowy (") poprzedź je znakiem backslash'em (\), np. \"%s\"".
+    const infoText = (<>W celu wprowadzenia zmiennej użyj %s.<br/>
+        Jeżeli w szablonie znajdują się cudzysłowy (") poprzedź je znakiem backslash'a (\), np. \"%s\"".
     </>);
 
     if (show) {
@@ -48,7 +48,6 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
             <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <InfoBox>{infoText}</InfoBox>
-                    {/* {infoText?.length > 0 && <InfoBox text={infoText} />} */}
                     <Field title={"Tworzenie"} value={create} setValue={setCreate} autoFocus={true} />
                     <Field title={"Modyfikacja"} value={modify} setValue={setModify} />
                     <Field title={"Usuwanie"} value={remove} setValue={setRemove} />
