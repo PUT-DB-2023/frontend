@@ -12,7 +12,7 @@ export interface ISemester {
 export const addSemester = async (semester: ISemester) => {
     const t = toast.loading("Dodawanie..")
     const response = await axios.post("/semesters/", semester)
-    .then((e)=>{toast.update(t, {render: `Pomyślnie dodano semestr - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
+    .then((e)=>{toast.update(t, {render: `Pomyślnie dodano semestr - ${e.data.start_year}/${e.data.start_year+1} - ${e.data.winter ? "Zima" : "Lato"}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     .catch((e)=>{toast.update(t, {render: `Nie udało się dodać semestru \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     
     return response

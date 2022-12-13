@@ -57,8 +57,8 @@ const ProfileMenu = () => {
   }
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
-        <div>
+    <Menu as="div" className="relative inline-block text-left rounded-md">
+        <div className='rounded-md'>
           <Menu.Button className="flex text-black items-center space-x-4">
             <div className='flex flex-col text-end'>
               <span className='text-base font-semibold'>{userData?.[0].first_name} {userData?.[0].last_name}</span>
@@ -66,36 +66,31 @@ const ProfileMenu = () => {
             <div className='h-9 w-9 rounded-full bg-black'></div>
           </Menu.Button>
         </div>
-          <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+          <Menu.Items className="absolute right-0 mt-4 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none border-[1px] border-zinc-300">    
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
                   <Link to={`/users/admins/` + userData?.[0].id}>
-                    <button
-                      className={`${
-                        active ? 'bg-blue-100' : 'text-black'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                    >
-                      Profil
-                    </button>
+                    <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                        <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
+                          <button className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}>
+                              Profil
+                          </button>
+                    </div> 
                   </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  // <Link to='/auth/login/'>
-                    <button
-                      className={`${
-                        active ? 'bg-blue-100' : 'text-black'
-                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      onClick={() => navigate('/auth/login')}
-                    >
-                      Wyloguj
-                    </button>
-                  // </Link>
+                  <Link to={`/auth/login/`}>
+                    <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                        <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
+                          <button className={`${active ? `font-normal text-red-500` : `font-normal`} my-[6px] w-full flex text-base`}>
+                              Wyloguj
+                          </button>
+                    </div> 
+                  </Link>
                 )}
               </Menu.Item>
-            </div>
           </Menu.Items>
       </Menu>
   )

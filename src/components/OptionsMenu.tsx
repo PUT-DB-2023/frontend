@@ -29,16 +29,16 @@ export const OptionsMenu = ({edit, remove, onClick, customMenuItems} : IOptionsM
                return (
                 <Menu.Item key={item.text}>
                     {({ active } : { active : boolean }) => (
-                    <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
-                        <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
-                        <button
-                            onClick={() => item.onClick()}
-                            className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}
-                        >
-                            {item.text}
-                        </button>
-                    </div> 
-                )}
+                        <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                            <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
+                            <button
+                                onClick={() => item.onClick()}
+                                className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}
+                            >
+                                {item.text}
+                            </button>
+                        </div> 
+                    )}
                 </Menu.Item>
                ) 
             })}
