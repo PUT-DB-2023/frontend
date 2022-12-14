@@ -1,11 +1,17 @@
 import { MainLayout } from "components";
-import { Courses } from "features/courses";
 import { CoursesRoutes } from "features/courses/routes";
 import { GroupsRoutes } from "features/groups";
 import { SemestersRoutes } from "features/semesters";
 import { ServersRoutes } from "features/servers";
 import { UsersRoutes } from "features/users";
+import { lazy } from "react";
 import { Navigate, Outlet } from "react-router-dom";
+
+// const CoursesRoutes = lazy(() => import("features/courses"))
+// const GroupsRoutes = lazy(() => import("features/groups"))
+// const SemestersRoutes = lazy(() => import("features/semesters"))
+// const ServersRoutes = lazy(() => import("features/servers"))
+// const UsersRoutes = lazy(() => import("features/users"))
 
 const App = () => {
     return (
