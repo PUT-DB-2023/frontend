@@ -1,4 +1,5 @@
 import { Menu } from '@headlessui/react';
+import { logout } from 'features/auth/api/logout';
 import { Admin } from 'features/users';
 import { getAdmin } from 'features/users/api/getAdmin';
 import { getAdmins } from 'features/users/api/getAdmins';
@@ -52,6 +53,13 @@ const ProfileMenu = () => {
   let navigate = useNavigate();
   const {data: userData, status: userStatus, refetch: userRefetch} = useQuery<Admin[]>(['menuAdmins'], getAdmins)
 
+  const handleLogout = async () => {
+    const res = await logout()
+    if (res) {
+      navigate('/auth/login/', {replace: true})
+    }
+  }
+
   if (userStatus === 'loading') {
     return null
   }
@@ -81,14 +89,12 @@ const ProfileMenu = () => {
               </Menu.Item>
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <Link to={`/auth/login/`}>
-                    <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
-                        <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
-                          <button className={`${active ? `font-normal text-red-500` : `font-normal`} my-[6px] w-full flex text-base`}>
-                              Wyloguj
-                          </button>
-                    </div> 
-                  </Link>
+                  <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                      <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
+                        <button className={`${active ? `font-normal text-red-500` : `font-normal`} my-[6px] w-full flex text-base`} onClick={() => handleLogout()}>
+                            Wyloguj
+                        </button>
+                  </div> 
                 )}
               </Menu.Item>
           </Menu.Items>
