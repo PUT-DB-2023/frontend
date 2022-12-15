@@ -7,15 +7,11 @@ export type LoginCredentials = {
   };
   
   export const login = async (data: LoginCredentials) => {
-    const t = toast.loading("Dodawanie..")
     console.log(data);
     
     const response = await axios.post('/login', data)
-    .then((e)=>{toast.update(t, {render: `Pomyślnie zalogowano.`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); console.log(e.config);
-     return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się zalogować.`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 5000}); return e})    
+    .then((e)=>{return e})
+    .catch((e)=>{return e})    
 
-    console.log(response);
-    
     return response.data
   };

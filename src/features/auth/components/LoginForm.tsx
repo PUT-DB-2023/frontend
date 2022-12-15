@@ -39,9 +39,9 @@ export const LoginForm = () => {
         return;
     }
     const res = await login({ username: username, password: password });
-    // if (res.data) {
-    //     navigate(`/`)
-    // }
+    if (res) {
+        navigate(`/`)
+    }
   }, [username, password])
 
   return (
