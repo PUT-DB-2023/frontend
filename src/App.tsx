@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { ErrorBoundary } from 'react-error-boundary';
+import { AuthProvider } from 'context/AuthContext';
 
 const ErrorFallback = ({error, resetErrorBoundary} : {error: any, resetErrorBoundary: any}) => {
   return (
@@ -24,14 +25,16 @@ const ErrorFallback = ({error, resetErrorBoundary} : {error: any, resetErrorBoun
 
 function App() {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <AppRoutes />
-          <ReactQueryDevtools initialIsOpen/>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </ErrorBoundary>
+    <AuthProvider>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <AppRoutes />
+            <ReactQueryDevtools initialIsOpen/>
+          </QueryClientProvider>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </AuthProvider>
     
   );
 }

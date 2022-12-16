@@ -1,7 +1,9 @@
 import { objectMap } from 'api/objectMap'
 import { Button } from 'components/Button'
 import { Field } from 'components/Field'
-import React, { useState } from 'react'
+import AuthContext from 'context/AuthContext'
+import { useAuthContext } from 'hooks/useAuthContext'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ButtonType } from 'types'
 import { login } from '../api/login'
@@ -11,6 +13,8 @@ export const LoginForm = () => {
   const [password, setPassword] = useState('')
   const defaultMsg = { username: '', password: '' }
   const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
+
+  // const {dispatch} = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -41,6 +45,8 @@ export const LoginForm = () => {
     const res = await login({ username: username, password: password });
     if (res) {
         navigate(`/`)
+
+        // dispatch({type: 'LOGIN'})
     }
   }, [username, password])
 
