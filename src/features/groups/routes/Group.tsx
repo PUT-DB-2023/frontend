@@ -43,10 +43,7 @@ export const Group = () => {
   }
   else {
     servers = groupData?.teacherEdition?.edition?.servers
-  }
-
-  console.log('GROUPDATAAAAAAAAAAAAAAAA', groupData);
-  
+  }  
 
   return (  
     <ContentLayout>

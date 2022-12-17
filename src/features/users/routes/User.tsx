@@ -13,6 +13,7 @@ import { UserInfo } from '../components/UserInfo'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
 import * as React from 'react'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
 
 const columns : ColumnDef<DbAccount>[] =
 [
@@ -81,10 +82,10 @@ const columns : ColumnDef<DbAccount>[] =
     },
     {
         accessorKey: 'is_moved',
-        header: 'Przeniesiono',
+        header: 'Utworzono na serwerze',
         cell: ({getValue} : {getValue : any}) => (
           <div className='p-2'>
-              {getValue()?.toString() as ReactNode}
+            {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <XCircleIcon className='h-6 text-red-500'/> : null}
           </div>
         )
     }

@@ -3,6 +3,13 @@ import { Edition } from "features/editions";
 import { Teacher } from "features/users";
 import { Server } from "http";
 
+export type AuthUserInfo = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  role: string; // TODO ADD ROLE TYPE (OR PERMISSIONS)
+}
+
 export interface ToastMessages {
   pending: string;
   success: string;

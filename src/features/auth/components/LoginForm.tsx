@@ -5,7 +5,7 @@ import AuthContext from 'context/AuthContext'
 import { useAuthContext } from 'hooks/useAuthContext'
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { ButtonType } from 'types'
+import { AuthUserInfo, ButtonType } from 'types'
 import { login } from '../api/login'
 
 export const LoginForm = () => {
@@ -14,7 +14,7 @@ export const LoginForm = () => {
   const defaultMsg = { username: '', password: '' }
   const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
-  // const {dispatch} = useContext(AuthContext)
+  const {authUser, setAuthUser} = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -38,15 +38,26 @@ export const LoginForm = () => {
   }, [username, password])
 
 
+  // TODO MOVE TO SEPARATE API FILE
   const handleLogin = React.useCallback(async () => {
     if (!validate()) {
         return;
     }
     const res = await login({ username: username, password: password });
     if (res) {
-        navigate(`/`)
+      const authUserInfo = {
+          id: '1',
+          first_name: 'FIRST_NAME',
+          last_name: 'LAST_NAME',
+          role: 'ROLE'
+      }
 
-        // dispatch({type: 'LOGIN'})
+      localStorage.setItem('auth_user', JSON.stringify(authUserInfo))
+
+      const authenticatedUser: AuthUserInfo = JSON.parse(localStorage.getItem('auth_user') || "")
+
+      setAuthUser(authenticatedUser)
+      navigate(`/`)
     }
   }, [username, password])
 

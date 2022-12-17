@@ -7,7 +7,9 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { ErrorBoundary } from 'react-error-boundary';
-import { AuthProvider } from 'context/AuthContext';
+import AuthContext, { AuthProvider } from 'context/AuthContext';
+import { useContext } from 'react';
+import { useAuthUserInfo } from 'hooks/useAuthUserInfo';
 
 const ErrorFallback = ({error, resetErrorBoundary} : {error: any, resetErrorBoundary: any}) => {
   return (
@@ -23,7 +25,8 @@ const ErrorFallback = ({error, resetErrorBoundary} : {error: any, resetErrorBoun
 };
 
 
-function App() {
+const App = () => {
+
   return (
     <AuthProvider>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
