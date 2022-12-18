@@ -1,29 +1,29 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useReducer, useState } from "react"
 import { AuthUserInfo } from "types";
 
-const initialState = {
-    id: '1',
-    first_name: 'TEST',
-    last_name: 'TEST',
-    role: 'TEST',
+export const initialAuthUserInfo: AuthUserInfo = {
+    id: '',
+    first_name: '',
+    last_name: '',
+    role: '',
 }
 
-export const authReducer = ({state, action}: any) => {
-    console.log(state, action);
+// export const authReducer = ({state, action}: any) => {
+//     console.log(state, action);
     
-    switch (action.type) {
-        case 'LOGIN':
-            return {
-                authUsername: action.payload
-            }
-        case 'LOGOUT':
-            return {
-                authUsername: ''
-            }
-        default:
-            return state
-    }
-}
+//     switch (action.type) {
+//         case 'LOGIN':
+//             return {
+//                 authUsername: action.payload
+//             }
+//         case 'LOGOUT':
+//             return {
+//                 authUsername: ''
+//             }
+//         default:
+//             return state
+//     }
+// }
 
 export const AuthContext = createContext<
     {
@@ -31,16 +31,12 @@ export const AuthContext = createContext<
         setAuthUser: Dispatch<SetStateAction<AuthUserInfo>>
     }>
     ({
-    authUser: initialState,
+    authUser: initialAuthUserInfo,
     setAuthUser: () => null
 })
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    // const [state, dispatch] = useReducer(authReducer, {
-    //     authUser: null
-    // })
-
-    const [authUser, setAuthUser] = useState<AuthUserInfo>(initialState)
+    const [authUser, setAuthUser] = useState<AuthUserInfo>(initialAuthUserInfo)
 
     console.log('-----------------------------------------AuthContext state:', authUser);
     

@@ -39,7 +39,11 @@ export const Course = () => {
 
   const navigate = useNavigate()
 
+  console.log('COURSE RERENDER');
+  
+
   React.useEffect(() => {
+    console.log('\tuseEffect');
     if (editionId !== undefined) {
       if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
@@ -65,7 +69,9 @@ export const Course = () => {
     
   }, [allEditionsData, activeEditionData])
 
-  const allRefetch = async () => {    
+  const allRefetch = async () => {   
+    console.log('\tallRefetch');
+     
     await activeEditionRefetch();
     await allEditionsRefetch();    
   }

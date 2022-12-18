@@ -1,5 +1,5 @@
 import { Menu } from '@headlessui/react';
-import AuthContext from 'context/AuthContext';
+import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
 import { Admin } from 'features/users';
 import { getAdmin } from 'features/users/api/getAdmin';
@@ -19,13 +19,6 @@ import { SideBar } from './SideBar';
 type MainLayoutProps = {
   children?: React.ReactNode;
 }
-
-interface ProfileMenuProps {
-  name: string;
-  role: string;
-  image? : string;
-}
-
 
 const NavBar = () => {
   // const pathSplitted : string[] = (useLocation().pathname.split('/').filter((str) => str.length != 0));
@@ -60,6 +53,8 @@ const ProfileMenu = () => {
   const handleLogout = async () => {
     const res = await logout()
     if (res) {
+      localStorage.setItem('auth_user', JSON.stringify(initialAuthUserInfo))
+      setAuthUser(initialAuthUserInfo)
       navigate('/auth/login/', {replace: true})
     }
   }
@@ -113,7 +108,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   const {authUser, setAuthUser} = useContext(AuthContext)
 
   useEffect(() => {
-    const authenticatedUser: AuthUserInfo = JSON.parse(localStorage.getItem('auth_user') || "")
+    const authenticatedUser: AuthUserInfo = JSON.parse(localStorage.getItem('auth_user') || "") 
     setAuthUser(authenticatedUser)
   }, [])
   

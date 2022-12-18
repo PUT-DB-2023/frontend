@@ -14,39 +14,21 @@ import { GroupList } from '../components/GroupList';
 import { groupsSortOptions } from 'types';
 import { sortFunc } from 'api/sortFilter';
 import { searchFunc } from 'api/searchApi'
+import { queryClient } from 'lib/react-query';
 
 export const Groups = () => {
     const [showAdd, setShowAdd] = React.useState(false);
-    const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
-    const [filterBy, setFilterBy] = React.useState(null);
-    const [search, setSearch] = React.useState('');
-
-    const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
-    // const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
-
-    const searchData = React.useMemo(() => searchFunc(search, groupData, ['name','day','hour','teacherEdition/edition/course/name','teacherEdition/edition/semester/year']), [search, groupData]);
-    const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
-
-
-    if (groupStatus == 'loading') {
-    return (
-        <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-        </div>
-        )
-    }
+    
     return (
         <ContentLayout>
-          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={groupRefetch}/>
+          <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['groups'])}/>
           <ContentPanel type={PanelType.HEADER}>
             <span className='text-black text-3xl font-bold mb-4'>Grupy</span>
             {/* <Button type={ButtonType.ACTION} text='Dodaj grupę' onClick={()=>setShowAdd(true)}/> */}
           </ContentPanel>
     
           <ContentPanel type={PanelType.CONTENT}>
-            <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
-            {/* <h2 className='text-lg font-semibold'>Aktywne grupy</h2> */}
-            <GroupList groupData={sortedGroups}></GroupList>
+            <GroupList />
           </ContentPanel>
         </ContentLayout>
       )

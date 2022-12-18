@@ -50,7 +50,7 @@ export const CourseList = () => {
       <div className='w-full h-full flex flex-col items-center'>
         { activeSorted.length == 0 ? 
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Aktywnych Przedmiotów </div> :
-          activeSorted.map(function(course : Course) {
+          activeSorted.map((course : Course) => {
             return (
               <Link key={course.id} to={'/courses/' + course.id} className='w-full'>
                 <Box color={course.active ? 'bg-blue-800' : 'bg-red-500'}>
