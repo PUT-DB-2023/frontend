@@ -34,7 +34,7 @@ export const Group = () => {
 
   const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
 
-  React.useEffect(() => {document.title = `Grupa: ${groupData?.name}`},[groupData?.name])
+  React.useEffect(() => {document.title = `Grupa: ${groupData?.name ? groupData?.name : ''}`},[groupData?.name])
 
   if (groupStatus === 'loading') {
     return (

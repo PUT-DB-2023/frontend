@@ -37,7 +37,7 @@ export const Course = () => {
   const { data : activeEditionData, status : activeEditionStatus, refetch : activeEditionRefetch } = useQuery(['activeEditions', courseId], () => getEditions(true, courseId));
   const { data : allEditionsData, status : allEditionsStatus, refetch : allEditionsRefetch } = useQuery(['allEditions', courseId, editionId], () => getEditions(undefined, courseId));
 
-  React.useEffect(() => {document.title = `Przedmiot: ${courseData?.name}`},[courseData?.name])
+  React.useEffect(() => {document.title = `Przedmiot: ${courseData?.name ? courseData?.name : ''}`},[courseData?.name])
 
   const navigate = useNavigate()
 
