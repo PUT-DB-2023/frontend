@@ -2,7 +2,7 @@ import { axios } from "lib/axios";
 import { toast } from "react-toastify";
 
 export type Credentials = {
-    username: string;
+    email: string;
     password: string;
   };
   
