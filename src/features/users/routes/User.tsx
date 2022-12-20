@@ -96,7 +96,8 @@ export const User = ({type} : {type: UserType}) => {
   const [removeModal, setRemoveModal] = React.useState(false)
   const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser( id, type ))
   React.useEffect(() => {
-    document.title = `${type === UserType.ADMIN ? 'Admin:' : type === UserType.TEACHER ? 'Dydaktyk:' : type === UserType.STUDENT ? 'Student:' : 'Użytkownik:'} ${userData?.first_name} ${userData?.last_name}`
+    document.title = `${type === UserType.ADMIN ? 'Admin:' : type === UserType.TEACHER ? 'Dydaktyk:' : type === UserType.STUDENT ? 'Student:' : 'Użytkownik:'} 
+    ${userData?.first_name ? userData?.first_name : ''} ${userData?.last_name ? userData?.last_name : ''}`
   },[type, userData?.first_name, userData?.last_name])
 
 
