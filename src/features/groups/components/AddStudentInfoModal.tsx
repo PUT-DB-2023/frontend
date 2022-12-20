@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { ReactNode, useCallback, useState } from 'react';
 import { Table } from 'components/Table';
 import { CheckCircleIcon, MinusCircleIcon, XCircleIcon } from '@heroicons/react/solid';
+import { InfoBox, InfoBoxDisclosure } from 'components/InfoBox';
 
 export type StudentInfo = {
   student_id: string;
@@ -94,10 +95,15 @@ export const AddStudentInfoModal = ({ show, off, refetch, id, data }: { show: bo
         <Button type={ButtonType.ACTION} text='Ok' onClick={handleOff} />
     </>
 
+    const info = 'Operacja wczytywania listy studentów nie tworzy kont bazodanowych na zewnętrznych serwerach. ' + 
+                  'Tworzone są jedynie szablony tych kont, gotowe do utworzenia na serwerach bazodanowych danej edycji. ' + 
+                  'Aby utworzyć konta na serwerach, należy wybrać przycisk "Utwórz konta bazodanowe" w widoku grupy.'
+
     if (show) {
         return (
             <ModalContainer title='Informacje o utworzonych kontach' off={handleOff} buttons={buttons}>
-                <div className={`flex flex-col pt-8`}>
+                <div className={`flex flex-col gap-4`}>
+                  <InfoBox>{info}</InfoBox>
                     <Table data={data} columns={columns}/>
                     <div className='flex flex-col gap-2 text-sm pt-4'>
                       <div className='flex items-center gap-2'>
