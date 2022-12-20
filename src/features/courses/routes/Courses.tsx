@@ -8,6 +8,7 @@ import { queryClient } from 'lib/react-query'
 
 export const Courses = () => {
   const [newModal, setNewModal] = React.useState(false);
+  React.useEffect(() => {document.title = `Przedmioty`},[])
 
   return (
     <ContentLayout>

@@ -49,6 +49,7 @@ export const Users = ({ type }: UsersProps) => {
   const [search, setSearch] = React.useState('');
 
   const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id', 'first_name', 'last_name', 'email']), [search, usersQuery.data]);
+  React.useEffect(() => {document.title = type === UserType.ADMIN ? 'Administratorzy' : type === UserType.TEACHER ? 'Dydaktycy' : type === UserType.STUDENT ? 'Studenci' : 'Użytkownicy'},[type])
 
   if (usersQuery.isLoading) {
     return null

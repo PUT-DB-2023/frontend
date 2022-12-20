@@ -34,6 +34,8 @@ export const Group = () => {
 
   const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
 
+  React.useEffect(() => {document.title = `Grupa: ${groupData?.name}`},[groupData?.name])
+
   if (groupStatus === 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>

@@ -93,12 +93,12 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title='Edytuj grupę' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50} />
                     <div className='flex justify-between'>
                             <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
                             <TimeField title={"Godzina"} value={hour} setValue={setHour} />
                         </div>
-                    <Field title={"Sala"} value={room} setValue={setRoom} />
+                    <Field title={"Sala"} value={room} setValue={setRoom} maxLenght={30} />
                     <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} errorMsg={errorMsg['teacher']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'teacher': e }))}/>
                 </div>
             </ModalContainer>

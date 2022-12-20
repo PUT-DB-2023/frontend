@@ -4,6 +4,7 @@ import { ButtonType, PanelType } from 'types'
 import { UserTypeList } from '../components/UserTypeList'
 
 export const UserTypes = () => {
+  React.useEffect(() => {document.title = `Użytkownicy`},[])
   return (
     <ContentLayout>
       <ContentPanel type={PanelType.HEADER}> 

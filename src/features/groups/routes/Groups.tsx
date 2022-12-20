@@ -21,6 +21,8 @@ export const Groups = () => {
     const [filterBy, setFilterBy] = React.useState(null);
     const [search, setSearch] = React.useState('');
 
+    React.useEffect(() => {document.title = `Grupy`},[])
+
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
     // const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
 

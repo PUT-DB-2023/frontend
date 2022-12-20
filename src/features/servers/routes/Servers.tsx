@@ -32,6 +32,8 @@ export const Servers = () => {
     return active?.concat(nonActive);
   }, []);
 
+  React.useEffect(() => {document.title = `Serwery`},[])
+
   const activeSorted = nonActiveLast(sortedServers);
 
   if (serverStatus == 'loading') {
