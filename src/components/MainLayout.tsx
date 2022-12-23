@@ -1,41 +1,19 @@
 import { Menu } from '@headlessui/react';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
-import { Admin } from 'features/users';
-import { getAdmin } from 'features/users/api/getAdmin';
-import { getAdmins } from 'features/users/api/getAdmins';
-import { getUsers } from 'features/users/api/getUsers';
-import { queryClient } from 'lib/react-query';
-import React, { useContext, useEffect, useState } from 'react'
-import { useQuery } from 'react-query';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AuthUserInfo, UserType } from 'types';
+import { AuthUserInfo } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
-// import { redirect } from "react-router-dom";
 
 type MainLayoutProps = {
   children?: React.ReactNode;
 }
 
 const NavBar = () => {
-  // const pathSplitted : string[] = (useLocation().pathname.split('/').filter((str) => str.length != 0));
-  // const rootPath: string = pathSplitted[0]
-  // const numArguments : number = pathSplitted.length - 1
-  // let pathToDisplay : string[] = []
-  
-  // // console.log('////////////////////path:', pathSplitted, rootPath, numArguments);
-
-  // for (let i=0; i<pathSplitted.length; i++) {
-  //   if (isNaN(+pathSplitted[i]) && i < pathSplitted.length - 1) {
-  //     const name = queryClient.getQueryData(`${pathSplitted[i]}`)
-  //     console.log(pathSplitted[i-1], name);
-      
-  //   }
-  // }
-  
   return (
     <nav>
       <span></span>
@@ -45,8 +23,6 @@ const NavBar = () => {
 
 const ProfileMenu = () => {
   let navigate = useNavigate();
-  // const {data: userData, status: userStatus, refetch: userRefetch} = useQuery<Admin[]>(['menuAdmins'], getAdmins)
-
   const {authUser, setAuthUser} = useContext(AuthContext)
 
   // TODO MOVE TO CUSTOM HOOK
@@ -58,10 +34,6 @@ const ProfileMenu = () => {
       navigate('/auth/login/', {replace: true})
     }
   }
-
-  // if (userStatus === 'loading') {
-  //   return null
-  // }
 
   return (
     <Menu as="div" className="relative inline-block text-left rounded-md">

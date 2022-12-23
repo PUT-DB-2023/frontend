@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useClickOutside } from 'hooks/useClickOutside';
 
 export interface IModalContainer {
@@ -9,9 +8,7 @@ export interface IModalContainer {
     style?: {},
 }
 
-export const ModalContainer: React.FC<IModalContainer> = ({
-    title, off, children, buttons, style
-}) => {
+export const ModalContainer = ({title, off, children, buttons, style} : IModalContainer) => {
     const ref = useClickOutside(off);
     return (
         <div className={`absolute w-full h-full top-0 left-0 overflow-x-hidden overflow-y-auto z-20 bg-black/25`} >

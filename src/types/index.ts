@@ -2,6 +2,23 @@ import { Course } from "features/courses";
 import { Edition } from "features/editions";
 import { Teacher } from "features/users";
 import { Server } from "http";
+import { Dispatch, SetStateAction } from "react";
+
+export interface IDropDownMulti<T> {
+  title: string;
+  values: T[];
+  value: T[] | undefined;
+  setValue: Dispatch<SetStateAction<T[]>>;
+  errorMsg?: string;
+  setErrorMsg?: React.Dispatch<SetStateAction<string>>;
+}
+
+export interface IDropDownSingle<T> {
+  title: string;
+  values: T[];
+  value: T | undefined;
+  setValue: Dispatch<SetStateAction<T | undefined>>;
+}
 
 export type AuthUserInfo = {
   id: string;

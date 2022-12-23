@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FieldBox, clsName } from './FieldBox';
+import { clsName, FieldBox } from './FieldBox';
 
 export const TimeField = ({ title, value, setValue }: any) => {
 

@@ -2,6 +2,7 @@ import { axios } from 'lib/axios'
 import { Edition } from '../types'
 import { format } from 'date-fns'
 import { toast } from 'react-toastify'
+import { Server } from 'features/servers'
 
 export interface IAddEdition {
     description: string,
@@ -10,7 +11,7 @@ export interface IAddEdition {
     semester: string,   
     course: string,
     teachers?: any[],
-    servers?: any[]
+    servers?: Server[]
 }
 
 export const addEdition = async (edition: IAddEdition) => {

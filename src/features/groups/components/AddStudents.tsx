@@ -7,11 +7,12 @@ import { StudentsDropDown } from 'components/StudentsDropDown';
 import { getStudents } from 'features/users/api/getStudents';
 import { addStudents } from '../api/addStudents';
 import { clsTextWrong } from 'components/FieldBox';
+import { Student } from 'features/users';
 
 export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off: () => void, refetch: () => void, group: any }) => {
     const { data: studentsData, status: studentsStatus, refetch: studentsRefetch } = useQuery(['students'], getStudents);
-    const [students, setStudents] = React.useState([]);
-    const [errorMsg, setErrorMsg] = React.useState('');
+    const [students, setStudents] = React.useState<Student[]>([]);
+    const [errorMsg, setErrorMsg] = React.useState<string>('');
 
     const handleOff = React.useCallback(() => {
         setStudents([]);
@@ -22,7 +23,7 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
     const filtered = studentsData?.filter((s: any) => !group?.students?.map((e: any) => e.id).includes(s.id))
 
     const handleAdd = React.useCallback(async () => {
-        if (students.length === 0) {
+        if (students && students.length === 0) {
             setErrorMsg('Wybierz chocia jednego studenta')
             return;
         }
@@ -43,7 +44,7 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
         return (
             <ModalContainer title='Dodaj studenta do grupy' off={handleOff} buttons={buttons} style={{height: 'min(100%, 520px)'}}>
                 <div className={`flex flex-col gap-1`}>
-                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} style={{maxHeight: '30vh'}} errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
+                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
                 </div>
             </ModalContainer>
         );

@@ -29,7 +29,7 @@ export type Student = {
     groups: Group[];
     db_accounts: DbAccount[];
 
-} & User
+}
 
 export type OldUser = {
     first_name: string;

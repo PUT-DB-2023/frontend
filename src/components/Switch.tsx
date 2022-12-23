@@ -1,11 +1,15 @@
-import * as React from 'react';
-import { FieldBox, clsName } from './FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
-import { Listbox } from '@headlessui/react'
-import { weekDays, WeekDay } from 'types';
+import { FieldBox } from './FieldBox';
 
+interface ISwitch {
+    title?: string;
+    value: any;
+    setValue: any;
+    leftText: string;
+    rightText: string;
+}
 
-export const Switch = ({ title, value, setValue, leftText, rightText }: any) => {
+export const Switch = ({ title, value, setValue, leftText, rightText }: ISwitch) => {
     return (
         <FieldBox title={title}>
             <div className='flex items-center relative gap-2 bg-white'>

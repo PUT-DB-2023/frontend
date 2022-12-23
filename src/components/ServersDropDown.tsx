@@ -1,18 +1,12 @@
-import * as React from 'react';
-import { FieldBox, clsName } from './FieldBox';
-import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
 import { Server } from 'features/servers';
 import { useClickOutside } from 'hooks/useClickOutside';
+import * as React from 'react';
+import "react-datepicker/dist/react-datepicker.css";
+import { IDropDownMulti } from 'types';
+import { FieldBox } from './FieldBox';
 
-export interface IDropDown {
-    title: string;
-    values: any[];
-    value: any;
-    setValue: (v: any) => void;
-}
-
-export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) => {
+export const ServersDropDown = ({ title, values, value, setValue }: IDropDownMulti<Server>) => {
     const [query, setQuery] = React.useState('');
     const ref = useClickOutside(() => setQuery(''))
 
@@ -26,7 +20,7 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) =
             })
     return (
         <FieldBox title={title}>
-            <Combobox value={value} onChange={(v) => setValue(v)} multiple>
+            <Combobox value={value} onChange={(v: Server[]) => setValue(v)} multiple>
                 <div className="relative">
                     <div className={'relative w-full bg-zinc-50 rounded-md border border-zinc-400 h-9 hover:zinc-blue-600 focus-within:outline-blue-800 focus-within:focus-visible:outline-blue-800 focus-visible:outline-blue-800'} ref={ref}>
                         <Combobox.Input
@@ -44,7 +38,7 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDown) =
                         </Combobox.Button>
                     </div>
                     <Combobox.Options className='z-10 absolute mt-2 w-full overflow-auto rounded-md shadow-md bg-white border-[1px] border-zinc-300 max-h-56'>
-                        {filteredServers?.map((option: any) => (
+                        {filteredServers?.map((option: Server) => (
                             <Combobox.Option className='cursor-pointer'
                                 key={option.id}
                                 value={option}

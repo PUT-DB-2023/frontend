@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { FieldBox, clsName } from './FieldBox';
+import { Listbox } from '@headlessui/react';
+import { Semester } from 'features/semesters';
 import "react-datepicker/dist/react-datepicker.css";
-import { Listbox } from '@headlessui/react'
-import { IDropDown } from './ServersDropDown';
+import { IDropDownSingle } from 'types';
+import { FieldBox } from './FieldBox';
 
-export const SemesterDropDown = ({ title, values, value, setValue }: IDropDown) => {
+export const SemesterDropDown = ({ title, values, value, setValue }: IDropDownSingle<Semester>) => {
 
     if (value === undefined) {
         return null
@@ -23,7 +23,7 @@ export const SemesterDropDown = ({ title, values, value, setValue }: IDropDown) 
                         </svg>
                     </Listbox.Button>
                     <Listbox.Options className='z-10 relative mt-2 w-full overflow-auto rounded-md shadow-md bg-white border-[1px] border-zinc-300 max-h-56'>
-                        {values.map((option: any) => (
+                        {values.map((option: Semester) => (
                             <Listbox.Option className='cursor-pointer'
                                 key={option.id}
                                 value={option}

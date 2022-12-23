@@ -1,6 +1,5 @@
 import { Menu } from '@headlessui/react'
 import { DotsHorizontalIcon } from '@heroicons/react/solid'
-import React from 'react'
 
 export interface CustomOptionMenuItem {
     text: string,

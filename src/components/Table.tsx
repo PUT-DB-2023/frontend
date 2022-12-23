@@ -1,14 +1,21 @@
 import {
+  ColumnDef,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable
-} from '@tanstack/react-table'
-import React, { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+} from '@tanstack/react-table';
+import React, { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
-export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, baseUrl : string}) => {   
+interface ILinkCell {
+  row: any;
+  getValue: any;
+  baseUrl: string;
+}
+
+export const LinkCell = ({row, getValue, baseUrl} : ILinkCell) => {   
     return  (
               <Link to={{pathname:`/users/${baseUrl}/${row.original.id}`}}>
                   <div className='p-2'>
@@ -18,7 +25,13 @@ export const LinkCell = ({row, getValue, baseUrl} : {row: any, getValue: any, ba
             )
 }
 
-export const Table = ({ data, columns } : any) => {
+interface ITable {
+  data: any;
+  columns: ColumnDef<any>[];
+}
+
+export const Table = 
+({ data, columns } : ITable) => {
     const [sorting, setSorting] = React.useState<SortingState>([])
     
     const table = useReactTable({

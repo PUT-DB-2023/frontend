@@ -1,18 +1,6 @@
-import React, { ReactNode } from 'react'
+import { AcademicCapIcon, CalendarIcon, DatabaseIcon, UserGroupIcon, UsersIcon } from '@heroicons/react/solid'
+import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../assets/logo.png'
-import { Disclosure } from '@headlessui/react'
-import { AcademicCapIcon, CalendarIcon, ChevronUpIcon, DatabaseIcon, UserGroupIcon, UserIcon, UsersIcon } from '@heroicons/react/solid'
-// import { courseList } from 'features/courses/api/getCourses'
-import { Edition } from 'features/editions'
-import { Course } from 'features/courses'
-import { Semester } from 'features/semesters'
-import { useQuery } from 'react-query'
-import { getCourses } from 'features/courses/api/getCourses'
-import { getServers } from 'features/servers/api/getServers'
-import { Spinner } from './Spinner'
-import { getGroups } from 'features/groups/api/getGroups'
-import { getSemesters } from 'features/semesters/api/getSemesters'
 
 interface INavItem {
   title: string;

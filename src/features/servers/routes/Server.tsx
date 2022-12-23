@@ -14,7 +14,6 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
-import { showToast } from 'api/showToast'
 import { EditCodesModal } from '../components/EditCodesModal'
 
 export const Server = () => {

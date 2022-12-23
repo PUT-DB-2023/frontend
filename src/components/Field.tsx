@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldBox, clsName, clsNameWrong, clsTextWrong } from './FieldBox';
+import { clsName, clsNameWrong, clsTextWrong, FieldBox } from './FieldBox';
 
 interface IField {
     title: string | undefined,
