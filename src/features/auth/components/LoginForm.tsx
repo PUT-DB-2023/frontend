@@ -5,8 +5,9 @@ import AuthContext from 'context/AuthContext'
 import { useAuthContext } from 'hooks/useAuthContext'
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { AuthUserInfo, ButtonType } from 'types'
+import { ButtonType } from 'types'
 import { login } from '../api/login'
+import { AuthUserInfo } from '../types'
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -46,15 +47,8 @@ export const LoginForm = () => {
     const res = await login({ email: email, password: password });
     if (res) {
       console.log('LOGIN RESPONSE', res);
-      
-      const authUserInfo = {
-          id: res.user.id,
-          first_name: res.user.first_name,
-          last_name: res.user.last_name,
-          role: ''
-      }
 
-      localStorage.setItem('auth_user', JSON.stringify(authUserInfo))
+      localStorage.setItem('auth_user', JSON.stringify(res.user))
 
       const authenticatedUser: AuthUserInfo = JSON.parse(localStorage.getItem('auth_user') || "")
 

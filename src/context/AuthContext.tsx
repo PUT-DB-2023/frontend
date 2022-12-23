@@ -1,11 +1,14 @@
-import { createContext, Dispatch, ReactNode, SetStateAction, useReducer, useState } from "react"
-import { AuthUserInfo } from "types";
+import { AuthUserInfo } from "features/auth";
+import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 export const initialAuthUserInfo: AuthUserInfo = {
     id: '',
     first_name: '',
     last_name: '',
-    role: '',
+    email: '',
+    is_student: false,
+    is_teacher: false,
+    is_superuser: false,
 }
 
 // export const authReducer = ({state, action}: any) => {

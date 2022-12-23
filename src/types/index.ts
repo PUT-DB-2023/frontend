@@ -20,13 +20,6 @@ export interface IDropDownSingle<T> {
   setValue: Dispatch<SetStateAction<T | undefined>>;
 }
 
-export type AuthUserInfo = {
-  id: string;
-  first_name: string;
-  last_name: string;
-  role: string; // TODO ADD ROLE TYPE (OR PERMISSIONS)
-}
-
 export interface ToastMessages {
   pending: string;
   success: string;

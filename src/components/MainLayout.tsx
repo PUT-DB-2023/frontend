@@ -1,10 +1,10 @@
 import { Menu } from '@headlessui/react';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
+import { AuthUserInfo } from 'features/auth';
 import { logout } from 'features/auth/api/logout';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { AuthUserInfo } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
