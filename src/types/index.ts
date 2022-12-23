@@ -41,6 +41,11 @@ export type DbAccount = {
   editionServer: EditionServer;
 } & BaseEntity
 
+export type Major = {
+  name: string;
+  description: string;
+} & BaseEntity
+
 export enum ButtonType {
     ACTION,
     WARNING,

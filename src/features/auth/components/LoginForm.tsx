@@ -45,11 +45,13 @@ export const LoginForm = () => {
     }
     const res = await login({ email: email, password: password });
     if (res) {
+      console.log('LOGIN RESPONSE', res);
+      
       const authUserInfo = {
-          id: '1',
-          first_name: 'FIRST_NAME',
-          last_name: 'LAST_NAME',
-          role: 'ROLE'
+          id: res.user.id,
+          first_name: res.user.first_name,
+          last_name: res.user.last_name,
+          role: ''
       }
 
       localStorage.setItem('auth_user', JSON.stringify(authUserInfo))

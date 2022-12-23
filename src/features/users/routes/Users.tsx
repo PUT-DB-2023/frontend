@@ -16,26 +16,43 @@ interface UsersProps {
   type: UserType;
 }
 
-export const columns = (baseUrl: string): ColumnDef<User>[] => {
+export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
+  let id_column = {
+    accessorKey: 'user.id',
+    header: () => 'Id',
+    cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
+  }
 
-  return ([
-    {
+  let prefix = 'user.'
+
+  if (type === UserType.STUDENT) {
+    id_column = {
       accessorKey: 'student_id',
       header: () => 'Nr Indeksu',
       cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
-    },
+    }
+  }
+
+  else if (type === UserType.ADMIN) {
+    prefix = ''
+  }
+
+  console.log(`${prefix}first_name`)
+
+  return ([
+    id_column,
     {
-      accessorKey: 'first_name',
+      accessorKey: `${prefix}first_name`,
       header: () => 'Imię',
       cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
     },
     {
-      accessorKey: 'last_name',
+      accessorKey: `${prefix}last_name`,
       header: () => 'Nazwisko',
       cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
     },
     {
-      accessorKey: 'email',
+      accessorKey: `${prefix}email`,
       header: 'Email',
       cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
     }
@@ -72,7 +89,7 @@ export const Users = ({ type }: UsersProps) => {
 
       <ContentPanel type={PanelType.CONTENT}>
         <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={searchData} columns={columns(baseUrl)} />
+        <Table data={searchData} columns={columns(type, baseUrl)} />
       </ContentPanel>
     </ContentLayout>
   )

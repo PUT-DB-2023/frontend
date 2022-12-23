@@ -76,7 +76,7 @@ const ProfileMenu = () => {
           <Menu.Items className="absolute right-0 mt-4 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none border-[1px] border-zinc-300">    
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <Link to={`/users/admins/` + authUser.id}>
+                  <Link to={`/users/` + authUser.id}>
                     <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
                         <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
                           <button className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}>

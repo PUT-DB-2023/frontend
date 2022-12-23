@@ -9,6 +9,7 @@ export const UsersRoutes = () => {
   return (
     <Routes>
       <Route path="" element={<UserTypes />} />
+      <Route path="/:id" element={<User type={UserType.TEACHER} />} />
       <Route path="/admins/" element={<Users type={UserType.ADMIN}/>} />
       <Route path="/teachers/" element={<Users type={UserType.TEACHER}/>} />
       <Route path="/students/" element={<Users type={UserType.STUDENT}/>} /> 

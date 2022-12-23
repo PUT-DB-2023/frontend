@@ -106,7 +106,7 @@ export const User = ({type} : {type: UserType}) => {
       <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>
       <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />
       <ContentPanel type={PanelType.HEADER}> 
-            <span className='text-black text-3xl font-bold mb-4'> { userData.first_name + " " + userData.last_name} </span>
+            <span className='text-black text-3xl font-bold mb-4'> { userData.user.first_name + " " + userData.user.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
             <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />

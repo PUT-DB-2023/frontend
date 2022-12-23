@@ -23,7 +23,7 @@ export const GroupList = ({groupData} : IGroupList) => {
                 <Link key={group.id} to={'/groups/' + group.id}>
                   <Box>
                     <span className='font-semibold text-xl'> {group.name} - { group.day + " " + group.hour}</span>
-                    <span className='font-normal text-base text-blue-800'> { group.teacherEdition.teacher.first_name + " " + group.teacherEdition.teacher.last_name}</span>
+                    <span className='font-normal text-base text-blue-800'> { group.teacherEdition.teacher.user.first_name + " " + group.teacherEdition.teacher.user.last_name}</span>
                   </Box>
                 </Link>
               )

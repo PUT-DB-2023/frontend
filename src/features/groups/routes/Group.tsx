@@ -6,7 +6,7 @@ import { Toolbar } from 'components/Toolbar'
 import { columns } from 'features/users/routes/Users'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
-import { ButtonType, PanelType } from 'types'
+import { ButtonType, PanelType, UserType } from 'types'
 import { getGroup } from '../api/getGroup'
 import { ServerListModal } from '../components/ServerListModal'
 import { RemoveModal } from '../components/RemoveModal'
@@ -57,7 +57,7 @@ export const Group = () => {
         <div className='flex-col flex gap-4'>
           <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
           <h2 className='font-semibold text-xl text-blue-800'>
-            {groupData?.teacherEdition?.teacher?.first_name} {groupData?.teacherEdition?.teacher?.last_name} - {groupData.day} {groupData.hour}
+            {groupData?.teacherEdition?.teacher?.user.first_name} {groupData?.teacherEdition?.teacher?.user.last_name} - {groupData.day} {groupData.hour}
           </h2>
         </div>
         <div className='flex gap-6'>
@@ -76,7 +76,7 @@ export const Group = () => {
           </div>
           
         </div>
-        <Table data={searchData} columns={columns('students')}></Table>
+        <Table data={searchData} columns={columns(UserType.STUDENT, 'students')}></Table>
       </ContentPanel>
     </ContentLayout>
   )

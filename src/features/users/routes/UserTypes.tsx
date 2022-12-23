@@ -11,7 +11,7 @@ export const UserTypes = () => {
         </ContentPanel>
 
         <ContentPanel type={PanelType.CONTENT}>
-          <UserTypeList></UserTypeList>
+          <UserTypeList />
         </ContentPanel>
     </ContentLayout>
   )

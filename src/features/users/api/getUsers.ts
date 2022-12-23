@@ -5,7 +5,11 @@ import { User } from '../types'
 
 export const getUsers = async (type? : UserType) => {
     let response = null
-    if (type === UserType.ADMIN) response = await axios.get("/admins/")
+    if (type === UserType.ADMIN) response = await axios.get("/users/", {
+        params : {
+            'is_superuser': true
+        }
+    })
     else if (type === UserType.TEACHER) response = await axios.get("/teachers/")
     else if (type === UserType.STUDENT) response = await axios.get("/students/")
 
