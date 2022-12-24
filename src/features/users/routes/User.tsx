@@ -14,6 +14,7 @@ import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
 import * as React from 'react'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
+import { Student, Teacher, User as TUser } from '../types'
 
 const columns : ColumnDef<DbAccount>[] =
 [
@@ -91,29 +92,44 @@ const columns : ColumnDef<DbAccount>[] =
     }
   ]
 
-export const User = ({type} : {type: UserType}) => {
+interface IUser {
+  type: UserType;
+}
+
+export const User = ({type} : IUser) => {
   const { id } = useParams()
   const [editModal, setEditModal] = React.useState(false)
   const [removeModal, setRemoveModal] = React.useState(false)
-  const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser( id, type ))
+  const [userAccessor, setUserAccessor] = React.useState<TUser>()
 
-  if (userStatus === 'loading' || userData === undefined) {
+  const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser(id, type))
+
+  React.useEffect(() => {
+    if (userData) {
+      if (type === UserType.ADMIN) setUserAccessor(userData)
+      else setUserAccessor(userData.user)
+    }
+  }, [id, userData, userStatus])
+  
+
+  if (userStatus === 'loading' || userData === undefined || userAccessor === undefined) {
     return null
   }
 
+  console.log(type)
   return (
     <ContentLayout>
       <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>
       <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />
       <ContentPanel type={PanelType.HEADER}> 
-            <span className='text-black text-3xl font-bold mb-4'> { userData.user.first_name + " " + userData.user.last_name} </span>
+            <span className='text-black text-3xl font-bold mb-4'> { userAccessor.first_name + " " + userAccessor.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
             <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>
-          <UserInfo userData={userData} />
+          <UserInfo userData={userAccessor} />
         </ContentPanel>
         {
           type === UserType.STUDENT ? (

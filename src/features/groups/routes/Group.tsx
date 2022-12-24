@@ -76,7 +76,7 @@ export const Group = () => {
           </div>
           
         </div>
-        <Table data={searchData} columns={columns(UserType.STUDENT, 'students')}></Table>
+        <Table data={searchData} columns={columns(UserType.STUDENT, 'students/')}></Table>
       </ContentPanel>
     </ContentLayout>
   )

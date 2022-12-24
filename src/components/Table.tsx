@@ -8,16 +8,18 @@ import {
 } from '@tanstack/react-table';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { UserType } from 'types';
 
 interface ILinkCell {
   row: any;
   getValue: any;
   baseUrl: string;
+  userType?: UserType;
 }
 
 export const LinkCell = ({row, getValue, baseUrl} : ILinkCell) => {   
     return  (
-              <Link to={{pathname:`/users/${baseUrl}/${row.original.id}`}}>
+              <Link to={{pathname:`/users/${baseUrl}${row.original.id}`}}>
                   <div className='p-2'>
                       {getValue() as ReactNode}
                   </div>

@@ -10,8 +10,19 @@ export const getUsers = async (type? : UserType) => {
             'is_superuser': true
         }
     })
+    .then(e => e)
+    .catch(e => e)
+
     else if (type === UserType.TEACHER) response = await axios.get("/teachers/")
+    .then(e => e)
+    .catch(e => e)
+
     else if (type === UserType.STUDENT) response = await axios.get("/students/")
+    .then(e => e)
+    .catch(e => e)
+
+    console.log(response);
+    
 
     if (response != null) return response.data
 }

@@ -1,16 +1,14 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { ContentLayout, ContentPanel } from 'components'
+import { searchFunc } from 'api/searchApi';
+import { ContentLayout, ContentPanel } from 'components';
 import { Button } from 'components/Button';
-import { Spinner } from 'components/Spinner';
 import { LinkCell, Table } from 'components/Table';
 import { Toolbar } from 'components/Toolbar';
-import { useQuery } from 'react-query';
-import { ButtonType, PanelType, UserType } from 'types'
-import { getUsers } from '../api/getUsers';
-import { User } from '../types';
 import * as React from 'react';
-import { searchFunc } from 'api/searchApi'
-import { AddNewModal } from '../components/AddNewModal'
+import { useQuery } from 'react-query';
+import { ButtonType, PanelType, UserType } from 'types';
+import { getUsers } from '../api/getUsers';
+import { AddNewModal } from '../components/AddNewModal';
 
 interface UsersProps {
   type: UserType;
@@ -40,7 +38,11 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
   console.log(`${prefix}first_name`)
 
   return ([
-    id_column,
+    {
+      accessorKey: `${prefix}id`,
+      header: () => 'Id',
+      cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
+    },
     {
       accessorKey: `${prefix}first_name`,
       header: () => 'Imię',
@@ -62,7 +64,7 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
 export const Users = ({ type }: UsersProps) => {
   const [addModal, setAddModal] = React.useState(false);
   const usersQuery = useQuery(['users', type], () => getUsers(type))
-  const baseUrl = type === UserType.ADMIN ? 'admins' : type === UserType.TEACHER ? 'teachers' : type === UserType.STUDENT ? 'students' : ''
+  const baseUrl = type === UserType.ADMIN ? '' : type === UserType.TEACHER ? 'teachers/' : type === UserType.STUDENT ? 'students/' : ''
   const [search, setSearch] = React.useState('');
 
   const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id', 'first_name', 'last_name', 'email']), [search, usersQuery.data]);
