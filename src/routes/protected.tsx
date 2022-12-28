@@ -11,15 +11,6 @@ import { Navigate, Outlet } from "react-router-dom";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 
 const App = () => {
-  const {authUser, setAuthUser} = useContext(AuthContext)
-
-  useEffect(() => {
-    const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "") 
-    setAuthUser(authenticatedUser)
-    console.log('authenticatedUser', authenticatedUser);
-    console.log('authUser', authUser);
-  }, [])
-
     return (
       <MainLayout>
         <Outlet />

@@ -80,7 +80,11 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   const {authUser, setAuthUser} = useContext(AuthContext)
 
   useEffect(() => {
-    const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "") 
+    let authenticatedUser: User = initialAuthUserInfo
+    try {
+        authenticatedUser = JSON.parse(localStorage.getItem('auth_user') || "")
+    }
+    catch (error){}
     setAuthUser(authenticatedUser)
   }, [])
   
