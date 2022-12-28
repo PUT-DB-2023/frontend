@@ -13,5 +13,5 @@ export const activeSemester = async (activeStat: IActiveStat) => {
         return e
     })
     .catch((e)=>{return e})
-    return response
+    return response.data
 }

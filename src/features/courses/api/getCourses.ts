@@ -12,10 +12,3 @@ export const getCourses = async (active?: boolean) => {
     .catch(e => {return e})
     return response.data
 }
-
-export const useCourses = () => {
-    return useQuery({
-        queryKey: ['courses'],
-        queryFn: () => getCourses(),
-    });
-};

@@ -14,7 +14,8 @@ export const getServers = async ({active, courseId} : IGetServers) => {
             'active': active
         }
     })
-    .then(e => {return e})
-    .catch(e => {return e})
+    // .then(e => {return e})
+    // .catch(e => {return e})
+    
     return response.data
 }

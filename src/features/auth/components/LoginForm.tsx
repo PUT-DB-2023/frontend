@@ -2,12 +2,12 @@ import { objectMap } from 'api/objectMap'
 import { Button } from 'components/Button'
 import { Field } from 'components/Field'
 import AuthContext from 'context/AuthContext'
+import { User } from 'features/users'
 import { useAuthContext } from 'hooks/useAuthContext'
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { ButtonType } from 'types'
 import { login } from '../api/login'
-import { AuthUserInfo } from '../types'
 
 export const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -46,11 +46,10 @@ export const LoginForm = () => {
     }
     const res = await login({ email: email, password: password });
     if (res) {
-      console.log('LOGIN RESPONSE', res);
 
       localStorage.setItem('auth_user', JSON.stringify(res.user))
 
-      const authenticatedUser: AuthUserInfo = JSON.parse(localStorage.getItem('auth_user') || "")
+      const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "")
 
       setAuthUser(authenticatedUser)
       navigate(`/`)

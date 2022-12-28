@@ -1,37 +1,23 @@
-import { AuthUserInfo } from "features/auth";
+import { AuthUser } from "features/auth";
+import { Student, Teacher, User } from "features/users";
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
-export const initialAuthUserInfo: AuthUserInfo = {
+export const initialAuthUserInfo: User = {
     id: '',
     first_name: '',
     last_name: '',
     email: '',
+    is_active: false,
     is_student: false,
     is_teacher: false,
     is_superuser: false,
+    permissions: []
 }
-
-// export const authReducer = ({state, action}: any) => {
-//     console.log(state, action);
-    
-//     switch (action.type) {
-//         case 'LOGIN':
-//             return {
-//                 authUsername: action.payload
-//             }
-//         case 'LOGOUT':
-//             return {
-//                 authUsername: ''
-//             }
-//         default:
-//             return state
-//     }
-// }
 
 export const AuthContext = createContext<
     {
-        authUser: AuthUserInfo;
-        setAuthUser: Dispatch<SetStateAction<AuthUserInfo>>
+        authUser: User;
+        setAuthUser: Dispatch<SetStateAction<User>>
     }>
     ({
     authUser: initialAuthUserInfo,
@@ -39,10 +25,12 @@ export const AuthContext = createContext<
 })
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
-    const [authUser, setAuthUser] = useState<AuthUserInfo>(initialAuthUserInfo)
-
-    console.log('-----------------------------------------AuthContext state:', authUser);
-    
+    let authenticatedUser: User = initialAuthUserInfo
+    try {
+        authenticatedUser = JSON.parse(localStorage.getItem('auth_user') || "")
+    }
+    catch (error){}
+    const [authUser, setAuthUser] = useState<User>(authenticatedUser)    
     return (
         <AuthContext.Provider value={{authUser, setAuthUser}}>
             {children}

@@ -10,6 +10,7 @@ export type User = {
     is_teacher: boolean;
     is_active: boolean;
     is_superuser: boolean;
+    permissions: string[];
 } & BaseEntity;
 
 export type Admin = {

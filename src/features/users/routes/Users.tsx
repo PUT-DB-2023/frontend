@@ -35,8 +35,6 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
     prefix = ''
   }
 
-  console.log(`${prefix}first_name`)
-
   return ([
     {
       accessorKey: `${prefix}id`,

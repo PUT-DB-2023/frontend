@@ -1,4 +1,5 @@
 import Axios, { AxiosRequestConfig } from 'axios';
+import { ErrorPage } from 'components/ErrorPage';
 import { API_URL } from 'config';
 
 export const axios = Axios.create({
@@ -8,8 +9,9 @@ export const axios = Axios.create({
     withCredentials: true,
   });
   
-//   axios.interceptors.response.use(
-//     (response) => {
-//       return response.data;
-//     }
-// )
+axios.interceptors.response.use(
+  undefined,
+  (error) => {
+    return Promise.reject(error);
+  }
+);

@@ -1,4 +1,6 @@
-export type AuthUserInfo = {
+import { User } from "features/users";
+
+export type AuthUser = {
     id: string;
     first_name: string;
     last_name: string;
@@ -6,4 +8,4 @@ export type AuthUserInfo = {
     is_student: boolean;
     is_teacher: boolean;
     is_superuser: boolean;
-  }
+} & User

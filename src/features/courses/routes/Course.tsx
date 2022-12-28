@@ -32,18 +32,17 @@ export const Course = () => {
 
   const { courseId, editionId } = useParams()
 
-
   const { data : courseData, status : courseStatus, refetch : courseRefetch } = useQuery(['course', courseId], () => getCourse(courseId));
   const { data : activeEditionData, status : activeEditionStatus, refetch : activeEditionRefetch } = useQuery(['activeEditions', courseId], () => getEditions(true, courseId));
   const { data : allEditionsData, status : allEditionsStatus, refetch : allEditionsRefetch } = useQuery(['allEditions', courseId, editionId], () => getEditions(undefined, courseId));
 
   const navigate = useNavigate()
 
-  console.log('COURSE RERENDER');
+  // console.log('COURSE RERENDER');
   
 
   React.useEffect(() => {
-    console.log('\tuseEffect');
+    // console.log('\tuseEffect');
     if (editionId !== undefined) {
       if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
@@ -70,17 +69,16 @@ export const Course = () => {
   }, [allEditionsData, activeEditionData])
 
   const allRefetch = async () => {   
-    console.log('\tallRefetch');
+    // console.log('\tallRefetch');
      
     await activeEditionRefetch();
     await allEditionsRefetch();    
   }
 
-  // const handleAddGroup = () => {
-  //   if ()
-  // }
-
   if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
+    console.log('LOADING')
+    console.log(courseStatus);
+    
     return (
       <div className='w-full h-full flex justify-center items-center'>
         <Spinner />
@@ -88,6 +86,19 @@ export const Course = () => {
     )
   }
 
+  if (courseStatus === 'error') {
+    console.log('ERROR');
+    
+    return (
+      <div className='w-full h-full flex justify-center items-center'>
+        ERROR
+      </div>
+    )
+  }
+
+  console.log('-------------------------COURSE STATUS', courseStatus);
+  
+  
   return (
     <ContentLayout>
         <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />

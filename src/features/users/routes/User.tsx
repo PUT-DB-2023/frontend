@@ -116,7 +116,6 @@ export const User = ({type} : IUser) => {
     return null
   }
 
-  console.log(type)
   return (
     <ContentLayout>
       <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>

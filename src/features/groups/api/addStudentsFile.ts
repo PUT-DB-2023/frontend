@@ -10,5 +10,5 @@ export const addStudentsFile = async (data: FormData) => {
     })
     .then((e)=>{toast.update(t, {render: `Operacja przebiegła pomyślnie`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     .catch((e)=>{toast.update(t, {render: `Operacja zakończyła się błędem.\n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})    
-    return response
+    return response.data
 }

@@ -25,7 +25,6 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, allAccou
     </>
 
     const handleOff = async () => {
-        console.log('`/`/`/`/`/` HANDLE OFF');
         await refetch()
         off()
     }

@@ -12,5 +12,5 @@ export const updateGroup = async (group: IUpdate) => {
     const response = await axios.put(`/groups/${group.id}/`, group)
     .then((e)=>{toast.update(t, {render: `Pomyślnie edytowano grupę - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     .catch((e)=>{toast.update(t, {render: `Nie udało się edytować grupy \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
-    return response
+    return response.data
 }

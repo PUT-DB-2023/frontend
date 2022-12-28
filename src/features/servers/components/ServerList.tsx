@@ -35,10 +35,18 @@ export const ServerList = () => {
 
   const activeSorted = nonActiveLast(sortedServers);
 
-  if (serverStatus == 'loading') {
+  if (serverStatus === 'loading') {
     return (
       <div className='w-full h-full flex justify-center items-center'>
         <Spinner />
+      </div>
+    )
+  }
+
+  if (serverStatus === 'error') {
+    return (
+      <div className='w-full h-full flex justify-center items-center'>
+        ERROR
       </div>
     )
   }

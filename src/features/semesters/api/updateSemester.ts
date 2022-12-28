@@ -7,5 +7,5 @@ export const updateSemester = async (semester: SemesterPost) => {
     const response = await axios.patch(`/semesters/${semester.id}/`, semester)
     .then((e)=>{toast.update(t, {render: `Pomyślnie edytowano semestr - ${e.data.name}`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     .catch((e)=>{toast.update(t, {render: `Nie udało się edytować semestru \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
-    return response
+    return response.data
 }

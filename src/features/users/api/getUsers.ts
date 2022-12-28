@@ -21,8 +21,5 @@ export const getUsers = async (type? : UserType) => {
     .then(e => e)
     .catch(e => e)
 
-    console.log(response);
-    
-
     if (response != null) return response.data
 }
