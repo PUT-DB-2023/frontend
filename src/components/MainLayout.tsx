@@ -2,6 +2,7 @@ import { Menu } from '@headlessui/react';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
 import { User } from 'features/users';
+import { queryClient } from 'lib/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -32,6 +33,7 @@ const ProfileMenu = () => {
       localStorage.setItem('auth_user', JSON.stringify(initialAuthUserInfo))
       setAuthUser(initialAuthUserInfo)
       navigate('/auth/login/', {replace: true})
+      queryClient.clear() // clear React Query cache on logout
     }
   }
 
