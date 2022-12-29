@@ -57,7 +57,7 @@ export const LoginForm = () => {
   }, [email, password])
 
   return (
-    <div className='bg-white lg:w-[500px] md:w-[500px] w-full min-h-[300px] rounded-md shadow-md lg:p-14 md:p-14 p-10 flex flex-col justify-between'>
+    <div className='bg-white flex flex-col lg:p-14 md:p-14 px-6 py-10 lg:w-[500px] md:w-[500px] w-full rounded-md shadow-md'>
       <div className='flex flex-col justify-between gap-8'>
         <Field title={"Email"} value={email} setValue={setEmail} autoFocus={true} errorMsg={errorMsg['email']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'email': e })}/>
         <Field type='password' title={"Hasło"} value={password} setValue={setPassword} autoFocus={true} errorMsg={errorMsg['password']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'password': e })}/>
