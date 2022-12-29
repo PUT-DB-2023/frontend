@@ -17,14 +17,14 @@ interface ILinkCell {
   userType?: UserType;
 }
 
-export const LinkCell = ({row, getValue, baseUrl} : ILinkCell) => {   
-    return  (
-              <Link to={{pathname:`/users/${baseUrl}${row.original.id}`}}>
-                  <div className='p-2'>
-                      {getValue() as ReactNode}
-                  </div>
-              </Link>
-            )
+export const LinkCell = ({row, getValue, baseUrl} : ILinkCell) => {
+  return  (
+            <Link to={baseUrl ? {pathname:`/users/${baseUrl}${row.original.user.id}`}: {pathname:`/users/${row.original.id}`}}>
+                <div className='p-2'>
+                    {getValue() as ReactNode}
+                </div>
+            </Link>
+          )
 }
 
 interface ITable {
@@ -90,8 +90,7 @@ export const Table =
             </thead>
             <tbody className='text-sm text-zinc-600 border border-slate-300'>
                 {table.getRowModel().rows.map(row => (
-                  
-                <tr key={row.id} className='hover:bg-zinc-100 transition-all cursor-pointer'>
+                  <tr key={row.id} className='hover:bg-zinc-100 transition-all cursor-pointer'>
                     {row.getVisibleCells().map(cell => (
                     <td key={cell.id} className='border border-slate-300'>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

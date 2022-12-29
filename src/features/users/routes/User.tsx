@@ -104,6 +104,9 @@ export const User = ({type} : IUser) => {
 
   const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser(id, type))
 
+  console.log('USER');
+  
+
   React.useEffect(() => {
     if (userData) {
       if (type === UserType.ADMIN) setUserAccessor(userData)
@@ -113,9 +116,15 @@ export const User = ({type} : IUser) => {
   
 
   if (userStatus === 'loading' || userData === undefined || userAccessor === undefined) {
+    console.log('userStatus', userStatus);
+    console.log('userData', userData);
+    console.log('userAccessor', userAccessor);
+    
     return null
   }
 
+  console.log('USER TYPE', type);
+  
   return (
     <ContentLayout>
       <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>

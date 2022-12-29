@@ -15,23 +15,9 @@ interface UsersProps {
 }
 
 export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
-  let id_column = {
-    accessorKey: 'user.id',
-    header: () => 'Id',
-    cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
-  }
-
   let prefix = 'user.'
 
-  if (type === UserType.STUDENT) {
-    id_column = {
-      accessorKey: 'student_id',
-      header: () => 'Nr Indeksu',
-      cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
-    }
-  }
-
-  else if (type === UserType.ADMIN) {
+  if (type === UserType.ADMIN) {
     prefix = ''
   }
 

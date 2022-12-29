@@ -1,11 +1,14 @@
 import { Menu } from '@headlessui/react';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
-import { User } from 'features/users';
+import { Student, Teacher, User } from 'features/users';
+import { getUser } from 'features/users/api/getUser';
 import { queryClient } from 'lib/react-query';
 import React, { useContext, useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { UserType } from 'types';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
@@ -22,10 +25,16 @@ const NavBar = () => {
   )
 }
 
-const ProfileMenu = () => {
+interface IProfileMenu {
+  authUserTypeDetailsData?: Teacher | Student;
+}
+
+const ProfileMenu = ({authUserTypeDetailsData}: IProfileMenu) => {
   let navigate = useNavigate();
   const {authUser, setAuthUser} = useContext(AuthContext)
-
+  
+  console.log(authUserTypeDetailsData);
+  
   // TODO MOVE TO CUSTOM HOOK
   const handleLogout = async () => {
     const res = await logout()
@@ -50,7 +59,10 @@ const ProfileMenu = () => {
           <Menu.Items className="absolute right-0 mt-4 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none border-[1px] border-zinc-300">    
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <Link to={`/users/${authUser.id}`}>
+                  <Link to={
+                    authUser.is_student ? `/users/students/${authUser.id}` 
+                    : authUser.is_teacher ? `/users/teachers/${authUser.id}` : `/users/${authUser.id}`
+                  }>
                     <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
                         <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
                           <button className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}>
@@ -80,6 +92,11 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   const location = useLocation()
 
   const {authUser, setAuthUser} = useContext(AuthContext)
+  const [authUserType, setAuthUserType] = useState<UserType>()
+  const { data: authUserTypeDetailsData, status: authUserTypeDetailsStatus, refetch: authUserTypeDetailsRefetch } = useQuery(['authUserTypeDetails', [authUser, authUserType]], () => getUser(authUser.id, authUserType), {
+    refetchOnWindowFocus: false,
+    enabled: false // disable this query from automatically running
+  })
 
   useEffect(() => {
     let authenticatedUser: User = initialAuthUserInfo
@@ -88,7 +105,23 @@ export const MainLayout = ({children} : MainLayoutProps) => {
     }
     catch (error){}
     setAuthUser(authenticatedUser)
+    
   }, [])
+
+  useEffect(() => {
+    console.log(authUserType);
+    if (authUser.is_student) {
+      setAuthUserType(UserType.STUDENT)
+    }
+    if (authUser.is_teacher) {
+      setAuthUserType(UserType.TEACHER)
+    }
+
+    console.log(authUserType);
+    
+    authUserTypeDetailsRefetch()
+  }, [authUser])
+  
   
   useEffect(() => {
     setShowSidebar(false)
@@ -103,7 +136,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
         <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
           <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>
           <NavBar/>
-          <ProfileMenu />
+          <ProfileMenu authUserTypeDetailsData={authUserTypeDetailsData}/>
         </div>
             {children}
         </div>
