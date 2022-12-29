@@ -6,7 +6,7 @@ export const getTeacherEdtition = async (editionId : string|undefined) => {
             'edition': editionId
         }
     })
-    .then(e => {return e})
-    .catch(e => {return e})    
+    // .then(e => {return e})
+    // .catch(e => {return e})    
     return response.data
 }

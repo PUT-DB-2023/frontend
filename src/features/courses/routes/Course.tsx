@@ -7,6 +7,7 @@ import { Edition } from 'features/editions'
 import { getEditions } from 'features/editions/api/getEditions'
 import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
 import { RemoveModal as RemoveEditionModal } from 'features/editions/components/RemoveModal'
+import { AddNewModal as AddGroupModal } from 'features/groups/components/AddNewModal'
 import * as React from 'react'
 import { useQuery } from 'react-query'
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
@@ -15,7 +16,6 @@ import { EditModal as EditEditionModal } from '../../editions/components/EditMod
 import { getCourse } from '../api/getCourse'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
-import { AddNewModal as AddGroupModal } from 'features/groups/components/AddNewModal'
 
 
 export const Course = () => {
@@ -37,12 +37,8 @@ export const Course = () => {
   const { data : allEditionsData, status : allEditionsStatus, refetch : allEditionsRefetch } = useQuery(['allEditions', courseId, editionId], () => getEditions(undefined, courseId));
 
   const navigate = useNavigate()
-
-  // console.log('COURSE RERENDER');
   
-
   React.useEffect(() => {
-    // console.log('\tuseEffect');
     if (editionId !== undefined) {
       if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
@@ -69,8 +65,6 @@ export const Course = () => {
   }, [allEditionsData, activeEditionData])
 
   const allRefetch = async () => {   
-    // console.log('\tallRefetch');
-     
     await activeEditionRefetch();
     await allEditionsRefetch();    
   }

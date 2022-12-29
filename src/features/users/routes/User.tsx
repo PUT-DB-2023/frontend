@@ -113,6 +113,11 @@ export const User = ({type} : IUser) => {
       else setUserAccessor(userData.user)
     }
   }, [id, userData, userStatus])
+
+  if (userStatus === 'error') {
+    console.log('error if');
+    
+  }
   
 
   if (userStatus === 'loading' || userData === undefined || userAccessor === undefined) {

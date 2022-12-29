@@ -1,14 +1,18 @@
 import { Menu } from '@headlessui/react';
+import { ErrorFallback } from 'App';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
 import { Student, Teacher, User } from 'features/users';
 import { getUser } from 'features/users/api/getUser';
 import { queryClient } from 'lib/react-query';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Suspense, useContext, useEffect, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { UserType } from 'types';
+import { ErrorPage } from './ErrorPage';
+import { Loading } from './Loading';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
@@ -119,7 +123,7 @@ export const MainLayout = ({children} : MainLayoutProps) => {
 
     console.log(authUserType);
     
-    authUserTypeDetailsRefetch()
+    authUser && authUserType && authUserTypeDetailsRefetch()
   }, [authUser])
   
   
@@ -133,12 +137,16 @@ export const MainLayout = ({children} : MainLayoutProps) => {
         <SideBar></SideBar>
         <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
         <div className='flex flex-col flex-1 w-full bg-zinc-100'>
-        <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
-          <ShowMenuButton onClick={() => setShowSidebar(true)}></ShowMenuButton>
-          <NavBar/>
-          <ProfileMenu authUserTypeDetailsData={authUserTypeDetailsData}/>
-        </div>
-            {children}
+          <div className='w-full h-16 py-2 bg-white shadow-md flex text-base text-black z-20 items-center lg:px-12 px-4 justify-between'>
+            <ShowMenuButton onClick={() => setShowSidebar(true)} />
+            <NavBar/>
+            <ProfileMenu authUserTypeDetailsData={authUserTypeDetailsData}/>
+          </div>
+          {/* <Suspense fallback={<Loading />}> */}
+            <ErrorBoundary FallbackComponent={ErrorFallback} key={location.pathname}>
+              {children}
+            </ErrorBoundary>
+          {/* </Suspense> */}
         </div>
     </div>
   )

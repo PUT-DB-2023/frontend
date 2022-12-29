@@ -9,7 +9,7 @@ export const getEditions = async (active?: boolean, courseId? : string ) => {
             'semester__active': active,
         }
     })
-    .then(e => {return e})
-    .catch(e => {return e})
+    // .then(e => {return e})
+    // .catch(e => {return e})
     return response.data
 }
