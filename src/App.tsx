@@ -11,18 +11,6 @@ import { AppRoutes } from 'routes';
 import { ButtonType } from 'types';
 import './App.css';
 
-export const ErrorFallback = ({error, resetErrorBoundary} : {error: any, resetErrorBoundary: any}) => {
-  console.log('-/-/-/-/-/-/-/-/-/-/-/- ERROR FALLBACK', error, resetErrorBoundary);
-  const navigate = useNavigate()
-  
-  return (
-    <div className='w-full h-full flex gap-8 flex-col justify-center items-center' role="alert">
-      <h2 className="text-xl text-red-500 font-semibold"> {error.message} </h2>
-      <Button type={ButtonType.ACTION} onClick={() => window.location.assign(window.location.origin)} text='Powrót na stronę główną' />
-  </div>
-  );
-};
-
 const App = () => {
   return (
     <AuthProvider>

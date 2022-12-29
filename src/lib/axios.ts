@@ -1,5 +1,4 @@
-import Axios, { AxiosRequestConfig } from 'axios';
-import { ErrorPage } from 'components/ErrorPage';
+import Axios from 'axios';
 import { API_URL } from 'config';
 
 export const axios = Axios.create({

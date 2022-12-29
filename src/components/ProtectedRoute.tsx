@@ -1,7 +1,7 @@
-import { ErrorPage } from 'components/ErrorPage';
 import AuthContext from 'context/AuthContext';
 import { useContext } from 'react';
 import { Navigate } from 'react-router';
+import { ErrorFallback } from './ErrorFallback';
 
 interface IProtectedRoutes {
   element: JSX.Element;
@@ -20,7 +20,7 @@ export const ProtectedRoute = ({element, permission}: IProtectedRoutes) => {
 
   // display 403 page
   if (!authUser.permissions.includes(permission)) {
-    return <ErrorPage text='Nie masz wystarczających uprawnień, aby wyświetlić tą stronę.' buttonText='Powrót na stronę główną' />
+    return <ErrorFallback error={{response: {status: 403}}}/>
   }
 
   return (

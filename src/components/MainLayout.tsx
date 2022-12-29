@@ -1,18 +1,16 @@
 import { Menu } from '@headlessui/react';
-import { ErrorFallback } from 'App';
 import AuthContext, { initialAuthUserInfo } from 'context/AuthContext';
 import { logout } from 'features/auth/api/logout';
 import { Student, Teacher, User } from 'features/users';
 import { getUser } from 'features/users/api/getUser';
 import { queryClient } from 'lib/react-query';
-import React, { Suspense, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { UserType } from 'types';
-import { ErrorPage } from './ErrorPage';
-import { Loading } from './Loading';
+import { ErrorFallback } from './ErrorFallback';
 import { MobileSideBar } from './MobileSideBar';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
@@ -36,8 +34,6 @@ interface IProfileMenu {
 const ProfileMenu = ({authUserTypeDetailsData}: IProfileMenu) => {
   let navigate = useNavigate();
   const {authUser, setAuthUser} = useContext(AuthContext)
-  
-  console.log(authUserTypeDetailsData);
   
   // TODO MOVE TO CUSTOM HOOK
   const handleLogout = async () => {

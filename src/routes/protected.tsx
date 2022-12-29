@@ -1,12 +1,10 @@
 import { MainLayout } from "components";
-import { ErrorPage } from "components/ErrorPage";
-import AuthContext from "context/AuthContext";
+import { ErrorFallback } from "components/ErrorFallback";
 import { CoursesRoutes } from "features/courses/routes";
 import { GroupsRoutes } from "features/groups";
 import { SemestersRoutes } from "features/semesters";
 import { ServersRoutes } from "features/servers";
-import { User, UsersRoutes } from "features/users";
-import { useContext, useEffect } from "react";
+import { UsersRoutes } from "features/users";
 import { Navigate, Outlet } from "react-router-dom";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 
@@ -23,7 +21,7 @@ export const protectedRoutes = [
     path: '/',
     element: <App />,
     children: [
-      { path: '*', element:  <ErrorPage text='Nie znaleziono takiej strony.' buttonText='Powrót na stronę główną' /> },
+      { path: '*', element: <ErrorFallback error={{response: {status: 404}}}/>},
       { path: '/', element: <Navigate to={'/courses/'} /> },
       { path: '/courses/*', element: <ProtectedRoute element={<CoursesRoutes />} permission={'database.view_course'} /> },
       { path: '/users/*', element: <ProtectedRoute element={<UsersRoutes />} permission={'database.view_user'} /> },
