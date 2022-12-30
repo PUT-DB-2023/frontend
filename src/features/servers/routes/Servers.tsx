@@ -1,20 +1,11 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
-import React, { useMemo, useState } from 'react'
-import { useQuery } from 'react-query'
-import { ButtonType, PanelType, Status } from 'types'
-import { getServers } from '../api/getServers'
-import { ServerList } from '../components/ServerList'
-import { AddNewModal } from '../components/AddNewModal'
-import { Toolbar } from 'components/Toolbar'
-import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon } from '@heroicons/react/solid'
-import { serversSortOptions } from 'types'
-import { sortFunc } from 'api/sortFilter'
-import { searchFunc } from 'api/searchApi'
+import AuthContext from 'context/AuthContext'
 import { queryClient } from 'lib/react-query'
-import AuthContext from 'context/AuthContext';
+import React from 'react'
+import { ButtonType, PanelType } from 'types'
+import { AddNewModal } from '../components/AddNewModal'
+import { ServerList } from '../components/ServerList'
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);

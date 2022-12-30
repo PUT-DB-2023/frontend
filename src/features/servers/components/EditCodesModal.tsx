@@ -28,7 +28,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
 
     const handleUpdate = React.useCallback(async () => {
         const res = await updateServer({ id: data.id, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: name } as Server)
-        if (res.data) {
+        if (res) {
             off();
             refetch();
         }

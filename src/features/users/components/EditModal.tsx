@@ -67,7 +67,7 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
         if (!validate()) { return; }
         let newData = { first_name, last_name, email, student_id, id: data.id };
         const res = await updateUserOld(newData as OldUser, type);
-        if (res.data) {
+        if (res) {
             handleOff();
             refetch();
         }

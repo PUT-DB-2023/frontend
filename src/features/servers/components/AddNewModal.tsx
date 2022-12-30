@@ -90,10 +90,10 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
         const res = await addServer({ name, ip, port, provider, user, password, database, active, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes } as Server)
-        if (res.data) {
+        if (res) {
             handleOff();
             refetch();
-            navigate(`${res.data.id}/`)
+            navigate(`${res.id}/`)
         }
     }, [name, ip, port, provider, user, password, database, active, create, modify, remove, nameCodes])
 

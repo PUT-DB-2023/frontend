@@ -1,19 +1,13 @@
 import { Box } from 'components'
+import { Loading } from 'components/Loading'
 import { CustomOptionMenuItem, OptionsMenu } from 'components/OptionsMenu'
-import { Spinner } from 'components/Spinner'
-import { queryClient } from 'lib/react-query'
-import { listenerCount } from 'process'
-import React, { useEffect } from 'react'
+import AuthContext from 'context/AuthContext'
+import React from 'react'
 import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
-import { activateSemester } from '../api/activateSemester'
-import { activeSemester } from '../api/activeSemester'
 import { getSemesters } from '../api/getSemesters'
 import { Semester } from '../types'
 import { ActivateModal } from './ActivateModal'
-import { EditModal } from './EditModal'
 import { RemoveModal } from './RemoveModal'
-import AuthContext from 'context/AuthContext';
 
 interface ISemesterList {
     allRefetch: (...args : any[]) => void,
@@ -26,11 +20,6 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     const [activateModal, setActivateModal] = React.useState(false)
     const [selectedSemester, setSelectedSemester] = React.useState<Semester>()
     const {authUser, checkPermission} = React.useContext(AuthContext)
-
-    // const { data: activateSemesterData, status: activateSemesterStatus, refetch: activateSemesterRefetch } = useQuery(['activateSemester', selectedSemester], () => activateSemester(selectedSemester?.id), {
-    //     refetchOnWindowFocus: false,
-    //     enabled: false // disable this query from automatically running
-    // })
     
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['inactiveSemesters'], () => getSemesters(false))
 
@@ -44,11 +33,7 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     ]
     
     if (semestersStatus == 'loading') {
-        return (
-          <div className='w-full h-full flex justify-center items-center'>
-            <Spinner />
-          </div>
-        )
+        return <Loading />
     }    
 
     const removeName = 'Usuń semestr ' + selectedSemester?.start_year + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')

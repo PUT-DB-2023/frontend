@@ -1,8 +1,9 @@
 import { Listbox } from '@headlessui/react'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { Loading } from 'components/Loading'
 import { OptionsMenu } from 'components/OptionsMenu'
-import { Spinner } from 'components/Spinner'
+import AuthContext from 'context/AuthContext'
 import { Edition } from 'features/editions'
 import { getEditions } from 'features/editions/api/getEditions'
 import { AddNewModal as AddEditionModal } from 'features/editions/components/AddNewModal'
@@ -16,7 +17,6 @@ import { EditModal as EditEditionModal } from '../../editions/components/EditMod
 import { getCourse } from '../api/getCourse'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
-import AuthContext from 'context/AuthContext';
 
 
 export const Course = () => {
@@ -76,11 +76,8 @@ export const Course = () => {
     console.log('LOADING')
     console.log(courseStatus);
 
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
+    return <Loading />
+
   }
 
   if (courseStatus === 'error') {

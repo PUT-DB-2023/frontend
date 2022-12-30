@@ -1,15 +1,13 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { searchFunc } from 'api/searchApi';
 import { ContentLayout, ContentPanel } from 'components';
 import { Button } from 'components/Button';
-import { LinkCell, Table } from 'components/Table';
-import { Toolbar } from 'components/Toolbar';
-import * as React from 'react';
-import { useQuery } from 'react-query';
-import { ButtonType, PanelType, UserType } from 'types';
-import { getUsers } from '../api/getUsers';
-import { AddNewModal } from '../components/AddNewModal';
+import { LinkCell } from 'components/Table';
 import AuthContext from 'context/AuthContext';
+import { queryClient } from 'lib/react-query';
+import * as React from 'react';
+import { ButtonType, PanelType, UserType } from 'types';
+import { AddNewModal } from '../components/AddNewModal';
+import { UserList } from '../components/UserList';
 
 interface UsersProps {
   type: UserType;
@@ -48,26 +46,17 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
 
 export const Users = ({ type }: UsersProps) => {
   const [addModal, setAddModal] = React.useState(false);
-  const usersQuery = useQuery(['users', type], () => getUsers(type))
-  const baseUrl = type === UserType.ADMIN ? '' : type === UserType.TEACHER ? 'teachers/' : type === UserType.STUDENT ? 'students/' : ''
-  const [search, setSearch] = React.useState('');
   const {authUser, checkPermission} = React.useContext(AuthContext);
-
-  const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id', 'first_name', 'last_name', 'email']), [search, usersQuery.data]);
-
-  if (usersQuery.isLoading) {
-    return null
-  }
 
   return (
     <ContentLayout>
-      <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() => usersQuery.refetch()} type={type} />
+      <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() =>queryClient.refetchQueries('users')} type={type} />
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>
           {
             type === UserType.ADMIN ? 'Administratorzy' :
-              type === UserType.TEACHER ? 'Dydaktycy' :
-                type === UserType.STUDENT ? 'Studenci' : ''
+            type === UserType.TEACHER ? 'Dydaktycy' :
+            type === UserType.STUDENT ? 'Studenci' : ''
           }
         </span>
         <div className='flex gap-4'>
@@ -76,8 +65,7 @@ export const Users = ({ type }: UsersProps) => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={searchData} columns={columns(type, baseUrl)} />
+        <UserList type={type} />
       </ContentPanel>
     </ContentLayout>
   )

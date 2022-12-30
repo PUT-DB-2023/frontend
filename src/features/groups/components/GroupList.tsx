@@ -1,12 +1,12 @@
 import { searchFunc } from 'api/searchApi';
 import { sortFunc } from 'api/sortFilter';
 import { Box } from 'components';
-import { Spinner } from 'components/Spinner';
+import { Loading } from 'components/Loading';
 import { Toolbar } from 'components/Toolbar';
-import React from 'react'
+import React from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { groupsSortOptions, Status } from 'types';
+import { groupsSortOptions } from 'types';
 import { getGroups } from '../api/getGroups';
 import { Group } from '../types';
 
@@ -28,11 +28,7 @@ export const GroupList = () => {
 
 
     if (groupStatus == 'loading') {
-    return (
-        <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-        </div>
-        )
+      return <Loading />
     }
 
     return (

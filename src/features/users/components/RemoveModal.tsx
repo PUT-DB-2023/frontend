@@ -17,7 +17,7 @@ export const RemoveModal = ({ show, off, id, type }: IRemoveModal) => {
     const handleRemove = React.useCallback(async () => {
         const dest = '/users' + (type === UserType.TEACHER ? "/teachers" : (type === UserType.ADMIN ? "/admins" : (type === UserType.STUDENT ? "/students" : "")));
         const res = await deleteUserOld(id, type)
-        if (res.status) {
+        if (res) {
             off();
             navigate(dest)
         }

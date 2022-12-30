@@ -1,5 +1,5 @@
 import { ErrorFallback } from 'components/ErrorFallback'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { UserType } from 'types'
 import { User } from './User'
 import { Users } from './Users'

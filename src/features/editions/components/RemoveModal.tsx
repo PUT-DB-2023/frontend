@@ -18,7 +18,7 @@ export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: I
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteEdition(editionId)
-        if (res.status) {
+        if (res) {
             off();
             refetch();
             courseId ? navigate(`/courses/${courseId}`) : navigate('/courses')

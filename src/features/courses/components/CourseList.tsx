@@ -1,15 +1,15 @@
+import { XCircleIcon } from '@heroicons/react/outline'
 import { searchFunc } from 'api/searchApi'
 import { sortFunc } from 'api/sortFilter'
 import { Box } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
+import { Loading } from 'components/Loading'
 import { Toolbar } from 'components/Toolbar'
-import React, { useMemo, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import React from 'react'
+import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { ButtonType, coursesSortOptions } from 'types'
 import { getCourses } from '../api/getCourses'
-import { CoursesRoutes } from '../routes'
 import { Course } from '../types'
 
 interface ICourseList {
@@ -37,19 +37,19 @@ export const CourseList = () => {
   const activeSorted = nonActiveLast(sorted);
 
   if (courseStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   return (
-    <div className='flex flex-col gap-8'>
+    <div className='flex flex-col gap-8 justify-center items-center'>
       <Toolbar sort={true} filter={false} search={true} sortOptions={coursesSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj przedmiotu' />
       <div className='w-full h-full flex flex-col items-center'>
         { activeSorted.length == 0 ? 
-          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Aktywnych Przedmiotów </div> :
+          <div className='flex flex-col justify-center items-center gap-6 p-10'>
+            <XCircleIcon className='h-14 w-auto text-zinc-400' />
+            <div className='w-full h-full flex justify-center items-center font-semibold text-xl'> Brak Aktywnych Przedmiotów </div>
+          </div>
+          :
           activeSorted.map((course : Course) => {
             return (
               <Link key={course.id} to={'/courses/' + course.id} className='w-full'>

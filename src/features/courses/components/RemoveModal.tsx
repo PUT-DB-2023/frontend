@@ -17,7 +17,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
 
     const handleRemove = React.useCallback(async () => {
         const res = await deleteCourse(id)
-        if (res.status) {
+        if (res) {
             off();
             navigate('/courses')
         }

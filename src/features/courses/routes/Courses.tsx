@@ -1,11 +1,11 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { ButtonType, PanelType } from 'types'
-import { CourseList } from '../components/CourseList'
-import { AddNewModal } from '../components/AddNewModal'
-import * as React from 'react'
+import AuthContext from 'context/AuthContext'
 import { queryClient } from 'lib/react-query'
-import AuthContext from 'context/AuthContext';
+import * as React from 'react'
+import { ButtonType, PanelType } from 'types'
+import { AddNewModal } from '../components/AddNewModal'
+import { CourseList } from '../components/CourseList'
 
 
 export const Courses = () => {

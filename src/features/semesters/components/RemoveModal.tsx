@@ -15,7 +15,7 @@ interface IRemoveModal {
 export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     const handleRemove = React.useCallback(async () => {
         const res = await deleteSemester(id)
-        if (res.status) {
+        if (res) {
             off();
             refetch();
         }

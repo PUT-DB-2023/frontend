@@ -2,12 +2,12 @@ import { searchFunc } from 'api/searchApi'
 import { sortFunc } from 'api/sortFilter'
 import { Box } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
+import { Loading } from 'components/Loading'
 import { Toolbar } from 'components/Toolbar'
 import { useCallback, useMemo, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
-import { ButtonType, serversSortOptions, Status } from 'types'
+import { ButtonType, serversSortOptions } from 'types'
 import { getServers } from '../api/getServers'
 import { Server } from '../types'
 
@@ -36,11 +36,7 @@ export const ServerList = () => {
   const activeSorted = nonActiveLast(sortedServers);
 
   if (serverStatus === 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   if (serverStatus === 'error') {
@@ -52,22 +48,22 @@ export const ServerList = () => {
   }
 
   return (
-    <div className='flex flex-col gap-8'>
-    <Toolbar sort={true} filter={false} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera' />
-    <div className='w-full h-full flex flex-col items-center'>
-      {serverData.length == 0 ? 
-        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Serwerów </div> : 
-        activeSorted.map((server : Server) => {
-          return (
-            <Link to={'/servers/' + server.id} className='w-full' key={server.id}>
-              <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
-                  <span className='font-semibold text-xl'> { server.name } </span>
-              </Box>
-            </Link>
-          )
-        }) }
-    </div>
-    <Button type={ButtonType.LOAD_HIDDEN} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => { setShowActiveOnly(showActiveOnly ? undefined : true) }} />
+    <div className='flex flex-col gap-8 justify-center items-center'>
+      <Toolbar sort={true} filter={false} search={true} sortOptions={serversSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj serwera' />
+      <div className='w-full h-full flex flex-col items-center'>
+        {serverData.length == 0 ? 
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Serwerów </div> : 
+          activeSorted.map((server : Server) => {
+            return (
+              <Link to={'/servers/' + server.id} className='w-full' key={server.id}>
+                <Box color={server.active ? 'bg-blue-800' : 'bg-red-500'}>
+                    <span className='font-semibold text-xl'> { server.name } </span>
+                </Box>
+              </Link>
+            )
+          }) }
+      </div>
+      <Button type={ButtonType.LOAD_HIDDEN} text={showActiveOnly ? 'Pokaż nieaktywne' : 'Schowaj nieaktywne'} onClick={() => { setShowActiveOnly(showActiveOnly ? undefined : true) }} />
     </div>
   )
 }

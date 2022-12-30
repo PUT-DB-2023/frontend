@@ -1,23 +1,23 @@
+import { searchFunc } from 'api/searchApi'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
+import { Loading } from 'components/Loading'
+import { OptionsMenu } from 'components/OptionsMenu'
 import { Table } from 'components/Table'
 import { Toolbar } from 'components/Toolbar'
+import AuthContext from 'context/AuthContext'
 import { columns } from 'features/users/routes/Users'
+import * as React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType, UserType } from 'types'
 import { getGroup } from '../api/getGroup'
-import { ServerListModal } from '../components/ServerListModal'
-import { RemoveModal } from '../components/RemoveModal'
-import { EditModal } from '../components/EditModal'
-import * as React from 'react'
-import { searchFunc } from 'api/searchApi'
-import { OptionsMenu } from 'components/OptionsMenu'
 import { AddStudCSVModal } from '../components/AddStudCSVModal'
-import { AddStudents } from '../components/AddStudents'
 import { AddStudentInfoModal, StudentInfo } from '../components/AddStudentInfoModal'
-import AuthContext from 'context/AuthContext';
+import { AddStudents } from '../components/AddStudents'
+import { EditModal } from '../components/EditModal'
+import { RemoveModal } from '../components/RemoveModal'
+import { ServerListModal } from '../components/ServerListModal'
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -37,11 +37,7 @@ export const Group = () => {
   const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
 
   if (groupStatus === 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
   else {
     servers = groupData?.teacherEdition?.edition?.servers

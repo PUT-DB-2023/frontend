@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
-import { deleteServer } from '../api/deleteServer'
-import { useNavigate, } from 'react-router-dom'
+import { deleteServer } from '../api/deleteServer';
 
 interface IRemoveModal {
     show: boolean,
@@ -16,7 +16,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteServer(id)
-        if (res.status) {
+        if (res) {
             off();
             navigate(-1)
         }

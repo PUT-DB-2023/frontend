@@ -24,8 +24,8 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
             handleOff()
             if (res) {
                 refetch()
-                if (res.data) {
-                    setResult(res.data.students_info)
+                if (res) {
+                    setResult(res.students_info)
                     showInfo()
                 }
             }

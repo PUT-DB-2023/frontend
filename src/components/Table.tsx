@@ -32,8 +32,7 @@ interface ITable {
   columns: ColumnDef<any>[];
 }
 
-export const Table = 
-({ data, columns } : ITable) => {
+export const Table = ({ data, columns } : ITable) => {
     const [sorting, setSorting] = React.useState<SortingState>([])
     
     const table = useReactTable({

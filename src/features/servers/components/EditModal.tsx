@@ -85,7 +85,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     const handleUpdate = React.useCallback(async () => {
         if (!validate()) { return; }
         const res = await updateServer({ id: data.id, name, ip, port, provider, password, database, active } as Server)
-        if (res.data) {
+        if (res) {
             off();
             refetch();
         }

@@ -1,6 +1,6 @@
 import { searchFunc } from 'api/searchApi';
 import { sortFunc } from 'api/sortFilter';
-import { Spinner } from 'components/Spinner';
+import { Loading } from 'components/Loading';
 import { Toolbar } from 'components/Toolbar';
 import { Group } from 'features/groups/types';
 import React from 'react';
@@ -31,11 +31,7 @@ export const Edition = () => {
     const sortedGroups = React.useMemo<Group[]>(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
 
     if (selectedEditionStatus == 'loading' || groupStatus == 'loading') {
-        return (
-          <div className='w-full h-full flex justify-center items-center'>
-            <Spinner />
-          </div>
-        )
+        return <Loading />
     }
 
     return (

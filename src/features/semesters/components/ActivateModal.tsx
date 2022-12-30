@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
 import { ButtonType } from 'types';
 import { activateSemester } from '../api/activateSemester';
 
@@ -15,6 +15,8 @@ interface IActivateModal {
 export const ActivateModal = ({ show, off, id, name, allRefetch }: IActivateModal) => {
     const handleActivate = React.useCallback(async () => {
         const res = await activateSemester(id)
+        console.log(res);
+        
         if (res) {
             off();
             allRefetch();

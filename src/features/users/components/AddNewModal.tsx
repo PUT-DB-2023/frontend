@@ -51,7 +51,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
         if (!validate()) { return; }
         let data = { first_name, last_name, email, student_id };
         const res = await addUserOld(data as OldUser, type);
-        if (res.data) {
+        if (res) {
             handleOff();
             refetch();
         }

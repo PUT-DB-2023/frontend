@@ -1,15 +1,15 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
+import { Loading } from 'components/Loading'
+import AuthContext from 'context/AuthContext'
+import { queryClient } from 'lib/react-query'
 import * as React from 'react'
 import { useQuery } from 'react-query'
+import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType } from 'types'
 import { getSemesters } from '../api/getSemesters'
 import { AddNewModal } from '../components/AddNewModal'
-import { useParams } from 'react-router-dom'
 import { SemesterList } from '../components/SemesterList'
-import { queryClient } from 'lib/react-query'
-import AuthContext from 'context/AuthContext';
 
 export const Semesters = () => {
   const [addModal, setAddModal] = React.useState(false)
@@ -19,11 +19,7 @@ export const Semesters = () => {
   const { data: activeSemesterData, status: activeSemesterStatus, refetch: activeSemesterRefetch } = useQuery(['activeSemester', id], () => getSemesters(true));
 
   if (activeSemesterStatus == 'loading') {
-    return (
-      <div className='w-full h-full flex justify-center items-center'>
-        <Spinner />
-      </div>
-    )
+    return <Loading />
   }
 
   const allRefetch = () => {

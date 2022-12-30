@@ -40,7 +40,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             return;
         }
         const res = await updateCourse({ id: data.id, name, description })
-        if (res.data) {
+        if (res) {
             off();
             refetch();
         }

@@ -1,14 +1,9 @@
-import { Button } from 'components/Button';
-import { Loading } from 'components/Loading';
 import { AuthProvider } from 'context/AuthContext';
 import { queryClient } from 'lib/react-query';
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { QueryClientProvider, useQueryErrorResetBoundary } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { BrowserRouter, useNavigate } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from 'routes';
-import { ButtonType } from 'types';
 import './App.css';
 
 const App = () => {

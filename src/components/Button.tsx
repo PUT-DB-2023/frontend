@@ -14,7 +14,7 @@ export const Button = ({type, text, onClick} : ButtonProps) => {
       type == ButtonType.OUTLINE ? 'text-blue-800 border border-blue-800 hover:text-blue-700 hover:border-blue-700 active:text-blue-800 active:border-blue-800' : 
       type == ButtonType.TEXT_ACTION ? 'text-blue-700 hover:text-blue-500 active:text-blue-800' :
       type == ButtonType.TEXT_WARNING ? 'text-red-600 hover:text-red-500 active:text-red-600' : 
-      type == ButtonType.LOAD_HIDDEN ? 'flex justify-center items-center self text-zinc-600 hover:bg-zinc-100' : ''
+      type == ButtonType.LOAD_HIDDEN ? 'max-w-[240px] flex justify-center items-center text-zinc-600 hover:bg-zinc-100' : ''
     }`} onClick={onClick ?? undefined}>
       {text}
     </button>

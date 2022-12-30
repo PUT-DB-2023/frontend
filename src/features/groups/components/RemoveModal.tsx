@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
 import { deleteGroup } from '../api/deleteGroup';
-import { useNavigate, } from 'react-router-dom'
 
 interface IRemoveModal {
     show: boolean,
@@ -16,7 +16,8 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteGroup(id)
-        if (res.status) {
+        if (res) {
+            // await queryClient.refetchQueries('groups')
             off();
             navigate(-1)
         }

@@ -1,4 +1,3 @@
-import { Course } from "features/courses";
 import { Edition } from "features/editions";
 import { Teacher } from "features/users";
 import { Server } from "http";
