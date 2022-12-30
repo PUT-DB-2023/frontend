@@ -17,11 +17,13 @@ export const initialAuthUserInfo: User = {
 export const AuthContext = createContext<
     {
         authUser: User;
-        setAuthUser: Dispatch<SetStateAction<User>>
+        setAuthUser: Dispatch<SetStateAction<User>>;
+        checkPermission: (permission: string) => boolean
     }>
     ({
     authUser: initialAuthUserInfo,
-    setAuthUser: () => null
+    setAuthUser: () => null,
+    checkPermission: (permission: string) => false
 })
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
@@ -30,9 +32,15 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         authenticatedUser = JSON.parse(localStorage.getItem('auth_user') || "")
     }
     catch (error){}
-    const [authUser, setAuthUser] = useState<User>(authenticatedUser)    
+    const [authUser, setAuthUser] = useState<User>(authenticatedUser)
+
+    const checkPermission = (permission: string) => {
+        console.log(authUser?.permissions)
+        return authUser?.permissions?.includes(permission);
+    }
+
     return (
-        <AuthContext.Provider value={{authUser, setAuthUser}}>
+        <AuthContext.Provider value={{authUser, setAuthUser, checkPermission}}>
             {children}
         </AuthContext.Provider>
     )

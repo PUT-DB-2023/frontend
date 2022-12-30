@@ -13,6 +13,7 @@ import { Semester } from '../types'
 import { ActivateModal } from './ActivateModal'
 import { EditModal } from './EditModal'
 import { RemoveModal } from './RemoveModal'
+import AuthContext from 'context/AuthContext';
 
 interface ISemesterList {
     allRefetch: (...args : any[]) => void,
@@ -24,6 +25,7 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     const [editModal, setEditModal] = React.useState(false)
     const [activateModal, setActivateModal] = React.useState(false)
     const [selectedSemester, setSelectedSemester] = React.useState<Semester>()
+    const {authUser, checkPermission} = React.useContext(AuthContext)
 
     // const { data: activateSemesterData, status: activateSemesterStatus, refetch: activateSemesterRefetch } = useQuery(['activateSemester', selectedSemester], () => activateSemester(selectedSemester?.id), {
     //     refetchOnWindowFocus: false,
@@ -68,7 +70,11 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
                                     <span className='font-semibold text-xl'> { semester.start_year }/{semester.start_year + 1} - {semester.winter ? 'Zima' : 'Lato'}</span>
                                     <span className='font-normal text-base text-red-600'>Nieaktywny</span>
                                 </div>
-                                <OptionsMenu onClick={() => setSelectedSemester(semester)} remove={() => setRemoveModal(true)} customMenuItems={customMenuItems(semester.id)}/>
+                                <OptionsMenu 
+                                    onClick={checkPermission('database.change_active_semester') ? (() => setSelectedSemester(semester)) : undefined}
+                                    remove={checkPermission('database.delete_semester') ? (() => setRemoveModal(true)) : undefined}
+                                    customMenuItems={customMenuItems(semester.id)}
+                                    />
                             </div>
                         </Box>
                     </div>

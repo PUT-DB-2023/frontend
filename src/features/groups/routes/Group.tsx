@@ -17,6 +17,7 @@ import { OptionsMenu } from 'components/OptionsMenu'
 import { AddStudCSVModal } from '../components/AddStudCSVModal'
 import { AddStudents } from '../components/AddStudents'
 import { AddStudentInfoModal, StudentInfo } from '../components/AddStudentInfoModal'
+import AuthContext from 'context/AuthContext';
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
@@ -28,6 +29,7 @@ export const Group = () => {
   const [addFileModal, setAddFileModal] = React.useState(false);
   const [studentInfoModal, setStudentInfoModal] = React.useState(false);
   const [addFileResult, setAddFileResult] = React.useState<StudentInfo[]>()
+  const {authUser, checkPermission} = React.useContext(AuthContext)
 
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   let servers = null
@@ -49,9 +51,9 @@ export const Group = () => {
     <ContentLayout>
       <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />
       <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
-      {id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
+      {id && checkPermission('database.add_students_to_group') && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
       <ServerListModal groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved}/>
-      <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData}/>
+      {checkPermission('database.add_students_to_group') && <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData}/>}
       {id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
@@ -61,8 +63,11 @@ export const Group = () => {
           </h2>
         </div>
         <div className='flex gap-6'>
-          <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta bazodanowe' />
-          <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
+          {checkPermission('database.move_dbaccount') && <Button onClick={() => setNewModal(true)} type={ButtonType.ACTION} text='Utwórz konta bazodanowe' />}
+          <OptionsMenu
+            edit={checkPermission('database.change_group') ? (() => setEditModal(true)) : undefined}
+            remove={checkPermission('database.delete_group') ? (() => setRemoveModal(true)) : undefined}
+          />
         </div>
       </ContentPanel>
 

@@ -19,7 +19,7 @@ export const ProtectedRoute = ({element, permission}: IProtectedRoutes) => {
   }
 
   // display 403 page
-  if (!authUser.permissions.includes(permission)) {
+  if (!authUser?.permissions?.includes(permission)) {
     return <ErrorFallback error={{response: {status: 403}}}/>
   }
 

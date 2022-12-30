@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { ButtonType, PanelType, UserType } from 'types';
 import { getUsers } from '../api/getUsers';
 import { AddNewModal } from '../components/AddNewModal';
+import AuthContext from 'context/AuthContext';
 
 interface UsersProps {
   type: UserType;
@@ -50,6 +51,7 @@ export const Users = ({ type }: UsersProps) => {
   const usersQuery = useQuery(['users', type], () => getUsers(type))
   const baseUrl = type === UserType.ADMIN ? '' : type === UserType.TEACHER ? 'teachers/' : type === UserType.STUDENT ? 'students/' : ''
   const [search, setSearch] = React.useState('');
+  const {authUser, checkPermission} = React.useContext(AuthContext);
 
   const searchData = React.useMemo(() => searchFunc(search, usersQuery.data, ['student_id', 'first_name', 'last_name', 'email']), [search, usersQuery.data]);
 
@@ -69,7 +71,7 @@ export const Users = ({ type }: UsersProps) => {
           }
         </span>
         <div className='flex gap-4'>
-          <Button type={ButtonType.ACTION} onClick={() => setAddModal(true)} text='Dodaj' />
+          {checkPermission('database.add_user') && <Button type={ButtonType.ACTION} onClick={() => setAddModal(true)} text='Dodaj' />}
         </div>
       </ContentPanel>
 

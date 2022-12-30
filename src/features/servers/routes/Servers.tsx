@@ -14,16 +14,18 @@ import { serversSortOptions } from 'types'
 import { sortFunc } from 'api/sortFilter'
 import { searchFunc } from 'api/searchApi'
 import { queryClient } from 'lib/react-query'
+import AuthContext from 'context/AuthContext';
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
+  const {authUser, checkPermission} = React.useContext(AuthContext)
 
   return (
     <ContentLayout>
       <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['servers'])} />
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
-        <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={() => setShowAdd(true)} />
+        {checkPermission('database.add_server') && <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={() => setShowAdd(true)} />}
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}

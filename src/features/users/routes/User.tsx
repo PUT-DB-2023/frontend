@@ -15,6 +15,7 @@ import { RemoveModal } from '../components/RemoveModal'
 import * as React from 'react'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
 import { Student, Teacher, User as TUser } from '../types'
+import AuthContext from 'context/AuthContext';
 
 const columns : ColumnDef<DbAccount>[] =
 [
@@ -101,6 +102,7 @@ export const User = ({type} : IUser) => {
   const [editModal, setEditModal] = React.useState(false)
   const [removeModal, setRemoveModal] = React.useState(false)
   const [userAccessor, setUserAccessor] = React.useState<TUser>()
+  const {authUser, checkPermission} = React.useContext(AuthContext);
 
   const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser(id, type))
 
@@ -138,7 +140,10 @@ export const User = ({type} : IUser) => {
             <span className='text-black text-3xl font-bold mb-4'> { userAccessor.first_name + " " + userAccessor.last_name} </span>
           <div className='flex gap-6'>
             <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
-            <OptionsMenu edit={() => setEditModal(true)} remove={() => setRemoveModal(true)} />
+            <OptionsMenu
+              edit={checkPermission('database.change_user') ? (() => setEditModal(true)) : undefined}
+              remove={checkPermission('database.delete_user') ? (() => setRemoveModal(true)) : undefined}
+            />
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>

@@ -15,12 +15,14 @@ import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
 import { EditCodesModal } from '../components/EditCodesModal'
+import AuthContext from 'context/AuthContext';
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
   const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
+  const {authUser, checkPermission} = React.useContext(AuthContext)
 
   const {data: serverData, status: serverStatus, refetch: serverRefetch} = useQuery<TServer, Error>(['server', id], () => getServer(id))
 
@@ -44,11 +46,14 @@ export const Server = () => {
         </div>
         <div className='flex items-start'>
           <div className='flex gap-6'>
-            {serverData.active ?
+            {checkPermission('database.change_server') &&  (serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
-            }
-            <OptionsMenu edit={() => setShowEdit(true)} remove={() => setShowRemove(true)} />
+            )}
+            <OptionsMenu
+              edit={checkPermission('database.change_server') ? (() => setShowEdit(true)) : undefined}
+              remove={checkPermission('database.delete_server') ? (() => setShowRemove(true)) : undefined}
+            />
           </div>
         </div>
       </ContentPanel>
@@ -60,7 +65,7 @@ export const Server = () => {
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Szablony poleceń  </h2>
           <div className='flex justify-between gap-6'>
-            <Button type={ButtonType.ACTION} text='Edytuj' onClick={() => setShowEditCodesModal(true)} />
+            {checkPermission('database.change_server') && <Button type={ButtonType.ACTION} text='Edytuj' onClick={() => setShowEditCodesModal(true)} />}
           </div>
         </div>
         <div className='flex flex-col gap-6 p-4'>
