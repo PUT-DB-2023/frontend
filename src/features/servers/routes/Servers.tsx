@@ -13,7 +13,7 @@ export const Servers = () => {
 
   return (
     <ContentLayout>
-      <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['servers'])} />
+      {checkPermission('database.add_server') && <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['servers'])} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Serwery</span>
         {checkPermission('database.add_server') && <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={() => setShowAdd(true)} />}

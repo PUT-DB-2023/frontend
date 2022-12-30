@@ -45,12 +45,12 @@ export const Group = () => {
 
   return (  
     <ContentLayout>
-      <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />
-      <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />
-      {id && checkPermission('database.add_students_to_group') && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
-      <ServerListModal groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved}/>
+      {checkPermission('database.delete_group') && <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />}
+      {checkPermission('database.change_group') && <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />}
+      {checkPermission('database.add_students_to_group') && id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult}/>}
+      {checkPermission('database.move_dbaccount') && <ServerListModal groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved}/>}
       {checkPermission('database.add_students_to_group') && <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData}/>}
-      {id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
+      {checkPermission('database.add_students_to_group') && id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col flex gap-4'>
           <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
@@ -71,8 +71,8 @@ export const Group = () => {
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Studenci </h2>
           <div className='flex justify-between gap-6'>
-            <Button text={'Dodaj z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>
-            <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)}/>
+            {checkPermission('database.add_students_to_group') && <Button text={'Dodaj z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>}
+            {checkPermission('database.add_students_to_group') && <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)}/>}
             <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
           </div>
           

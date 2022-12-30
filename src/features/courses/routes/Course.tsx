@@ -95,12 +95,12 @@ export const Course = () => {
 
   return (
     <ContentLayout>
-      <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />
-      <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />
-      <AddGroupModal show={addGroupModal} off={() => setAddGroupModal(false)} refetch={allRefetch} edition={editionId} />
-      {courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={allRefetch} courseId={courseId} />}
-      {courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition} courseId={courseId} />}
-      {courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch} />}
+      {checkPermission('database.delete_course') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={courseId} name={courseData.name} />}
+      {checkPermission('database.change_course') && <EditModal refetch={() => courseRefetch()} show={editModal} off={() => setEditModal(false)} data={courseData} />}
+      {checkPermission('database.add_group') && <AddGroupModal show={addGroupModal} off={() => setAddGroupModal(false)} refetch={allRefetch} edition={editionId} />}
+      {checkPermission('database.add_edition') && courseId && <AddEditionModal show={addEditionModal} off={() => setAddEditionModal(false)} refetch={allRefetch} courseId={courseId} />}
+      {checkPermission('database.change_edition') && courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition} courseId={courseId} />}
+      {checkPermission('database.delete_edition') && courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch} />}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col'>
           <h1 className='text-black text-3xl font-bold mb-4'>{courseData.name}</h1>

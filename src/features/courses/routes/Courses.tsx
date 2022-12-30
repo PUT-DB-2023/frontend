@@ -14,7 +14,7 @@ export const Courses = () => {
 
   return (
     <ContentLayout>
-      <AddNewModal refetch={() => queryClient.refetchQueries(['courses'])} show={newModal} off={() => setNewModal(false)} />
+      {checkPermission('database.add_course') && <AddNewModal refetch={() => queryClient.refetchQueries(['courses'])} show={newModal} off={() => setNewModal(false)} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Przedmioty</span>
         {checkPermission('database.add_course') && <Button type={ButtonType.ACTION} text='Dodaj przedmiot' onClick={() => setNewModal(true)} />}

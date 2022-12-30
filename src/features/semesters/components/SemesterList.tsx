@@ -16,7 +16,6 @@ interface ISemesterList {
 
 export const SemesterList = ({allRefetch} : ISemesterList) => {
     const [removeModal, setRemoveModal] = React.useState(false)
-    const [editModal, setEditModal] = React.useState(false)
     const [activateModal, setActivateModal] = React.useState(false)
     const [selectedSemester, setSelectedSemester] = React.useState<Semester>()
     const {authUser, checkPermission} = React.useContext(AuthContext)
@@ -41,8 +40,8 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
 
     return (
         <>
-        <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={selectedSemester?.id} name={removeName} refetch={() => allRefetch()}/>
-        <ActivateModal show={activateModal} off={() => setActivateModal(false)} id={selectedSemester?.id} name={activateName} allRefetch={allRefetch}/>
+        {checkPermission('database.delete_semester') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={selectedSemester?.id} name={removeName} refetch={() => allRefetch()}/>}
+        {checkPermission('database.change_active_semester') && <ActivateModal show={activateModal} off={() => setActivateModal(false)} id={selectedSemester?.id} name={activateName} allRefetch={allRefetch}/>}
         <div className='w-full h-full flex flex-col items-center'>
             { semestersData.length == 0 ? 
                 <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Semestrów </div> :

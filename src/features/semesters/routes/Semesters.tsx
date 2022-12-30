@@ -29,7 +29,7 @@ export const Semesters = () => {
 
   return (
     <ContentLayout>
-      <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() => allRefetch()} />
+      {checkPermission('database.add_semester') && <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() => allRefetch()} />}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col'>
           <h1 className='text-black text-3xl font-bold mb-4'> Semestry </h1>

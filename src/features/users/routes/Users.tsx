@@ -50,7 +50,7 @@ export const Users = ({ type }: UsersProps) => {
 
   return (
     <ContentLayout>
-      <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() =>queryClient.refetchQueries('users')} type={type} />
+      {checkPermission('database.add_user') && <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() =>queryClient.refetchQueries('users')} type={type} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>
           {
