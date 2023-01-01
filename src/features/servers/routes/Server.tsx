@@ -31,6 +31,8 @@ export const Server = () => {
     serverRefetch()
   }, [serverData, serverStatus, id, serverRefetch])
 
+  React.useEffect(() => {document.title = `Serwer: ${serverData?.name ? serverData?.name : ''}`},[serverData?.name])
+
   if (serverStatus === 'loading' || !serverData) {
     return null
   }

@@ -10,6 +10,7 @@ import { ServerList } from '../components/ServerList'
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
   const {authUser, checkPermission} = React.useContext(AuthContext)
+  React.useEffect(() => {document.title = `Serwery`},[])
 
   return (
     <ContentLayout>

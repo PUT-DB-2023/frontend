@@ -17,6 +17,8 @@ import { EditModal as EditEditionModal } from '../../editions/components/EditMod
 import { getCourse } from '../api/getCourse'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
+import { AddNewModal as AddGroupModal } from 'features/groups/components/AddNewModal'
+import { InfoBoxDisclosure } from 'components/InfoBox'
 
 
 export const Course = () => {
@@ -38,6 +40,8 @@ export const Course = () => {
   const { data: courseData, status: courseStatus, refetch: courseRefetch } = useQuery(['course', courseId], () => getCourse(courseId));
   const { data: activeEditionData, status: activeEditionStatus, refetch: activeEditionRefetch } = useQuery(['activeEditions', courseId], () => getEditions(true, courseId));
   const { data: allEditionsData, status: allEditionsStatus, refetch: allEditionsRefetch } = useQuery(['allEditions', courseId, editionId], () => getEditions(undefined, courseId));
+
+  React.useEffect(() => {document.title = `Przedmiot: ${courseData?.name ? courseData?.name : ''}`},[courseData?.name])
 
   const navigate = useNavigate()
 
@@ -105,7 +109,7 @@ export const Course = () => {
         <div className='flex-col'>
           <h1 className='text-black text-3xl font-bold mb-4'>{courseData.name}</h1>
           <h2 className='text-blue-900 font-semibold mb-8'> {allEditionsData !== undefined ? allEditionsData.length : ''} edycje </h2>
-          <h3 className='text-slate-500 text-base text-justify'>{courseData.description}</h3>
+          {courseData?.description && <InfoBoxDisclosure children={courseData.description}/>}
         </div>
         <div className='flex gap-6'>
           {checkPermission('database.add_edition') && <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={() => setAddEditionModal(true)} />}

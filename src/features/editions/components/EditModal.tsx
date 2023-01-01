@@ -73,7 +73,7 @@ export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
         return (
             <ModalContainer title='Edytuj edycję' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Opis"} value={description} setValue={setDescription} autoFocus={true} />
+                    <Field title={"Opis"} multiline={true} value={description} setValue={setDescription} autoFocus={true} maxLenght={255}/>
                     <div className='flex justify-between'>
                         <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
                         <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />

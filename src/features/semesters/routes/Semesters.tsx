@@ -18,6 +18,8 @@ export const Semesters = () => {
 
   const { data: activeSemesterData, status: activeSemesterStatus, refetch: activeSemesterRefetch } = useQuery(['activeSemester', id], () => getSemesters(true));
 
+  React.useEffect(() => {document.title = `Semestry`},[])
+
   if (activeSemesterStatus == 'loading') {
     return <Loading />
   }

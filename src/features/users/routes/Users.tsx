@@ -47,6 +47,7 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
 export const Users = ({ type }: UsersProps) => {
   const [addModal, setAddModal] = React.useState(false);
   const {authUser, checkPermission} = React.useContext(AuthContext);
+  React.useEffect(() => {document.title = type === UserType.ADMIN ? 'Administratorzy' : type === UserType.TEACHER ? 'Dydaktycy' : type === UserType.STUDENT ? 'Studenci' : 'Użytkownicy'},[type])
 
   return (
     <ContentLayout>

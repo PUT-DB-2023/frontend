@@ -120,7 +120,11 @@ export const User = ({type} : IUser) => {
     console.log('error if');
     
   }
-  
+
+  React.useEffect(() => {
+    document.title = `${type === UserType.ADMIN ? 'Admin:' : type === UserType.TEACHER ? 'Dydaktyk:' : type === UserType.STUDENT ? 'Student:' : 'Użytkownik:'} 
+    ${userData?.first_name ? userData?.first_name : ''} ${userData?.last_name ? userData?.last_name : ''}`
+  },[type, userData?.first_name, userData?.last_name])
 
   if (userStatus === 'loading' || userData === undefined || userAccessor === undefined) {
     console.log('userStatus', userStatus);
