@@ -11,7 +11,6 @@ import { RemoveModal } from './RemoveModal'
 
 interface ISemesterList {
     allRefetch: (...args : any[]) => void,
-    // activateSemesterRefetch: () => void,
 }
 
 export const SemesterList = ({allRefetch} : ISemesterList) => {
@@ -22,10 +21,11 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
     
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['inactiveSemesters'], () => getSemesters(false))
 
-    const customMenuItems = (id: string) : CustomOptionMenuItem[] => [
+    const customMenuItems = (semester: Semester) : CustomOptionMenuItem[] => [
         {
             text: 'Ustaw jako bieżący',
             onClick: async () => {
+                setSelectedSemester(semester);
                 setActivateModal(true)
             },
         }
@@ -35,7 +35,7 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
         return <Loading />
     }    
 
-    const removeName = 'Usuń semestr ' + selectedSemester?.start_year + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
+    const removeName = 'Usuń semestr ' + selectedSemester?.start_year + '/' + ((selectedSemester?.start_year || '0') + 1) + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
     const activateName = 'Zmień bieżący semestr na ' + selectedSemester?.start_year + '/' + ((selectedSemester?.start_year || '0') + 1) + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
 
     return (
@@ -55,9 +55,8 @@ export const SemesterList = ({allRefetch} : ISemesterList) => {
                                     <span className='font-normal text-base text-red-600'>Nieaktywny</span>
                                 </div>
                                 <OptionsMenu 
-                                    onClick={checkPermission('database.change_active_semester') ? (() => setSelectedSemester(semester)) : undefined}
-                                    remove={checkPermission('database.delete_semester') ? (() => setRemoveModal(true)) : undefined}
-                                    customMenuItems={customMenuItems(semester.id)}
+                                    remove={checkPermission('database.delete_semester') ? (() => {setSelectedSemester(semester); setRemoveModal(true)}) : undefined}
+                                    customMenuItems={checkPermission('database.change_active_semester') ? customMenuItems(semester) : undefined}
                                     />
                             </div>
                         </Box>
