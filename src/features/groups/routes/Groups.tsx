@@ -1,9 +1,10 @@
 import { ContentLayout, ContentPanel } from 'components';
+import { useEffect } from 'react';
 import { PanelType } from 'types';
 import { GroupList } from '../components/GroupList';
 
 export const Groups = () => {
-    React.useEffect(() => {document.title = `Grupy`},[])
+    useEffect(() => {document.title = `Grupy`},[])
     return (
         <ContentLayout>
           <ContentPanel type={PanelType.HEADER}>
