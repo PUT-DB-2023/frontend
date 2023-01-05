@@ -4,22 +4,23 @@ import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { UserType } from 'types';
-import { updateUserOld } from '../api/updateUser';
-import { OldUser } from '../types';
+import { updateUserNew } from '../api/updateUser';
+import { Student, Teacher, User } from '../types';
+import { isStudent, isTeacher } from '../api/checkUserType';
 
 interface IEditModal {
     show: boolean,
     off: () => void,
     refetch: () => void,
     type: UserType
-    data: OldUser,
+    data: Student | Teacher | User,
 }
 
 export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
-    const [first_name, setFirstName] = React.useState(data?.first_name);
-    const [last_name, setLastName] = React.useState(data?.last_name);
-    const [email, setEmail] = React.useState(data?.email);
-    const [student_id, setStudentId] = React.useState<number | undefined>(data?.student_id);
+    const [first_name, setFirstName] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.first_name : data?.first_name);
+    const [last_name, setLastName] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.last_name : data?.last_name);
+    const [email, setEmail] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.email : data?.email);
+    const [student_id, setStudentId] = React.useState<string | undefined>(isStudent(data) ? data?.student_id : undefined);
     const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
@@ -47,26 +48,29 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     }, [first_name, last_name, email, student_id])
 
     React.useEffect(() => {
-        setFirstName(data?.first_name);
-        setLastName(data?.last_name);
-        setEmail(data?.email);
-        setStudentId(data?.student_id);
+        setFirstName((isStudent(data) || isTeacher(data)) ? data?.user?.first_name : data?.first_name);
+        setLastName((isStudent(data) || isTeacher(data)) ? data?.user?.last_name : data?.last_name);
+        setEmail((isStudent(data) || isTeacher(data)) ? data?.user?.email : data?.email);
+        setStudentId(isStudent(data) ? data?.student_id : undefined);
         setErrorMsg(defaultMsg);
     }, [show, data])
 
     const handleOff = React.useCallback(() => {
-        setFirstName(data?.first_name);
-        setLastName(data?.last_name);
-        setEmail(data?.email);
-        setStudentId(data?.student_id);
+        setFirstName((isStudent(data) || isTeacher(data)) ? data?.user?.first_name : data?.first_name);
+        setLastName((isStudent(data) || isTeacher(data)) ? data?.user?.last_name : data?.last_name);
+        setEmail((isStudent(data) || isTeacher(data)) ? data?.user?.email : data?.email);
+        setStudentId(isStudent(data) ? data?.student_id : undefined);
         setErrorMsg(defaultMsg);
         off();
     }, [data])
 
     const handleEdit = React.useCallback(async () => {
         if (!validate()) { return; }
-        let newData = { first_name, last_name, email, student_id, id: data.id };
-        const res = await updateUserOld(newData as OldUser, type);
+        let newUser: User = { first_name, last_name, email, id: (isStudent(data) || isTeacher(data)) ? data.user.id : data.id } as User;
+        let newTeacher: Teacher = (isTeacher(data) ? { id: data.id, user: newUser } : {}) as Teacher;
+        let newStudent: Student = (isStudent(data) ? { id: data.id, user: newUser, student_id: student_id } : {}) as Student;
+        let newData = isTeacher(data) ? newStudent : (isTeacher(data) ? newTeacher : newUser)
+        const res = await updateUserNew(newData, type);
         if (res) {
             handleOff();
             refetch();
