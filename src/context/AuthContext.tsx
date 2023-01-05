@@ -35,7 +35,6 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     const [authUser, setAuthUser] = useState<User>(authenticatedUser)
 
     const checkPermission = (permission: string) => {
-        console.log(authUser?.permissions)
         return authUser?.permissions?.includes(permission);
     }
 

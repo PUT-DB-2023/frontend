@@ -10,8 +10,6 @@ export const TeachersDropDown = ({ title, values, value, setValue }: IDropDownMu
     const [query, setQuery] = React.useState('');
     const ref = useClickOutside(() => setQuery(''))
 
-    React.useEffect(()=>{console.log(query)},[query])
-
     const filteredTeachers =
         query === ''
             ? values

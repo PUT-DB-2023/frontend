@@ -10,46 +10,40 @@ import { groupsSortOptions } from 'types';
 import { getGroups } from '../api/getGroups';
 import { Group } from '../types';
 
-interface IGroupList {
-    groupData: Group[];
-  }
-
 export const GroupList = () => {
 
   const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
-    const [filterBy, setFilterBy] = React.useState(null);
-    const [search, setSearch] = React.useState('');
+  const [filterBy, setFilterBy] = React.useState(null);
+  const [search, setSearch] = React.useState('');
 
-    const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
-    // const { data: techerEditionsData, status: teacherEditionsStatus, refetch: teacherEditionsRefetch } = useQuery(['teacher_editions'], getTeacherEdition)
+  const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
 
-    const searchData = React.useMemo(() => searchFunc(search, groupData, ['name','day','hour','teacherEdition/edition/course/name','teacherEdition/edition/semester/year']), [search, groupData]);
-    const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy),[searchData, sortBy]);
+  const searchData = React.useMemo(() => searchFunc(search, groupData, ['name', 'day', 'hour', 'teacherEdition/edition/course/name', 'teacherEdition/edition/semester/start_year']), [search, groupData]);
+  const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
+  console.log(groupData)
+  if (groupStatus == 'loading') {
+    return <Loading />
+  }
 
-
-    if (groupStatus == 'loading') {
-      return <Loading />
-    }
-
-    return (
-      <div className='flex flex-col gap-8'>
-      <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy'/>
+  return (
+    <div className='flex flex-col gap-8'>
+      <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
       <div className='w-full'>
-        { groupData.length == 0 ? 
-        <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Grup </div> :
-        groupData.map((group : Group) => {
-          return (
-            <Link key={group.id} to={'/groups/' + group.id}>
-              <Box>
-                  <span className='font-semibold text-xl'> {group?.name} - {group?.teacherEdition?.edition?.course?.name} - {group?.teacherEdition?.edition?.semester?.start_year} { group?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</span>
-                  <span className='font-normal text-base'> 
-                    {group.day} {group.hour} 
+        {groupData.length == 0 ?
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Grup </div> :
+          sortedGroups.map((group: Group) => {
+            return (
+              <Link key={group.id} to={'/groups/' + group.id}>
+                <Box>
+                  <span className='font-semibold text-xl'> {group?.name} - {group?.teacherEdition?.edition?.course?.name} - {group?.teacherEdition?.edition?.semester?.start_year} {group?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</span>
+                  <span className='font-normal text-base'>
+                    {group.day} {group.hour}
                   </span>
-              </Box>
-            </Link>
-          )
-        }) }
+                </Box>
+              </Link>
+            )
+          })}
       </div>
     </div>
-    )
+  )
 }
