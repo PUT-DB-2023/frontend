@@ -11,7 +11,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
     const [first_name, setFirstName] = React.useState('');
     const [last_name, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [student_id, setStudentId] = React.useState<number>();
+    const [student_id, setStudentId] = React.useState('');
     const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
@@ -42,15 +42,15 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
         setFirstName('');
         setLastName('');
         setEmail('');
-        setStudentId(undefined);
+        setStudentId('');
         setErrorMsg(defaultMsg);
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
-        let data = { first_name, last_name, email, student_id };
-        const res = await addUserOld(data as OldUser, type);
+        let data: OldUser = { first_name, last_name, email, student_id } as OldUser;
+        const res = await addUserOld(data, type);
         if (res) {
             handleOff();
             refetch();

@@ -37,6 +37,6 @@ export type OldUser = {
     last_name: string;
     email: string;
     password: string;
-    student_id?: number;
+    student_id?: string;
     id?: string;
 }
