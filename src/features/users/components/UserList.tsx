@@ -16,7 +16,7 @@ export const UserList = ({type}: IUserList) => {
     const {data: usersData, status: usersStatus, refetch: usersRefetch} = useQuery(['users', type], () => getUsers(type))
     const baseUrl = type === UserType.ADMIN ? '' : type === UserType.TEACHER ? 'teachers/' : type === UserType.STUDENT ? 'students/' : ''
     const [search, setSearch] = React.useState('');
-    const searchData = React.useMemo(() => searchFunc(search, usersData, ['student_id', 'first_name', 'last_name', 'email']), [search, usersData]);
+    const searchData = React.useMemo(() => searchFunc(search, usersData, ['student_id', 'user/first_name', 'user/last_name', 'user/email']), [search, usersData]);
 
     if (usersStatus === 'loading') {
         return <Loading />
