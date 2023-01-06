@@ -1,5 +1,4 @@
 import { axios } from "lib/axios";
-import { toast } from "react-toastify";
 
 export type Credentials = {
     email: string;

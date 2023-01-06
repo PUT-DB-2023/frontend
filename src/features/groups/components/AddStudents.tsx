@@ -1,14 +1,13 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
-import { ButtonType } from 'types';
-import { useQuery } from 'react-query'
-import { StudentsDropDown } from 'components/StudentsDropDown';
-import { getStudents } from 'features/users/api/getStudents';
-import { addStudents } from '../api/addStudents';
-import { clsTextWrong } from 'components/FieldBox';
-import { Student } from 'features/users';
 import { InfoBox } from 'components/InfoBox';
+import { ModalContainer } from 'components/ModalContainer';
+import { StudentsDropDown } from 'components/StudentsDropDown';
+import { Student } from 'features/users';
+import { getStudents } from 'features/users/api/getStudents';
+import * as React from 'react';
+import { useQuery } from 'react-query';
+import { ButtonType } from 'types';
+import { addStudents } from '../api/addStudents';
 
 export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off: () => void, refetch: () => void, group: any }) => {
     const { data: studentsData, status: studentsStatus, refetch: studentsRefetch } = useQuery(['students'], getStudents);

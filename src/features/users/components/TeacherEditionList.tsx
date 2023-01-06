@@ -1,7 +1,6 @@
-import { Box } from 'components'
+import { Box } from 'components';
 import { Edition } from 'features/editions';
-import { Group } from 'features/groups/types'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 interface ITeacherEditionList {
   editionData : Edition[];

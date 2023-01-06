@@ -1,5 +1,4 @@
-import { AuthUser } from "features/auth";
-import { Student, Teacher, User } from "features/users";
+import { User } from "features/users";
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react";
 
 export const initialAuthUserInfo: User = {

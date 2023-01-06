@@ -2,7 +2,6 @@ import { axios } from 'lib/axios'
 import { UserType } from 'types'
 import { toast } from 'react-toastify'
 
-
 export const deleteUser = async ({ id } : any) => {
     const response = await axios.delete(`/users/${ id }`, id)
     return response.data

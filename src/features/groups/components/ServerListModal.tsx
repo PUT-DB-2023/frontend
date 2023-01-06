@@ -1,11 +1,8 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
-import { ButtonType } from 'types';
-import e from 'express';
-import { addDbAccounts } from '../api/addDbAccounts';
 import { InfoBox } from 'components/InfoBox';
-
+import { ModalContainer } from 'components/ModalContainer';
+import { ButtonType } from 'types';
+import { addDbAccounts } from '../api/addDbAccounts';
 
 interface IServerListModal {
     show: boolean,

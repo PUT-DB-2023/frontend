@@ -1,6 +1,6 @@
-import { Box } from 'components'
-import { Group } from 'features/groups/types'
-import { Link, useParams } from 'react-router-dom'
+import { Box } from 'components';
+import { Group } from 'features/groups/types';
+import { Link } from 'react-router-dom';
 
 interface IStudentGroupList {
   groupData : Group[];
