@@ -16,6 +16,8 @@ import * as React from 'react'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
 import { Student, Teacher, User as TUser } from '../types'
 import AuthContext from 'context/AuthContext';
+import { resetPassword } from '../api/resetPassword'
+import { PasswordResetModal } from '../components/PasswordResetModal'
 
 const columns : ColumnDef<DbAccount>[] =
 [
@@ -101,25 +103,18 @@ export const User = ({type} : IUser) => {
   const { id } = useParams()
   const [editModal, setEditModal] = React.useState(false)
   const [removeModal, setRemoveModal] = React.useState(false)
+  const [resetModal, setResetModal] = React.useState(false)
   const [userAccessor, setUserAccessor] = React.useState<TUser>()
   const {authUser, checkPermission} = React.useContext(AuthContext);
 
   const {data: userData, status: userStatus, refetch: userRefetch} = useQuery(['user', id], () => getUser(id, type))
-
-  console.log('USER');
   
-
   React.useEffect(() => {
     if (userData) {
       if (type === UserType.ADMIN) setUserAccessor(userData)
       else setUserAccessor(userData.user)
     }
   }, [id, userData, userStatus])
-
-  if (userStatus === 'error') {
-    console.log('error if');
-    
-  }
 
   React.useEffect(() => {
     document.title = `${type === UserType.ADMIN ? 'Admin:' : type === UserType.TEACHER ? 'Dydaktyk:' : type === UserType.STUDENT ? 'Student:' : 'Użytkownik:'} 
@@ -134,16 +129,15 @@ export const User = ({type} : IUser) => {
     return null
   }
 
-  console.log('USER TYPE', type);
-  
   return (
     <ContentLayout>
       {checkPermission('database.change_user') && <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>}
       {checkPermission('database.delete_user') && <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />}
+      {checkPermission('database.reset_system_password') && <PasswordResetModal show={resetModal} id={id} off={() => setResetModal(false)}/>}
       <ContentPanel type={PanelType.HEADER}> 
             <span className='text-black text-3xl font-bold mb-4'> { userAccessor.first_name + " " + userAccessor.last_name} </span>
           <div className='flex gap-6'>
-            <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>console.log('RESET PASSWORD')}/>
+          {checkPermission('database.reset_system_password') ? <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>setResetModal(true)}/> : null }
             <OptionsMenu
               edit={checkPermission('database.change_user') ? (() => setEditModal(true)) : undefined}
               remove={checkPermission('database.delete_user') ? (() => setRemoveModal(true)) : undefined}

@@ -1,7 +1,7 @@
 import { axios } from 'lib/axios'
-import { User, OldUser } from '../types'
-import { UserType } from 'types'
 import { toast } from 'react-toastify'
+import { UserType } from 'types'
+import { OldUser, User } from '../types'
 
 export const addUser = async (user: User) => {
     const response = await axios.post("/users/", user)
