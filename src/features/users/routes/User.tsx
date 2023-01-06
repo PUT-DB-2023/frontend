@@ -1,59 +1,55 @@
-import { ColumnDef } from '@tanstack/react-table'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
+import { ColumnDef, Getter } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { OptionsMenu } from 'components/OptionsMenu'
-import { Spinner } from 'components/Spinner'
 import { Table } from 'components/Table'
+import AuthContext from 'context/AuthContext'
+import { Semester } from 'features/semesters'
+import * as React from 'react'
 import { ReactNode } from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, DbAccount, PanelType, UserType } from 'types'
 import { getUser } from '../api/getUser'
-import { UserInfo } from '../components/UserInfo'
 import { EditModal } from '../components/EditModal'
-import { RemoveModal } from '../components/RemoveModal'
-import * as React from 'react'
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
-import { Student, Teacher, User as TUser } from '../types'
-import AuthContext from 'context/AuthContext';
-import { resetPassword } from '../api/resetPassword'
 import { PasswordResetModal } from '../components/PasswordResetModal'
+import { RemoveModal } from '../components/RemoveModal'
+import { UserInfo } from '../components/UserInfo'
+import { User as TUser } from '../types'
 
 const columns : ColumnDef<DbAccount>[] =
 [
     {
-      accessorKey: 'editionServer.server.name',
+      id: 'server',
+      accessorFn: row => row?.editionServer?.server?.name,
       header: () => 'Serwer',
       cell: ({getValue}) => (
         <div className='p-2'>
-            {getValue() as ReactNode}
+            {getValue() as ReactNode || 'Brak'}
         </div>
       )
     },
     {
-      accessorKey: 'editionServer.edition.course.name',
+      id: 'course',
+      accessorFn: row => row?.editionServer?.edition?.course?.name,
       header: () => 'Przedmiot',
       cell: ({getValue}) => (
         <div className='p-2'>
-            {getValue() as ReactNode}
+            {getValue() as ReactNode || 'Brak'}
         </div>
       )
     },
     {
-      accessorKey: 'editionServer.edition.semester.start_year',
+      id: 'edycja',
+      accessorFn: row => row?.editionServer?.edition?.semester,
       header: () => 'Edycja',
-      cell: ({getValue} : {getValue : any}) => (
+      cell: ({getValue} : {getValue : Getter<Semester>}) => (
         <div className='p-2'>
-            {getValue().toString() + '/' + (parseInt(getValue()) + 1).toString() as ReactNode}
-        </div>
-      )
-    },
-    {
-      accessorKey: 'editionServer.edition.semester.winter',
-      header: () => 'Semestr',
-      cell: ({getValue} : {getValue : any}) => (
-        <div className='p-2'>
-            {getValue() ? <span>Zima</span> : <span>Lato</span>}
+            {getValue() ? 
+              getValue()?.start_year.toString() + '/' + (parseInt(getValue()?.start_year) + 1).toString() + ' - ' +
+              getValue()?.winter ? <span>Zima</span> : <span>Lato</span> : 'Brak'
+            }
         </div>
       )
     },
@@ -62,7 +58,7 @@ const columns : ColumnDef<DbAccount>[] =
         header: () => 'Użytkownik',
         cell: ({getValue}) => (
           <div className='p-2'>
-              {getValue() as ReactNode}
+              {getValue() as ReactNode  || 'Brak'}
           </div>
         )
     },
@@ -71,7 +67,7 @@ const columns : ColumnDef<DbAccount>[] =
         header: () => 'Hasło',
         cell: ({getValue}) => (
           <div className='p-2'>
-              {getValue() as ReactNode}
+              {getValue() as ReactNode  || 'Brak'}
           </div>
         )
     },
@@ -80,7 +76,7 @@ const columns : ColumnDef<DbAccount>[] =
         header: () => 'Dodatkowe informacje',
         cell: ({getValue}) => (
           <div className='p-2'>
-              {getValue() as ReactNode}
+              {getValue() as ReactNode  || 'Brak'}
           </div>
         )
     },
@@ -89,7 +85,7 @@ const columns : ColumnDef<DbAccount>[] =
         header: 'Utworzono na serwerze',
         cell: ({getValue} : {getValue : any}) => (
           <div className='p-2'>
-            {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <XCircleIcon className='h-6 text-red-500'/> : null}
+            {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <XCircleIcon className='h-6 text-red-500'/> : null  || 'Brak'}
           </div>
         )
     }

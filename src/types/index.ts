@@ -1,6 +1,6 @@
 import { Edition } from "features/editions";
+import { Server } from "features/servers";
 import { Teacher } from "features/users";
-import { Server } from "http";
 import { Dispatch, SetStateAction } from "react";
 
 export interface IDropDownMulti<T> {
