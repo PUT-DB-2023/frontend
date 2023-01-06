@@ -128,8 +128,8 @@ export const User = ({type} : IUser) => {
   return (
     <ContentLayout>
       {checkPermission('database.change_user') && <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData}/>}
-      {checkPermission('database.delete_user') && <RemoveModal show={removeModal} id={id} off={() => setRemoveModal(false)} type={type} />}
-      {checkPermission('database.reset_system_password') && <PasswordResetModal show={resetModal} id={id} off={() => setResetModal(false)}/>}
+      {checkPermission('database.delete_user') && <RemoveModal show={removeModal} id={userData.id} off={() => setRemoveModal(false)} type={type} />}
+      {checkPermission('database.reset_system_password') && <PasswordResetModal show={resetModal} id={userData.id} off={() => setResetModal(false)}/>}
       <ContentPanel type={PanelType.HEADER}> 
             <span className='text-black text-3xl font-bold mb-4'> { userAccessor.first_name + " " + userAccessor.last_name} </span>
           <div className='flex gap-6'>

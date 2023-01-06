@@ -1,9 +1,8 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
-import { ButtonType, UserType } from 'types';
-import { useNavigate } from 'react-router-dom'
-import { deleteUserOld } from '../api/deleteUser'
+import { ModalContainer } from 'components/ModalContainer';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ButtonType } from 'types';
 import { resetPassword } from '../api/resetPassword';
 
 interface IPasswordResetModal {
