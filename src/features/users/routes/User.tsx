@@ -2,9 +2,11 @@ import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/solid'
 import { ColumnDef, Getter } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
+import { Loading } from 'components/Loading'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Table } from 'components/Table'
 import AuthContext from 'context/AuthContext'
+import { GroupList } from 'features/groups/components/GroupList'
 import { Semester } from 'features/semesters'
 import * as React from 'react'
 import { ReactNode } from 'react'
@@ -15,10 +17,12 @@ import { getUser } from '../api/getUser'
 import { EditModal } from '../components/EditModal'
 import { PasswordResetModal } from '../components/PasswordResetModal'
 import { RemoveModal } from '../components/RemoveModal'
+import { StudentGroupList } from '../components/StudentGroupList'
+import { TeacherEditionList } from '../components/TeacherEditionList'
 import { UserInfo } from '../components/UserInfo'
 import { User as TUser } from '../types'
 
-const columns : ColumnDef<DbAccount>[] =
+const dbAccountsColumns : ColumnDef<DbAccount>[] =
 [
     {
       id: 'server',
@@ -89,7 +93,7 @@ const columns : ColumnDef<DbAccount>[] =
           </div>
         )
     }
-  ]
+]
 
 interface IUser {
   type: UserType;
@@ -118,11 +122,7 @@ export const User = ({type} : IUser) => {
   },[type, userData?.first_name, userData?.last_name])
 
   if (userStatus === 'loading' || userData === undefined || userAccessor === undefined) {
-    console.log('userStatus', userStatus);
-    console.log('userData', userData);
-    console.log('userAccessor', userAccessor);
-    
-    return null
+    return <Loading />
   }
 
   return (
@@ -147,7 +147,25 @@ export const User = ({type} : IUser) => {
           type === UserType.STUDENT ? (
             <ContentPanel type={PanelType.CONTENT}>
               <h2 className='text-lg font-semibold'> Konta bazodanowe </h2>
-              <Table data={userData.db_accounts} columns={columns}></Table>
+              <Table data={userData?.db_accounts} columns={dbAccountsColumns}></Table>
+            </ContentPanel>
+          ) : null
+        }
+
+        {
+          type === UserType.STUDENT ? (
+            <ContentPanel type={PanelType.CONTENT}>
+              <h2 className='text-lg font-semibold'> Grupy studenta </h2>
+              <StudentGroupList groupData={userData?.groups} />
+            </ContentPanel>
+          ) : null
+        }
+
+        {
+          type === UserType.TEACHER ? (
+            <ContentPanel type={PanelType.CONTENT}>
+              <h2 className='text-lg font-semibold'> Edycje nauczyciela </h2>
+              <TeacherEditionList editionData={userData?.editions} />
             </ContentPanel>
           ) : null
         }

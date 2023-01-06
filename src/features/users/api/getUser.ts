@@ -9,25 +9,22 @@ export const getUser = async (userId: string|undefined, type? : UserType) => {
                 user: userId
             }
         })
-        .then(e => e)
-        .catch(e => e)
         return response.data?.[0]
     }
     
     else if (type === UserType.STUDENT) {
-        response = await axios.get(`/students/`, {
+        const studentIdResponse = await axios.get(`/students/`, {
             params: {
                 user: userId
             }
         })
-        .then(e => e)
-        .catch(e => e)
-        return response.data?.[0]
+        console.log(studentIdResponse);
+        
+        response = await axios.get(`/students/${studentIdResponse.data?.[0].id}`)
+        return response.data
     }
 
     else response = await axios.get(`/users/${userId}`)
-    .then(e => e)
-    .catch(e => e)
     
     return response.data
 }

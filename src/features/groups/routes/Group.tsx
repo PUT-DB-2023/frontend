@@ -6,6 +6,7 @@ import { OptionsMenu } from 'components/OptionsMenu'
 import { Table } from 'components/Table'
 import { Toolbar } from 'components/Toolbar'
 import AuthContext from 'context/AuthContext'
+import { Server } from 'features/servers'
 import { columns } from 'features/users/routes/Users'
 import * as React from 'react'
 import { useQuery } from 'react-query'
@@ -54,10 +55,19 @@ export const Group = () => {
       {checkPermission('database.add_students_to_group') && <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData}/>}
       {checkPermission('database.add_students_to_group') && id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult}/>}
       <ContentPanel type={PanelType.HEADER}>
-        <div className='flex-col flex gap-4'>
-          <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
-          <h2 className='font-semibold text-xl text-blue-800'>
-            {groupData?.teacherEdition?.teacher?.user.first_name} {groupData?.teacherEdition?.teacher?.user.last_name} - {groupData.day} {groupData.hour}
+        <div className='flex-col flex gap-8'>
+          <div className='flex flex-col gap-4'>
+            <h1 className='font-bold text-3xl'> {groupData?.name} - {groupData?.teacherEdition?.edition?.course?.name} {groupData?.teacherEdition?.edition?.semester?.year} {groupData?.teacherEdition?.edition?.semester?.winter ? "Zima" : "Lato"}</h1>
+            <h2 className='font-semibold text-xl text-blue-800'>
+              {groupData?.teacherEdition?.teacher?.user.first_name} {groupData?.teacherEdition?.teacher?.user.last_name} - {groupData.day} {groupData.hour}
+            </h2>
+          </div>
+          <h2 className={`text-lg font-normal`}>
+              {groupData?.teacherEdition?.edition?.servers.map((server: Server, index: number) => {
+                  return (
+                      server.name + (index == groupData?.teacherEdition?.edition?.servers.length - 1 ? ' ' : ' | ')
+                  )
+              })}
           </h2>
         </div>
         <div className='flex gap-6'>
@@ -73,8 +83,8 @@ export const Group = () => {
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Studenci </h2>
           <div className='flex justify-between gap-6'>
-            {checkPermission('database.add_students_to_group') && <Button text={'Dodaj z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>}
-            {checkPermission('database.add_students_to_group') && <Button text={'Dodaj studenta'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)}/>}
+            {checkPermission('database.add_students_to_group') && <Button text={'Wczytaj studentów z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)}/>}
+            {checkPermission('database.add_students_to_group') && <Button text={'Dodaj studentów'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)}/>}
             <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />
           </div>
           

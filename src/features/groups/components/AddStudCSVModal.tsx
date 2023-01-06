@@ -46,7 +46,7 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
 
     if (show) {
         return (
-            <ModalContainer title='Dodaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
+            <ModalContainer title='Wczytaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <FieldBox>
                         <input className={errorMsg.length > 0 ? clsNameWrong : clsName} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />

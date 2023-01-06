@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { groupsSortOptions } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
-import { GroupList } from '../components/GroupList';
+import { EditionGroupList } from '../components/EditionGroupList';
 import { Edition as TEdition } from '../types';
 import { InfoBoxDisclosure } from 'components/InfoBox';
 import { Server } from 'features/servers';
@@ -59,7 +59,7 @@ export const Edition = () => {
             {selectedEditionData ?
                 <>
                     <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
-                    <GroupList groupData={sortedGroups}></GroupList>
+                    <EditionGroupList groupData={sortedGroups}></EditionGroupList>
                 </>
                 : null}
         </>
