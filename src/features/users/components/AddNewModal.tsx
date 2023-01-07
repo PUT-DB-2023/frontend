@@ -2,18 +2,26 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType } from 'types';
-import { UserType } from 'types';
-import { addUserOld } from '../api/addUser';
-import { OldUser } from '../types';
+import { ButtonType, UserType, Major } from 'types';
+import { addUserNew, addUserOld } from '../api/addUser';
+import { OldUser, Student, Teacher, User } from '../types';
+import { getMajors } from '../api/geyMajors';
+import { useQuery } from 'react-query'
+import { MajorsDropDown } from 'components/MajorsDropDown';
 
 export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: () => void, refetch: () => void, type: UserType }) => {
+    const { data: majorsData, status: majorsStatus, refetch: majorsRefetch } = useQuery(['majors'], () => getMajors())
     const [first_name, setFirstName] = React.useState('');
     const [last_name, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [student_id, setStudentId] = React.useState('');
-    const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '' }
+    const [major, setMajor] = React.useState<Major | undefined>(majorsData?.[0])
+    const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '', major: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
+
+    React.useEffect(() => {
+        setMajor(majorsData?.[0])
+    },  [majorsData])
 
     const validate = React.useCallback(() => {
         let correct = true;
@@ -35,27 +43,38 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
             correct = false;
         }
 
+        if (!major && type === UserType.STUDENT) {
+            setErrorMsg(prevState => ({ ...prevState, 'major': 'Pole wymagane' }));
+            correct = false;
+        }
+
         return correct;
-    }, [first_name, last_name, email, student_id])
+    }, [first_name, last_name, email, student_id, major])
 
     const handleOff = React.useCallback(() => {
         setFirstName('');
         setLastName('');
         setEmail('');
         setStudentId('');
+        setMajor(majorsData?.[0]);
         setErrorMsg(defaultMsg);
         off();
     }, [])
 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
-        let data: OldUser = { first_name, last_name, email, student_id } as OldUser;
+        // let addUser: User = {first_name, last_name, email} as User;
+        // let addTeacher: Teacher = {user: addUser} as Teacher;
+        // let addStudent: Student = (type === UserType.STUDENT ? { user: addUser, student_id: student_id, major: major?.id } : {}) as any;
+        // let addData = type === UserType.STUDENT ? addStudent : (type === UserType.TEACHER ? addTeacher : addUser)
+        // const res = await addUserNew(addData, type)
+        let data: OldUser = { first_name, last_name, email, student_id, major: major?.id } as OldUser;
         const res = await addUserOld(data, type);
         if (res) {
             handleOff();
             refetch();
         }
-    }, [first_name, last_name, email, student_id, type])
+    }, [first_name, last_name, email, student_id, major, type])
 
     const name = 'Dodaj ' + (type === UserType.ADMIN ? 'admina' : (type === UserType.TEACHER ? 'nauczyciela' : (type === UserType.STUDENT ? 'studenta' : '')))
 
@@ -72,7 +91,11 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
                     <Field title={"Nazwisko"} value={last_name} setValue={setLastName} errorMsg={errorMsg['last_name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'last_name': e }))} maxLenght={30} />
                     <Field title={"Email"} value={email} type={'email'} setValue={setEmail} errorMsg={errorMsg['email']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'email': e }))} maxLenght={70} />
                     {type === UserType.STUDENT &&
-                        <Field title={"Student ID"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />}
+                        <>
+                            <Field title={"Student ID"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
+                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} />}
+                        </>
+                    }
                 </div>
             </ModalContainer>
         );

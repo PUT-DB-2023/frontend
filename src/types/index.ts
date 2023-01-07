@@ -17,6 +17,8 @@ export interface IDropDownSingle<T> {
   values: T[];
   value: T | undefined;
   setValue: Dispatch<SetStateAction<T | undefined>>;
+  errorMsg?: string;
+  setErrorMsg?: React.Dispatch<SetStateAction<string | any>>;
 }
 
 export interface ToastMessages {
@@ -53,6 +55,8 @@ export type DbAccount = {
 export type Major = {
   name: string;
   description: string;
+  courses: [];
+  students: [];
 } & BaseEntity
 
 export enum ButtonType {

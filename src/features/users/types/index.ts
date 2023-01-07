@@ -29,7 +29,6 @@ export type Student = {
     major: Major;
     groups: Group[];
     db_accounts: DbAccount[];
-
 }
 
 export type OldUser = {
@@ -39,4 +38,5 @@ export type OldUser = {
     password: string;
     student_id?: string;
     id?: string;
+    major?: Major;
 }
