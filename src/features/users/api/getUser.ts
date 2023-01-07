@@ -4,12 +4,15 @@ import { UserType } from 'types'
 export const getUser = async (userId: string|undefined, type? : UserType) => {    
     let response = null
     if (type === UserType.TEACHER) {
-        response = await axios.get(`/teachers/`, {
+        const teacherIdResponse = await axios.get(`/teachers/`, {
             params: {
                 user: userId
             }
         })
-        return response.data?.[0]
+        console.log(teacherIdResponse);
+        
+        response = await axios.get(`/teachers/${teacherIdResponse.data?.[0].id}`)
+        return response.data
     }
     
     else if (type === UserType.STUDENT) {
