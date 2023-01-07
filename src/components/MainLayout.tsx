@@ -8,7 +8,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import { UserType } from 'types';
 import { ErrorFallback } from './ErrorFallback';
 import { MobileSideBar } from './MobileSideBar';
@@ -129,7 +128,6 @@ export const MainLayout = ({children} : MainLayoutProps) => {
   
   return (
     <div className='w-screen h-screen flex overflow-hidden'>
-        <ToastContainer />
         <SideBar></SideBar>
         <MobileSideBar show={showSidebar} off={() => setShowSidebar(false)}></MobileSideBar>
         <div className='flex flex-col flex-1 w-full bg-zinc-100'>
