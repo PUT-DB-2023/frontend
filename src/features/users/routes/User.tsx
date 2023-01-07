@@ -44,7 +44,7 @@ const dbAccountsColumns : ColumnDef<DbAccount>[] =
       )
     },
     {
-      id: 'edycja',
+      id: 'edition',
       accessorFn: row => row?.editionServer?.edition?.semester,
       header: () => 'Edycja',
       cell: ({getValue} : {getValue : Getter<Semester>}) => (
@@ -91,7 +91,17 @@ const dbAccountsColumns : ColumnDef<DbAccount>[] =
             {getValue() === true ? <CheckCircleIcon className='h-6 text-green-500'/> : getValue() === false ? <XCircleIcon className='h-6 text-red-500'/> : null  || 'Brak'}
           </div>
         )
-    }
+    },
+    {
+      id: 'options',
+      accessorFn: row => null,
+      header: 'Opcje',
+      cell: ({getValue} : {getValue : any}) => (
+        <div className='p-2 flex justify-center '>
+          <OptionsMenu edit={() => console.log('EDIT')} remove={() => console.log('REMOVE')}/>
+        </div>
+      )
+  }
 ]
 
 interface IUser {

@@ -3,10 +3,10 @@ import { Student, Teacher, User } from '../types'
 import { UserType } from 'types'
 import { toast } from 'react-toastify'
 
-export const updateUser = async (user: User) => {
-    const response = await axios.patch(`/users/${user.id}`, user)
-    return response.data
-}
+// export const updateUser = async (user: User) => {
+//     const response = await axios.patch(`/users/${user.id}`, user)
+//     return response.data
+// }
 
 export const updateUserNew = async (data: Student | Teacher | User, type: UserType) => {
     const t = toast.loading("Edytowanie..")

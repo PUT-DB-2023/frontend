@@ -21,8 +21,8 @@ export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: I
         if (res) {
             off();
             refetch();
-            courseId ? navigate(`/courses/${courseId}`) : navigate('/courses')
-        } else {
+            // courseId ? navigate(`/courses/${courseId}`) : navigate('/courses')
+            navigate('/courses')
         }
     }, [editionId])
 

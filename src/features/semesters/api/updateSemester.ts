@@ -1,6 +1,6 @@
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
-import { Semester, SemesterPost } from '../types'
+import { SemesterPost } from '../types'
 
 export const updateSemester = async (semester: SemesterPost) => {
     const t = toast.loading("Edytowanie..")
