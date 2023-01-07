@@ -35,7 +35,7 @@ export const Group = () => {
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   let servers = null
 
-  const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','first_name','last_name','email']), [search, groupData?.students]);
+  const searchData = React.useMemo(() => searchFunc(search, groupData?.students, ['student_id','user/first_name','user/last_name','user/email']), [search, groupData?.students]);
 
   React.useEffect(() => {document.title = `Grupa: ${groupData?.name ? groupData?.name : ''}`},[groupData?.name])
 
