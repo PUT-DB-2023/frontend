@@ -2,6 +2,7 @@ import { axios } from 'lib/axios'
 import { format } from 'date-fns'
 import { toast } from 'react-toastify';
 import { Student } from 'features/users';
+import { displayError } from 'api/displayError';
 
 export interface IAddStudentsToGroup {
     groupId: string,
@@ -22,7 +23,7 @@ export const addStudents = async ({groupId, students}: IAddStudentsToGroup) => {
         }
     })
     .then((e)=>{toast.update(t, {render: `Pomyślnie dodano studentów.`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać studentów \n${e.response.data.name}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać studentów - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
     
     return response.data
 }

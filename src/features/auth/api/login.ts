@@ -1,3 +1,4 @@
+import { displayError } from "api/displayError";
 import { axios } from "lib/axios";
 import { toast } from 'react-toastify'
 
@@ -11,7 +12,7 @@ export type Credentials = {
     const t = toast.loading("Logowanie...")   
     const response = await axios.post('/login', data)
     .then((e)=>{toast.update(t, {render: `Pomyślnie zalogowano`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 4000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się zalogować`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})  
+    .catch((e)=>{toast.update(t, {render: `Nie udało się zalogować - ${displayError(e.response.data)} - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})  
 
     console.log(response, t);
     

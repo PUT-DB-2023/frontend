@@ -145,7 +145,7 @@ export const User = ({type} : IUser) => {
           {checkPermission('database.reset_system_password') ? <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={()=>setResetModal(true)}/> : null }
             <OptionsMenu
               edit={checkPermission('database.change_user') ? (() => setEditModal(true)) : undefined}
-              remove={checkPermission('database.delete_user') ? (() => setRemoveModal(true)) : undefined}
+              remove={checkPermission('database.delete_user') && type !== UserType.ADMIN ? (() => setRemoveModal(true)) : undefined}
             />
           </div>
         </ContentPanel>
