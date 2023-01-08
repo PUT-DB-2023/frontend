@@ -2,8 +2,10 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { FieldBox, clsName, clsTextWrong, clsNameWrong } from 'components/FieldBox';
+import { clsName, clsTextWrong, clsNameWrong } from 'components/FieldBox';
 import { addStudentsFile } from '../api/addStudentsFile';
+
+export const blueButtonStyle = "p-2 file:p-2 file:rounded-lg file:bg-blue-700 file:text-white file:hover:bg-blue-800 file:border-0"
 
 export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }: { show: boolean, off: () => void, refetch: () => void, id: string, showInfo: () => void, setResult: React.Dispatch<React.SetStateAction<any>> }) => {
     const [students, setStudents] = React.useState(undefined);
@@ -48,10 +50,8 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
         return (
             <ModalContainer title='Wczytaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <FieldBox>
-                        <input className={errorMsg.length > 0 ? clsNameWrong : clsName} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
+                        <input className={`${errorMsg.length > 0 ? clsNameWrong : clsName} ${blueButtonStyle}`} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
                         {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
-                    </FieldBox>
                 </div>
             </ModalContainer>
         );
