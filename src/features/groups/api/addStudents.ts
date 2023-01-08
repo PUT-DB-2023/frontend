@@ -22,8 +22,8 @@ export const addStudents = async ({groupId, students}: IAddStudentsToGroup) => {
             })
         }
     })
-    .then((e)=>{toast.update(t, {render: `Pomyślnie dodano studentów.`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać studentów - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
+    .then((e)=>{toast.update(t, {render: `Pomyślnie dodano studentów.`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Nie udało się dodać studentów - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000}); return e})
     
     return response.data
 }
