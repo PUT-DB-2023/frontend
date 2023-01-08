@@ -27,7 +27,7 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
             setErrorMsg('Wybierz chocia jednego studenta')
             return;
         }
-        const allStudents = [...group?.students, ...students].map(s => s.id)
+
         const res = await addStudents({ groupId: group?.id, students: students });
         if (res) {
             handleOff();
