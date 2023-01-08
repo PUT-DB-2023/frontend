@@ -9,7 +9,7 @@ export const addStudentsFile = async (data: FormData) => {
         url: '/load_students_csv',
         data: data
     })
-    .then((e)=>{toast.update(t, {render: `Operacja przebiegła pomyślnie`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})
-    .catch((e)=>{toast.update(t, {render: `Operacja zakończyła się błędem.\n${e.response.data.name} - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 8000}); return e})    
+    .then((e)=>{toast.update(t, {render: `Operacja przebiegła pomyślnie`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000}); return e})
+    .catch((e)=>{toast.update(t, {render: `Operacja zakończyła się błędem.\n${e.response.data.name} - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000}); return e})    
     return response.data
 }
