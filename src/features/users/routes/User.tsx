@@ -150,7 +150,7 @@ export const User = ({type} : IUser) => {
           </div>
         </ContentPanel>
         <ContentPanel type={PanelType.HEADER}>
-          <UserInfo userData={userAccessor} />
+          <UserInfo userData={userData} userAccessor={userAccessor} userType={type} />
         </ContentPanel>
         {
           type === UserType.STUDENT ? (

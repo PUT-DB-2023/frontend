@@ -29,6 +29,8 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
 
     const validate = React.useCallback(() => {
         let correct = true;
+        console.log(student_id?.length);
+        
 
         if (first_name.length === 0) {
             setErrorMsg(prevState => ({ ...prevState, 'first_name': 'Pole wymagane' }));
@@ -42,9 +44,15 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
             setErrorMsg(prevState => ({ ...prevState, 'email': 'Pole wymagane' }));
             correct = false;
         }
-        if (!student_id && type === UserType.STUDENT) {
-            setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Pole wymagane' }));
-            correct = false;
+        if (type === UserType.STUDENT) {
+            if (student_id?.length != 6) {
+                setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Indeks musi składać się z 6 znaków' }));
+                correct = false;
+            }
+            if (!student_id) {
+                setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Pole wymagane' }));
+                correct = false;
+            }
         }
 
         if (!major && type === UserType.STUDENT) {

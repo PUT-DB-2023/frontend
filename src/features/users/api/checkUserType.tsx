@@ -1,4 +1,4 @@
-import { Student, Teacher, User } from '../types'
+import { Student, Teacher } from '../types';
 
 export function isStudent(obj: any): obj is Student {
     return 'student_id' in obj;

@@ -38,9 +38,16 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
             setErrorMsg(prevState => ({ ...prevState, 'email': 'Pole wymagane' }));
             correct = false;
         }
-        if (!student_id && type === UserType.STUDENT) {
-            setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Pole wymagane' }));
-            correct = false;
+        if (type === UserType.STUDENT) {
+            if (student_id?.length != 6) {
+                setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Indeks musi składać się z 6 znaków' }));
+                correct = false;
+            }
+            
+            if (!student_id) {
+                setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Pole wymagane' }));
+                correct = false;
+            }
         }
 
         if (!major && type === UserType.STUDENT) {
