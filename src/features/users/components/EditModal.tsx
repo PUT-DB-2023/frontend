@@ -5,10 +5,12 @@ import { Button } from 'components/Button';
 import { ButtonType, UserType, Major } from 'types';
 import { updateUserNew, updateUserOld } from '../api/updateUser';
 import { OldUser, Student, Teacher, User } from '../types';
-import { isStudent, isTeacher } from '../api/checkUserType';
+import { isStudent, isTeacher, isStudentOrTeacher } from '../api/checkUserType';
 import { getMajors } from '../api/geyMajors';
 import { useQuery } from 'react-query'
 import { MajorsDropDown } from 'components/MajorsDropDown';
+import AuthContext from 'context/AuthContext'
+
 interface IEditModal {
     show: boolean,
     off: () => void,
@@ -19,18 +21,20 @@ interface IEditModal {
 
 export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     const { data: majorsData, status: majorsStatus, refetch: majorsRefetch } = useQuery(['majors'], () => getMajors())
-    const [first_name, setFirstName] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.first_name : data?.first_name);
-    const [last_name, setLastName] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.last_name : data?.last_name);
-    const [email, setEmail] = React.useState((isStudent(data) || isTeacher(data)) ? data?.user?.email : data?.email);
+    const [first_name, setFirstName] = React.useState(isStudentOrTeacher(data) ? data?.user?.first_name : data?.first_name);
+    const [last_name, setLastName] = React.useState(isStudentOrTeacher(data) ? data?.user?.last_name : data?.last_name);
+    const [email, setEmail] = React.useState(isStudentOrTeacher(data) ? data?.user?.email : data?.email);
     const [student_id, setStudentId] = React.useState<string | undefined>(isStudent(data) ? data?.student_id : undefined);
     const [major, setMajor] = React.useState<Major | undefined>();
     const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '', major: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
+    const { authUser, setAuthUser } = React.useContext(AuthContext)
+
     const validate = React.useCallback(() => {
         let correct = true;
         console.log(student_id?.length);
-        
+
 
         if (first_name.length === 0) {
             setErrorMsg(prevState => ({ ...prevState, 'first_name': 'Pole wymagane' }));
@@ -75,20 +79,30 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
         setErrorMsg(defaultMsg);
     }, [show, data, majorsData])
 
+    const updateCurrentUser = (user: User) => {
+        localStorage.setItem('auth_user', JSON.stringify(user));
+        const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "");
+        setAuthUser(authenticatedUser);
+    }
+
     const handleEdit = React.useCallback(async () => {
         if (!validate()) { return; }
-        // let newUser: User = { first_name, last_name, email, id: (isStudent(data) || isTeacher(data)) ? data.user.id : data.id } as User;
+        // let newUser: User = { first_name, last_name, email, id: isStudentOrTeacher(data) ? data.user.id : data.id } as User;
         // let newTeacher: Teacher = (isTeacher(data) ? { id: data.id, user: newUser } : {}) as Teacher;
         // let newStudent: Student = (isStudent(data) ? { id: data.id, user: newUser, student_id: student_id, major: major?.id } : {}) as any;
-        // let newData = isTeacher(data) ? newStudent : (isTeacher(data) ? newTeacher : newUser)
+        // let newData = isStudent(data) ? newStudent : (isTeacher(data) ? newTeacher : newUser)
         // const res = await updateUserNew(newData, type);
-        let oldData: OldUser = {first_name, last_name, email, id: data.id, student_id, major: major?.id } as OldUser
+        let oldData: OldUser = { first_name, last_name, email, id: data.id, student_id, major: major?.id } as OldUser
         const res = await updateUserOld(oldData, type);
         if (res) {
+            const user: User = res?.user ? res.user : res;
+            if (user.id === authUser.id) {
+                updateCurrentUser(user);
+            }
             off();
             refetch();
         }
-    }, [first_name, last_name, email, student_id, major, type, data.id])
+    }, [first_name, last_name, email, student_id, major, type, authUser, data.id])
 
     const name = 'Edytuj ' + (type === UserType.ADMIN ? 'admina' : (type === UserType.TEACHER ? 'nauczyciela' : (type === UserType.STUDENT ? 'studenta' : '')))
 
@@ -107,7 +121,7 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
                     {type === UserType.STUDENT &&
                         <>
                             <Field title={"Student ID"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
-                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(value: string) => setErrorMsg(prevState => ({ ...prevState, 'major': value }))}/>}
+                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(value: string) => setErrorMsg(prevState => ({ ...prevState, 'major': value }))} />}
                         </>
                     }
                 </div>
