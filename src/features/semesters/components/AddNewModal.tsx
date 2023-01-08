@@ -38,7 +38,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
             return
         }
         const res = await addSemester({ start_year: year?.getFullYear()?.toString(), winter, active: false, editions: [] })
-        if (res.data) {
+        if (res) {
             handleOff();
             refetch();
         }

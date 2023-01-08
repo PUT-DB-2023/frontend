@@ -1,13 +1,33 @@
 import { axios } from 'lib/axios'
 import { UserType } from 'types'
-import { Admin, Student, Teacher, User } from '../types'
 
-export const getUser = async (userId: string|undefined, type? : UserType) => {
+export const getUser = async (userId: string|undefined, type? : UserType) => {    
     let response = null
-    if (type === UserType.ADMIN) response = await axios.get(`/admins/${userId}/`)
-    else if (type === UserType.TEACHER) response = await axios.get(`/teachers/${userId}/`)
-    else if (type === UserType.STUDENT) response = await axios.get(`/students/${userId}/`)
-    else response = await axios.get(`/users/${userId}`)
+    if (type === UserType.TEACHER) {
+        const teacherIdResponse = await axios.get(`/teachers/`, {
+            params: {
+                user: userId
+            }
+        })
+        console.log(teacherIdResponse);
+        
+        response = await axios.get(`/teachers/${teacherIdResponse.data?.[0].id}`)
+        return response.data
+    }
+    
+    else if (type === UserType.STUDENT) {
+        const studentIdResponse = await axios.get(`/students/`, {
+            params: {
+                user: userId
+            }
+        })
+        console.log(studentIdResponse);
+        
+        response = await axios.get(`/students/${studentIdResponse.data?.[0].id}`)
+        return response.data
+    }
 
+    else response = await axios.get(`/users/${userId}`)
+    
     return response.data
 }

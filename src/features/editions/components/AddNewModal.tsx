@@ -14,6 +14,8 @@ import { TeachersDropDown } from 'components/TeachersDropDown';
 import { getTeachers } from 'features/groups/api/getTeachers';
 import { ServersDropDown } from 'components/ServersDropDown';
 import { getServers } from 'features/servers/api/getServers';
+import { Teacher } from 'features/users';
+import { Server } from 'features/servers';
 
 export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, off: () => void, refetch: () => void, courseId: string }) => {
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
@@ -23,10 +25,10 @@ export const AddNewModal = ({ show, off, refetch, courseId }: { show: boolean, o
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
-    const [semester, setSemester] = React.useState<Semester>(semestersData?.[0]);
+    const [semester, setSemester] = React.useState<Semester | undefined>(semestersData?.[0]);
     const [course, setCourse] = React.useState(courseId);
-    const [teachers, setTeachers] = React.useState([]);
-    const [servers, setServers] = React.useState([]);
+    const [teachers, setTeachers] = React.useState<Teacher[]>([]);
+    const [servers, setServers] = React.useState<Server[]>([]);
 
     const navigate = useNavigate()
 

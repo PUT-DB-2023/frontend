@@ -14,6 +14,8 @@ import { getTeachers } from 'features/groups/api/getTeachers';
 import { getServers } from 'features/servers/api/getServers';
 import { ServersDropDown } from 'components/ServersDropDown';
 import { queryClient } from 'lib/react-query';
+import { Server } from 'features/servers';
+import { Teacher } from 'features/users';
 
 interface IEditModal {
     show: boolean,
@@ -23,14 +25,14 @@ interface IEditModal {
     courseId: string,
 }
 
-export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) => {
+export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
     const [semester, setSemester] = React.useState<Semester>();
     const [course, setCourse] = React.useState('');
-    const [teachers, setTeachers] = React.useState([]);
-    const [servers, setServers] = React.useState([]);
+    const [teachers, setTeachers] = React.useState<Teacher[]>([]);
+    const [servers, setServers] = React.useState<Server[]>([]);
 
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
     const { data: teachersData, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);

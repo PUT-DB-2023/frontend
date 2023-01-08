@@ -1,13 +1,11 @@
-import { ModalContainer } from 'components/ModalContainer';
-import { Button } from 'components/Button';
-import { ButtonType } from 'types';
-import { FieldBox } from 'components/FieldBox';
-import { addStudentsFile } from '../api/addStudentsFile';
-import { ColumnDef } from '@tanstack/react-table';
-import { ReactNode, useCallback, useState } from 'react';
-import { Table } from 'components/Table';
 import { CheckCircleIcon, MinusCircleIcon, XCircleIcon } from '@heroicons/react/solid';
-import { InfoBox, InfoBoxDisclosure } from 'components/InfoBox';
+import { ColumnDef } from '@tanstack/react-table';
+import { Button } from 'components/Button';
+import { InfoBox } from 'components/InfoBox';
+import { ModalContainer } from 'components/ModalContainer';
+import { Table } from 'components/Table';
+import { ReactNode, useCallback } from 'react';
+import { ButtonType } from 'types';
 
 export type StudentInfo = {
   student_id: string;

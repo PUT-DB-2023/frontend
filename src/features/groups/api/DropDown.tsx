@@ -20,7 +20,7 @@ export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg
         query === ''
             ? values
             : values.filter((opt: TeacherEdition) => {                
-                const val: string = `${opt?.teacher.first_name} ${opt?.teacher.last_name}`;
+                const val: string = `${opt?.teacher.user.first_name} ${opt?.teacher.user.last_name}`;
                 return val.toLowerCase().includes(query.toLowerCase())
             })
 
@@ -32,7 +32,7 @@ export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg
                         <Combobox.Input
                             className={`w-full border-none py-[3px] pl-3 pr-10 leading-5 text-gray-900 bg-transparent focus-visible:outline-none`}
                             onChange={(event) => setQuery(event.target.value)}
-                            displayValue={(option: TeacherEdition) => option ? option?.teacher.first_name + ' ' + option?.teacher.last_name : ''}
+                            displayValue={(option: TeacherEdition) => option ? option?.teacher.user.first_name + ' ' + option?.teacher.user.last_name : ''}
                         />
                         <Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600">
@@ -50,7 +50,7 @@ export const DropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg
                                         <>   
                                         <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
                                             <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
-                                            <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option?.teacher.first_name + ' ' + option?.teacher.last_name}</span>
+                                            <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option?.teacher.user.first_name + ' ' + option?.teacher.user.last_name}</span>
                                         </div>                
                                         </> 
                                 )}

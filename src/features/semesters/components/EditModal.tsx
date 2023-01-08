@@ -49,7 +49,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             editions: data.editions.map((edition: Edition) => edition.id)
         }
         const res = await updateSemester(new_data)
-        if (res.data) {
+        if (res) {
             off();
             refetch();
         }

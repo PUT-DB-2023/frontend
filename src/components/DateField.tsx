@@ -1,9 +1,16 @@
-import * as React from 'react';
-import { FieldBox, clsName, clsTextWrong, clsNameWrong } from './FieldBox';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { clsName, clsNameWrong, clsTextWrong, FieldBox } from './FieldBox';
 
-export const DateField = ({ title, value, setValue, maxDate, minDate }: any) => {
+interface IDateField {
+    title: any;
+    value: any; 
+    setValue: any; 
+    maxDate?: any;
+    minDate?: any;
+}
+
+export const DateField = ({ title, value, setValue, maxDate, minDate }: IDateField) => {
     return (
         <FieldBox title={title}>
             <DatePicker
@@ -20,7 +27,18 @@ export const DateField = ({ title, value, setValue, maxDate, minDate }: any) => 
 
 DateField.displayName = 'DateField';
 
-export const YearField = ({ title, value, setValue, autoFocus, minYear, maxYear, errorMsg, setErrorMsg }: any) => {
+interface IYearField {
+    title: any;
+    value: any;
+    setValue: any;
+    autoFocus: any;
+    minYear?: any;
+    maxYear?: any;
+    errorMsg: any;
+    setErrorMsg: any;
+}
+
+export const YearField = ({ title, value, setValue, autoFocus, minYear, maxYear, errorMsg, setErrorMsg }: IYearField) => {
     return (
         <FieldBox title={title}>
             <DatePicker

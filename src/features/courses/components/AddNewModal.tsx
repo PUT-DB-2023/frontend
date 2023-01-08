@@ -37,10 +37,10 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
             return;
         }
         const res = await addCourse({ name, description });
-        if (res.data) {
+        if (res) {
             handleOff();
             refetch()
-            navigate(`${res.data.id}/`)
+            navigate(`${res.id}/`)
         }
     }, [name, description])
 

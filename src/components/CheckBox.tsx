@@ -1,6 +1,11 @@
-import * as React from 'react';
+interface ICheckBox {
+    title: any;
+    value: any;
+    setValue: any;
+}
 
-export const CheckBox = ({ title, value, setValue }: any) => {
+
+export const CheckBox = ({ title, value, setValue }: ICheckBox) => {
 
     return (
         <div className='flex gap-2 items-center'>

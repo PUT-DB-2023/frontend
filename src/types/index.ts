@@ -1,7 +1,25 @@
-import { Course } from "features/courses";
 import { Edition } from "features/editions";
+import { Server } from "features/servers";
 import { Teacher } from "features/users";
-import { Server } from "http";
+import { Dispatch, SetStateAction } from "react";
+
+export interface IDropDownMulti<T> {
+  title: string;
+  values: T[];
+  value: T[] | undefined;
+  setValue: Dispatch<SetStateAction<T[]>>;
+  errorMsg?: string;
+  setErrorMsg?: React.Dispatch<SetStateAction<string>>;
+}
+
+export interface IDropDownSingle<T> {
+  title: string;
+  values: T[];
+  value: T | undefined;
+  setValue: Dispatch<SetStateAction<T | undefined>>;
+  errorMsg?: string;
+  setErrorMsg?: React.Dispatch<SetStateAction<string | any>>;
+}
 
 export interface ToastMessages {
   pending: string;
@@ -32,6 +50,13 @@ export type DbAccount = {
   additional_info : string,
   is_moved : boolean;
   editionServer: EditionServer;
+} & BaseEntity
+
+export type Major = {
+  name: string;
+  description: string;
+  courses: [];
+  students: [];
 } & BaseEntity
 
 export enum ButtonType {

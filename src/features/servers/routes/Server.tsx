@@ -14,14 +14,15 @@ import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
-import { showToast } from 'api/showToast'
 import { EditCodesModal } from '../components/EditCodesModal'
+import AuthContext from 'context/AuthContext';
 
 export const Server = () => {
   const [showRemove, setShowRemove] = React.useState(false)
   const [showEdit, setShowEdit] = React.useState(false)
   const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
+  const {authUser, checkPermission} = React.useContext(AuthContext)
 
   const {data: serverData, status: serverStatus, refetch: serverRefetch} = useQuery<TServer, Error>(['server', id], () => getServer(id))
 
@@ -38,20 +39,23 @@ export const Server = () => {
 
   return (
     <ContentLayout>
-      <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverData.name} />
-      <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />
-      <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }}/>
+      {checkPermission('database.delete_server') && <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverData.name} />}
+      {checkPermission('database.change_server') && <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />}
+      {checkPermission('database.change_server') && <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }}/>}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col'>
           <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverData.name}</h1>
         </div>
         <div className='flex items-start'>
           <div className='flex gap-6'>
-            {serverData.active ?
+            {checkPermission('database.change_server') &&  (serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
-            }
-            <OptionsMenu edit={() => setShowEdit(true)} remove={() => setShowRemove(true)} />
+            )}
+            <OptionsMenu
+              edit={checkPermission('database.change_server') ? (() => setShowEdit(true)) : undefined}
+              remove={checkPermission('database.delete_server') ? (() => setShowRemove(true)) : undefined}
+            />
           </div>
         </div>
       </ContentPanel>
@@ -63,7 +67,7 @@ export const Server = () => {
         <div className='flex justify-between'>
           <h2 className='text-lg font-semibold'> Szablony poleceń  </h2>
           <div className='flex justify-between gap-6'>
-            <Button type={ButtonType.ACTION} text='Edytuj' onClick={() => setShowEditCodesModal(true)} />
+            {checkPermission('database.change_server') && <Button type={ButtonType.ACTION} text='Edytuj' onClick={() => setShowEditCodesModal(true)} />}
           </div>
         </div>
         <div className='flex flex-col gap-6 p-4'>
@@ -84,7 +88,7 @@ export const Server = () => {
 
             <div className='flex flex-col gap-2'>
               <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
-              <h4 className='text-slate-600 text-base'>{serverData.delete_user_template}</h4>  {/* TODO */}
+              <h4 className='text-slate-600 text-base'>{serverData.username_template}</h4>
           </div>
         </div>
       </ContentPanel>

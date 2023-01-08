@@ -1,6 +1,6 @@
 import { searchFunc } from 'api/searchApi';
 import { sortFunc } from 'api/sortFilter';
-import { Spinner } from 'components/Spinner';
+import { Loading } from 'components/Loading';
 import { Toolbar } from 'components/Toolbar';
 import { Group } from 'features/groups/types';
 import React from 'react';
@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { groupsSortOptions } from 'types';
 import { getEdition } from '../api/getEdition';
 import { getEditionGroups } from '../api/getEditionGroups';
-import { GroupList } from '../components/GroupList';
+import { EditionGroupList } from '../components/EditionGroupList';
 import { Edition as TEdition } from '../types';
 import { InfoBoxDisclosure } from 'components/InfoBox';
 import { Server } from 'features/servers';
@@ -33,12 +33,7 @@ export const Edition = () => {
     const sortedGroups = React.useMemo<Group[]>(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
 
     if (selectedEditionStatus == 'loading' || groupStatus == 'loading') {
-        return (
-            <div className='w-full h-full flex justify-center items-center'>
-                <Spinner />
-                <Spinner />
-            </div>
-        )
+        return <Loading />
     }
 
     return (
@@ -64,7 +59,7 @@ export const Edition = () => {
             {selectedEditionData ?
                 <>
                     <Toolbar sort={true} filter={false} search={true} sortOptions={groupsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj grupy' />
-                    <GroupList groupData={sortedGroups}></GroupList>
+                    <EditionGroupList groupData={sortedGroups}></EditionGroupList>
                 </>
                 : null}
         </>

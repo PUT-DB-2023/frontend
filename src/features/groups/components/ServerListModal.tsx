@@ -1,10 +1,8 @@
-import * as React from 'react';
-import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
+import { InfoBox } from 'components/InfoBox';
+import { ModalContainer } from 'components/ModalContainer';
 import { ButtonType } from 'types';
-import e from 'express';
 import { addDbAccounts } from '../api/addDbAccounts';
-
 
 interface IServerListModal {
     show: boolean,
@@ -25,7 +23,6 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, allAccou
     </>
 
     const handleOff = async () => {
-        console.log('`/`/`/`/`/` HANDLE OFF');
         await refetch()
         off()
     }
@@ -48,15 +45,20 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, allAccou
         else {
             return (
                 <ModalContainer title='Tworzenie kont na serwerach' off={() => handleOff()} buttons={buttons}>
-                    <div className={`flex flex-col gap-1 p-2`}>
-                        {servers.map((server: any) => {
-                            return (
-                                <div className='w-full flex justify-between p-4 items-center rounded-lg' key={server.id}>
-                                    <span className='text-lg'> {server.name} </span>
-                                    <Button type={ButtonType.OUTLINE} text='Utwórz konta' onClick={() => addDbAccounts(groupId, server.id)} />
-                                </div>
-                            )
-                        })}
+                    <div className='flex flex-col gap-8'>
+                        <InfoBox>
+                            Ta operacja tworzy konta bazodanowe na wybranym serwerze zgodnie z utworzonym wcześniej szablonem konta.
+                        </InfoBox>
+                        <div className={`flex flex-col gap-1 p-2`}>
+                            {servers.map((server: any) => {
+                                return (
+                                    <div className='w-full flex justify-between p-4 items-center rounded-lg hover:bg-zinc-50' key={server.id}>
+                                        <span className='text-lg'> {server.name} </span>
+                                        <Button type={ButtonType.ACTION} text='Utwórz konta' onClick={() => addDbAccounts(groupId, server.id)} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </ModalContainer>
             );

@@ -2,7 +2,11 @@ import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 import * as React from 'react'
 
-export const InfoBox = ({ children }: { children: any }) => {
+interface IInfoBox {
+    children?: any;
+}
+
+export const InfoBox = ({children}: IInfoBox) => {
     return (
         <div className={`p-3 font-medium rounded bg-zinc-100 text-zinc-700`}>{children}</div>
     )
@@ -13,7 +17,6 @@ InfoBox.displayName = 'InfoBox';
 export const InfoBoxDisclosure = ({ children }: { children: any }) => {
     const ref = React.useRef<HTMLDListElement>(null);
     const showIcon = ref.current && (ref?.current?.scrollWidth > ref?.current?.offsetWidth);
-
     return (
         <div className="w-full">
             <div className="w-fit max-w-md rounded-xl" style={{ maxWidth: 'min(100%, 800px)' }}>
