@@ -66,15 +66,6 @@ const dbAccountsColumns : ColumnDef<DbAccount>[] =
         )
     },
     {
-        accessorKey: 'password',
-        header: () => 'Hasło',
-        cell: ({getValue}) => (
-          <div className='p-2'>
-              {getValue() as ReactNode  || 'Brak'}
-          </div>
-        )
-    },
-    {
         accessorKey: 'additional_info',
         header: () => 'Dodatkowe informacje',
         cell: ({getValue}) => (
