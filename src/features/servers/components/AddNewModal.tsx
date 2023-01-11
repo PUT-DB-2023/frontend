@@ -21,7 +21,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [modify, setModify] = React.useState('');
     const [remove, setRemove] = React.useState('');
     const [nameCodes, setNameCodes] = React.useState('');
-    const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '', create: '', modify: '', remove: '', nameCodes: '' }
+    const [custom, setCustom] = React.useState('');
+    const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '', create: '', modify: '', remove: '', nameCodes: '', custom: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const navigate = useNavigate()
@@ -88,7 +89,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         objectMap(errorMsg, (v: any) => sum += v.length)
 
         return correct && sum === 0;
-    }, [name, ip, port, provider, user, password, database, create, modify, remove, nameCodes,errorMsg])
+    }, [name, ip, port, provider, user, password, database, create, modify, remove, nameCodes, custom, errorMsg])
 
     const handleOff = React.useCallback(() => {
         setName('')
@@ -102,6 +103,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         setModify('')
         setRemove('')
         setNameCodes('')
+        setCustom('')
         setActive(false)
         setErrorMsg(defaultMsg)
         off()
@@ -109,13 +111,13 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
-        const res = await addServer({ name, ip, port, provider, user, password, database, active, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes } as Server)
+        const res = await addServer({ name, ip, port, provider, user, password, database, active, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes, custom_command_template: custom  } as Server)
         if (res) {
             handleOff();
             refetch();
             navigate(`${res.id}/`)
         }
-    }, [name, ip, port, provider, user, password, database, active, create, modify, remove, nameCodes])
+    }, [name, ip, port, provider, user, password, database, active, create, modify, remove, nameCodes, custom])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={handleOff} />
@@ -141,12 +143,15 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} errorMsg={errorMsg['database']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'database': e }))} maxLenght={30} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon polecenia tworzenia"} value={create} setValue={setCreate} errorMsg={errorMsg['create']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'create': e }))} maxLenght={255} />
-                    <Field title={"Szablon polecenia modyfikowania"} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={255} />
-                    <Field title={"Szablon polecenia usuwania"} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={255} />
+                    <Field title={"Szablon polecenia tworzenia"} multiline={true} value={create} setValue={setCreate} errorMsg={errorMsg['create']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'create': e }))} maxLenght={1023} />
+                    <Field title={"Szablon polecenia modyfikowania"} multiline={true} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={1023} />
+                    <Field title={"Szablon polecenia usuwania"} multiline={true} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={1023} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon nazewnictwa kont"} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={255} />
+                    <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
+
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
+                    <Field title={"Szablon customowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
                 </div>
             </ModalContainer>
         );
