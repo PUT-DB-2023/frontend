@@ -1,4 +1,3 @@
-import "react-datepicker/dist/react-datepicker.css";
 import { FieldBox } from './FieldBox';
 
 interface ISwitch {

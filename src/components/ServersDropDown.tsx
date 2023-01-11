@@ -2,7 +2,6 @@ import { Combobox } from '@headlessui/react';
 import { Server } from 'features/servers';
 import { useClickOutside } from 'hooks/useClickOutside';
 import * as React from 'react';
-import "react-datepicker/dist/react-datepicker.css";
 import { IDropDownMulti } from 'types';
 import { FieldBox } from './FieldBox';
 
