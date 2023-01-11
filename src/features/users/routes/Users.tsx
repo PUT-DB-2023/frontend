@@ -20,28 +20,34 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
     prefix = ''
   }
 
-  return ([
-    {
-      accessorKey: `${prefix}id`,
-      header: () => 'Id',
-      cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
-    },
-    {
-      accessorKey: `${prefix}first_name`,
-      header: () => 'Imię',
-      cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
-    },
-    {
-      accessorKey: `${prefix}last_name`,
-      header: () => 'Nazwisko',
-      cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
-    },
-    {
-      accessorKey: `${prefix}email`,
-      header: 'Email',
-      cell: ({ row, getValue }) => LinkCell({ row, getValue, baseUrl })
-    }
-  ])
+  let data = [];
+  type !== UserType.STUDENT && data.push({
+    accessorKey: `${prefix}id`,
+    header: () => 'Id',
+    cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
+  })
+  type === UserType.STUDENT && data.push({
+    accessorKey: `student_id`,
+    header: () => 'Student ID',
+    cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
+  })
+  data.push({
+    accessorKey: `${prefix}first_name`,
+    header: () => 'Imię',
+    cell: ({ row, getValue }: any) => LinkCell({ row, getValue, baseUrl })
+  })
+  data.push({
+    accessorKey: `${prefix}last_name`,
+    header: () => 'Nazwisko',
+    cell: ({ row, getValue }: any) => LinkCell({ row, getValue, baseUrl })
+  })
+  data.push({
+    accessorKey: `${prefix}email`,
+    header: 'Email',
+    cell: ({ row, getValue }: any) => LinkCell({ row, getValue, baseUrl })
+  })
+
+  return data;
 }
 
 export const Users = ({ type }: UsersProps) => {
