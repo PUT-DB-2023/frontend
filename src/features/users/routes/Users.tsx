@@ -55,9 +55,15 @@ export const Users = ({ type }: UsersProps) => {
   const {authUser, checkPermission} = React.useContext(AuthContext);
   React.useEffect(() => {document.title = type === UserType.ADMIN ? 'Administratorzy' : type === UserType.TEACHER ? 'Dydaktycy' : type === UserType.STUDENT ? 'Studenci' : 'Użytkownicy'},[type])
 
+  const addUserPermission = (type: UserType) => {
+    const user = checkPermission('database.add_user');
+    const special = type === UserType.STUDENT ? checkPermission('database.add_student') : (type === UserType.TEACHER ? checkPermission('database.add_teacher') : checkPermission('database.add_admin'));
+    return user && special;
+  }
+
   return (
     <ContentLayout>
-      {checkPermission('database.add_user') && <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() =>queryClient.refetchQueries('users')} type={type} />}
+      {addUserPermission(type) && <AddNewModal show={addModal} off={() => setAddModal(false)} refetch={() =>queryClient.refetchQueries('users')} type={type} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>
           {
@@ -67,7 +73,7 @@ export const Users = ({ type }: UsersProps) => {
           }
         </span>
         <div className='flex gap-4'>
-          {checkPermission('database.add_user') && <Button type={ButtonType.ACTION} onClick={() => setAddModal(true)} text='Dodaj' />}
+          {addUserPermission(type) && <Button type={ButtonType.ACTION} onClick={() => setAddModal(true)} text='Dodaj' />}
         </div>
       </ContentPanel>
 
