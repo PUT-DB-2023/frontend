@@ -59,6 +59,11 @@ export type Major = {
   students: [];
 } & BaseEntity
 
+export type Provider = {
+  name: string;
+  description: string;
+} & BaseEntity
+
 export enum ButtonType {
     ACTION,
     WARNING,
