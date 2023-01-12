@@ -2,10 +2,13 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType } from 'types';
+import { ButtonType, Provider } from 'types';
 import { updateServer } from '../api/updateServer';
 import { Server } from '../types';
 import { objectMap } from 'api/objectMap';
+import { useQuery } from 'react-query';
+import { getProviders } from '../api/getProviders';
+import { ProvidersDropDown } from 'components/ProvidersDropDown';
 
 interface IEditModal {
     show: boolean,
@@ -15,15 +18,16 @@ interface IEditModal {
 }
 
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
+    const { data: providersData, status: providersStatus, refetch: providersRefetch } = useQuery(['dbms'], () => getProviders());
     const [name, setName] = React.useState('');
-    const [ip, setIp] = React.useState('');
+    const [host, setHost] = React.useState('');
     const [port, setPort] = React.useState('');
-    const [provider, setProvider] = React.useState('');
+    const [provider, setProvider] = React.useState<Provider>();
     const [user, setUser] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [database, setDatabase] = React.useState('');
     const [active, setActive] = React.useState(false);
-    const defaultMsg = { name: '', ip: '', port: '', provider: '', user: '', password: '', database: '' }
+    const defaultMsg = { name: '', host: '', port: '', provider: '', user: '', password: '', database: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const validate = React.useCallback(() => {
@@ -34,8 +38,8 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             correct = false;
         }
 
-        if (ip.length === 0) {
-            setErrorMsg(prevState => ({ ...prevState, 'ip': 'Pole wymagane' }));
+        if (host.length === 0) {
+            setErrorMsg(prevState => ({ ...prevState, 'host': 'Pole wymagane' }));
             correct = false;
         }
 
@@ -44,7 +48,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             correct = false;
         }
 
-        if (provider.length === 0) {
+        if (!provider) {
             setErrorMsg(prevState => ({ ...prevState, 'provider': 'Pole wymagane' }));
             correct = false;
         }
@@ -68,14 +72,18 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         objectMap(errorMsg, (v: any) => sum += v.length)
 
         return correct && sum === 0;
-    }, [name, ip, port, provider, user, password, database, errorMsg])
+    }, [name, host, port, provider, user, password, database, errorMsg])
 
     React.useEffect(() => {
+        console.log(data)
         setName(data.name);
-        setIp(data.ip);
+        setHost(data.host);
         setPort(data.port);
         setUser(data.user);
-        setProvider(data.provider);
+
+        const dbms = providersData?.find((e: Provider) => e.id === data?.dbms?.id)
+        setProvider(dbms);
+
         setPassword(data.password);
         setDatabase(data.database);
         setActive(data.active);
@@ -84,12 +92,12 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
 
     const handleUpdate = React.useCallback(async () => {
         if (!validate()) { return; }
-        const res = await updateServer({ id: data.id, name, ip, port, provider, user, password, database, active } as Server)
+        const res: Server = await updateServer({ id: data.id, name, host, port, dbms: provider?.id, user, password, database, active } as any)
         if (res) {
             off();
             refetch();
         }
-    }, [name, data, name, ip, port, provider, user, password, database, active])
+    }, [name, data, name, host, port, provider, user, password, database, active])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
@@ -106,10 +114,10 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                     </div>
                     <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={255} />
                     <div className='flex justify-between'>
-                        <Field title={"IP"} value={ip} setValue={setIp} errorMsg={errorMsg['ip']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'ip': e }))} maxLenght={30} />
+                        <Field title={"Host"} value={host} setValue={setHost} errorMsg={errorMsg['host']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'host': e }))} maxLenght={30} />
                         <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' errorMsg={errorMsg['port']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'port': e }))} maxLenght={30} />
                     </div>
-                    <Field title={"Dostawca"} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))} maxLenght={30} />
+                    {providersData && <ProvidersDropDown title='Dostawca' values={providersData} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))} />}
                     <Field title={"Użytkownik"} value={user} setValue={setUser} errorMsg={errorMsg['user']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'user': e }))} maxLenght={30} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} errorMsg={errorMsg['password']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'password': e }))} maxLenght={30} />
                 </div>

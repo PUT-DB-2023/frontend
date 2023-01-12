@@ -7,28 +7,33 @@ interface IServerInfo {
     serverData: Server;
 }
 
-export const ServerInfo = ({serverData}: IServerInfo) => {
+export const ServerInfo = ({ serverData }: IServerInfo) => {
     const fieldNames = {
-        ip: 'Adres IP',
+        host: 'Host',
         port: "Port",
-        provider: 'System',
+        "dbms.name": 'System',
         user: 'Użytkownik',
         password: 'Hasło',
         database: 'Nazwa bazy',
         date_created: 'Data utworzenia',
-        active: 'Aktywny' 
+        active: 'Aktywny'
     }
-    
+
     return (
         <div className='flex w-full flex-wrap'>
-            {Object.keys(fieldNames).map((key : string) => {
+            {Object.keys(fieldNames).map((key: string) => {
+                let res = serverData as any;
+                for (const val of key.split('.')) {
+                    res = res?.[val];
+                }
                 return (
                     <div className='flex flex-col basis-1/2 md:basis-1/3 lg:basis-1/4 gap-2 p-4'>
                         <span className='text-black text-base font-semibold'> {(fieldNames as any)[key]} </span>
-                        <span className='text-slate-600 text-base'> {serverData?.[key as keyof typeof fieldNames]?.toString()} </span>
+                        <span className='text-slate-600 text-base'> {res.toString()} </span>
+
                     </div>
                 )
-                })
+            })
             }
         </div>
     )
