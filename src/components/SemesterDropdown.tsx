@@ -1,6 +1,5 @@
 import { Listbox } from '@headlessui/react';
 import { Semester } from 'features/semesters';
-import "react-datepicker/dist/react-datepicker.css";
 import { IDropDownSingle } from 'types';
 import { FieldBox } from './FieldBox';
 

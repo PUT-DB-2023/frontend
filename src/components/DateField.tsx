@@ -4,23 +4,26 @@ import { clsName, clsNameWrong, clsTextWrong, FieldBox } from './FieldBox';
 
 interface IDateField {
     title: any;
-    value: any; 
-    setValue: any; 
+    value: any;
+    setValue: any;
     maxDate?: any;
     minDate?: any;
+    errorMsg?: any;
+    setErrorMsg?: any;
 }
 
-export const DateField = ({ title, value, setValue, maxDate, minDate }: IDateField) => {
+export const DateField = ({ title, value, setValue, maxDate, minDate, errorMsg, setErrorMsg }: IDateField) => {
     return (
         <FieldBox title={title}>
             <DatePicker
-                onChange={(v: Date) => setValue(v)}
+                onChange={(v: Date) => { setErrorMsg && setErrorMsg(''); setValue(v) }}
                 selected={value}
-                className={`${clsName} w-full bg-zinc-50 rounded-md`}
-                dateFormat={'dd.MM.yyyy'} 
+                className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} w-full bg-zinc-50 rounded-md`}
+                dateFormat={'dd.MM.yyyy'}
                 maxDate={maxDate}
                 minDate={minDate}
-                todayButton={'Dzisiaj'}/>
+                todayButton={'Dzisiaj'} />
+            {errorMsg && errorMsg?.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>
     )
 };
@@ -34,22 +37,22 @@ interface IYearField {
     autoFocus: any;
     minYear?: any;
     maxYear?: any;
-    errorMsg: any;
-    setErrorMsg: any;
+    errorMsg?: any;
+    setErrorMsg?: any;
 }
 
 export const YearField = ({ title, value, setValue, autoFocus, minYear, maxYear, errorMsg, setErrorMsg }: IYearField) => {
     return (
         <FieldBox title={title}>
             <DatePicker
-                onChange={(v: Date) => {setErrorMsg && setErrorMsg(''); setValue(v)}}
+                onChange={(v: Date) => { setErrorMsg && setErrorMsg(''); setValue(v) }}
                 selected={value}
                 className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} w-full bg-zinc-50 rounded-md`}
-                dateFormat={'yyyy'} 
+                dateFormat={'yyyy'}
                 showYearPicker
                 autoFocus={autoFocus}
                 minDate={new Date(minYear)}
-                maxDate={new Date(maxYear)}/>
+                maxDate={new Date(maxYear)} />
             {errorMsg && errorMsg?.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>
     )

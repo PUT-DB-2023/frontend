@@ -1,10 +1,10 @@
-import { BaseEntity } from "types";
+import { BaseEntity, Provider } from "types";
 
 export type Server = {
     name: string;
-    ip: string;
+    host: string;
     port: string;
-    provider: string;
+    dbms: Provider;
     user: string;
     password: string;
     database: string;
@@ -13,6 +13,7 @@ export type Server = {
     modify_user_template: string;
     delete_user_template: string;
     username_template: string;
+    custom_command_template: string;
     active: boolean;
 
 } & BaseEntity;

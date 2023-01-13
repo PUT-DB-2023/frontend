@@ -22,16 +22,16 @@ export const Server = () => {
   const [showEdit, setShowEdit] = React.useState(false)
   const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
-  const {authUser, checkPermission} = React.useContext(AuthContext)
+  const { authUser, checkPermission } = React.useContext(AuthContext)
 
-  const {data: serverData, status: serverStatus, refetch: serverRefetch} = useQuery<TServer, Error>(['server', id], () => getServer(id))
+  const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery<TServer, Error>(['server', id], () => getServer(id))
 
   const activation = React.useCallback(() => {
     serverData && id && activeServer({ id: id, active: serverData.active, refresh: serverRefetch });
     serverRefetch()
   }, [serverData, serverStatus, id, serverRefetch])
 
-  React.useEffect(() => {document.title = `Serwer: ${serverData?.name ? serverData?.name : ''}`},[serverData?.name])
+  React.useEffect(() => { document.title = `Serwer: ${serverData?.name ? serverData?.name : ''}` }, [serverData?.name])
 
   if (serverStatus === 'loading' || !serverData) {
     return null
@@ -41,14 +41,14 @@ export const Server = () => {
     <ContentLayout>
       {checkPermission('database.delete_server') && <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverData.name} />}
       {checkPermission('database.change_server') && <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />}
-      {checkPermission('database.change_server') && <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }}/>}
+      {checkPermission('database.change_server') && <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex-col'>
           <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverData.name}</h1>
         </div>
         <div className='flex items-start'>
           <div className='flex gap-6'>
-            {checkPermission('database.change_server') &&  (serverData.active ?
+            {checkPermission('database.change_server') && (serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
             )}
@@ -76,19 +76,24 @@ export const Server = () => {
             <h4 className='text-slate-600 text-base'>{serverData.create_user_template}</h4>
           </div>
 
-            <div className='flex flex-col gap-2'>
-              <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverData.modify_user_template}</h4>
-            </div>
+          <div className='flex flex-col gap-2'>
+            <h3 className='text-black text-base font-semibold'> Modyfikowanie użytkownika </h3>
+            <h4 className='text-slate-600 text-base'>{serverData.modify_user_template}</h4>
+          </div>
 
-            <div className='flex flex-col gap-2'>
-              <h3 className='text-black text-base font-semibold'> Usuwanie użytkownika </h3>
-              <h4 className='text-slate-600 text-base'>{serverData.delete_user_template}</h4>
-            </div>
+          <div className='flex flex-col gap-2'>
+            <h3 className='text-black text-base font-semibold'> Usuwanie użytkownika </h3>
+            <h4 className='text-slate-600 text-base'>{serverData.delete_user_template}</h4>
+          </div>
 
-            <div className='flex flex-col gap-2'>
-              <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
-              <h4 className='text-slate-600 text-base'>{serverData.username_template}</h4>
+          <div className='flex flex-col gap-2'>
+            <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
+            <h4 className='text-slate-600 text-base'>{serverData.username_template}</h4>
+          </div>
+
+          <div className='flex flex-col gap-2'>
+            <h3 className='text-black text-base font-semibold'> Szablon customowy </h3>
+            <h4 className='text-slate-600 text-base'>{serverData.custom_command_template}</h4>
           </div>
         </div>
       </ContentPanel>

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FieldBox, clsName, clsNameWrong, clsTextWrong } from './FieldBox';
-import "react-datepicker/dist/react-datepicker.css";
 import { Combobox } from '@headlessui/react';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { IDropDownMulti } from 'types';

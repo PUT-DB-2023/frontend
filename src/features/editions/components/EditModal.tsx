@@ -16,6 +16,7 @@ import { ServersDropDown } from 'components/ServersDropDown';
 import { queryClient } from 'lib/react-query';
 import { Server } from 'features/servers';
 import { Teacher } from 'features/users';
+import { objectMap } from 'api/objectMap';
 
 interface IEditModal {
     show: boolean,
@@ -25,7 +26,7 @@ interface IEditModal {
     courseId: string,
 }
 
-export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
+export const EditModal = ({ show, off, refetch, data, courseId }: IEditModal) => {
     const [description, setDescription] = React.useState('');
     const [dateOpened, setDateOpened] = React.useState<Date>(new Date());
     const [dateClosed, setDateClosed] = React.useState<Date>(new Date());
@@ -33,6 +34,8 @@ export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
     const [course, setCourse] = React.useState('');
     const [teachers, setTeachers] = React.useState<Teacher[]>([]);
     const [servers, setServers] = React.useState<Server[]>([]);
+    const defaultMsg = { dateOpened: '', dateClosed: '' }
+    const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     const { data: semestersData, status: semestersStatus, refetch: semestersRefetch } = useQuery(['semesters'], () => getSemesters());
     const { data: teachersData, status: teachersStatus, refetch: teachersRefetch } = useQuery(['teachers'], getTeachers);
@@ -51,10 +54,38 @@ export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
         setSemester(selectedSemester);
         setCourse(data?.course?.id);
         setTeachers(selectedTeachers);
-        setServers(selectedServers)
+        setServers(selectedServers);
+        setErrorMsg(defaultMsg);
     }, [show, data])
 
+    const validate = React.useCallback(() => {
+        let correct = true;
+
+        if (!dateOpened) {
+            setErrorMsg(prevState => ({ ...prevState, 'dateOpened': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (!dateClosed) {
+            setErrorMsg(prevState => ({ ...prevState, 'dateClosed': 'Pole wymagane' }));
+            correct = false;
+        }
+
+        if (dateOpened > dateClosed) {
+            setErrorMsg(prevState => ({ ...prevState, 'dateOpened': 'Data musi być mniejsza od daty zakończenia' }));
+            setErrorMsg(prevState => ({ ...prevState, 'dateClosed': 'Data musi być większa od daty rozpoczęcia' }));
+            correct = false;
+        }
+
+
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
+    }, [dateOpened, dateClosed, errorMsg])
+
     const handleUpdate = React.useCallback(async () => {
+        if (!validate()) { return; };
         const res = await updateEdition({ description, date_opened: dateOpened, date_closed: dateClosed, semester: semester!.id.toString(), course, id: data.id, teachers: teachers, servers: servers });
         if (res) {
             off();
@@ -73,10 +104,10 @@ export const EditModal = ({show, off, refetch, data, courseId}: IEditModal) => {
         return (
             <ModalContainer title='Edytuj edycję' off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Opis"} multiline={true} value={description} setValue={setDescription} autoFocus={true} maxLenght={255}/>
+                    <Field title={"Opis"} multiline={true} value={description} setValue={setDescription} autoFocus={true} maxLenght={255} />
                     <div className='flex justify-between'>
-                        <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} maxDate={dateClosed} />
-                        <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} minDate={dateOpened} />
+                        <DateField title={"Data startu"} value={dateOpened} setValue={setDateOpened} errorMsg={errorMsg['dateOpened']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'dateOpened': e }))} />
+                        <DateField title={"Data końca"} value={dateClosed} setValue={setDateClosed} errorMsg={errorMsg['dateClosed']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'dateClosed': e }))} />
                     </div>
                     <SemesterDropDown title={"Semestr"} values={semestersData} value={semester} setValue={setSemester} />
                     <TeachersDropDown title={"Dydaktycy"} values={teachersData} value={teachers} setValue={setTeachers} />
