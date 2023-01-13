@@ -2,14 +2,15 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType, UserType, Major } from 'types';
+import { ButtonType, UserType } from 'types';
 import { updateUserNew, updateUserOld } from '../api/updateUser';
 import { OldUser, Student, Teacher, User } from '../types';
 import { isStudent, isTeacher, isStudentOrTeacher } from '../api/checkUserType';
-import { getMajors } from '../api/geyMajors';
 import { useQuery } from 'react-query'
 import { MajorsDropDown } from 'components/MajorsDropDown';
 import AuthContext from 'context/AuthContext'
+import { Major } from 'features/majors';
+import { getMajors } from 'features/majors/api/getMajors';
 
 interface IEditModal {
     show: boolean,

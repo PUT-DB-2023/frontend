@@ -2,12 +2,13 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType, UserType, Major } from 'types';
+import { ButtonType, UserType } from 'types';
 import { addUserNew, addUserOld } from '../api/addUser';
 import { OldUser, Student, Teacher, User } from '../types';
-import { getMajors } from '../api/geyMajors';
 import { useQuery } from 'react-query'
 import { MajorsDropDown } from 'components/MajorsDropDown';
+import { Major } from 'features/majors';
+import { getMajors } from 'features/majors/api/getMajors';
 
 export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: () => void, refetch: () => void, type: UserType }) => {
     const { data: majorsData, status: majorsStatus, refetch: majorsRefetch } = useQuery(['majors'], () => getMajors())

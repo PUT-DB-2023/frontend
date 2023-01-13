@@ -1,6 +1,7 @@
 import { Edition } from "features/editions";
 import { Group } from "features/groups/types";
-import { BaseEntity, DbAccount, Major } from "types";
+import { Major } from "features/majors";
+import { BaseEntity, DbAccount } from "types";
 
 export type User = {
     first_name: string;

@@ -1,4 +1,4 @@
-import { AcademicCapIcon, CalendarIcon, DatabaseIcon, UserGroupIcon, UsersIcon } from '@heroicons/react/solid'
+import { AcademicCapIcon, BookOpenIcon, CalendarIcon, DatabaseIcon, UserGroupIcon, UsersIcon } from '@heroicons/react/solid'
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from 'context/AuthContext'
@@ -23,7 +23,7 @@ export const SideNavigation = () => {
   return (
     <nav className='flex flex-col w-full h-full overflow-y-auto mt-12 scrollbar-hide'>
       <Link to='/courses/'>
-        <NavItem title='Przedmioty' icon={<AcademicCapIcon className='h-5 w-auto' />} />
+        <NavItem title='Przedmioty' icon={<BookOpenIcon className='h-5 w-auto' />} />
       </Link>
       {checkPermission('database.view_server') &&
         <Link to='/servers/'>
@@ -39,6 +39,19 @@ export const SideNavigation = () => {
         <Link to='/semesters/'>
           <NavItem title='Semestry' icon={<CalendarIcon className='h-5 w-auto' />} />
         </Link>}
+      {checkPermission('database.view_semester') &&
+      <Link to='/majors/'>
+        <NavItem title='Kierunki' icon={<AcademicCapIcon className='h-5 w-auto' />} />
+      </Link>}
+      {checkPermission('database.view_semester') &&
+      <Link to='/providers/'>
+        <NavItem title='Systemy bazodanowe' icon={
+        <div className='flex'>
+          <DatabaseIcon className='h-5 w-auto' />
+        </div>
+      } />
+      </Link>}
     </nav>
+    
   )
 }
