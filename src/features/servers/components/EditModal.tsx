@@ -2,13 +2,14 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType, Provider } from 'types';
+import { ButtonType } from 'types';
 import { updateServer } from '../api/updateServer';
 import { Server } from '../types';
 import { objectMap } from 'api/objectMap';
 import { useQuery } from 'react-query';
 import { getProviders } from '../api/getProviders';
 import { ProvidersDropDown } from 'components/ProvidersDropDown';
+import { Provider } from 'features/providers';
 
 interface IEditModal {
     show: boolean,

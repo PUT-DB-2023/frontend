@@ -1,4 +1,5 @@
-import { BaseEntity, Provider } from "types";
+import { Provider } from "features/providers";
+import { BaseEntity } from "types";
 
 export type Server = {
     name: string;

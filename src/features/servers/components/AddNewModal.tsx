@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
-import { ButtonType, Provider } from 'types';
+import { ButtonType } from 'types';
 import { addServer } from '../api/addServer';
 import { useNavigate } from 'react-router-dom';
 import { Server } from '../types';
@@ -10,6 +10,7 @@ import { objectMap } from 'api/objectMap';
 import { ProvidersDropDown } from 'components/ProvidersDropDown';
 import { useQuery } from 'react-query';
 import { getProviders } from '../api/getProviders';
+import { Provider } from 'features/providers';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const { data: providersData, status: providersStatus, refetch: providersRefetch } = useQuery(['dbms'], () => getProviders());

@@ -1,5 +1,5 @@
 import { Listbox } from '@headlessui/react';
-import { Provider } from 'types';
+import { Provider } from 'features/providers';
 import { IDropDownSingle } from 'types';
 import { FieldBox, clsTextWrong, clsName, clsNameWrong } from './FieldBox';
 
