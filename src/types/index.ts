@@ -1,6 +1,6 @@
 import { Edition } from "features/editions";
 import { Server } from "features/servers";
-import { Teacher } from "features/users";
+import { Student, Teacher } from "features/users";
 import { Dispatch, SetStateAction } from "react";
 
 export interface IDropDownMulti<T> {
@@ -50,6 +50,7 @@ export type DbAccount = {
   additional_info : string,
   is_moved : boolean;
   editionServer: EditionServer;
+  student : Student;
 } & BaseEntity
 
 export enum ButtonType {
