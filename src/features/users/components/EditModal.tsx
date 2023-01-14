@@ -81,9 +81,14 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     }, [show, data, majorsData])
 
     const updateCurrentUser = (user: User) => {
-        localStorage.setItem('auth_user', JSON.stringify(user));
-        const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "");
-        setAuthUser(authenticatedUser);
+        const localUser = localStorage.getItem('auth_user');
+        const authenticatedUser: User = localUser && localUser?.length > 0 ? JSON.parse(localUser) : undefined;
+
+        const combineLocal: User = {...authenticatedUser, ...user} as User;
+        localStorage.setItem('auth_user', JSON.stringify(combineLocal));
+
+        const combineAuth: User = {...authUser, ...user} as User;
+        setAuthUser(combineAuth);
     }
 
     const handleEdit = React.useCallback(async () => {
