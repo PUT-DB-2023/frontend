@@ -9,12 +9,13 @@ interface IPasswordResetModal {
     show: boolean,
     off: () => void,
     id: string | undefined,
+    owner?: boolean,
 }
 
-export const PasswordResetModal = ({ show, off, id }: IPasswordResetModal) => {
+export const PasswordResetModal = ({ show, off, id, owner }: IPasswordResetModal) => {
     const navigate = useNavigate();
     const handlePasswordReset = React.useCallback(async () => {
-        const res = await resetPassword(id)
+        const res = await resetPassword(id, owner)
         if (res) {
             off();
             // navigate(dest)
