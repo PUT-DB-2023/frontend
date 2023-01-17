@@ -69,8 +69,8 @@ const dbAccountsColumns = (
       cell: ({ getValue }: { getValue: Getter<Semester> }) => (
         <div className='p-2'>
           {getValue() ?
-            getValue()?.start_year.toString() + '/' + (parseInt(getValue()?.start_year) + 1).toString() + ' - ' +
-              getValue()?.winter ? <span>Zima</span> : <span>Lato</span> : 'Brak'
+            (getValue()?.start_year.toString() + '/' + (parseInt(getValue()?.start_year) + 1).toString() + ' - ' +
+              (getValue()?.winter ? 'Zima' : 'Lato')) : 'Brak'
           }
         </div>
       )
