@@ -35,7 +35,7 @@ const customMenuItems = (dbAccount: DbAccount, setShow: (v: boolean) => void, se
 ]
 
 const dbAccountsColumns = (
-  setReamoveShow: (v: boolean) => void,
+  setRemoveShow: (v: boolean) => void,
   setResetPassword: (v: boolean) => void,
   setCurrent: (v: DbAccount) => void,
   resetDBPassPerm: boolean,
@@ -113,7 +113,7 @@ const dbAccountsColumns = (
             remove={deleteDBPerm ?
               async () => {
               setCurrent(getValue());
-              setReamoveShow(true);
+              setRemoveShow(true);
             } : undefined
             }
             customMenuItems={resetDBPassPerm ? customMenuItems(getValue(), setResetPassword, setCurrent) : undefined}

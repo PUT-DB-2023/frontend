@@ -2,8 +2,8 @@ import { Button } from 'components/Button';
 import { ModalContainer } from 'components/ModalContainer';
 import * as React from 'react';
 import { ButtonType, DbAccount } from 'types';
-import { resetDBAccountPassword } from '../api/resetDBAcountPassword';
-import { removeDBAccount } from '../api/removeDBAcount'
+import { removeDBAccountLocal } from '../api/removeDBAccountLocal';
+import { removeDBAccountFromServer } from '../api/removeDBAcountFromServer';
 
 interface IRemoveModal {
     show: boolean,
@@ -12,12 +12,24 @@ interface IRemoveModal {
 }
 
 export const RemoveDBAccountModal = ({ show, off, dbAccount }: IRemoveModal) => {
+    const [removeLocal, setRemoveLocal] = React.useState(false)
+    const [removeFromServer, setRemoveFromServer] = React.useState(false)
+    let resLocal = false
+    let resServer = false
+
     const handleRemove = React.useCallback(async () => {
-        const res = await removeDBAccount(dbAccount?.id);
-        if (res) {
+        if (removeFromServer) {
+            resServer = await removeDBAccountFromServer(dbAccount?.id);
+        }
+
+        if (removeLocal) {
+            resServer = await removeDBAccountLocal(dbAccount?.id);
+        }
+        
+        if ((removeFromServer && resServer) || (removeLocal && resLocal)) {
             off();
         }
-    }, [dbAccount])
+    }, [dbAccount, removeLocal, removeFromServer])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
@@ -27,7 +39,16 @@ export const RemoveDBAccountModal = ({ show, off, dbAccount }: IRemoveModal) => 
     if (show) {
         return (
             <ModalContainer title={`Usuń konto "${dbAccount?.editionServer?.server?.name}"`} off={off} buttons={buttons}>
-                Jesteś pewny?
+                <div className='flex flex-col gap-1'>
+                    <div className='flex gap-2 items-center px-4 mb-4'>
+                        <input type="checkbox" checked={removeLocal} onChange={() => setRemoveLocal(!removeLocal)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
+                        Usuń lokalną reprezentację konta
+                    </div>
+                    <div className={`flex gap-2 items-center px-4 mb-4 ${!dbAccount?.is_moved ? 'text-zinc-400' : ''}`}>
+                        <input type="checkbox" disabled={!dbAccount?.is_moved} checked={removeFromServer} onChange={() => setRemoveFromServer(!removeFromServer)} className="w-4 h-4 text-blue-600 accent-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 focus:ring-2"></input>
+                        Usuń z serwera bazodanowego
+                    </div>
+                </div>
             </ModalContainer>
         );
     } else {

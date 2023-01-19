@@ -10,5 +10,4 @@ export const resetDBAccountPassword = async (id: string | undefined) => {
     .then((e) => { toast.update(t, { render: `Pomyślnie zresetowano hasło`, type: "success", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000 }); return e })
     .catch((e) => { toast.update(t, { render: `Nie udało się zresetować hasła - ${displayError(e.response.data)}`, type: "error", theme: "colored", isLoading: false, closeButton: true, autoClose: 12000 }); return e })
     return response.data
-    return false;
 }
