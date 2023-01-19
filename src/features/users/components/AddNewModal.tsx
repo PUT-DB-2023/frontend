@@ -100,7 +100,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
                     <Field title={"Email"} value={email} type={'email'} setValue={setEmail} errorMsg={errorMsg['email']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'email': e }))} maxLenght={70} />
                     {type === UserType.STUDENT &&
                         <>
-                            <Field title={"Student ID"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
+                            <Field title={"Nr albumu"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
                             {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} />}
                         </>
                     }

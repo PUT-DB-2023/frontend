@@ -81,9 +81,14 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     }, [show, data, majorsData])
 
     const updateCurrentUser = (user: User) => {
-        localStorage.setItem('auth_user', JSON.stringify(user));
-        const authenticatedUser: User = JSON.parse(localStorage.getItem('auth_user') || "");
-        setAuthUser(authenticatedUser);
+        const localUser = localStorage.getItem('auth_user');
+        const authenticatedUser: User = localUser && localUser?.length > 0 ? JSON.parse(localUser) : undefined;
+
+        const combineLocal: User = {...authenticatedUser, ...user} as User;
+        localStorage.setItem('auth_user', JSON.stringify(combineLocal));
+
+        const combineAuth: User = {...authUser, ...user} as User;
+        setAuthUser(combineAuth);
     }
 
     const handleEdit = React.useCallback(async () => {
@@ -121,7 +126,7 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
                     <Field title={"Email"} value={email} type={'email'} setValue={setEmail} errorMsg={errorMsg['email']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'email': e }))} maxLenght={70} />
                     {type === UserType.STUDENT &&
                         <>
-                            <Field title={"Student ID"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
+                            <Field title={"Nr albumuD"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
                             {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(value: string) => setErrorMsg(prevState => ({ ...prevState, 'major': value }))} />}
                         </>
                     }

@@ -28,7 +28,7 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
   })
   type === UserType.STUDENT && data.push({
     accessorKey: `student_id`,
-    header: () => 'Student ID',
+    header: () => 'Nr albumu',
     cell: ({ row, getValue } : any) => LinkCell({ row, getValue, baseUrl })
   })
   data.push({
