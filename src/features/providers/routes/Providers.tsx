@@ -14,10 +14,10 @@ export const Providers = () => {
 
   return (
     <ContentLayout>
-      {checkPermission('database.add_provider') && <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['providers'])} />}
+      {checkPermission('database.add_group') && <AddNewModal show={showAdd} off={() => setShowAdd(false)} refetch={() => queryClient.refetchQueries(['providers'])} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold mb-4'>Systemy bazodanowe</span>
-        {checkPermission('database.add_provider') && <Button type={ButtonType.ACTION} text='Dodaj system' onClick={() => setShowAdd(true)} />}
+        {checkPermission('database.add_group') && <Button type={ButtonType.ACTION} text='Dodaj system' onClick={() => setShowAdd(true)} />}
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
         <ProviderList />

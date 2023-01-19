@@ -3,7 +3,7 @@ import { ColumnDef, Getter } from '@tanstack/react-table'
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Loading } from 'components/Loading'
-import { OptionsMenu } from 'components/OptionsMenu'
+import { CustomOptionMenuItem, OptionsMenu } from 'components/OptionsMenu'
 import { Table } from 'components/Table'
 import AuthContext from 'context/AuthContext'
 import { Semester } from 'features/semesters'
@@ -20,6 +20,16 @@ import { StudentGroupList } from '../components/StudentGroupList'
 import { TeacherEditionList } from '../components/TeacherEditionList'
 import { UserInfo } from '../components/UserInfo'
 import { User as TUser } from '../types'
+
+const customMenuItems = (dbAccount: DbAccount) : CustomOptionMenuItem[] => [
+  {
+      text: 'Resetuj hasło',
+      onClick: async () => {
+          console.log('RESET', dbAccount.id);
+          
+      },
+  }
+]
 
 const dbAccountsColumns : ColumnDef<DbAccount>[] =
 [
@@ -85,11 +95,11 @@ const dbAccountsColumns : ColumnDef<DbAccount>[] =
     },
     {
       id: 'options',
-      accessorFn: row => null,
+      accessorFn: row => row,
       header: 'Opcje',
       cell: ({getValue} : {getValue : any}) => (
         <div className='p-2 flex justify-center '>
-          <OptionsMenu edit={() => console.log('EDIT')} remove={() => console.log('REMOVE')}/>
+          <OptionsMenu customMenuItems={customMenuItems(getValue())} remove={() => console.log('REMOVE')}/>
         </div>
       )
   }
