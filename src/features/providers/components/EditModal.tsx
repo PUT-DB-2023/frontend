@@ -5,23 +5,24 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { objectMap } from 'api/objectMap';
 import { updateProvider } from '../api/updateProvider';
+import { Provider } from '../types';
 
 interface IEditModal {
     show: boolean,
     off: () => void,
     refetch: () => void,
-    data: { name: string, id: string, description: string }
+    data: Provider;
 }
 
 export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
-    const [name, setName] = React.useState(data.name);
-    const [description, setDescription] = React.useState(data.description);
+    const [name, setName] = React.useState(data?.name);
+    const [description, setDescription] = React.useState(data?.description);
     const defaultMsg = { name: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     React.useEffect(() => {
-        setName(data.name);
-        setDescription(data.description);
+        setName(data?.name);
+        setDescription(data?.description);
         setErrorMsg(defaultMsg);
     }, [show, data])
 
@@ -40,7 +41,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         if (!validate()) {
             return;
         }
-        const res = await updateProvider({ id: data.id, name, description })
+        const res = await updateProvider({ id: data?.id, name, description })
         if (res) {
             off();
             refetch();
@@ -54,10 +55,10 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
 
     if (show) {
         return (
-            <ModalContainer title={data.name} off={off} buttons={buttons}>
+            <ModalContainer title={data?.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50}/>
-                    <Field title={"Opis"} value={description} setValue={setDescription} maxLenght={255}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} maxLenght={255} />
                 </div>
             </ModalContainer>
         );
