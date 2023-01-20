@@ -31,14 +31,15 @@ export const DateField = ({ title, value, setValue, maxDate, minDate, errorMsg, 
 DateField.displayName = 'DateField';
 
 interface IYearField {
-    title: any;
+    title?: any;
     value: any;
     setValue: any;
-    autoFocus: any;
+    autoFocus?: boolean;
     minYear?: any;
     maxYear?: any;
     errorMsg?: any;
     setErrorMsg?: any;
+    disabled?: boolean;
 }
 
 export const YearField = ({ title, value, setValue, autoFocus, minYear, maxYear, errorMsg, setErrorMsg }: IYearField) => {

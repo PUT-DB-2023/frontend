@@ -5,7 +5,7 @@ import { onEnterPress } from 'api/onKeyPress';
 interface IField {
     title: string | undefined,
     value: any,
-    setValue: (e: any) => void,
+    setValue?: (e: any) => void,
     type?: string,
     pattern?: string,
     forcePattern?: boolean,
@@ -16,9 +16,10 @@ interface IField {
     setErrorMsg?: (e: string) => void,
     maxLenght?: number;
     onSubmit?: () => void;
+    disabled?: boolean;
 }
 
-export const Field = ({ title, value, setValue, type, pattern, forcePattern, wrongText, autoFocus, multiline, errorMsg, setErrorMsg, maxLenght, onSubmit }: IField) => {
+export const Field = ({ title, value, setValue, type, pattern, forcePattern, wrongText, autoFocus, multiline, errorMsg, setErrorMsg, maxLenght, onSubmit, disabled }: IField) => {
     const handleChange = React.useCallback((e: any) => {
         const val = e.target.value;
         if (pattern) {
@@ -31,7 +32,7 @@ export const Field = ({ title, value, setValue, type, pattern, forcePattern, wro
                 } else {
                     setErrorMsg && wrongText && setErrorMsg(wrongText);
                     if (forcePattern) {
-                        setValue((prev: string) => prev);
+                        setValue && setValue((prev: string) => prev);
                         return;
                     }
                 }
@@ -39,16 +40,16 @@ export const Field = ({ title, value, setValue, type, pattern, forcePattern, wro
         } else {
             setErrorMsg && setErrorMsg('');
         }
-        setValue(val)
+        setValue && setValue(val)
     }, [pattern, value])
 
     return (
         <FieldBox title={title}>
             {multiline ?
-                <textarea value={value} onChange={handleChange} rows={6} maxLength={maxLenght} onKeyDown={(e) => onEnterPress(e, onSubmit)}
+                <textarea disabled={disabled} value={value} onChange={handleChange} rows={6} maxLength={maxLenght} onKeyDown={(e) => onEnterPress(e, onSubmit)}
                     className={`${(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} rounded-md`} autoFocus={autoFocus} />
                 :
-                <input type={type ? type : 'input'} value={value} onChange={handleChange} maxLength={maxLenght} onKeyDown={(e) => onEnterPress(e, onSubmit)}
+                <input disabled={disabled} type={type ? type : 'input'} value={value} onChange={handleChange} maxLength={maxLenght} onKeyDown={(e) => onEnterPress(e, onSubmit)}
                     className={(errorMsg && errorMsg?.length > 0) ? clsNameWrong : clsName} autoFocus={autoFocus} />}
             {errorMsg && errorMsg?.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
         </FieldBox>

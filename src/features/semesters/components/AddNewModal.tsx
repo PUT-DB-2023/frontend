@@ -6,6 +6,7 @@ import { addSemester } from '../api/addSemester';
 import { YearField } from 'components/DateField';
 import { Switch } from 'components/Switch';
 import { toast } from 'react-toastify'
+import { Field } from 'components/Field';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const [year, setYear] = React.useState(new Date());
@@ -52,10 +53,13 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     if (show) {
         return (
-            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons} style={{height: 'min(100%, 470px)'}}>
+            <ModalContainer title='Nowy semestr' off={handleOff} buttons={buttons} style={{ height: 'min(100%, 470px)' }}>
                 <div className={`flex flex-col`}>
-                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })}/>
-                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter}/>
+                    <div className="flex">
+                        <YearField title={'Rok rozpoczęcia'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })} />
+                        <Field title={"Rok zakończenia"} value={year.getFullYear() + 1} disabled={true} />
+                    </div>
+                    <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>
         );
