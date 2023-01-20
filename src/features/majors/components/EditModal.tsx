@@ -58,7 +58,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             <ModalContainer title={data?.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50} />
-                    <Field title={"Opis"} value={description} setValue={setDescription} maxLenght={255} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255} />
                 </div>
             </ModalContainer>
         );
