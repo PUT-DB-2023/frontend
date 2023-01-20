@@ -1,7 +1,6 @@
 import { Button } from 'components/Button';
 import { ModalContainer } from 'components/ModalContainer';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
 import { deleteMajor } from '../api/deleteMajor';
 
@@ -9,16 +8,16 @@ interface IRemoveModal {
     show: boolean,
     off: () => void,
     id: string | undefined,
-    name: string
+    name: string,
+    refetch: () => void,
 }
 
-export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
-    const navigate = useNavigate()
+export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     const handleRemove = React.useCallback(async () => {
         const res = await deleteMajor(id)
         if (res) {
+            refetch();
             off();
-            navigate(-1)
         }
     }, [id])
 

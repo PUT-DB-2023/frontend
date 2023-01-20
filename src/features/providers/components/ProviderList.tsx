@@ -2,18 +2,24 @@ import { searchFunc } from 'api/searchApi'
 import { sortFunc } from 'api/sortFilter'
 import { Box } from 'components'
 import { Loading } from 'components/Loading'
+import { OptionsMenu } from 'components/OptionsMenu'
 import { Toolbar } from 'components/Toolbar'
-import { useMemo, useState } from 'react'
+import AuthContext from 'context/AuthContext'
+import { useMemo, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import { getProviders } from '../api/getProviders'
 import { Provider, majorsSortOptions } from '../types'
+import { RemoveModal } from './RemoveModal'
 
 export const ProviderList = () => {
 
   const [sortBy, setSortBy] = useState(majorsSortOptions[0])
   const [filterBy, setFilterBy] = useState(null);
   const [search, setSearch] = useState('');
+  const { authUser, checkPermission } = useContext(AuthContext);
+  const [removeModal, setRemoveModal] = useState(false);
+
 
   const { data: majorData, status: majorStatus, refetch: majorRefetch } = useQuery(['providers'], getProviders)
 
@@ -30,11 +36,19 @@ export const ProviderList = () => {
       <div className='w-full'>
         {majorData.length == 0 ?
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Kierunków </div> :
-          sortedProviders.map((major: Provider) => {
+          sortedProviders.map((provider: Provider) => {
             return (
-              <Box>
-                <span className='font-semibold text-xl'> {major?.name}</span>
-              </Box>
+              <>
+                {checkPermission('database.delete_major') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={provider?.id} name={`Usuwanie kierunku ${provider?.name}`} refetch={majorRefetch} />}
+                <Box>
+                  <div className='flex justify-between'>
+                    <span className='font-semibold text-xl'> {provider?.name}</span>
+                    <OptionsMenu
+                      remove={checkPermission('database.delete_dbms') ? (() => { setRemoveModal(true) }) : undefined}
+                    />
+                  </div>
+                </Box>
+              </>
             )
           })}
       </div>
