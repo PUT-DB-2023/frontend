@@ -7,7 +7,6 @@ import { Toolbar } from 'components/Toolbar'
 import AuthContext from 'context/AuthContext'
 import { useMemo, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
 import { getProviders } from '../api/getProviders'
 import { Provider, majorsSortOptions } from '../types'
 import { EditModal } from './EditModal'
@@ -40,7 +39,7 @@ export const ProviderList = () => {
       <Toolbar sort={true} filter={false} search={true} sortOptions={majorsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj dostawcy' />
       <div className='w-full'>
         {providersData.length == 0 ?
-          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Dostawców </div> :
+          <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak systemów bazodanowych </div> :
           sortedProviders.map((provider: Provider) => {
             return (
               <Box>

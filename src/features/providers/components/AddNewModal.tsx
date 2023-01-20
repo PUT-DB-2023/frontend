@@ -41,7 +41,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         if (res) {
             handleOff();
             refetch()
-            navigate(`${res.id}/`)
         }
     }, [name, description])
 
@@ -54,8 +53,8 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy system bazodanowy' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50}/>
-                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50} />
+                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255} />
                 </div>
             </ModalContainer>
         );
