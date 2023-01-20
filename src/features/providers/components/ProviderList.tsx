@@ -42,7 +42,7 @@ export const ProviderList = () => {
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak systemów bazodanowych </div> :
           sortedProviders.map((provider: Provider) => {
             return (
-              <Box>
+              <Box key={provider.id}>
                 <div className='flex justify-between'>
                   <span className='font-semibold text-xl'> {provider?.name}</span>
                   <OptionsMenu

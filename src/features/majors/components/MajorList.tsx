@@ -7,7 +7,6 @@ import { Toolbar } from 'components/Toolbar'
 import AuthContext from 'context/AuthContext'
 import { useMemo, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
 import { getMajors } from '../api/getMajors'
 import { Major, majorsSortOptions } from '../types'
 import { EditModal } from './EditModal'
@@ -41,7 +40,7 @@ export const MajorList = () => {
           <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Kierunków </div> :
           sortedMajors.map((major: Major) => {
             return (
-              <Box>
+              <Box key={major.id}>
                 <div className='flex justify-between'>
                   <span className='font-semibold text-xl'> {major?.name}</span>
                   <OptionsMenu
