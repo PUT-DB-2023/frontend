@@ -23,21 +23,21 @@ export const OptionsMenu = ({ edit, remove, onClick, customMenuItems }: IOptions
                         <DotsHorizontalIcon className='w-7 h-auto cursor-pointer hover:text-zinc-500' />
                     </Menu.Button>
                 </div>
-                <Menu.Items className="z-10 absolute right-0 mt-4 border-[1px] border-zinc-300 w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="z-10 absolute right-0 mt-4 border-[1px] border-zinc-300 min-w-[212px] origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-md ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="">
                         {customMenuItems?.map((item: CustomOptionMenuItem) => {
                             return (
                                 <Menu.Item key={item.text}>
                                     {({ active }: { active: boolean }) => (
-                                        <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
-                                            <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
                                             <button
                                                 onClick={() => item.onClick()}
-                                                className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}
+                                                className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full text-base`}
                                             >
-                                                {item.text}
+                                                <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
+                                                <span className='py-[6px] font-normal'>
+                                                    {item.text}
+                                                </span>
                                             </button>
-                                        </div>
                                     )}
                                 </Menu.Item>
                             )
@@ -45,30 +45,30 @@ export const OptionsMenu = ({ edit, remove, onClick, customMenuItems }: IOptions
                         {edit ?
                             <Menu.Item>
                                 {({ active }: { active: boolean }) => (
-                                    <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
+                                    <button
+                                        onClick={edit}
+                                        className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full text-base`}
+                                    >
                                         <div className={`w-1 ${active ? 'bg-blue-600' : ''}`}></div>
-                                        <button
-                                            onClick={edit}
-                                            className={`${active ? `font-normal` : `font-normal`} my-[6px] w-full flex text-base`}
-                                        >
+                                        <span className='py-[6px] font-normal'>
                                             Edytuj
-                                        </button>
-                                    </div>
+                                        </span>
+                                    </button>
                                 )}
                             </Menu.Item>
                             : null}
                         {remove ?
                             <Menu.Item>
                                 {({ active }: { active: boolean }) => (
-                                    <div className={`${active ? 'bg-red-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-500'} flex gap-7 w-full`}>
+                                    <button
+                                        onClick={remove}
+                                        className={`${active ? 'bg-zinc-100 text-red-500' : 'hover:bg-zinc-100 [&>div]:hover:bg-red-500'} flex gap-7 w-full text-base`}
+                                    >
                                         <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
-                                        <button
-                                            onClick={remove}
-                                            className={`${active ? `font-normal text-red-500` : `font-normal`} my-[6px] w-full flex text-base`}
-                                        >
+                                        <span className='py-[6px] font-normal'>
                                             Usuń
-                                        </button>
-                                    </div>
+                                        </span>
+                                    </button>
                                 )}
                             </Menu.Item>
                             : null}

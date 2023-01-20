@@ -11,6 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { UserType } from 'types';
 import { ErrorFallback } from './ErrorFallback';
 import { MobileSideBar } from './MobileSideBar';
+import { CustomOptionMenuItem } from './OptionsMenu';
 import { ShowMenuButton } from './ShowMenuButton';
 import { SideBar } from './SideBar';
 
@@ -73,12 +74,15 @@ const ProfileMenu = ({authUserTypeDetailsData}: IProfileMenu) => {
               </Menu.Item>
               <Menu.Item>
                 {({ active } : { active : boolean }) => (
-                  <div className={`${active ? 'bg-zinc-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
-                      <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
-                        <button className={`${active ? `font-normal text-red-500` : `font-normal`} my-[6px] w-full flex text-base`} onClick={() => handleLogout()}>
-                            Wyloguj
-                        </button>
-                  </div> 
+                  <button
+                  onClick={() => handleLogout()}
+                  className={`${active ? 'bg-zinc-100 text-red-500' : 'hover:bg-zinc-100 [&>div]:hover:bg-red-500'} flex gap-7 w-full text-base`}
+              >
+                  <div className={`w-1 ${active ? 'bg-red-500' : ''}`}></div>
+                  <span className='py-[6px] font-normal'>
+                      Wyloguj
+                  </span>
+              </button> 
                 )}
               </Menu.Item>
           </Menu.Items>

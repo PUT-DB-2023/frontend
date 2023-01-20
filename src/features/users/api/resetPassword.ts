@@ -3,6 +3,8 @@ import { axios } from 'lib/axios'
 import { toast } from 'react-toastify';
 
 export const resetPassword = async (userId: string | undefined, owner: boolean = false) => {
+    console.log(owner);
+    
     const t = toast.loading("Resetowanie hasła..")
     const response = await axios.post(owner ? "/reset_own_password" : "/reset_student_password", {
         "account_id": userId
