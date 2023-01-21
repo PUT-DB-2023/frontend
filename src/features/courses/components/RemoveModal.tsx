@@ -24,8 +24,8 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     }, [id])
 
     const buttons = <>
-        <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
-        <Button type={ButtonType.ACTION} text='Usuń' onClick={handleRemove} />
+        <Button type={ButtonType.TEXT_WARNING} text='Anuluj' onClick={off} />
+        <Button type={ButtonType.WARNING} text='Usuń' onClick={handleRemove} />
     </>
 
     if (show) {
