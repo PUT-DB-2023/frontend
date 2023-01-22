@@ -2,20 +2,21 @@ import { Button } from 'components/Button';
 import { ModalContainer } from 'components/ModalContainer';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ButtonType } from 'types';
+import { ButtonType, UserType } from 'types';
 import { resetPassword } from '../api/resetPassword';
 
 interface IPasswordResetModal {
     show: boolean,
+    userType: UserType,
     off: () => void,
     id: string | undefined,
     owner?: boolean,
 }
 
-export const PasswordResetModal = ({ show, off, id, owner }: IPasswordResetModal) => {
+export const PasswordResetModal = ({ show, userType, off, id, owner }: IPasswordResetModal) => {
     const navigate = useNavigate();
     const handlePasswordReset = React.useCallback(async () => {
-        const res = await resetPassword(id, owner)
+        const res = await resetPassword(id, userType, owner)
         if (res) {
             off();
             // navigate(dest)

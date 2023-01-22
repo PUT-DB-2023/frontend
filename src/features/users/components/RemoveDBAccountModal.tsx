@@ -1,5 +1,6 @@
 import { Button } from 'components/Button';
 import { ModalContainer } from 'components/ModalContainer';
+import { queryClient } from 'lib/react-query';
 import * as React from 'react';
 import { ButtonType, DbAccount } from 'types';
 import { removeDBAccountLocal } from '../api/removeDBAccountLocal';
@@ -27,6 +28,9 @@ export const RemoveDBAccountModal = ({ show, off, dbAccount }: IRemoveModal) => 
         }
         
         if ((removeFromServer && resServer) || (removeLocal && resLocal)) {
+            queryClient.refetchQueries('user')
+            setRemoveLocal(false)
+            setRemoveFromServer(false)
             off();
         }
     }, [dbAccount, removeLocal, removeFromServer])

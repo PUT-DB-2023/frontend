@@ -173,10 +173,10 @@ export const User = ({ type }: IUser) => {
       {resetDBPassPerm && <ResetDBAccountPasswordModal show={resetDBPassword} off={() => setResetBPassword(false)} dbAccount={currentDBAccountID}/>}
       {editPerm && <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData} />}
       {deletePerm && <RemoveModal show={removeModal} id={userData.id} off={() => setRemoveModal(false)} type={type} />}
-      {resetPassPerm && <PasswordResetModal show={resetModal} id={userData.id} off={() => setResetModal(false)} owner={userProfil} />}
+      {resetPassPerm && <PasswordResetModal show={resetModal} id={userAccessor.id} userType={type} off={() => setResetModal(false)} owner={userProfil} />}
       <ContentPanel type={PanelType.HEADER}>
-        <span className='text-black text-3xl font-bold mb-4'> {userAccessor.first_name + " " + userAccessor.last_name} </span>
-        <div className='flex gap-6'>
+        <span className='text-black text-3xl font-bold'> {userAccessor.first_name + " " + userAccessor.last_name} </span>
+        <div className='flex gap-6 items-center'>
           {resetPassPerm && <Button type={ButtonType.ACTION} text='Resetuj hasło' onClick={() => setResetModal(true)} />}
           <OptionsMenu
             edit={editPerm ? (() => setEditModal(true)) : undefined}

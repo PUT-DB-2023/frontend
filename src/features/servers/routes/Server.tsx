@@ -47,7 +47,7 @@ export const Server = () => {
           <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverData.name}</h1>
         </div>
         <div className='flex items-start'>
-          <div className='flex gap-6'>
+        <div className='flex gap-6 items-center'>
             {checkPermission('database.change_server') && (serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />
