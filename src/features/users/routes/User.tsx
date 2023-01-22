@@ -157,9 +157,11 @@ export const User = ({ type }: IUser) => {
   }, [id, userData, userStatus])
 
   React.useEffect(() => {
-    document.title = `${type === UserType.ADMIN ? 'Admin:' : type === UserType.TEACHER ? 'Dydaktyk:' : type === UserType.STUDENT ? 'Student:' : 'Użytkownik:'} 
-    ${userData?.first_name ? userData?.first_name : ''} ${userData?.last_name ? userData?.last_name : ''}`
-  }, [type, userData?.first_name, userData?.last_name])
+    const userType = type === UserType.ADMIN ? 'Admin' : type === UserType.TEACHER ? 'Dydaktyk' : type === UserType.STUDENT ? 'Student' : 'Użytkownik';
+    const first_name = userData?.user?.first_name ? userData?.user?.first_name : (userData?.first_name ? userData?.first_name : '');
+    const last_name = userData?.user?.last_name ? userData?.user?.first_name : (userData?.last_name ? userData?.last_name : '');
+    document.title = `${userType}: ${first_name} ${last_name}`;
+  }, [type, userData])
 
   const columns = dbAccountsColumns(setRemoveDBAccount, setResetBPassword, setCurrentDBAccountID, resetDBPassPerm, deleteDBPerm);
 
