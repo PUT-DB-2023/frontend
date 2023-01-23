@@ -159,7 +159,7 @@ export const User = ({ type }: IUser) => {
   React.useEffect(() => {
     const userType = type === UserType.ADMIN ? 'Admin' : type === UserType.TEACHER ? 'Dydaktyk' : type === UserType.STUDENT ? 'Student' : 'Użytkownik';
     const first_name = userData?.user?.first_name ? userData?.user?.first_name : (userData?.first_name ? userData?.first_name : '');
-    const last_name = userData?.user?.last_name ? userData?.user?.first_name : (userData?.last_name ? userData?.last_name : '');
+    const last_name = userData?.user?.last_name ? userData?.user?.last_name : (userData?.last_name ? userData?.last_name : '');
     document.title = `${userType}: ${first_name} ${last_name}`;
   }, [type, userData])
 
