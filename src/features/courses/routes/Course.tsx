@@ -18,6 +18,7 @@ import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
 import { AddNewModal as AddGroupModal } from 'features/groups/components/AddNewModal'
 import { InfoBoxDisclosure } from 'components/InfoBox'
+import { descriptionClass } from 'features/groups/routes/Group'
 
 
 export const Course = () => {
@@ -105,10 +106,10 @@ export const Course = () => {
       {checkPermission('database.change_edition') && courseId && <EditEditionModal show={editEditionModal} off={() => setEditEditionModal(false)} refetch={allRefetch} data={selectedEdition} courseId={courseId} />}
       {checkPermission('database.delete_edition') && courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch} />}
       <ContentPanel type={PanelType.HEADER}>
-        <div className='flex-col'>
-          <h1 className='text-black text-3xl font-bold mb-4'>{courseData.name}</h1>
-          <h2 className='text-blue-900 font-semibold mb-8'> {allEditionsData !== undefined ? allEditionsData.length : ''} edycje </h2>
-          {courseData?.description && <InfoBoxDisclosure children={courseData.description}/>}
+        <div className='flex flex-col gap-4 text-blue-800'>
+            <h1 className='text-black text-3xl font-bold'>{courseData.name}</h1>
+            <span className={descriptionClass}> {allEditionsData !== undefined ? allEditionsData.length : ''} edycje </span>
+            {courseData?.description && <InfoBoxDisclosure children={courseData.description}/>}
         </div>
         <div className='flex gap-6'>
           {checkPermission('database.add_edition') && <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={() => setAddEditionModal(true)} />}

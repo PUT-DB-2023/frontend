@@ -7,7 +7,8 @@ import { Table } from 'components/Table'
 import { Toolbar } from 'components/Toolbar'
 import AuthContext from 'context/AuthContext'
 import { Server } from 'features/servers'
-import { columns } from 'features/users/routes/Users'
+import { Student } from 'features/users'
+import { usersColumns } from 'features/users/routes/Users'
 import * as React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
@@ -18,21 +19,24 @@ import { AddStudentInfoModal, StudentInfo } from '../components/AddStudentInfoMo
 import { AddStudents } from '../components/AddStudents'
 import { EditModal } from '../components/EditModal'
 import { RemoveModal } from '../components/RemoveModal'
+import { RemoveStudentFromGroupModal } from '../components/RemoveStudentFromGroupModal'
 import { ServerListModal } from '../components/ServerListModal'
 
-const descriptionClass = 'rounded-lg bg-zinc-100 px-4 py-2 font-semibold text-lg';
+export const descriptionClass = 'rounded-lg bg-zinc-100 px-4 py-2 font-semibold text-lg w-auto';
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
+  const [removeStudentModal, setRemoveStudentModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [addStudentModal, setAddStudentModal] = React.useState(false);
-  const { id } = useParams()
+  const {id} = useParams()
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [addFileModal, setAddFileModal] = React.useState(false);
   const [studentInfoModal, setStudentInfoModal] = React.useState(false);
   const [addFileResult, setAddFileResult] = React.useState<StudentInfo[]>()
-  const { authUser, checkPermission } = React.useContext(AuthContext)
+  const {authUser, checkPermission} = React.useContext(AuthContext)
+  const [currentStudent, setCurrentStudent] = React.useState<Student>()
 
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
   let servers = null
@@ -50,6 +54,7 @@ export const Group = () => {
 
   return (
     <ContentLayout>
+      {checkPermission('database.remove_student_from_group') && <RemoveStudentFromGroupModal show={removeStudentModal} off={() => setRemoveStudentModal(false)} group_id={groupData?.id} student_id={currentStudent?.id}/>}
       {checkPermission('database.delete_group') && <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />}
       {checkPermission('database.change_group') && <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />}
       {checkPermission('database.add_students_to_group') && id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult} />}
@@ -91,7 +96,7 @@ export const Group = () => {
           </div>
 
         </div>
-        <Table data={searchData} columns={columns(UserType.STUDENT, 'students/')}></Table>
+        <Table data={searchData} columns={usersColumns(UserType.STUDENT, 'students/', true, checkPermission('database.remove_student_from_group'), setRemoveStudentModal, setCurrentStudent)}></Table>
       </ContentPanel>
     </ContentLayout>
   )

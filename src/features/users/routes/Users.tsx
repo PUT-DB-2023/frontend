@@ -10,19 +10,36 @@ import { ButtonType, PanelType, UserType } from 'types';
 import { AddNewModal } from '../components/AddNewModal';
 import { RemoveStudentsWithoutGroupsModal } from '../components/RemoveUsersWithoutGroupsModal';
 import { UserList } from '../components/UserList';
+import { Student, User } from '../types';
 
 interface UsersProps {
   type: UserType;
 }
 
-export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
+const customMenuItems = (student: Student, setShow: (v: boolean) => void, setCurrent: (v: Student) => void): CustomOptionMenuItem[] => [
+  {
+    text: 'Usuń z grupy',
+    onClick: async () => {
+      setCurrent(student);
+      setShow(true);
+    },
+  }
+]
+
+export const usersColumns = (type: UserType,
+  baseUrl: string, 
+  options?: boolean, 
+  removeFromGroupPerm?: boolean,
+  setRemoveFromGroup?: (v: boolean) => void,
+  setCurrent?: (v: Student) => void,
+): ColumnDef<any>[] => {
   let prefix = 'user.'
 
   if (type === UserType.ADMIN) {
     prefix = ''
   }
 
-  let data = [];
+  let data: ColumnDef<any>[] = [];
   type !== UserType.STUDENT && data.push({
     accessorKey: `${prefix}id`,
     header: () => 'Id',
@@ -48,6 +65,22 @@ export const columns = (type: UserType, baseUrl: string): ColumnDef<any>[] => {
     header: 'Email',
     cell: ({ row, getValue }: any) => LinkCell({ row, getValue, baseUrl })
   })
+
+  if (options && setRemoveFromGroup && setCurrent) {
+    data.push({
+      id: 'options',
+      accessorFn: row => row,
+      // accessorFn: row => ({id: row?.id, name: row?.editionServer?.server.name}),
+      header: 'Opcje',
+      cell: ({ getValue }: any) => (
+        <div className='p-2 flex justify-center '>
+          <OptionsMenu
+            customMenuItems={removeFromGroupPerm ? customMenuItems(getValue(), setRemoveFromGroup, setCurrent) : undefined}
+          />
+        </div>
+      )
+    })
+  }
 
   return data;
 }

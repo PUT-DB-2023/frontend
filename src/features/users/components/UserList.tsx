@@ -6,7 +6,7 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { UserType } from 'types'
 import { getUsers } from '../api/getUsers'
-import { columns } from '../routes/Users'
+import { usersColumns } from '../routes/Users'
 
 interface IUserList {
     type: UserType;
@@ -25,7 +25,7 @@ export const UserList = ({type}: IUserList) => {
     return (
     <div className='flex flex-col gap-8 justify-center items-center'>
         <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={searchData} columns={columns(type, baseUrl)} />
+        <Table data={searchData} columns={usersColumns(type, baseUrl)} />
     </div>
   )
 }

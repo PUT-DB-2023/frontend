@@ -13,6 +13,7 @@ import { EditionGroupList } from '../components/EditionGroupList';
 import { Edition as TEdition } from '../types';
 import { InfoBoxDisclosure } from 'components/InfoBox';
 import { Server } from 'features/servers';
+import { descriptionClass } from 'features/groups/routes/Group';
 
 interface IEdition {
     editionData: TEdition;
@@ -39,21 +40,21 @@ export const Edition = () => {
     return (
         <>
             <div className='flex flex-col gap-8'>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-6'>
                 <h1 className='text-3xl font-bold'>
                     {selectedEditionData ? selectedEditionData.semester.start_year.toString().concat('/').concat((selectedEditionData.semester.start_year + 1).toString()).concat(selectedEditionData.semester.winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
                 </h1>
-                <h2 className={`text-lg font-semibold ${selectedEditionData?.semester?.active ? 'text-blue-600' : 'text-red-500'}`}>
-                    {selectedEditionData ? selectedEditionData?.semester?.active ? 'Aktywna' : 'Nieaktywna' : ''}
-                </h2>
+                <div className={selectedEditionData?.semester?.active ? 'text-blue-600' : 'text-red-500'}>
+                    <span className={descriptionClass}>{selectedEditionData ? selectedEditionData?.semester?.active ? 'Aktywna' : 'Nieaktywna' : ''}</span>
+                </div>
             </div>
-                <h2 className={`text-lg font-normal`}>
+                <div className={`flex gap-3 flex-wrap`}>
                     {selectedEditionData?.servers.map((server: Server, index) => {
                         return (
-                            server.name + (index == selectedEditionData.servers.length - 1 ? ' ' : ' | ')
+                            <span className={descriptionClass}>{server.name}</span>
                         )
                     })}
-                </h2>
+                </div>
                 {selectedEditionData?.description && <InfoBoxDisclosure children={selectedEditionData.description}/>}
             </div>
             {selectedEditionData ?

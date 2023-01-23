@@ -2,6 +2,7 @@ import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
 import { Loading } from 'components/Loading'
 import AuthContext from 'context/AuthContext'
+import { descriptionClass } from 'features/groups/routes/Group'
 import { queryClient } from 'lib/react-query'
 import * as React from 'react'
 import { useQuery } from 'react-query'
@@ -44,13 +45,13 @@ export const Semesters = () => {
         <div className='flex justify-between'>
           <div className='flex flex-col gap-6'>
             <h2 className='text-lg font-semibold'>Bieżący semestr</h2>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-6'>
               <h1 className='text-3xl font-bold'>
                 {activeSemesterData ? activeSemesterData[0].start_year.toString().concat('/').concat((activeSemesterData[0].start_year + 1).toString()).concat(activeSemesterData[0].winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
               </h1>
-              <h2 className={`text-lg font-semibold ${activeSemesterData[0].active ? 'text-blue-600' : 'text-red-500'}`}>
-                {activeSemesterData ? activeSemesterData[0].active ? 'Aktywny' : 'Nieaktywny' : ''}
-              </h2>
+              <div className={activeSemesterData[0].active ? 'text-blue-600' : 'text-red-500'}>
+                  <span className={descriptionClass}>{activeSemesterData ? activeSemesterData[0].active ? 'Aktywny' : 'Nieaktywny' : ''}</span>
+              </div>
             </div>
           </div>
         </div>
