@@ -22,7 +22,7 @@ import { RemoveModal } from '../components/RemoveModal'
 import { RemoveStudentFromGroupModal } from '../components/RemoveStudentFromGroupModal'
 import { ServerListModal } from '../components/ServerListModal'
 
-export const descriptionClass = 'rounded-lg bg-zinc-100 px-4 py-2 font-semibold text-lg w-auto';
+export const descriptionClass = 'w-fit rounded-lg bg-zinc-100 px-4 py-2 font-semibold text-lg w-auto';
 
 export const Group = () => {
   const [removeModal, setRemoveModal] = React.useState(false);
