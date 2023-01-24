@@ -27,10 +27,9 @@ export const Edition = () => {
     const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['editionGroups', editionId, selectedEditionData], () => getEditionGroups(editionId))
 
     const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
-    const [filterBy, setFilterBy] = React.useState(null)
     const [search, setSearch] = React.useState('')
-
-    const searchData = React.useMemo(() => searchFunc(search, groupData, ['day', 'hour', 'teacherEdition/teacher/first_name', 'teacherEdition/teacher/last_name']), [search, groupData]);
+console.log(groupData)
+    const searchData = React.useMemo(() => searchFunc(search, groupData, ['day', 'hour', 'name', 'room', 'teacherEdition/teacher/user/first_name', 'teacherEdition/teacher/user/last_name']), [search, groupData]);
     const sortedGroups = React.useMemo<Group[]>(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
 
     if (selectedEditionStatus == 'loading' || groupStatus == 'loading') {

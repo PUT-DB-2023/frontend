@@ -20,7 +20,7 @@ export const EditionGroupList = ({ groupData }: IEditionGroupList) => {
                 <Box>
                   <span className='font-semibold text-xl'>{group.name}</span>
                   <div className='flex flex-col'>
-                    <span className='font-modeium text-base'>{group.day} {group.hour}</span>
+                    <span className='font-modeium text-base'>{group.day} {group.hour}, sala {group.room}</span>
                     <span className='font-medium text-base text-blue-800'> {group.teacherEdition.teacher.user.first_name + " " + group.teacherEdition.teacher.user.last_name}</span>
                   </div>
                 </Box>
