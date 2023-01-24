@@ -16,10 +16,10 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const navigate = useNavigate()
 
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteCourse(id)
-        if (res) {
+        const res = await deleteCourse(id);
+        if (res.status) {
             off();
-            navigate('/courses')
+            navigate('/courses');
         }
     }, [id])
 

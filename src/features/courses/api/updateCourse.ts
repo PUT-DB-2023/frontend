@@ -6,6 +6,7 @@ import { Course } from '../types'
 interface ICourse {
     id: string,
     name: string,
+    major?: string,
     description: string,
 }
 
