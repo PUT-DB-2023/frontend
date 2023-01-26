@@ -50,7 +50,7 @@ console.log(groupData)
                 <div className={`flex gap-3 flex-wrap`}>
                     {selectedEditionData?.servers.map((server: Server, index) => {
                         return (
-                            <span className={descriptionClass}>{server.name}</span>
+                            <span className={descriptionClass} key={server.id}>{server.name}</span>
                         )
                     })}
                 </div>

@@ -11,6 +11,7 @@ import { MajorsDropDown } from 'components/MajorsDropDown';
 import AuthContext from 'context/AuthContext'
 import { Major } from 'features/majors';
 import { getMajors } from 'features/majors/api/getMajors';
+import { objectMap } from 'api/objectMap';
 
 interface IEditModal {
     show: boolean,
@@ -26,7 +27,7 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
     const [last_name, setLastName] = React.useState(isStudentOrTeacher(data) ? data?.user?.last_name : data?.last_name);
     const [email, setEmail] = React.useState(isStudentOrTeacher(data) ? data?.user?.email : data?.email);
     const [student_id, setStudentId] = React.useState<string | undefined>(isStudent(data) ? data?.student_id : undefined);
-    const [major, setMajor] = React.useState<Major | undefined>();
+    const [major, setMajor] = React.useState<Major>();
     const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '', major: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
@@ -65,7 +66,10 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
             correct = false;
         }
 
-        return correct;
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
     }, [first_name, last_name, email, student_id, major])
 
     React.useEffect(() => {

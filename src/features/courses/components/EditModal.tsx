@@ -1,3 +1,4 @@
+import { objectMap } from 'api/objectMap';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { MajorsDropDown } from 'components/MajorsDropDown';
@@ -47,7 +48,10 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
             correct = false;
         }
 
-        return correct;
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
     }, [name, major, errorMsg])
 
     const handleUpdate = React.useCallback(async () => {
@@ -70,7 +74,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50}/>
                     {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))}/>}
                     <Field title={"Opis"} value={description} setValue={setDescription} maxLenght={255}/>
                 </div>

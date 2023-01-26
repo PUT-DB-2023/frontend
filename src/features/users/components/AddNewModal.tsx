@@ -9,6 +9,7 @@ import { useQuery } from 'react-query'
 import { MajorsDropDown } from 'components/MajorsDropDown';
 import { Major } from 'features/majors';
 import { getMajors } from 'features/majors/api/getMajors';
+import { objectMap } from 'api/objectMap';
 
 export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: () => void, refetch: () => void, type: UserType }) => {
     const { data: majorsData, status: majorsStatus, refetch: majorsRefetch } = useQuery(['majors'], () => getMajors())
@@ -16,13 +17,9 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
     const [last_name, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [student_id, setStudentId] = React.useState('');
-    const [major, setMajor] = React.useState<Major | undefined>(majorsData?.[0])
+    const [major, setMajor] = React.useState<Major>()
     const defaultMsg = { first_name: '', last_name: '', email: '', student_id: '', major: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
-
-    React.useEffect(() => {
-        setMajor(majorsData?.[0])
-    },  [majorsData])
 
     const validate = React.useCallback(() => {
         let correct = true;
@@ -56,7 +53,10 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
             correct = false;
         }
 
-        return correct;
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
     }, [first_name, last_name, email, student_id, major])
 
     const handleOff = React.useCallback(() => {
@@ -64,7 +64,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
         setLastName('');
         setEmail('');
         setStudentId('');
-        setMajor(majorsData?.[0]);
+        setMajor(undefined);
         setErrorMsg(defaultMsg);
         off();
     }, [])
@@ -101,7 +101,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
                     {type === UserType.STUDENT &&
                         <>
                             <Field title={"Nr albumu"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
-                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} />}
+                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))}/>}
                         </>
                     }
                 </div>

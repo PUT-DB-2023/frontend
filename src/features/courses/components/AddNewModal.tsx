@@ -1,3 +1,4 @@
+import { objectMap } from 'api/objectMap';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { MajorsDropDown } from 'components/MajorsDropDown';
@@ -18,10 +19,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const defaultMsg = { name: '', major: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
-    React.useEffect(() => {
-        setMajor(majorsData?.[0]);
-    },  [majorsData])
-
     const navigate = useNavigate();
 
     const validate = React.useCallback(() => {
@@ -37,12 +34,15 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
             correct = false;
         }
 
-        return correct;
+        let sum = 0;
+        objectMap(errorMsg, (v: any) => sum += v.length)
+
+        return correct && sum === 0;
     }, [name, major, errorMsg])
 
     const handleOff = React.useCallback(() => {
         setName('');
-        setMajor(majorsData?.[0]);
+        setMajor(undefined);
         setDescription('');
         setErrorMsg(defaultMsg);
         off();
@@ -69,7 +69,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'name': e })} maxLenght={50}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50}/>
                     {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))}/>}
                     <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255}/>
                 </div>
