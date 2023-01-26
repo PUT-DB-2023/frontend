@@ -87,9 +87,9 @@ export const Group = () => {
       </ContentPanel>
 
       <ContentPanel type={PanelType.CONTENT}>
-        <div className='flex justify-between'>
+        <div className='flex flex-col justify-between md:flex-row lg:flex-row'>
           <h2 className='text-lg font-semibold'> Studenci </h2>
-          <div className='flex justify-between gap-6'>
+          <div className='flex flex-col justify-between gap-6 md:flex-row lg:flex-row'>
             {checkPermission('database.add_students_to_group') && <Button text={'Wczytaj studentów z pliku'} type={ButtonType.ACTION} onClick={() => setAddFileModal(true)} />}
             {checkPermission('database.add_students_to_group') && <Button text={'Dodaj studentów'} type={ButtonType.ACTION} onClick={() => setAddStudentModal(true)} />}
             <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkowników' />

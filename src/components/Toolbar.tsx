@@ -57,7 +57,7 @@ export const Toolbar = ({ sort, filter, search, searchPlaceholder, sortOptions, 
                     </div>
                 </Listbox> : null}
             {search ? <div className='flex'>
-                <input className='border border-zinc-400 rounded-l-md h-9 w-60 px-3 py-1 outline-offset-[-2px] outline-none border-r-0 focus:outline-blue-800 hover:border-zinc-500'
+                <input className='border border-zinc-400 rounded-l-md h-9 w-full px-3 py-1 outline-offset-[-2px] outline-none border-r-0 focus:outline-blue-800 hover:border-zinc-500'
                     placeholder={searchPlaceholder}
                     value={searchVal}
                     onChange={(v) => searchSet?.(v.target.value)}
