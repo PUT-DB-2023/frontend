@@ -27,7 +27,8 @@ export const RemoveStudentsWithoutGroupsModal = ({ show, off, refetch }: IRemove
     if (show) {
         return (
             <ModalContainer title={"Usuwanie studentów bez grup"} off={off} buttons={buttons}>
-                Czy na pewno chcesz usunąć wszystkich studentów bez grup?
+                Operacja ta spowoduje usunięcie wszystkich studentów bez grup.<br/>
+                Czy chcesz kontynuować?
             </ModalContainer>
         );
     } else {

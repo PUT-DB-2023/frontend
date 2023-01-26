@@ -29,7 +29,8 @@ export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Jesteś pewny?
+                Operacja ta spowoduje usunięcie kierunku.<br/>
+                Czy chcesz kontynuować?
             </ModalContainer>
         );
     } else {

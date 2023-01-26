@@ -34,7 +34,8 @@ export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: I
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Jesteś pewny?
+                Operacja ta spowoduje usunięcie edycji.<br/>
+                Czy chcesz kontynuować?
             </ModalContainer>
         );
     } else {

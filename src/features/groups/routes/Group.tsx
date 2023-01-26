@@ -54,7 +54,7 @@ export const Group = () => {
 
   return (
     <ContentLayout>
-      {checkPermission('database.remove_student_from_group') && <RemoveStudentFromGroupModal show={removeStudentModal} off={() => setRemoveStudentModal(false)} group_id={groupData?.id} student_id={currentStudent?.id}/>}
+      {checkPermission('database.remove_student_from_group') && <RemoveStudentFromGroupModal show={removeStudentModal} off={() => setRemoveStudentModal(false)} student={currentStudent} group={groupData}/>}
       {checkPermission('database.delete_group') && <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />}
       {checkPermission('database.change_group') && <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />}
       {checkPermission('database.add_students_to_group') && id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult} />}

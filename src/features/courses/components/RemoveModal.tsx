@@ -31,7 +31,8 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Jesteś pewny?
+                Operacja ta spowoduje usunięcie przedmiotu.<br/>
+                Czy chcesz kontynuować?
             </ModalContainer>
         );
     } else {

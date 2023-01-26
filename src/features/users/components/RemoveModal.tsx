@@ -31,7 +31,8 @@ export const RemoveModal = ({ show, off, id, type }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={"Usuń użytkownika"} off={off} buttons={buttons}>
-                Jesteś pewny?
+                Operacja ta spowoduje usunięcie {type === UserType.TEACHER ? 'dydaktyka' : (type === UserType.STUDENT ? 'studenta' : (type === UserType.ADMIN ? 'admina' : 'użytkownika'))}.<br />
+                Czy chcesz kontynuować?
             </ModalContainer>
         );
     } else {
