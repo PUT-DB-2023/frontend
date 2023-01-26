@@ -160,7 +160,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon customowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
+                    <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
                 </div>
             </ModalContainer>
         );

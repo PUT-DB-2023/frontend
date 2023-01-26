@@ -88,7 +88,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
                     <Field title={"Szablon polecenia modyfikowania"} multiline={true} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia usuwania"} multiline={true} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={1023} />
                     <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
-                    <Field title={"Szablon customowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
+                    <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
                 </div>
             </ModalContainer>
         );
