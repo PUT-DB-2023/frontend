@@ -14,7 +14,7 @@ interface IDateField {
 
 export const DateField = ({ title, value, setValue, maxDate, minDate, errorMsg, setErrorMsg }: IDateField) => {
     return (
-        <FieldBox title={title}>
+        <FieldBox title={title} cls={`[&>input]:h-auto [&>div]:h-auto`}>
             <DatePicker
                 onChange={(v: Date) => { setErrorMsg && setErrorMsg(''); setValue(v) }}
                 selected={value}

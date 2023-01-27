@@ -4,12 +4,13 @@ export const clsTextWrong = 'text-red-400 text-sm font-medium';
 
 interface IFieldBox {
     title?: any;
+    cls?: string;
     children?: any;
 }
 
-export const FieldBox = ({ title, children }: IFieldBox) => {
+export const FieldBox = ({ title, cls, children }: IFieldBox) => {
     return (
-        <div className='flex flex-col px-4 w-full gap-1 my-2 relative [&>input]:rounded-[4px] [&>input]:bg-zinc-50 [&>textarea]:bg-zinc-50 [&>input]:h-9 [&>div]:h-9'>
+        <div className={`${cls} flex flex-col px-4 w-full gap-1 my-2 relative [&>input]:rounded-[4px] [&>input]:bg-zinc-50 [&>textarea]:bg-zinc-50 [&>input]:h-9 [&>div]:h-9`}>
             {title ? <span className='font-semibold'>{title}</span> : null}
             {children}
         </div>
