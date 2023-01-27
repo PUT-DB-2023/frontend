@@ -14,6 +14,37 @@ interface IEditModal {
     data: Server,
 }
 
+export const infoText = (<>
+    Obsługiwane przez system parametry:<br />
+    <ul style={{ listStyle: 'disc', listStylePosition: 'inside' }}>
+        <li><b>arg_username</b> - nazwa konta użytkownika</li>
+        <li><b>arg_password</b> - hasło konta użytkownika</li>
+        <li><b>arg_database</b> - nazwa schematu</li>
+        <li><b>arg_host</b> - host serwera</li>
+        <li><b>arg_port</b> - port serwera</li>
+    </ul>
+    <br />
+    System obsługuje możliwość wprowadzenia wielu komend jako szablon. Należy wtedy oddzielić od siebie te komendy używając ';'.
+    <br />
+    Jeżeli w szablonie znajdują się cudzysłowy (") poprzedź je znakiem backslash'a (\), np. \"%s\".
+    <br /><br />
+    Przykład:<br />
+    <i>CREATE USER arg_username IDENTIFIED BY arg_password; GRANT CREATE TYPE, CREATE TABLE TO arg_username;</i>
+</>);
+
+export const infoTextNames = (<>
+    Zdefiniowane zostały następujące nazwy:<br />
+    <ul style={{ listStyle: 'disc', listStylePosition: 'inside' }}>
+        <li>imie, imię</li>
+        <li>nazwisko</li>
+        <li>nr_indeksu, numer_indeksu, nr_ind, indeks</li>
+        <li>e-mail</li>
+    </ul>
+    <br />
+    Przykład:<br />
+    <i>NAZWISKO_NR_INDEKSU</i> (generuje to przykładową nazwę użytkownika: walczak_100140)
+</>);
+
 export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
     const [create, setCreate] = React.useState('');
     const [modify, setModify] = React.useState('');
@@ -75,20 +106,20 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
         <Button type={ButtonType.ACTION} text='Zapisz' onClick={handleUpdate} />
     </>
 
-    const infoText = (<>W celu wprowadzenia zmiennej użyj %s.<br />
-        Jeżeli w szablonie znajdują się cudzysłowy (") poprzedź je znakiem backslash'a (\), np. \"%s\"".
-    </>);
-
     if (show) {
         return (
             <ModalContainer title={data.name} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
                     <InfoBox>{infoText}</InfoBox>
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
                     <Field title={"Szablon polecenia tworzenia"} multiline={true} value={create} setValue={setCreate} errorMsg={errorMsg['create']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'create': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia modyfikowania"} multiline={true} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia usuwania"} multiline={true} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={1023} />
-                    <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
                     <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
+                    <InfoBox>{infoTextNames}</InfoBox>
+                    <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
                 </div>
             </ModalContainer>
         );

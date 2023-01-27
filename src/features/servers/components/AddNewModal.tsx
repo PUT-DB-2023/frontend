@@ -11,6 +11,8 @@ import { ProvidersDropDown } from 'components/ProvidersDropDown';
 import { useQuery } from 'react-query';
 import { getProviders } from '../api/getProviders';
 import { Provider } from 'features/providers';
+import { InfoBox } from 'components/InfoBox';
+import { infoText, infoTextNames } from './EditCodesModal';
 
 export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => void, refetch: () => void }) => {
     const { data: providersData, status: providersStatus, refetch: providersRefetch } = useQuery(['dbms'], () => getProviders());
@@ -152,15 +154,19 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} errorMsg={errorMsg['database']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'database': e }))} maxLenght={30} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
+                    <InfoBox>{infoText}</InfoBox>
+                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
+
                     <Field title={"Szablon polecenia tworzenia"} multiline={true} value={create} setValue={setCreate} errorMsg={errorMsg['create']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'create': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia modyfikowania"} multiline={true} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia usuwania"} multiline={true} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={1023} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
+                    <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
 
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
+                    <InfoBox>{infoTextNames}</InfoBox>
+                    <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />
                 </div>
             </ModalContainer>
         );
