@@ -46,25 +46,32 @@ export const Course = () => {
   const navigate = useNavigate()
 
   React.useEffect(() => {
+    console.log('selected Edition', selectedEdition);
+    
     if (editionId !== undefined) {
-      if (allEditionsData && allEditionsData.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
+      console.log('editionId not undefined');
+      
+      if (allEditionsData && allEditionsData?.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
         navigate(`editions/${editionId}/`, { replace: true })
       }
       else {
+        setSelectedEdition(undefined)
         if (allEditionsStatus === 'success') navigate('', { replace: true })
       }
     }
     else {
-      if (activeEditionData && activeEditionData.length !== 0) {
+      console.log('editionId undefined');
+      if (activeEditionData && activeEditionData?.length !== 0) {
         setSelectedEdition(activeEditionData[0])
         navigate(`editions/${activeEditionData[0].id}/`, { replace: true })
       }
-      else if (allEditionsData !== undefined && allEditionsData.length !== 0) {
+      else if (allEditionsData !== undefined && allEditionsData?.length !== 0) {
         setSelectedEdition(allEditionsData[0])
         navigate(`editions/${allEditionsData[0].id}/`, { replace: true })
       }
       else {
+        setSelectedEdition(undefined)
         navigate('', { replace: true })
       }
     }

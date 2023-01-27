@@ -1,12 +1,15 @@
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify';
 
-export const addDbAccounts = async (groupId: string, serverId: string) => {
+export const addDbAccounts = async (editionId: string, groupId: string, serverId: string) => {
+    console.log(editionId, groupId, serverId);
+    
     const t = toast.loading("Przenoszenie kont..")
     const response = await axios({
         method: 'post',
         url: '/move_db_account',
         data: {
+            edition_id: editionId,
             group_id : groupId,
             server_id : serverId
         }
