@@ -11,7 +11,7 @@ import { Student } from 'features/users'
 import { usersColumns } from 'features/users/routes/Users'
 import * as React from 'react'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { ButtonType, PanelType, UserType } from 'types'
 import { getGroup } from '../api/getGroup'
 import { AddStudCSVModal } from '../components/AddStudCSVModal'
@@ -58,17 +58,21 @@ export const Group = () => {
       {checkPermission('database.delete_group') && <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />}
       {checkPermission('database.change_group') && <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />}
       {checkPermission('database.add_students_to_group') && id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult} />}
-      {checkPermission('database.move_dbaccount') && <ServerListModal editionId={groupData?.teacherEdition?.edition} groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved} />}
+      {checkPermission('database.move_dbaccount') && <ServerListModal editionId={groupData?.teacherEdition?.edition.id} groupId={groupData.id} servers={servers} refetch={() => groupRefetch()} show={newModal} off={() => setNewModal(false)} allAccountsMoved={groupData.all_accounts_moved} />}
       {checkPermission('database.add_students_to_group') && <AddStudents off={() => setAddStudentModal(false)} show={addStudentModal} refetch={groupRefetch} group={groupData} />}
       {checkPermission('database.add_students_to_group') && id && <AddStudentInfoModal show={studentInfoModal} off={() => setStudentInfoModal(false)} refetch={groupRefetch} id={id} data={addFileResult} />}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex flex-col gap-4'>
           <h1 className='font-bold text-3xl'> {groupData?.name} </h1>
-          <div className='flex gap-3 flex-wrap text-blue-800'>
-            <span className={descriptionClass}>{groupData?.teacherEdition?.edition?.course?.name}</span>
-            <span className={descriptionClass}>{groupData?.teacherEdition?.teacher?.user.first_name} {groupData?.teacherEdition?.teacher?.user.last_name}</span>
-            <span className={descriptionClass}>{groupData.day} {groupData.hour}</span>
-          </div>
+          <Link to={`/courses/${groupData?.teacherEdition?.edition?.course?.id}/editions/${groupData?.teacherEdition?.edition?.id}`} >
+            <div className='flex gap-3 flex-wrap text-blue-800'>
+              <span className={descriptionClass}>{groupData?.teacherEdition?.edition?.course?.name 
+              + ' - ' + groupData?.teacherEdition?.edition?.semester?.start_year + '/' + ((groupData?.teacherEdition?.edition?.semester?.start_year || '0') + 1)
+              + ' ' + (groupData?.teacherEdition?.edition?.semester?.winter ? 'Zima' : 'Lato')}</span>
+              <span className={descriptionClass}>{groupData?.teacherEdition?.teacher?.user?.first_name} {groupData?.teacherEdition?.teacher?.user?.last_name}</span>
+              <span className={descriptionClass}>{groupData.day} {groupData.hour}</span>
+            </div>
+          </Link>
           <h2 className={`w-fit text-zinc-700 ${descriptionClass}`}>
             {groupData?.teacherEdition?.edition?.servers.map((server: Server, index: number) => {
               return (
