@@ -27,8 +27,8 @@ const customMenuItems = (student: Student, setShow: (v: boolean) => void, setCur
 ]
 
 export const usersColumns = (type: UserType,
-  baseUrl: string, 
-  options?: boolean, 
+  baseUrl: string,
+  options?: boolean,
   removeFromGroupPerm?: boolean,
   setRemoveFromGroup?: (v: boolean) => void,
   setCurrent?: (v: Student) => void,
@@ -70,7 +70,6 @@ export const usersColumns = (type: UserType,
     data.push({
       id: 'options',
       accessorFn: row => row,
-      // accessorFn: row => ({id: row?.id, name: row?.editionServer?.server.name}),
       header: 'Opcje',
       cell: ({ getValue }: any) => (
         <div className='p-2 flex justify-center '>
@@ -87,7 +86,7 @@ export const usersColumns = (type: UserType,
 
 export const Users = ({ type }: UsersProps) => {
   const [addModal, setAddModal] = React.useState(false);
-  const { authUser, checkPermission } = React.useContext(AuthContext);
+  const { checkPermission } = React.useContext(AuthContext);
   const [removeStudentsWithoutGroups, setRemoveStudentsWithoutGroups] = React.useState(false);
   React.useEffect(() => { document.title = type === UserType.ADMIN ? 'Administratorzy' : type === UserType.TEACHER ? 'Dydaktycy' : type === UserType.STUDENT ? 'Studenci' : 'Użytkownicy' }, [type])
 

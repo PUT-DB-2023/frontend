@@ -5,14 +5,14 @@ export const useClickOutside = (onClick: any) => {
 
     React.useEffect(() => {
         const handleClickOutside = (e: any) => {
-            if(ref.current && !ref.current.contains(e.target)) {
+            if (ref.current && !ref.current.contains(e.target)) {
                 onClick();
             }
         }
 
-        document.addEventListener('click', handleClickOutside, {capture: true});
+        document.addEventListener('click', handleClickOutside, { capture: true });
 
-        return () => document.removeEventListener('click', handleClickOutside, {capture: true})
+        return () => document.removeEventListener('click', handleClickOutside, { capture: true })
     }, [])
 
     return ref;

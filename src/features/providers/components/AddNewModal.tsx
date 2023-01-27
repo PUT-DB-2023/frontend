@@ -1,9 +1,7 @@
-import { objectMap } from 'api/objectMap';
 import { Button } from 'components/Button';
 import { Field } from 'components/Field';
 import { ModalContainer } from 'components/ModalContainer';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
 import { addProvider } from '../api/addProvider';
 
@@ -12,8 +10,6 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
     const [description, setDescription] = React.useState('');
     const defaultMsg = { name: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
-
-    const navigate = useNavigate()
 
     const validate = React.useCallback(() => {
         let correct = true;

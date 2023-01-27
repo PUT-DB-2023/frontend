@@ -4,7 +4,7 @@ import * as React from 'react'
 import AuthContext from 'context/AuthContext';
 
 export const UserTypeList = () => {
-    const {authUser, checkPermission} = React.useContext(AuthContext);
+    const { authUser, checkPermission } = React.useContext(AuthContext);
     return (
         <div className='w-full h-full'>
             {authUser.is_superuser && // TMP: in future switch to checkPermission
@@ -24,5 +24,5 @@ export const UserTypeList = () => {
                 </Box>
             </Link>
         </div>
-        )
+    )
 }

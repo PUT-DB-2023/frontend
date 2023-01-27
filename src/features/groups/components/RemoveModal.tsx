@@ -17,7 +17,6 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     const handleRemove = React.useCallback(async () => {
         const res = await deleteGroup(id)
         if (res) {
-            // await queryClient.refetchQueries('groups')
             off();
             navigate(-1)
         }
@@ -31,7 +30,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie grupy.<br/>
+                Operacja ta spowoduje usunięcie grupy.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

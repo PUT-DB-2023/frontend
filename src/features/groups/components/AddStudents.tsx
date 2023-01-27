@@ -42,9 +42,9 @@ export const AddStudents = ({ show, off, refetch, group }: { show: boolean, off:
 
     if (show) {
         return (
-            <ModalContainer title='Dodaj studentów do grupy' off={handleOff} buttons={buttons} style={{height: 'min(100%, 520px)'}}>
+            <ModalContainer title='Dodaj studentów do grupy' off={handleOff} buttons={buttons} style={{ height: 'min(100%, 520px)' }}>
                 <div className={`flex flex-col gap-1`}>
-                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} errorMsg={errorMsg} setErrorMsg={setErrorMsg}/>
+                    <StudentsDropDown title={"Studenci"} values={filtered} value={students} setValue={setStudents} errorMsg={errorMsg} setErrorMsg={setErrorMsg} />
                     <div className='px-4'>
                         <InfoBox>
                             Jeśli chcesz utworzyć nowego studenta, przejdź do Użytkownicy -{'>'} Studenci -{'>'} Dodaj

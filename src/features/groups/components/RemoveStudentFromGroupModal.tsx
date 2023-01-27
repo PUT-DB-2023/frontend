@@ -31,7 +31,7 @@ export const RemoveStudentFromGroupModal = ({ show, off, student, group }: IRemo
     if (show) {
         return (
             <ModalContainer title={'Usuwanie studenta z grupy'} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie studenta <strong>{student?.user?.first_name} {student?.user?.last_name}</strong> z grupy <strong>{group?.name}</strong>.<br/>
+                Operacja ta spowoduje usunięcie studenta <strong>{student?.user?.first_name} {student?.user?.last_name}</strong> z grupy <strong>{group?.name}</strong>.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

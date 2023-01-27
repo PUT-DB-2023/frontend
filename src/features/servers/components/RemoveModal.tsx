@@ -30,7 +30,7 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie serwera.<br/>
+                Operacja ta spowoduje usunięcie serwera.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

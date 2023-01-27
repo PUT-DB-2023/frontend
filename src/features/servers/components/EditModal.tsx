@@ -76,7 +76,6 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
     }, [name, host, port, provider, user, password, database, errorMsg])
 
     React.useEffect(() => {
-        console.log(data)
         setName(data.name);
         setHost(data.host);
         setPort(data.port);

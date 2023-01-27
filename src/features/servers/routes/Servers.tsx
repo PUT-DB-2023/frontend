@@ -9,8 +9,8 @@ import { ServerList } from '../components/ServerList'
 
 export const Servers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
-  const {authUser, checkPermission} = React.useContext(AuthContext)
-  React.useEffect(() => {document.title = `Serwery`},[])
+  const { checkPermission } = React.useContext(AuthContext)
+  React.useEffect(() => { document.title = `Serwery` }, [])
 
   return (
     <ContentLayout>
@@ -20,7 +20,6 @@ export const Servers = () => {
         {checkPermission('database.add_server') && <Button type={ButtonType.ACTION} text='Dodaj serwer' onClick={() => setShowAdd(true)} />}
       </ContentPanel>
       <ContentPanel type={PanelType.CONTENT}>
-        {/* <h2 className='text-lg font-semibold'>Aktywne serwery</h2> */}
         <ServerList />
       </ContentPanel>
     </ContentLayout>

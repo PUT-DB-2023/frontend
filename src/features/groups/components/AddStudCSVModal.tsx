@@ -50,8 +50,8 @@ export const AddStudCSVModal = ({ show, off, refetch, id, showInfo, setResult }:
         return (
             <ModalContainer title='Wczytaj studentów z pliku CSV' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                        <input className={`${errorMsg.length > 0 ? clsNameWrong : clsName} ${blueButtonStyle}`} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
-                        {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
+                    <input className={`${errorMsg.length > 0 ? clsNameWrong : clsName} ${blueButtonStyle}`} type="file" accept=".csv, .xlsx" onChange={handleSelectedFile} />
+                    {errorMsg.length > 0 && <span className={clsTextWrong}>{errorMsg}</span>}
                 </div>
             </ModalContainer>
         );

@@ -14,7 +14,7 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDownMul
             ? values
             : values.filter((opt: Server) => {
                 const val: string = opt?.name;
-                
+
                 return val.toLowerCase().includes(query.toLowerCase())
             })
     return (
@@ -42,13 +42,13 @@ export const ServersDropDown = ({ title, values, value, setValue }: IDropDownMul
                                 key={option.id}
                                 value={option}
                             >
-                                {({ selected }) => (         
-                                        <>   
+                                {({ selected }) => (
+                                    <>
                                         <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
                                             <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
                                             <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option.name}</span>
-                                        </div>                
-                                        </> 
+                                        </div>
+                                    </>
                                 )}
                             </Combobox.Option>
                         ))}

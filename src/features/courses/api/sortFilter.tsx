@@ -10,7 +10,7 @@ export const sortCourses = (data: any, sort: SortOptions) => {
         } else {
             const strA: String = aVal.toLowerCase();
             const strB: String = bVal.toLowerCase();
-            if(strA > strB) {
+            if (strA > strB) {
                 return sort.asc ? 1 : -1;
             } else if (strA < strB) {
                 return sort.asc ? -1 : 1;

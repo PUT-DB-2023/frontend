@@ -12,8 +12,8 @@ interface IUserList {
     type: UserType;
 }
 
-export const UserList = ({type}: IUserList) => {
-    const {data: usersData, status: usersStatus, refetch: usersRefetch} = useQuery(['users', type], () => getUsers(type))
+export const UserList = ({ type }: IUserList) => {
+    const { data: usersData, status: usersStatus, refetch: usersRefetch } = useQuery(['users', type], () => getUsers(type))
     const baseUrl = type === UserType.ADMIN ? '' : type === UserType.TEACHER ? 'teachers/' : type === UserType.STUDENT ? 'students/' : ''
     const [search, setSearch] = React.useState('');
     const searchData = React.useMemo(() => searchFunc(search, usersData, ['student_id', 'user/first_name', 'user/last_name', 'user/email']), [search, usersData]);
@@ -23,9 +23,9 @@ export const UserList = ({type}: IUserList) => {
     }
 
     return (
-    <div className='flex flex-col gap-8 justify-center items-center'>
-        <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
-        <Table data={searchData} columns={usersColumns(type, baseUrl)} />
-    </div>
-  )
+        <div className='flex flex-col gap-8 justify-center items-center'>
+            <Toolbar sort={false} filter={false} search={true} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj użytkownika' />
+            <Table data={searchData} columns={usersColumns(type, baseUrl)} />
+        </div>
+    )
 }

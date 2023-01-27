@@ -3,7 +3,7 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType, UserType } from 'types';
-import { updateUserNew, updateUserOld } from '../api/updateUser';
+import { updateUserOld } from '../api/updateUser';
 import { OldUser, Student, Teacher, User } from '../types';
 import { isStudent, isTeacher, isStudentOrTeacher } from '../api/checkUserType';
 import { useQuery } from 'react-query'
@@ -35,8 +35,6 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
 
     const validate = React.useCallback(() => {
         let correct = true;
-        console.log(student_id?.length);
-
 
         if (first_name.length === 0) {
             setErrorMsg(prevState => ({ ...prevState, 'first_name': 'Pole wymagane' }));
@@ -88,20 +86,15 @@ export const EditModal = ({ show, off, refetch, type, data }: IEditModal) => {
         const localUser = localStorage.getItem('auth_user');
         const authenticatedUser: User = localUser && localUser?.length > 0 ? JSON.parse(localUser) : undefined;
 
-        const combineLocal: User = {...authenticatedUser, ...user} as User;
+        const combineLocal: User = { ...authenticatedUser, ...user } as User;
         localStorage.setItem('auth_user', JSON.stringify(combineLocal));
 
-        const combineAuth: User = {...authUser, ...user} as User;
+        const combineAuth: User = { ...authUser, ...user } as User;
         setAuthUser(combineAuth);
     }
 
     const handleEdit = React.useCallback(async () => {
         if (!validate()) { return; }
-        // let newUser: User = { first_name, last_name, email, id: isStudentOrTeacher(data) ? data.user.id : data.id } as User;
-        // let newTeacher: Teacher = (isTeacher(data) ? { id: data.id, user: newUser } : {}) as Teacher;
-        // let newStudent: Student = (isStudent(data) ? { id: data.id, user: newUser, student_id: student_id, major: major?.id } : {}) as any;
-        // let newData = isStudent(data) ? newStudent : (isTeacher(data) ? newTeacher : newUser)
-        // const res = await updateUserNew(newData, type);
         let oldData: OldUser = { first_name, last_name, email, id: data.id, student_id, major: major?.id } as OldUser
         const res = await updateUserOld(oldData, type);
         if (res) {

@@ -26,7 +26,7 @@ export const ResetDBAccountPasswordModal = ({ show, off, dbAccount }: IResetModa
     if (show) {
         return (
             <ModalContainer title={`Resetuj hasło "${dbAccount?.editionServer?.server?.name}"`} off={off} buttons={buttons}>
-                Akcja ta spowoduje zresetowanie obecnego hasła.<br/>
+                Akcja ta spowoduje zresetowanie obecnego hasła.<br />
                 Nowe hasło zostanie wysłane mailem.
             </ModalContainer>
         );

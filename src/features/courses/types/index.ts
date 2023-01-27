@@ -4,6 +4,6 @@ export type Course = {
     name: string;
     description: string;
     active: boolean;
-    major: string|null; // TODO
+    major: string | null; // TODO
 
 } & BaseEntity;

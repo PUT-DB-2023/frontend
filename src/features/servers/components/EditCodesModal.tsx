@@ -50,7 +50,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
     const [modify, setModify] = React.useState('');
     const [remove, setRemove] = React.useState('');
     const [nameCodes, setNameCodes] = React.useState('');
-    const defaultMsg = { create: '', modify: '', remove: '', nameCodes: ''}
+    const defaultMsg = { create: '', modify: '', remove: '', nameCodes: '' }
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     React.useEffect(() => {
@@ -92,7 +92,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
 
     const handleUpdate = React.useCallback(async () => {
         if (!validate()) { return; }
-        const res = await updateServer({ id: data.id, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes} as Server)
+        const res = await updateServer({ id: data.id, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes } as Server)
         if (res) {
             off();
             refetch();

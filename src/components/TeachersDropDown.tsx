@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FieldBox, clsName } from './FieldBox';
+import { FieldBox } from './FieldBox';
 import { Combobox } from '@headlessui/react';
 import { useClickOutside } from 'hooks/useClickOutside';
 import { IDropDownMulti } from 'types';
@@ -41,13 +41,13 @@ export const TeachersDropDown = ({ title, values, value, setValue }: IDropDownMu
                                 key={option.id}
                                 value={option}
                             >
-                                {({ selected }) => (         
-                                        <>   
+                                {({ selected }) => (
+                                    <>
                                         <div className={`${selected ? 'bg-blue-100' : 'hover:bg-zinc-100 [&>div]:hover:bg-blue-600'} flex gap-7 w-full`}>
                                             <div className={`w-1 ${selected ? 'bg-blue-600' : ''}`}></div>
                                             <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{option.user.first_name + ' ' + option.user.last_name}</span>
-                                        </div>                
-                                        </> 
+                                        </div>
+                                    </>
                                 )}
                             </Combobox.Option>
                         ))}

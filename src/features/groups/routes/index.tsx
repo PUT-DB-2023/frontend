@@ -6,7 +6,7 @@ import { Groups } from './Groups'
 export const GroupsRoutes = () => {
   return (
     <Routes>
-      <Route path='*' element={<ErrorFallback error={{response: {status: 404}}}/> } />,
+      <Route path='*' element={<ErrorFallback error={{ response: { status: 404 } }} />} />,
       <Route path="" element={<Groups />} />
       <Route path=":id" element={<Group />} />
     </Routes>

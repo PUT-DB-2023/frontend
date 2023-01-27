@@ -9,8 +9,8 @@ import { ProviderList } from '../components/ProviderList'
 
 export const Providers = () => {
   const [showAdd, setShowAdd] = React.useState(false);
-  const {authUser, checkPermission} = React.useContext(AuthContext)
-  React.useEffect(() => {document.title = `Systemy bazodanowe`},[])
+  const { checkPermission } = React.useContext(AuthContext)
+  React.useEffect(() => { document.title = `Systemy bazodanowe` }, [])
 
   return (
     <ContentLayout>

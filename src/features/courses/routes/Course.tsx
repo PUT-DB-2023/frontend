@@ -11,7 +11,7 @@ import { RemoveModal as RemoveEditionModal } from 'features/editions/components/
 import * as React from 'react'
 import { useQuery } from 'react-query'
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom'
-import { ButtonType, editionsSortOptions, PanelType } from 'types'
+import { ButtonType, PanelType } from 'types'
 import { EditModal as EditEditionModal } from '../../editions/components/EditModal'
 import { getCourse } from '../api/getCourse'
 import { EditModal } from '../components/EditModal'
@@ -28,11 +28,8 @@ export const Course = () => {
   const [addGroupModal, setAddGroupModal] = React.useState(false)
   const [editEditionModal, setEditEditionModal] = React.useState(false)
   const [removeEditionModal, setRemoveEditionModal] = React.useState(false)
-  const [sortBy, setSortBy] = React.useState(editionsSortOptions[0])
-  const [filterBy, setFilterBy] = React.useState(null)
-  const [search, setSearch] = React.useState('')
   const [selectedEdition, setSelectedEdition] = React.useState<Edition>()
-  const { authUser, checkPermission } = React.useContext(AuthContext)
+  const { checkPermission } = React.useContext(AuthContext)
 
 
   const { courseId, editionId } = useParams()
@@ -41,16 +38,12 @@ export const Course = () => {
   const { data: activeEditionData, status: activeEditionStatus, refetch: activeEditionRefetch } = useQuery(['activeEditions', courseId], () => getEditions(true, courseId));
   const { data: allEditionsData, status: allEditionsStatus, refetch: allEditionsRefetch } = useQuery(['allEditions', courseId, editionId], () => getEditions(undefined, courseId));
 
-  React.useEffect(() => {document.title = `Przedmiot: ${courseData?.name ? courseData?.name : ''}`},[courseData?.name])
+  React.useEffect(() => { document.title = `Przedmiot: ${courseData?.name ? courseData?.name : ''}` }, [courseData?.name])
 
   const navigate = useNavigate()
 
   React.useEffect(() => {
-    console.log('selected Edition', selectedEdition);
-    
     if (editionId !== undefined) {
-      console.log('editionId not undefined');
-      
       if (allEditionsData && allEditionsData?.length > 0 && allEditionsData.filter((edition: Edition) => edition.id == editionId).length > 0) {
         setSelectedEdition(allEditionsData.filter((edition: Edition) => edition.id == editionId)[0])
         navigate(`editions/${editionId}/`, { replace: true })
@@ -61,7 +54,6 @@ export const Course = () => {
       }
     }
     else {
-      console.log('editionId undefined');
       if (activeEditionData && activeEditionData?.length !== 0) {
         setSelectedEdition(activeEditionData[0])
         navigate(`editions/${activeEditionData[0].id}/`, { replace: true })
@@ -84,25 +76,16 @@ export const Course = () => {
   }
 
   if (activeEditionStatus == 'loading' || allEditionsStatus == 'loading' || courseStatus == 'loading') {
-    console.log('LOADING')
-    console.log(courseStatus);
-
     return <Loading />
-
   }
 
   if (courseStatus === 'error') {
-    console.log('ERROR');
-
     return (
       <div className='w-full h-full flex justify-center items-center'>
         ERROR
       </div>
     )
   }
-
-  console.log('-------------------------COURSE STATUS', courseStatus);
-
 
   return (
     <ContentLayout>
@@ -114,9 +97,9 @@ export const Course = () => {
       {checkPermission('database.delete_edition') && courseId && <RemoveEditionModal name={'Usuń edycję'} show={removeEditionModal} off={() => setRemoveEditionModal(false)} courseId={courseId} editionId={selectedEdition?.id} refetch={allRefetch} />}
       <ContentPanel type={PanelType.HEADER}>
         <div className='flex flex-col gap-4 text-blue-800'>
-            <h1 className='text-black text-3xl font-bold'>{courseData.name}</h1>
-            <span className={descriptionClass}> {allEditionsData !== undefined ? allEditionsData.length : ''} edycje </span>
-            {courseData?.description && <InfoBoxDisclosure children={courseData.description}/>}
+          <h1 className='text-black text-3xl font-bold'>{courseData.name}</h1>
+          <span className={descriptionClass}> {allEditionsData !== undefined ? allEditionsData.length : ''} edycje </span>
+          {courseData?.description && <InfoBoxDisclosure children={courseData.description} />}
         </div>
         <div className='flex gap-6'>
           {checkPermission('database.add_edition') && <Button type={ButtonType.ACTION} text='Dodaj edycję' onClick={() => setAddEditionModal(true)} />}
@@ -158,7 +141,6 @@ export const Course = () => {
                                     <span className={`${selected ? `font-normal text-blue-600` : `font-normal`} my-[6px]`}>{edition!.semester.start_year}/{edition!.semester.start_year + 1} - {edition!.semester.winter ? "Zima" : "Lato"}</span>
                                   </div>
                                 </>
-
                               )}
                             </Listbox.Option>
                           </Link>
@@ -175,9 +157,7 @@ export const Course = () => {
               : null}
             {/* : null}      */}
           </div>
-          {allEditionsData.length ? null :
-            <h1 className='text-3xl font-bold'>Brak edycji</h1>
-          }
+          {allEditionsData.length ? null : <h1 className='text-3xl font-bold'>Brak edycji</h1>}
           <Outlet />
         </div>
       </ContentPanel>

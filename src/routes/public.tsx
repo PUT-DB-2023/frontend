@@ -4,11 +4,9 @@ import { useContext } from "react";
 import { Navigate } from "react-router";
 
 const PublicRoute = () => {
-  const {authUser, setAuthUser} = useContext(AuthContext)
-  
+  const { authUser } = useContext(AuthContext)
+
   if (authUser.id) {
-    console.log(authUser.id);
-    
     return <Navigate to='/' />
   }
 
@@ -16,8 +14,8 @@ const PublicRoute = () => {
 }
 
 export const publicRoutes = [
-    {
-      path: '/auth/*',
-      element: <PublicRoute />,
-    },
+  {
+    path: '/auth/*',
+    element: <PublicRoute />,
+  },
 ];

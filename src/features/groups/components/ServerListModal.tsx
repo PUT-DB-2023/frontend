@@ -8,10 +8,10 @@ import { addDbAccounts } from '../api/addDbAccounts';
 interface IServerListModal {
     show: boolean,
     off: () => void,
-    refetch: () => void, 
-    servers: any, 
+    refetch: () => void,
+    servers: any,
     editionId: string,
-    groupId: any, 
+    groupId: any,
     allAccountsMoved: boolean,
 }
 
@@ -42,7 +42,7 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, editionI
                 <ModalContainer title='Nie można utworzyć kont bazodanowych' off={() => handleOff()} buttons={warningButton}>
                     Brak kont to utworzenia lub wszystkie konta zostały już utworzone.
                 </ModalContainer>
-            ) 
+            )
         }
         else {
             return (
@@ -56,7 +56,7 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, editionI
                                 return (
                                     <div className='w-full flex justify-between p-4 items-center rounded-lg hover:bg-zinc-50' key={server.id}>
                                         <span className='text-lg'> {server.name} </span>
-                                        <Button type={ButtonType.ACTION} text='Utwórz konta' onClick={() => addDbAccounts(editionId , groupId, server.id)} />
+                                        <Button type={ButtonType.ACTION} text='Utwórz konta' onClick={() => addDbAccounts(editionId, groupId, server.id)} />
                                     </div>
                                 )
                             })}
@@ -64,7 +64,7 @@ export const ServerListModal = ({ show, off, refetch, servers, groupId, editionI
                     </div>
                 </ModalContainer>
             );
-        } 
+        }
     }
     else {
         return null

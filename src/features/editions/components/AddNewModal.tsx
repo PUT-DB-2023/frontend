@@ -3,7 +3,7 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { addEdition, IAddEdition } from '../api/addEdition';
+import { addEdition } from '../api/addEdition';
 import { DateField } from 'components/DateField';
 import { useNavigate } from 'react-router-dom';
 import { SemesterDropDown } from 'components/SemesterDropdown';

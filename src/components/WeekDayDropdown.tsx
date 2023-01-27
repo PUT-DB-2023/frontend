@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FieldBox, clsName } from './FieldBox';
 import "react-datepicker/dist/react-datepicker.css";
 import { Listbox } from '@headlessui/react'

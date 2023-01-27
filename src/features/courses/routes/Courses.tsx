@@ -10,8 +10,8 @@ import { CourseList } from '../components/CourseList'
 
 export const Courses = () => {
   const [newModal, setNewModal] = React.useState(false);
-  const {authUser, checkPermission} = React.useContext(AuthContext)
-  React.useEffect(() => {document.title = `Przedmioty`},[])
+  const { checkPermission } = React.useContext(AuthContext)
+  React.useEffect(() => { document.title = `Przedmioty` }, [])
 
   return (
     <ContentLayout>

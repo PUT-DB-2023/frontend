@@ -6,7 +6,7 @@ import { FieldBox, clsTextWrong, clsName, clsNameWrong } from './FieldBox';
 export const ProvidersDropDown = ({ title, values, value, setValue, errorMsg, setErrorMsg }: IDropDownSingle<Provider>) => {
     return (
         <FieldBox title={title}>
-            <Listbox value={value} onChange={(v) => {setErrorMsg && setErrorMsg(''); setValue(v)}}>
+            <Listbox value={value} onChange={(v) => { setErrorMsg && setErrorMsg(''); setValue(v) }}>
                 <div className={`bg-zinc-50 h-9 ${errorMsg ? clsNameWrong : clsName}`}>
                     <Listbox.Button className='relative w-full cursor-pointer text-zinc-600 flex px-1 justify-between items-center h-full rounded-lg focus-visible:outline-blue-800'>
                         <span className='flex justify-start w-full px-2'>

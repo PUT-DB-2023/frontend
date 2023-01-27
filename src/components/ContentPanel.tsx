@@ -2,8 +2,8 @@ import React from 'react'
 import { PanelType } from 'types';
 
 interface IContentPanel {
-    type: PanelType;
-    children?: React.ReactNode;
+  type: PanelType;
+  children?: React.ReactNode;
 };
 
 export const ContentPanel = ({type, children} : IContentPanel) => {
@@ -13,8 +13,8 @@ export const ContentPanel = ({type, children} : IContentPanel) => {
       type === PanelType.CONTENT ? 'flex-col flex-grow' :
       type === PanelType.OUTLINE ? 'flex-col pt-0 lg:pt-0' :
       type === PanelType.GRADIENT ? 'flex-col bg-gradient-to-r from-blue-600 to-blue-600' : ''
-    }`}>
-      { children }
+      }`}>
+      {children}
     </main>
   )
 }

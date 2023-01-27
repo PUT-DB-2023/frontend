@@ -69,9 +69,9 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
         return (
             <ModalContainer title='Nowy przedmiot' off={handleOff} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50}/>
-                    {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))}/>}
-                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255}/>
+                    <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50} />
+                    {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))} />}
+                    <Field title={"Opis"} value={description} setValue={setDescription} multiline={true} maxLenght={255} />
                 </div>
             </ModalContainer>
         );

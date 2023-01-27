@@ -13,7 +13,6 @@ import { getTeacherEdtition } from '../api/getTeacherEdition';
 import { Group } from '../types';
 import { objectMap } from 'api/objectMap';
 
-
 interface IEditModal {
     show: boolean,
     off: () => void,
@@ -59,7 +58,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         const min = time.length !== 1 ? time[1] : '00';
         const newTime = hour + ':' + min;
         const selectedTeacher = teacherEditionData?.find((e: TeacherEdition) => e.teacher.id === data?.teacherEdition?.teacher?.id);
-        
+
         setName(data?.name);
         setDay(day);
         setHour(newTime);
@@ -68,11 +67,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         setErrorMsg(defaultMsg);
     }, [show, data, teacherEditionData, teacherEditionStatus])
 
-    React.useEffect(() => setErrorMsg(defaultMsg),[data, show])
+    React.useEffect(() => setErrorMsg(defaultMsg), [data, show])
 
     const handleUpdate = React.useCallback(async () => {
         if (!validate()) { return; }
-        
+
         const res = await updateGroup({ name, day: day.field, hour, room, teacherEdition: teacher?.id!, id: data.id });
         if (res) {
             off();
@@ -95,11 +94,11 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
                 <div className={`flex flex-col gap-1`}>
                     <Field title={"Nazwa"} value={name} setValue={setName} autoFocus={true} errorMsg={errorMsg['name']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'name': e }))} maxLenght={50} />
                     <div className='flex justify-between'>
-                            <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
-                            <TimeField title={"Godzina"} value={hour} setValue={setHour} />
-                        </div>
+                        <WeekDayDropDown title={'Dzień'} value={day} setValue={setDay} />
+                        <TimeField title={"Godzina"} value={hour} setValue={setHour} />
+                    </div>
                     <Field title={"Sala"} value={room} setValue={setRoom} maxLenght={30} />
-                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} errorMsg={errorMsg['teacher']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'teacher': e }))}/>
+                    <DropDown title={"Nauczyciel"} values={teacherEditionData} value={teacher} setValue={setTeacher} errorMsg={errorMsg['teacher']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'teacher': e }))} />
                 </div>
             </ModalContainer>
         );

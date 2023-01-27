@@ -6,7 +6,7 @@ interface IInfoBox {
     children?: any;
 }
 
-export const InfoBox = ({children}: IInfoBox) => {
+export const InfoBox = ({ children }: IInfoBox) => {
     return (
         <div className={`p-3 font-medium rounded bg-zinc-100 text-zinc-700`}>{children}</div>
     )

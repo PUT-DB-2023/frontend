@@ -36,7 +36,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     React.useEffect(() => {
         setProvider(providersData?.[0])
-    },  [providersData])
+    }, [providersData])
 
     const validate = React.useCallback(() => {
         let correct = true;
@@ -122,7 +122,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
-        const res: Server = await addServer({ name, host, port, dbms: provider?.id, user, password, database, active, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes, custom_command_template: custom  } as any)
+        const res: Server = await addServer({ name, host, port, dbms: provider?.id, user, password, database, active, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes, custom_command_template: custom } as any)
         if (res) {
             handleOff();
             refetch();
@@ -148,7 +148,7 @@ export const AddNewModal = ({ show, off, refetch }: { show: boolean, off: () => 
                         <Field title={"Host"} value={host} setValue={setHost} errorMsg={errorMsg['host']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'host': e }))} maxLenght={30} />
                         <Field title={"Port"} value={port} setValue={setPort} pattern={'^[0-9]+$'} wrongText='Port musi mieć wartość numeryczną' errorMsg={errorMsg['port']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'port': e }))} maxLenght={30} />
                     </div>
-                    {providersData && <ProvidersDropDown title='Dostawca' values={providersData} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))}/>}
+                    {providersData && <ProvidersDropDown title='Dostawca' values={providersData} value={provider} setValue={setProvider} errorMsg={errorMsg['provider']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'provider': e }))} />}
                     <Field title={"Użytkownik"} value={user} setValue={setUser} errorMsg={errorMsg['user']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'user': e }))} maxLenght={30} />
                     <Field title={"Hasło"} type={'password'} value={password} setValue={setPassword} errorMsg={errorMsg['password']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'password': e }))} maxLenght={30} />
                     <Field title={"Baza danych"} value={database} setValue={setDatabase} errorMsg={errorMsg['database']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'database': e }))} maxLenght={30} />

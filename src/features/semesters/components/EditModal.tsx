@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ModalContainer } from 'components/ModalContainer';
-import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { updateSemester } from '../api/updateSemester';
@@ -64,7 +63,7 @@ export const EditModal = ({ show, off, refetch, data }: IEditModal) => {
         return (
             <ModalContainer title={data.start_year} off={off} buttons={buttons}>
                 <div className={`flex flex-col gap-1`}>
-                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })}/>
+                    <YearField title={'Rok'} value={year} setValue={setYear} autoFocus={true} minYear={'2000'} errorMsg={errorMsg['year']} setErrorMsg={(e: string) => setErrorMsg({ ...errorMsg, 'year': e })} />
                     <Switch leftText='Lato' rightText='Zima' value={winter} setValue={setWinter} />
                 </div>
             </ModalContainer>

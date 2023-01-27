@@ -6,7 +6,7 @@ export type Provider = {
 
 } & BaseEntity;
 
-export const majorsSortOptions : SortOptions[] = [
-    {name: 'Nazwa', field: 'name', asc: true},
-    {name: 'Nazwa', field: 'name', asc: false},
-  ]
+export const majorsSortOptions: SortOptions[] = [
+    { name: 'Nazwa', field: 'name', asc: true },
+    { name: 'Nazwa', field: 'name', asc: false },
+]

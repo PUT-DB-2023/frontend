@@ -9,13 +9,13 @@ import './App.css';
 const App = () => {
   return (
     <AuthProvider>
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <AppRoutes />
-            <ReactQueryDevtools initialIsOpen/>
-          </QueryClientProvider>
-        </BrowserRouter>
-    </AuthProvider>   
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <AppRoutes />
+          <ReactQueryDevtools initialIsOpen />
+        </QueryClientProvider>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

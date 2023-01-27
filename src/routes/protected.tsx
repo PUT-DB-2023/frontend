@@ -11,19 +11,19 @@ import { Navigate, Outlet } from "react-router-dom";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 
 const App = () => {
-    return (
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
-    );
-  };
+  return (
+    <MainLayout>
+      <Outlet />
+    </MainLayout>
+  );
+};
 
 export const protectedRoutes = [
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '*', element: <ErrorFallback error={{response: {status: 404}}}/>},
+      { path: '*', element: <ErrorFallback error={{ response: { status: 404 } }} /> },
       { path: '/', element: <Navigate to={'/courses/'} /> },
       { path: '/courses/*', element: <ProtectedRoute element={<CoursesRoutes />} permission={'database.view_course'} /> },
       { path: '/users/*', element: <ProtectedRoute element={<UsersRoutes />} permission={'database.view_user'} /> },

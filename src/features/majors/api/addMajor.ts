@@ -1,7 +1,6 @@
 import { displayError } from 'api/displayError'
 import { axios } from 'lib/axios'
 import { toast } from 'react-toastify'
-import { Major } from '../types'
 
 export const addMajor = async ({ name, description }: { name: string, description: string }) => {
     const t = toast.loading("Dodawanie..")

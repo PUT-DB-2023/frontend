@@ -5,7 +5,7 @@ import { Providers } from './Providers'
 export const ProvidersRoutes = () => {
   return (
     <Routes>
-      <Route path='*' element={<ErrorFallback error={{response: {status: 404}}}/> } />,
+      <Route path='*' element={<ErrorFallback error={{ response: { status: 404 } }} />} />,
       <Route path="" element={<Providers />} />
     </Routes>
   )

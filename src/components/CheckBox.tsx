@@ -4,7 +4,6 @@ interface ICheckBox {
     setValue: any;
 }
 
-
 export const CheckBox = ({ title, value, setValue }: ICheckBox) => {
 
     return (

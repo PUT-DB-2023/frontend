@@ -1,5 +1,4 @@
-import React from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { Edition } from './Edition'
 
 export const EditionsRoutes = () => {

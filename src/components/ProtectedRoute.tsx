@@ -8,19 +8,17 @@ interface IProtectedRoutes {
   permission: string;
 }
 
-export const ProtectedRoute = ({element, permission}: IProtectedRoutes) => {
-  const {authUser, setAuthUser} = useContext(AuthContext)
+export const ProtectedRoute = ({ element, permission }: IProtectedRoutes) => {
+  const { authUser } = useContext(AuthContext)
 
   // redirect to login if there is no user
   if (!authUser.id) {
-    console.log('YEP');
-    
     return <Navigate to='/auth/login' />
   }
 
   // display 403 page
   if (!authUser?.permissions?.includes(permission)) {
-    return <ErrorFallback error={{response: {status: 403}}}/>
+    return <ErrorFallback error={{ response: { status: 403 } }} />
   }
 
   return (

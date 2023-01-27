@@ -29,7 +29,7 @@ export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
     if (show) {
         return (
             <ModalContainer title={name} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie semestru.<br/>
+                Operacja ta spowoduje usunięcie semestru.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

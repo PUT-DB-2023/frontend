@@ -13,21 +13,18 @@ import { EditModal } from './EditModal'
 import { RemoveModal } from './RemoveModal'
 
 export const ProviderList = () => {
-
   const [sortBy, setSortBy] = useState(majorsSortOptions[0])
-  const [filterBy, setFilterBy] = useState(null);
   const [search, setSearch] = useState('');
-  const { authUser, checkPermission } = useContext(AuthContext);
+  const { checkPermission } = useContext(AuthContext);
   const [removeModal, setRemoveModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [currentModal, setCurrentModal] = useState<Provider>();
-
 
   const { data: providersData, status: providersStatus, refetch: providersRefetch } = useQuery(['providers'], getProviders)
 
   const searchData = useMemo(() => searchFunc(search, providersData, ['name', 'day', 'hour', 'teacherEdition/edition/course/name', 'teacherEdition/edition/semester/start_year']), [search, providersData]);
   const sortedProviders = useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
-  console.log(providersData)
+
   if (providersStatus == 'loading') {
     return <Loading />
   }

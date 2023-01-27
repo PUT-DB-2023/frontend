@@ -1,6 +1,5 @@
 import { ContentLayout, ContentPanel } from 'components'
 import { Button } from 'components/Button'
-import { Spinner } from 'components/Spinner'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { ButtonType, PanelType } from 'types'
@@ -9,8 +8,6 @@ import { ServerInfo } from '../components/ServerInfo'
 import { RemoveModal } from '../components/RemoveModal'
 import { EditModal } from '../components/EditModal'
 import * as React from 'react'
-import { Menu } from '@headlessui/react'
-import { DotsHorizontalIcon } from '@heroicons/react/solid'
 import { activeServer } from '../api/activeServer'
 import { OptionsMenu } from 'components/OptionsMenu'
 import { Server as TServer } from '../types'
@@ -22,7 +19,7 @@ export const Server = () => {
   const [showEdit, setShowEdit] = React.useState(false)
   const [showEditCodesModal, setShowEditCodesModal] = React.useState(false);
   const { id } = useParams()
-  const { authUser, checkPermission } = React.useContext(AuthContext)
+  const { checkPermission } = React.useContext(AuthContext)
 
   const { data: serverData, status: serverStatus, refetch: serverRefetch } = useQuery<TServer, Error>(['server', id], () => getServer(id))
 
@@ -47,7 +44,7 @@ export const Server = () => {
           <h1 className='text-black text-3xl font-bold mb-4'> Serwer - {serverData.name}</h1>
         </div>
         <div className='flex items-start'>
-        <div className='flex gap-6 items-center'>
+          <div className='flex gap-6 items-center'>
             {checkPermission('database.change_server') && (serverData.active ?
               <Button type={ButtonType.WARNING} text='Deaktywuj' onClick={activation} /> :
               <Button type={ButtonType.ACTION} text='Aktywuj' onClick={activation} />

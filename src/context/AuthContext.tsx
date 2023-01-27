@@ -20,17 +20,17 @@ export const AuthContext = createContext<
         checkPermission: (permission: string) => boolean
     }>
     ({
-    authUser: initialAuthUserInfo,
-    setAuthUser: () => null,
-    checkPermission: (permission: string) => false
-})
+        authUser: initialAuthUserInfo,
+        setAuthUser: () => null,
+        checkPermission: (permission: string) => false
+    })
 
-export const AuthProvider = ({children}: {children: ReactNode}) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
     let authenticatedUser: User = initialAuthUserInfo
     try {
         authenticatedUser = JSON.parse(localStorage.getItem('auth_user') || "")
     }
-    catch (error){}
+    catch (error) { }
     const [authUser, setAuthUser] = useState<User>(authenticatedUser)
 
     const checkPermission = (permission: string) => {
@@ -38,7 +38,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     }
 
     return (
-        <AuthContext.Provider value={{authUser, setAuthUser, checkPermission}}>
+        <AuthContext.Provider value={{ authUser, setAuthUser, checkPermission }}>
             {children}
         </AuthContext.Provider>
     )

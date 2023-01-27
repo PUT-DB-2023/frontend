@@ -3,8 +3,8 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType, UserType } from 'types';
-import { addUserNew, addUserOld } from '../api/addUser';
-import { OldUser, Student, Teacher, User } from '../types';
+import { addUserOld } from '../api/addUser';
+import { OldUser } from '../types';
 import { useQuery } from 'react-query'
 import { MajorsDropDown } from 'components/MajorsDropDown';
 import { Major } from 'features/majors';
@@ -41,7 +41,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
                 setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Indeks musi składać się z 6 znaków' }));
                 correct = false;
             }
-            
+
             if (!student_id) {
                 setErrorMsg(prevState => ({ ...prevState, 'student_id': 'Pole wymagane' }));
                 correct = false;
@@ -71,11 +71,6 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
 
     const handleAdd = React.useCallback(async () => {
         if (!validate()) { return; }
-        // let addUser: User = {first_name, last_name, email} as User;
-        // let addTeacher: Teacher = {user: addUser} as Teacher;
-        // let addStudent: Student = (type === UserType.STUDENT ? { user: addUser, student_id: student_id, major: major?.id } : {}) as any;
-        // let addData = type === UserType.STUDENT ? addStudent : (type === UserType.TEACHER ? addTeacher : addUser)
-        // const res = await addUserNew(addData, type)
         let data: OldUser = { first_name, last_name, email, student_id, major: major?.id } as OldUser;
         const res = await addUserOld(data, type);
         if (res) {
@@ -101,7 +96,7 @@ export const AddNewModal = ({ show, off, refetch, type }: { show: boolean, off: 
                     {type === UserType.STUDENT &&
                         <>
                             <Field title={"Nr albumu"} value={student_id} type={'number'} setValue={setStudentId} errorMsg={errorMsg['student_id']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'student_id': e }))} maxLenght={6} />
-                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))}/>}
+                            {majorsData && <MajorsDropDown title='Kierunek' values={majorsData} value={major} setValue={setMajor} errorMsg={errorMsg['major']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'major': e }))} />}
                         </>
                     }
                 </div>

@@ -28,7 +28,7 @@ export interface ToastMessages {
 }
 
 export type BaseEntity = {
-    id: string;
+  id: string;
 } & unknown;
 
 export type TeacherEdition = {
@@ -45,21 +45,21 @@ export type EditionServer = {
 } & BaseEntity
 
 export type DbAccount = {
-  username : string,
-  password : string,
-  additional_info : string,
-  is_moved : boolean;
+  username: string,
+  password: string,
+  additional_info: string,
+  is_moved: boolean;
   editionServer: EditionServer;
-  student : Student;
+  student: Student;
 } & BaseEntity
 
 export enum ButtonType {
-    ACTION,
-    WARNING,
-    OUTLINE,
-    TEXT_WARNING,
-    TEXT_ACTION,
-    LOAD_HIDDEN
+  ACTION,
+  WARNING,
+  OUTLINE,
+  TEXT_WARNING,
+  TEXT_ACTION,
+  LOAD_HIDDEN
 }
 
 export enum PanelType {
@@ -67,7 +67,7 @@ export enum PanelType {
   CONTENT,
   OUTLINE,
   GRADIENT
-} 
+}
 
 export enum Status {
   ACTIVE,
@@ -81,39 +81,39 @@ export enum UserType {
 }
 
 export type SortOptions = {
-  name : string;
-  field : string,
-  asc : boolean
+  name: string;
+  field: string,
+  asc: boolean
 }
 
 export type FilterOptions = {
-  field : string,
-  asc : boolean
+  field: string,
+  asc: boolean
 }
 
-export const coursesSortOptions : SortOptions[] = [
-  {name: 'Nazwa', field: 'name', asc: true},
-  {name: 'Nazwa', field: 'name', asc: false},
+export const coursesSortOptions: SortOptions[] = [
+  { name: 'Nazwa', field: 'name', asc: true },
+  { name: 'Nazwa', field: 'name', asc: false },
 ]
 
-export const editionsSortOptions : SortOptions[] = [
-  {name: 'Nazwa', field: 'description', asc: true},
-  {name: 'Nazwa', field: 'description', asc: false},
+export const editionsSortOptions: SortOptions[] = [
+  { name: 'Nazwa', field: 'description', asc: true },
+  { name: 'Nazwa', field: 'description', asc: false },
 ]
 
-export const groupsSortOptions : SortOptions[] = [
-  {name: 'Nazwa', field: 'name', asc: true},
-  {name: 'Nazwa', field: 'name', asc: false},
+export const groupsSortOptions: SortOptions[] = [
+  { name: 'Nazwa', field: 'name', asc: true },
+  { name: 'Nazwa', field: 'name', asc: false },
 ]
 
-export const serversSortOptions : SortOptions[] = [
-  {name: 'Nazwa', field: 'name', asc: true},
-  {name: 'Nazwa', field: 'name', asc: false},
+export const serversSortOptions: SortOptions[] = [
+  { name: 'Nazwa', field: 'name', asc: true },
+  { name: 'Nazwa', field: 'name', asc: false },
 ]
 
-export const semestersSortOptions : SortOptions[] = [
-  {name: 'Nazwa', field: 'name', asc: true},
-  {name: 'Nazwa', field: 'name', asc: false},
+export const semestersSortOptions: SortOptions[] = [
+  { name: 'Nazwa', field: 'name', asc: true },
+  { name: 'Nazwa', field: 'name', asc: false },
 ]
 
 export type WeekDay = {
@@ -121,16 +121,16 @@ export type WeekDay = {
   field: string;
 }
 
-export const weekDays : WeekDay[] = [
-  {name: 'Poniedziałek', field: 'Poniedziałek'},
-  {name: 'Wtorek', field: 'Wtorek'},
-  {name: 'Środa', field: 'Środa'},
-  {name: 'Czwartek', field: 'Czwartek'},
-  {name: 'Piątek', field: 'Piątek'},
-  {name: 'Sobota', field: 'Sobota'},
-  {name: 'Niedziela', field: 'Niedziela'},
+export const weekDays: WeekDay[] = [
+  { name: 'Poniedziałek', field: 'Poniedziałek' },
+  { name: 'Wtorek', field: 'Wtorek' },
+  { name: 'Środa', field: 'Środa' },
+  { name: 'Czwartek', field: 'Czwartek' },
+  { name: 'Piątek', field: 'Piątek' },
+  { name: 'Sobota', field: 'Sobota' },
+  { name: 'Niedziela', field: 'Niedziela' },
 ]
 
 export const semesters: number[] = [
-  1,2,3,4,5,6,7
+  1, 2, 3, 4, 5, 6, 7
 ]

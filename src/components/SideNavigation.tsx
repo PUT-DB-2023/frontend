@@ -40,18 +40,18 @@ export const SideNavigation = () => {
           <NavItem title='Semestry' icon={<CalendarIcon className='h-5 w-auto' />} />
         </Link>}
       {checkPermission('database.view_semester') &&
-      <Link to='/majors/'>
-        <NavItem title='Kierunki' icon={<AcademicCapIcon className='h-5 w-auto' />} />
-      </Link>}
+        <Link to='/majors/'>
+          <NavItem title='Kierunki' icon={<AcademicCapIcon className='h-5 w-auto' />} />
+        </Link>}
       {checkPermission('database.view_semester') &&
-      <Link to='/providers/'>
-        <NavItem title='Systemy bazodanowe' icon={
-        <div className='flex'>
-          <DatabaseIcon className='h-5 w-auto' />
-        </div>
-      } />
-      </Link>}
+        <Link to='/providers/'>
+          <NavItem title='Systemy bazodanowe' icon={
+            <div className='flex'>
+              <DatabaseIcon className='h-5 w-auto' />
+            </div>
+          } />
+        </Link>}
     </nav>
-    
+
   )
 }

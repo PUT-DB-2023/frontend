@@ -8,7 +8,7 @@ export const AppRoutes = () => {
   const element = useRoutes([...protectedRoutes, ...publicRoutes])
 
   return <>
-    <ToastContainer position='bottom-left'/>
+    <ToastContainer position='bottom-left' />
     {element}
   </>
 }

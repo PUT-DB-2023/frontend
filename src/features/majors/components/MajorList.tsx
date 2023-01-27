@@ -16,7 +16,7 @@ export const MajorList = () => {
 
   const [sortBy, setSortBy] = useState(majorsSortOptions[0])
   const [search, setSearch] = useState('');
-  const { authUser, checkPermission } = useContext(AuthContext);
+  const { checkPermission } = useContext(AuthContext);
   const [removeModal, setRemoveModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [currentModal, setCurrentModal] = useState<Major>();
@@ -25,7 +25,7 @@ export const MajorList = () => {
 
   const searchData = useMemo(() => searchFunc(search, majorData, ['name', 'day', 'hour', 'teacherEdition/edition/course/name', 'teacherEdition/edition/semester/start_year']), [search, majorData]);
   const sortedMajors = useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
-  console.log(majorData, authUser)
+
   if (majorStatus == 'loading') {
     return <Loading />
   }

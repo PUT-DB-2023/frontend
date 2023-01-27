@@ -3,7 +3,6 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Field } from 'components/Field';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
-import { objectMap } from 'api/objectMap';
 import { updateMajor } from '../api/updateMajor';
 import { Major } from '../types';
 

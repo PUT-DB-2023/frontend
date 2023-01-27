@@ -50,9 +50,6 @@ export const RemoveDBAccountModal = ({ show, off, dbAccount }: IRemoveModal) => 
             resLocal = await removeDBAccountLocal(dbAccount?.id);
         }
 
-        console.log(removeFromServer, resServer, removeLocal, resLocal);
-        
-        
         if ((removeFromServer && resServer) || (removeLocal && resLocal)) {
             handleOff();
         }

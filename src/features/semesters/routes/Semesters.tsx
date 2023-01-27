@@ -15,11 +15,11 @@ import { SemesterList } from '../components/SemesterList'
 export const Semesters = () => {
   const [addModal, setAddModal] = React.useState(false)
   const { id } = useParams()
-  const {authUser, checkPermission} = React.useContext(AuthContext)
+  const { checkPermission } = React.useContext(AuthContext)
 
   const { data: activeSemesterData, status: activeSemesterStatus, refetch: activeSemesterRefetch } = useQuery(['activeSemester', id], () => getSemesters(true));
 
-  React.useEffect(() => {document.title = `Semestry`},[])
+  React.useEffect(() => { document.title = `Semestry` }, [])
 
   if (activeSemesterStatus == 'loading') {
     return <Loading />
@@ -50,7 +50,7 @@ export const Semesters = () => {
                 {activeSemesterData ? activeSemesterData[0].start_year.toString().concat('/').concat((activeSemesterData[0].start_year + 1).toString()).concat(activeSemesterData[0].winter ? " - Zima" : " - Lato") : 'Brak semestrów'}
               </h1>
               <div className={activeSemesterData[0].active ? 'text-blue-600' : 'text-red-500'}>
-                  <span className={descriptionClass}>{activeSemesterData ? activeSemesterData[0].active ? 'Aktywny' : 'Nieaktywny' : ''}</span>
+                <span className={descriptionClass}>{activeSemesterData ? activeSemesterData[0].active ? 'Aktywny' : 'Nieaktywny' : ''}</span>
               </div>
             </div>
           </div>

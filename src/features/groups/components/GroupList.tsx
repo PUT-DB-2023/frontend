@@ -11,16 +11,14 @@ import { getGroups } from '../api/getGroups';
 import { Group } from '../types';
 
 export const GroupList = () => {
-
   const [sortBy, setSortBy] = React.useState(groupsSortOptions[0])
-  const [filterBy, setFilterBy] = React.useState(null);
   const [search, setSearch] = React.useState('');
 
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['groups'], getGroups)
 
   const searchData = React.useMemo(() => searchFunc(search, groupData, ['name', 'day', 'hour', 'teacherEdition/edition/course/name', 'teacherEdition/edition/semester/start_year']), [search, groupData]);
   const sortedGroups = React.useMemo(() => sortFunc(searchData, sortBy), [searchData, sortBy]);
-  console.log(groupData)
+
   if (groupStatus == 'loading') {
     return <Loading />
   }

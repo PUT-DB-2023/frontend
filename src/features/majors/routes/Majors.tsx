@@ -9,8 +9,8 @@ import { MajorList } from '../components/MajorList'
 
 export const Majors = () => {
   const [showAdd, setShowAdd] = React.useState(false);
-  const {authUser, checkPermission} = React.useContext(AuthContext)
-  React.useEffect(() => {document.title = `Kierunki`},[])
+  const { checkPermission } = React.useContext(AuthContext)
+  React.useEffect(() => { document.title = `Kierunki` }, [])
 
   return (
     <ContentLayout>

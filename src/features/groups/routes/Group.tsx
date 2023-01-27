@@ -29,13 +29,13 @@ export const Group = () => {
   const [removeStudentModal, setRemoveStudentModal] = React.useState(false);
   const [editModal, setEditModal] = React.useState(false);
   const [addStudentModal, setAddStudentModal] = React.useState(false);
-  const {id} = useParams()
+  const { id } = useParams()
   const [newModal, setNewModal] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [addFileModal, setAddFileModal] = React.useState(false);
   const [studentInfoModal, setStudentInfoModal] = React.useState(false);
   const [addFileResult, setAddFileResult] = React.useState<StudentInfo[]>()
-  const {authUser, checkPermission} = React.useContext(AuthContext)
+  const { checkPermission } = React.useContext(AuthContext)
   const [currentStudent, setCurrentStudent] = React.useState<Student>()
 
   const { data: groupData, status: groupStatus, refetch: groupRefetch } = useQuery(['group', id], () => getGroup(id))
@@ -54,7 +54,7 @@ export const Group = () => {
 
   return (
     <ContentLayout>
-      {checkPermission('database.remove_student_from_group') && <RemoveStudentFromGroupModal show={removeStudentModal} off={() => setRemoveStudentModal(false)} student={currentStudent} group={groupData}/>}
+      {checkPermission('database.remove_student_from_group') && <RemoveStudentFromGroupModal show={removeStudentModal} off={() => setRemoveStudentModal(false)} student={currentStudent} group={groupData} />}
       {checkPermission('database.delete_group') && <RemoveModal off={() => setRemoveModal(false)} id={id} show={removeModal} name={`${groupData.name} - ${groupData.day} ${groupData.hour}`} />}
       {checkPermission('database.change_group') && <EditModal off={() => setEditModal(false)} refetch={groupRefetch} show={editModal} data={groupData} />}
       {checkPermission('database.add_students_to_group') && id && <AddStudCSVModal show={addFileModal} off={() => setAddFileModal(false)} refetch={groupRefetch} id={id} showInfo={() => setStudentInfoModal(true)} setResult={setAddFileResult} />}
@@ -66,9 +66,9 @@ export const Group = () => {
           <h1 className='font-bold text-3xl'> {groupData?.name} </h1>
           <Link to={`/courses/${groupData?.teacherEdition?.edition?.course?.id}/editions/${groupData?.teacherEdition?.edition?.id}`} >
             <div className='flex gap-3 flex-wrap text-blue-800'>
-              <span className={descriptionClass}>{groupData?.teacherEdition?.edition?.course?.name 
-              + ' - ' + groupData?.teacherEdition?.edition?.semester?.start_year + '/' + ((groupData?.teacherEdition?.edition?.semester?.start_year || '0') + 1)
-              + ' ' + (groupData?.teacherEdition?.edition?.semester?.winter ? 'Zima' : 'Lato')}</span>
+              <span className={descriptionClass}>{groupData?.teacherEdition?.edition?.course?.name
+                + ' - ' + groupData?.teacherEdition?.edition?.semester?.start_year + '/' + ((groupData?.teacherEdition?.edition?.semester?.start_year || '0') + 1)
+                + ' ' + (groupData?.teacherEdition?.edition?.semester?.winter ? 'Zima' : 'Lato')}</span>
               <span className={descriptionClass}>{groupData?.teacherEdition?.teacher?.user?.first_name} {groupData?.teacherEdition?.teacher?.user?.last_name}</span>
               <span className={descriptionClass}>{groupData.day} {groupData.hour}</span>
             </div>

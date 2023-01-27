@@ -3,8 +3,6 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteEdition } from '../api/deleteEdition'
-import { useNavigate, } from 'react-router-dom'
-import { queryClient } from 'lib/react-query';
 
 interface IRemoveModal {
     show: boolean,
@@ -16,18 +14,11 @@ interface IRemoveModal {
 }
 
 export const RemoveModal = ({ show, off, courseId, editionId, name, refetch }: IRemoveModal) => {
-    const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
         const res = await deleteEdition(editionId)
         if (res) {
-            // queryClient.removeQueries('editionGroups')
             off();
             refetch();
-            // navigate(`/courses/${courseId}`);
-            console.log(courseId);
-            
-            // courseId ? navigate(`/courses/${courseId}`) : navigate('/courses')
-            // navigate('/courses')
         }
     }, [editionId])
 

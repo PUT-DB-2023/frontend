@@ -4,11 +4,6 @@ import { UserType } from 'types'
 import { toast } from 'react-toastify'
 import { displayError } from 'api/displayError'
 
-// export const updateUser = async (user: User) => {
-//     const response = await axios.patch(`/users/${user.id}`, user)
-//     return response.data
-// }
-
 export const updateUserNew = async (data: Student | Teacher | User, type: UserType) => {
     const t = toast.loading("Edytowanie..")
     const dest = (type === UserType.TEACHER ? "/teachers/" : (type === UserType.ADMIN ? "/users/" : (type === UserType.STUDENT ? "/students/" : ""))) + `${data.id}/`

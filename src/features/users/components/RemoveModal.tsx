@@ -15,7 +15,6 @@ interface IRemoveModal {
 export const RemoveModal = ({ show, off, id, type }: IRemoveModal) => {
     const navigate = useNavigate();
     const handleRemove = React.useCallback(async () => {
-        const dest = '/users' + (type === UserType.TEACHER ? "/teachers" : (type === UserType.ADMIN ? "/admins" : (type === UserType.STUDENT ? "/students" : "")));
         const res = await deleteUserOld(id, type)
         if (res) {
             off();

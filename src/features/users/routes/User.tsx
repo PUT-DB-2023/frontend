@@ -112,9 +112,9 @@ const dbAccountsColumns = (
           <OptionsMenu
             remove={deleteDBPerm ?
               async () => {
-              setCurrent(getValue());
-              setRemoveShow(true);
-            } : undefined
+                setCurrent(getValue());
+                setRemoveShow(true);
+              } : undefined
             }
             customMenuItems={resetDBPassPerm ? customMenuItems(getValue(), setResetPassword, setCurrent) : undefined}
           />
@@ -139,7 +139,6 @@ export const User = ({ type }: IUser) => {
   const [currentDBAccountID, setCurrentDBAccountID] = React.useState<DbAccount>();
   const { authUser, checkPermission } = React.useContext(AuthContext);
   const userProfil = id === (isStudentOrTeacher(authUser) ? authUser?.user?.id.toString() : authUser?.id.toString());
-  console.log(authUser?.permissions)
 
   const resetPassPerm = (userProfil && checkPermission('database.reset_own_password')) || checkPermission('database.reset_student_password')
   const editPerm = checkPermission('database.change_user')
@@ -171,8 +170,8 @@ export const User = ({ type }: IUser) => {
 
   return (
     <ContentLayout>
-      {deleteDBPerm && <RemoveDBAccountModal show={removeDBAccount} off={() => setRemoveDBAccount(false)} dbAccount={currentDBAccountID}/>}
-      {resetDBPassPerm && <ResetDBAccountPasswordModal show={resetDBPassword} off={() => setResetBPassword(false)} dbAccount={currentDBAccountID}/>}
+      {deleteDBPerm && <RemoveDBAccountModal show={removeDBAccount} off={() => setRemoveDBAccount(false)} dbAccount={currentDBAccountID} />}
+      {resetDBPassPerm && <ResetDBAccountPasswordModal show={resetDBPassword} off={() => setResetBPassword(false)} dbAccount={currentDBAccountID} />}
       {editPerm && <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData} />}
       {deletePerm && <RemoveModal show={removeModal} id={userData.id} off={() => setRemoveModal(false)} type={type} />}
       {resetPassPerm && <PasswordResetModal show={resetModal} id={userAccessor.id} userType={type} off={() => setResetModal(false)} owner={userProfil} />}
