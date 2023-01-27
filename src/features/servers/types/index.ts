@@ -14,7 +14,6 @@ export type Server = {
     modify_user_template: string;
     delete_user_template: string;
     username_template: string;
-    custom_command_template: string;
     active: boolean;
 
 } & BaseEntity;

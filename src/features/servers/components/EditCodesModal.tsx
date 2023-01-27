@@ -50,8 +50,7 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
     const [modify, setModify] = React.useState('');
     const [remove, setRemove] = React.useState('');
     const [nameCodes, setNameCodes] = React.useState('');
-    const [custom, setCustom] = React.useState('');
-    const defaultMsg = { create: '', modify: '', remove: '', nameCodes: '', custom: '' }
+    const defaultMsg = { create: '', modify: '', remove: '', nameCodes: ''}
     const [errorMsg, setErrorMsg] = React.useState(defaultMsg);
 
     React.useEffect(() => {
@@ -59,7 +58,6 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
         setModify(data?.modify_user_template);
         setRemove(data?.delete_user_template);
         setNameCodes(data?.username_template);
-        setCustom(data?.custom_command_template);
         setErrorMsg(defaultMsg);
     }, [show, data])
 
@@ -90,16 +88,16 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
         objectMap(errorMsg, (v: any) => sum += v.length)
 
         return correct && sum === 0;
-    }, [create, modify, remove, nameCodes, custom, errorMsg])
+    }, [create, modify, remove, nameCodes, errorMsg])
 
     const handleUpdate = React.useCallback(async () => {
         if (!validate()) { return; }
-        const res = await updateServer({ id: data.id, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes, custom_command_template: custom } as Server)
+        const res = await updateServer({ id: data.id, create_user_template: create, modify_user_template: modify, delete_user_template: remove, username_template: nameCodes} as Server)
         if (res) {
             off();
             refetch();
         }
-    }, [data, create, modify, remove, nameCodes, custom])
+    }, [data, create, modify, remove, nameCodes])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_ACTION} text='Anuluj' onClick={off} />
@@ -115,8 +113,6 @@ export const EditCodesModal = ({ show, off, refetch, data }: IEditModal) => {
                     <Field title={"Szablon polecenia tworzenia"} multiline={true} value={create} setValue={setCreate} errorMsg={errorMsg['create']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'create': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia modyfikowania"} multiline={true} value={modify} setValue={setModify} errorMsg={errorMsg['modify']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'modify': e }))} maxLenght={1023} />
                     <Field title={"Szablon polecenia usuwania"} multiline={true} value={remove} setValue={setRemove} errorMsg={errorMsg['remove']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'remove': e }))} maxLenght={1023} />
-                    <hr className='w-full my-6 border-1 border-zinc-300'></hr>
-                    <Field title={"Szablon niestandardowy"} multiline={true} value={custom} setValue={setCustom} errorMsg={errorMsg['custom']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'custom': e }))} maxLenght={1023} />
                     <hr className='w-full my-6 border-1 border-zinc-300'></hr>
                     <InfoBox>{infoTextNames}</InfoBox>
                     <Field title={"Szablon nazewnictwa kont"} multiline={true} value={nameCodes} setValue={setNameCodes} errorMsg={errorMsg['nameCodes']} setErrorMsg={(e: string) => setErrorMsg(prevState => ({ ...prevState, 'nameCodes': e }))} maxLenght={1023} />

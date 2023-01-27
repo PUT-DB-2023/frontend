@@ -90,11 +90,6 @@ export const Server = () => {
             <h3 className='text-black text-base font-semibold'> Szablon nazewnictwa kont </h3>
             <h4 className='text-slate-600 text-base'>{serverData.username_template}</h4>
           </div>
-
-          <div className='flex flex-col gap-2'>
-            <h3 className='text-black text-base font-semibold'> Szablon niestandardowy </h3>
-            <h4 className='text-slate-600 text-base'>{serverData.custom_command_template}</h4>
-          </div>
         </div>
       </ContentPanel>
     </ContentLayout>
