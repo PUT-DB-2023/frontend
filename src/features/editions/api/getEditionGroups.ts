@@ -5,6 +5,6 @@ export const getEditionGroups = async (editionId?: string) => {
         params: {
             'teacherEdition__edition': editionId
         }
-    })
+    }).then((e) => {return e}).catch((e) => {return e})
     return response.data
 }

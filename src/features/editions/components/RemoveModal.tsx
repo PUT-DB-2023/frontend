@@ -4,6 +4,8 @@ import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteEdition } from '../api/deleteEdition'
 import { Edition } from '../types';
+import { useNavigate } from 'react-router';
+import { queryClient } from 'lib/react-query';
 
 interface IRemoveModal {
     show: boolean,
@@ -15,14 +17,18 @@ interface IRemoveModal {
     refetch: () => void
 }
 
-export const RemoveModal = ({ show, off, edition, refetch }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, editionId, courseId, edition, refetch }: IRemoveModal) => {
+    const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteEdition(edition?.id)
-        if (res) {
-            off();
+        const res = await deleteEdition(editionId)
+        if (res.status) {
             refetch();
+            // queryClient.removeQueries('selectedEdition')
+            off();
+            // courseId ? navigate(`/courses/${courseId}`) : navigate('/courses')
+        } else {
         }
-    }, [edition?.id])
+    }, [editionId])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_WARNING} text='Anuluj' onClick={off} />

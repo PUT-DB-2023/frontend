@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost/api" // TODO: change the hardcoded URL
+export const API_URL = "http://localhost:8000/api" // TODO: change the hardcoded URL

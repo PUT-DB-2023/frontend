@@ -6,6 +6,6 @@ export const getEditions = async (active?: boolean, courseId?: string) => {
             'course': courseId,
             'semester__active': active,
         }
-    })
+    }).then((e) => {return e}).catch((e) => {return e})
     return response.data
 }
