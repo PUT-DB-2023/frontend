@@ -4,23 +4,23 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ButtonType } from 'types';
 import { deleteServer } from '../api/deleteServer';
+import { Server } from '../types';
 
 interface IRemoveModal {
     show: boolean,
+    server: Server,
     off: () => void,
-    id: string | undefined,
-    name: string
 }
 
-export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, server }: IRemoveModal) => {
     const navigate = useNavigate()
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteServer(id)
+        const res = await deleteServer(server?.id)
         if (res) {
             off();
             navigate(-1)
         }
-    }, [id])
+    }, [server?.id])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_WARNING} text='Anuluj' onClick={off} />
@@ -29,8 +29,8 @@ export const RemoveModal = ({ show, off, id, name }: IRemoveModal) => {
 
     if (show) {
         return (
-            <ModalContainer title={name} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie serwera.<br />
+            <ModalContainer title={'Usuwanie serwera'} off={off} buttons={buttons}>
+                Operacja ta spowoduje usunięcie serwera <strong>{server?.name}</strong>.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

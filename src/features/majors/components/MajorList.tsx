@@ -33,7 +33,7 @@ export const MajorList = () => {
   return (
     <div className='flex flex-col gap-8'>
       {checkPermission('database.change_major') && currentModal && <EditModal show={editModal} off={() => setEditModal(false)} data={currentModal} refetch={majorRefetch} />}
-      {checkPermission('database.delete_major') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={currentModal?.id} name={`Usuwanie kierunku ${currentModal?.name}`} refetch={majorRefetch} />}
+      {checkPermission('database.delete_major') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} major={currentModal} refetch={majorRefetch} />}
       <Toolbar sort={true} filter={false} search={true} sortOptions={majorsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj kierunku' />
       <div className='w-full'>
         {majorData.length == 0 ?

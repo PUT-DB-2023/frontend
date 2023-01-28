@@ -35,13 +35,10 @@ export const SemesterList = ({ allRefetch }: ISemesterList) => {
         return <Loading />
     }
 
-    const removeName = 'Usuń semestr ' + selectedSemester?.start_year + '/' + ((selectedSemester?.start_year || '0') + 1) + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
-    const activateName = 'Zmień bieżący semestr na ' + selectedSemester?.start_year + '/' + ((selectedSemester?.start_year || '0') + 1) + ' - ' + (selectedSemester?.winter ? 'Zima' : 'Lato')
-
     return (
         <>
-            {checkPermission('database.delete_semester') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={selectedSemester?.id} name={removeName} refetch={() => allRefetch()} />}
-            {checkPermission('database.change_active_semester') && <ActivateModal show={activateModal} off={() => setActivateModal(false)} id={selectedSemester?.id} name={activateName} allRefetch={allRefetch} />}
+            {checkPermission('database.delete_semester') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} semester={selectedSemester} refetch={() => allRefetch()} />}
+            {checkPermission('database.change_active_semester') && <ActivateModal show={activateModal} off={() => setActivateModal(false)} semester={selectedSemester} allRefetch={allRefetch} />}
             <div className='w-full h-full flex flex-col items-center'>
                 {semestersData.length == 0 ?
                     <div className='w-full h-full flex justify-center items-center p-10 font-semibold text-xl'> Brak Semestrów </div> :

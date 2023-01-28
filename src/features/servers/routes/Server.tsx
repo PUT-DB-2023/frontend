@@ -36,7 +36,7 @@ export const Server = () => {
 
   return (
     <ContentLayout>
-      {checkPermission('database.delete_server') && <RemoveModal off={() => setShowRemove(false)} show={showRemove} id={id} name={serverData.name} />}
+      {checkPermission('database.delete_server') && <RemoveModal off={() => setShowRemove(false)} show={showRemove} server={serverData} />}
       {checkPermission('database.change_server') && <EditModal off={() => setShowEdit(false)} show={showEdit} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />}
       {checkPermission('database.change_server') && <EditCodesModal off={() => setShowEditCodesModal(false)} show={showEditCodesModal} refetch={serverRefetch} data={{ ...serverData, id: id as string }} />}
       <ContentPanel type={PanelType.HEADER}>

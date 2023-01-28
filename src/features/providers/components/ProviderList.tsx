@@ -32,7 +32,7 @@ export const ProviderList = () => {
   return (
     <div className='flex flex-col gap-8'>
       {checkPermission('database.change_dbms') && currentModal && <EditModal show={editModal} off={() => setEditModal(false)} data={currentModal} refetch={providersRefetch} />}
-      {checkPermission('database.delete_dbms') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} id={currentModal?.id} name={`Usuwanie dostawcy ${currentModal?.name}`} refetch={providersRefetch} />}
+      {checkPermission('database.delete_dbms') && <RemoveModal show={removeModal} off={() => setRemoveModal(false)} provider={currentModal} refetch={providersRefetch} />}
       <Toolbar sort={true} filter={false} search={true} sortOptions={majorsSortOptions} sortVal={sortBy} sortSet={setSortBy} searchVal={search} searchSet={setSearch} searchPlaceholder='Szukaj dostawcy' />
       <div className='w-full'>
         {providersData.length == 0 ?

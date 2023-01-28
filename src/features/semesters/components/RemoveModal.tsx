@@ -3,23 +3,23 @@ import { ModalContainer } from 'components/ModalContainer';
 import { Button } from 'components/Button';
 import { ButtonType } from 'types';
 import { deleteSemester } from '../api/deleteSemester'
+import { Semester } from '../types';
 
 interface IRemoveModal {
     show: boolean,
     off: () => void,
-    id: string | undefined,
-    name: string,
-    refetch: () => void;
+    semester?: Semester,
+    refetch: () => void,
 }
 
-export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
+export const RemoveModal = ({ show, off, semester, refetch }: IRemoveModal) => {
     const handleRemove = React.useCallback(async () => {
-        const res = await deleteSemester(id)
+        const res = await deleteSemester(semester?.id)
         if (res) {
             off();
             refetch();
         }
-    }, [id])
+    }, [semester?.id])
 
     const buttons = <>
         <Button type={ButtonType.TEXT_WARNING} text='Anuluj' onClick={off} />
@@ -28,8 +28,8 @@ export const RemoveModal = ({ show, off, id, name, refetch }: IRemoveModal) => {
 
     if (show) {
         return (
-            <ModalContainer title={name} off={off} buttons={buttons}>
-                Operacja ta spowoduje usunięcie semestru.<br />
+            <ModalContainer title={'Usuwanie semestru'} off={off} buttons={buttons}>
+                Operacja ta spowoduje usunięcie semestru <strong>{semester?.start_year}/{semester && semester.start_year + 1} - {semester?.winter ? 'Zima' : 'Lato'}</strong>.<br />
                 Czy chcesz kontynuować?
             </ModalContainer>
         );

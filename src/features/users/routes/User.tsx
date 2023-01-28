@@ -171,9 +171,9 @@ export const User = ({ type }: IUser) => {
   return (
     <ContentLayout>
       {deleteDBPerm && <RemoveDBAccountModal show={removeDBAccount} off={() => setRemoveDBAccount(false)} dbAccount={currentDBAccountID} />}
-      {resetDBPassPerm && <ResetDBAccountPasswordModal show={resetDBPassword} off={() => setResetBPassword(false)} dbAccount={currentDBAccountID} />}
+      {resetDBPassPerm && <ResetDBAccountPasswordModal show={resetDBPassword} off={() => setResetBPassword(false)} dbAccount={currentDBAccountID} user={userData} />}
       {editPerm && <EditModal show={editModal} refetch={userRefetch} off={() => setEditModal(false)} type={type} data={userData} />}
-      {deletePerm && <RemoveModal show={removeModal} id={userData.id} off={() => setRemoveModal(false)} type={type} />}
+      {deletePerm && <RemoveModal show={removeModal} user={userData} id={userData.id} off={() => setRemoveModal(false)} type={type} />}
       {resetPassPerm && <PasswordResetModal show={resetModal} id={userAccessor.id} userType={type} off={() => setResetModal(false)} owner={userProfil} />}
       <ContentPanel type={PanelType.HEADER}>
         <span className='text-black text-3xl font-bold'> {userAccessor.first_name + " " + userAccessor.last_name} </span>
