@@ -1,10 +1,10 @@
-FROM node:17-alpine
+FROM node:18-alpine AS front
 
 WORKDIR /frontend
 COPY . .
-RUN npm install
-RUN npm run build
+RUN npm install && npm run build
 
-# EXPOSE 3000
-
-# CMD ["npm", "start"]
+FROM nginx:alpine
+WORKDIR /frontend
+COPY --from=front /frontend/build .
+COPY nginx.conf /etc/nginx/nginx.conf
